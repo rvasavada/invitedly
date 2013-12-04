@@ -8,19 +8,29 @@
   - @events.each do |event|
     .panel.panel-default{id: "row#{event.id}"}
       .panel-body
+        .btn-toolbar.pull-right
+          .btn-group
+            = link_to "<span class='glyphicon glyphicon-pencil'></span> Edit details".html_safe, edit_occasion_event_path(@occasion, event), :class => "btn btn-default btn-sm"              
+            = link_to "Invite guests", new_occasion_invitation_path(@occasion, :event => event), :class => "btn btn-primary btn-sm"
+          .btn-group
+            = link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, occasion_event_path(@occasion, event), method: :delete,  remote: true, 'data-type' => 'json', data: {confirm: 'Are you sure you want to delete this event?'}, :class => "btn btn-danger btn-sm"
+      
         %h2
           %strong= event.name
           %small=link_to "(see event details)", "#event_#{event.id}", data: {toggle: "collapse", parent: "#accordion"}
-        
+        %span
+          - invited = event.invitations.where(:is_visible => true)
+          - attending = invited.where(:response => "Attending")
+          - might_attend = invited.where(:response => "Might Attend")
+          - not_attend = invited.where(:response => "Not Attending")
+          - not_responded = invited.where(:response => "Not Responded")
+          .btn-group
+            = link_to "<strong>#{attending.count}</strong> attending <br> <small class='text-muted'>(#{pluralize(attending.sum(:num_guests), 'person')})</small>".html_safe, occasion_event_path(@occasion, event, :response => "Attending"), :class => "btn btn-default"
+            = link_to "<strong>#{might_attend.count}</strong> might attend <br> <small class='text-muted'>(#{pluralize(might_attend.sum(:num_guests), 'person')})</small>".html_safe, occasion_event_path(@occasion, event, :response => "Might Attend"), :class => "btn btn-default"
+            = link_to "<strong>#{not_attend.count}</strong> not attending<br> <small class='text-muted'>(#{pluralize(not_attend.sum(:num_guests), 'person')})</small>".html_safe, occasion_event_path(@occasion, event, :response => "Not Attending"), :class => "btn btn-default"
+            = link_to "<strong>#{not_responded.count}</strong> not responded <br> <small class='text-muted'> (#{pluralize(not_responded.sum(:num_guests), 'person')})</small>".html_safe, occasion_event_path(@occasion, event, :response => "Not Responded"), :class => "btn btn-default"
       .panel-collapse.collapse{id: "event_#{event.id}"}
-        .panel-footer
-          .btn-toolbar.pull-right
-            .btn-group
-              = link_to "<span class='glyphicon glyphicon-pencil'></span> Edit details".html_safe, edit_occasion_event_path(@occasion, event), :class => "btn btn-default btn-sm"              
-              /= link_to "Invite guests", new_occasion_invite_path(@occasion, :event => event), :class => "btn btn-primary btn-sm"
-            .btn-group
-              = link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, occasion_event_path(@occasion, event), method: :delete,  remote: true, 'data-type' => 'json', data: {confirm: 'Are you sure you want to delete this event?'}, :class => "btn btn-danger btn-sm"
-              
+        .panel-footer              
           #event_details
             %span.glyphicon.glyphicon-calendar
             %strong Date and Time

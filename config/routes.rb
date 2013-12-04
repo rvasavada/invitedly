@@ -1,4 +1,6 @@
 Invitedly::Application.routes.draw do
+  resources :invitations
+
   get 'about' => 'static#about'
   get 'terms' => 'static#terms'
   get 'privacy' => 'static#privacy'
@@ -11,6 +13,7 @@ Invitedly::Application.routes.draw do
   end
   resources :occasions do
     resources :events
+    resources :invitations
   end
   
   devise_for :users, :controllers => { :registrations => "users/registrations",

@@ -1,79 +1,32 @@
-<p id="notice"><%= notice %></p>
+.btn-group.pull-right
+  = link_to 'Add contact', new_contact_path, :class => "btn btn-default"
+  = link_to 'Invite guests', new_occasion_invitation_path(@occasion, :event => @event), :class => "btn btn-primary"
 
-<p>
-  <strong>Name:</strong>
-  <%= @event.name %>
-</p>
+%h1.form-h1
+  =@event.name
+  %strong Guestlist
+%h2.form-h2
+  %strong#guest_count
+  guests found
+.well.well-sm
+  .row
+    .col-xs-4
+      =label_tag :response, "Response", {:class=> "control-label"}
+      %br
+      =select_tag :response, options_from_collection_for_select(@response, :name, :name, :selected => params[:response]), :id => "response_tag", :prompt => "Please select"
 
-<p>
-  <strong>Description:</strong>
-  <%= @event.description %>
-</p>
-
-<p>
-  <strong>Occasion:</strong>
-  <%= @event.occasion_id %>
-</p>
-
-<p>
-  <strong>Start date:</strong>
-  <%= @event.start_date %>
-</p>
-
-<p>
-  <strong>Start time:</strong>
-  <%= @event.start_time %>
-</p>
-
-<p>
-  <strong>Address 1:</strong>
-  <%= @event.address_1 %>
-</p>
-
-<p>
-  <strong>Address 2:</strong>
-  <%= @event.address_2 %>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @event.city %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @event.state %>
-</p>
-
-<p>
-  <strong>Zip:</strong>
-  <%= @event.zip %>
-</p>
-
-<p>
-  <strong>Country:</strong>
-  <%= @event.country %>
-</p>
-
-<p>
-  <strong>Region:</strong>
-  <%= @event.region %>
-</p>
-
-<p>
-  <strong>Postal code:</strong>
-  <%= @event.postal_code %>
-</p>
-
-<p>
-  <strong>Location:</strong>
-  <%= @event.location %>
-</p>
-
-<p>
-  <strong>Slug:</strong>
-  <%= @event.slug %>
-</p>
-
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+.panel-group#accordion
+  - @invites.each do |invite|
+    - guest = Guest.find(invite.guest_id)
+    .panel.panel-default{id: "row#{invite.id}", data: {response: invite.response}}
+      .panel-body{:style => "font-size: 14px;"}      
+        %strong=guest.invite_name
+        %span.text-muted
+          ="(#{pluralize(invite.num_guests,'person')})"
+        
+        %span.pull-right
+          =link_to invite.response, "#invite_#{invite.id}", data: {toggle: "collapse", parent: "#accordion"}          
+      .panel-collapse.collapse{id: "invite_#{invite.id}"}        
+        = render "invite_fields", :guest => guest, :invite => invite
+%p.text-center#no_guest_found{:style => "font-size: 14px;"} 
+  %em No guests found

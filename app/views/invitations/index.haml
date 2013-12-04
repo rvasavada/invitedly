@@ -1,0 +1,23 @@
+.btn-group.pull-right
+  = link_to 'Invite guests', new_occasion_invitation_path(@occasion), :class => "btn btn-primary"
+
+%h1.form-h1
+  Invites
+  %small
+    %strong#row_count=@guests.count
+    guests invited
+
+.panel-group#accordion
+  - @guests.each do |guest|
+    .panel.panel-default{data: {guest_id: guest.id}}
+      .panel-body
+        %strong=link_to guest.invite_name, "#guest_#{guest.id}", data: {toggle: "collapse", parent: "#accordion"}          
+      .panel-collapse.collapse{id: "guest_#{guest.id}"}
+        .panel-footer
+          - invites = Invite.where(guest_id: guest.id, is_visible: 't')          
+          - invites.each do |invite|
+            %ul.list-group{id: "row#{invite.id}"}
+              %li.list-group-item
+                = render "event_invite_fields", :guest => guest, :invite => invite
+%p.text-center#no_row_found
+  %em No guests invited

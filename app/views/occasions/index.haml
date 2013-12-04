@@ -15,7 +15,7 @@
                 = link_to 'edit', edit_occasion_path(occasion)
           %td
             = link_to "Events", occasion_events_path(occasion), :class => "btn btn-default"
-            /= link_to "Invites", occasion_invites_path(occasion), :class => "btn btn-default"
+            = link_to "Invitations", occasion_invitations_path(occasion), :class => "btn btn-default"
     -else
       %td{:colspan => 2}
     

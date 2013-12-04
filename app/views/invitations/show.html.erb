@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Guest:</strong>
+  <%= @invitation.guest_id %>
+</p>
+
+<p>
+  <strong>Event:</strong>
+  <%= @invitation.event_id %>
+</p>
+
+<p>
+  <strong>Num guests:</strong>
+  <%= @invitation.num_guests %>
+</p>
+
+<p>
+  <strong>Message:</strong>
+  <%= @invitation.message %>
+</p>
+
+<p>
+  <strong>Response:</strong>
+  <%= @invitation.response %>
+</p>
+
+<p>
+  <strong>Is visible:</strong>
+  <%= @invitation.is_visible %>
+</p>
+
+<%= link_to 'Edit', edit_invitation_path(@invitation) %> |
+<%= link_to 'Back', invitations_path %>

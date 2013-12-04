@@ -40,8 +40,8 @@
                     / Collect the nav links, forms, and other content for toggling
                     .collapse.navbar-collapse.navbar-ex1-collapse
                       %ul.nav.navbar-nav
-                        %li.active= link_to "Events", occasion_events_path(@occasion)
-                        /%li= link_to "Invites", occasion_invites_path(@occasion), :style => "color:white;"           
+                        %li= link_to "Events", occasion_events_path(@occasion)
+                        %li= link_to "Invitations", occasion_invitations_path(@occasion)
             .row
               .col-sm-12
                 - if notice.present?

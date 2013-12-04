@@ -14,6 +14,17 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    @event = Event.friendly.find(params[:id])
+    
+    
+    @invites = @event.invitations.where(:is_visible => 't')
+    @response = ResponseType.all
+    
+    @title = Title.all.order("name ASC")
+    @country = Country.all.order("name ASC")
+    @state = State.all.order("name ASC")
+    @filter_response = params[:response]
   end
 
   # GET /events/new
