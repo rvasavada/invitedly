@@ -1,0 +1,54 @@
+%h1.form-h1
+  = link_to 'Create event', new_occasion_event_path(@occasion), :class => "btn btn-primary pull-right"
+  Events
+  %small
+    %strong#guest_count
+    events found
+.panel-group#accordion
+  - @events.each do |event|
+    .panel.panel-default{id: "row#{event.id}"}
+      .panel-body
+        %h2
+          %strong= event.name
+          %small=link_to "(see event details)", "#event_#{event.id}", data: {toggle: "collapse", parent: "#accordion"}
+        
+      .panel-collapse.collapse{id: "event_#{event.id}"}
+        .panel-footer
+          .btn-toolbar.pull-right
+            .btn-group
+              = link_to "<span class='glyphicon glyphicon-pencil'></span> Edit details".html_safe, edit_occasion_event_path(@occasion, event), :class => "btn btn-default btn-sm"              
+              /= link_to "Invite guests", new_occasion_invite_path(@occasion, :event => event), :class => "btn btn-primary btn-sm"
+            .btn-group
+              = link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, occasion_event_path(@occasion,event), method: :delete,  remote: true,data: {confirm: 'Are you sure you want to delete this event?'}, :class => "btn btn-danger btn-sm"
+              
+          #event_details
+            %span.glyphicon.glyphicon-calendar
+            %strong Date and Time
+            %br
+            = event.start_date.strftime("%A	%B %e, %Y")
+            at
+            = event.start_time
+            %br
+            %br
+
+            %span.glyphicon.glyphicon-map-marker
+            %strong Location
+            %br
+            = link_to event.location, "https://maps.google.com/maps?q=#{event.address}",:target => "_blank"
+            %br
+            = "#{event.address_1} #{event.address_2 if event.address_2.present? } <br>".html_safe if event.address_1.present?
+            = "#{event.city}, #{event.state} #{event.zip}".html_safe if ((event.city.present? or event.zip.present?) and (event.country == 'United States'))
+            = "#{event.city}, #{event.region} #{event.postal_code} <br>".html_safe if ((!event.region.blank? or !event.postal_code.blank?) and (event.country != 'United States'))
+            = "#{event.country}" if event.country != 'United States'
+      
+            %br
+            %br
+      
+            %span.glyphicon.glyphicon-info-sign
+            %strong Description
+            %br
+            = event.description
+
+
+%p.text-center#no_guest_found 
+  %em No events found

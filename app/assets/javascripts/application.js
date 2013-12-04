@@ -12,5 +12,37 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui-1.10.3.custom.min
+//= require jquery.timepicker.min
 //= require turbolinks
 //= require_tree .
+
+$("document").ready(function(){
+	//calendar feature on new events
+	$(document).ready(function(){	
+		$('.datepicker').datepicker({
+			dateFormat: "M d, yy"
+			});
+	});
+  
+	$('#spinner').timepicker({ 'scrollDefaultNow': true });
+	
+	$("#countrySelect").change(function() {
+		if($("#countrySelect").val() == "United States") {
+			$(".international").hide();
+			$(".domestic").show();
+		} else {
+			$(".international").show();
+			$(".domestic").hide();
+		}
+	});
+	
+	if($("#countrySelect").val() == "United States") {
+		$(".international").hide();
+		$(".domestic").show();
+	} else {
+		$(".international").show();
+		$(".domestic").hide();
+	}
+
+});

@@ -1,0 +1,71 @@
+!!!
+%html
+  %head
+    %title Invitedly
+    %link{href: "http://fonts.googleapis.com/css?family=Pacifico", rel: "stylesheet", type: "text/css"}
+    %link{:href=>"//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css", :rel=>"stylesheet"}
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = csrf_meta_tags
+    %body{:style => "padding-top: 20px;" }
+      .container
+        .row
+          .col-sm-offset-1.col-sm-10.col-sm-offset-1
+            .row
+              .col-sm-12
+                %h1#logo RSVPgenius
+              
+                - if user_signed_in?
+                  %ul.list-inline#signout
+                    %li= link_to "Address Book", address_book_path, :class => "signout-link"
+                    %li= link_to "Occasions", occasions_path, :class => "signout-link"
+                    %li= link_to "Settings", edit_user_registration_path, :class => "signout-link"
+                    %li=link_to "Sign out", destroy_user_session_path, method: :delete, :class => "signout-link"
+                -else
+                  %ul.list-inline#signout
+                    %li= link_to "Sign in",new_user_session_path, :class => " signout-link"
+                    %li=link_to "Sign up", new_user_registration_path, :class => "signout-link"
+              
+            .row
+              .col-sm-12 
+                - if user_signed_in? & params[:occasion_id].present?
+                  %nav.navbar.navbar-default{role: "navigation", style: "background-color:#99B3CC"}
+                    / Brand and toggle get grouped for better mobile display
+                    .navbar-header
+                      %button.navbar-toggle{"data-target" => ".navbar-ex1-collapse", "data-toggle" => "collapse", type: "button"}
+                        %span.sr-only Toggle navigation
+                        %span.icon-bar
+                        %span.icon-bar
+                        %span.icon-bar
+                      .navbar-brand{:style => "color:white;"}=@occasion.name
+                    / Collect the nav links, forms, and other content for toggling
+                    .collapse.navbar-collapse.navbar-ex1-collapse
+                      %ul.nav.navbar-nav
+                        %li= link_to "Events", occasion_events_path(@occasion), :style => "color:white;"
+                        /%li= link_to "Invites", occasion_invites_path(@occasion), :style => "color:white;"           
+            .row
+              .col-sm-12
+                - if notice.present?
+                  .alert.alert-success.alert-dismissable
+                    %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
+                    = notice.html_safe
+                - if alert.present?
+                  .alert.alert-danger.alert-dismissable
+                    %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
+                    = alert.html_safe
+                .alert.alert-success.alert-dismissable{id: "alert_success", style: "display:none;position:fixed;width:100%;top:0;left:0;z-index: 5000;"}
+                  %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
+                .alert.alert-danger.alert-dismissable{id: "alert_danger", style: "display:none;position:fixed;width:100%;top:0;left:0;z-index: 5000;"}
+                  %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
+
+            = yield
+      
+            %footer#footer
+              %ul.list-inline#legal
+                %li= link_to "About", about_path
+                %li= link_to "Privacy", privacy_path
+                %li= link_to "Terms", terms_path
+                %li RSVPgenius © 2013
+
+      = javascript_include_tag "application", "data-turbolinks-track" => true
+      %script{:src=>"//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"}            
+    

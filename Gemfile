@@ -43,3 +43,11 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+gem 'devise', '~> 3.2.2'
+gem 'haml', '~> 4.0.4'
+gem 'friendly_id', '~> 5.0.1'
+gem 'omniauth', '~> 1.1.4'
+gem 'omniauth-facebook', '~> 1.5.1'
+gem 'omniauth-google-oauth2', '~> 0.2.1'
+gem 'koala', '~> 1.6.0'

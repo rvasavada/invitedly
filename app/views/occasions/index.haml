@@ -1,0 +1,24 @@
+%h1
+  = link_to 'New occasion', new_occasion_path, :class=>"btn btn-primary pull-right"
+  Occasions
+
+%table.table.table-condensed.table-hover
+  %tbody
+    - if @occasions.present?
+      - @occasions.each do |occasion|
+        %tr
+          %td
+            %strong= occasion.name
+            %span
+              .text-muted
+                = occasion.description
+                = link_to 'edit', edit_occasion_path(occasion)
+          %td
+            = link_to "Events", occasion_events_path(occasion), :class => "btn btn-default"
+            /= link_to "Invites", occasion_invites_path(occasion), :class => "btn btn-default"
+    -else
+      %td{:colspan => 2}
+    
+        %p.text-center
+          There are no occasions!
+          %span= link_to '<strong>Add occasion.</strong>'.html_safe, new_occasion_path

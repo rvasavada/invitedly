@@ -1,4 +1,28 @@
 Invitedly::Application.routes.draw do
+  get 'about' => 'static#about'
+  get 'terms' => 'static#terms'
+  get 'privacy' => 'static#privacy'
+  get 'address_book' => 'contacts#index'
+  
+  resources :events
+
+  resources :contacts, :except => [:index,:show] do
+   get :get_facebook_contacts, :on => :collection
+  end
+  resources :occasions do
+    resources :events
+  end
+  
+  devise_for :users, :controllers => { :registrations => "users/registrations",
+    :omniauth_callbacks => "users/omniauth_callbacks",
+    :sessions => "users/sessions"
+     }
+     
+  root 'static#home'
+
+
+  
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

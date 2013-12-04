@@ -1,0 +1,99 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @contact.user_id %>
+</p>
+
+<p>
+  <strong>Contact:</strong>
+  <%= @contact.contact_id %>
+</p>
+
+<p>
+  <strong>Address 1:</strong>
+  <%= @contact.address_1 %>
+</p>
+
+<p>
+  <strong>Address 2:</strong>
+  <%= @contact.address_2 %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @contact.city %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @contact.state %>
+</p>
+
+<p>
+  <strong>Zip:</strong>
+  <%= @contact.zip %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @contact.country %>
+</p>
+
+<p>
+  <strong>Region:</strong>
+  <%= @contact.region %>
+</p>
+
+<p>
+  <strong>Postal code:</strong>
+  <%= @contact.postal_code %>
+</p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @contact.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @contact.last_name %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @contact.title %>
+</p>
+
+<p>
+  <strong>Spouse title:</strong>
+  <%= @contact.spouse_title %>
+</p>
+
+<p>
+  <strong>Spouse first name:</strong>
+  <%= @contact.spouse_first_name %>
+</p>
+
+<p>
+  <strong>Spouse last name:</strong>
+  <%= @contact.spouse_last_name %>
+</p>
+
+<p>
+  <strong>Cell phone:</strong>
+  <%= @contact.cell_phone %>
+</p>
+
+<p>
+  <strong>Home phone:</strong>
+  <%= @contact.home_phone %>
+</p>
+
+<p>
+  <strong>Max guests:</strong>
+  <%= @contact.max_guests %>
+</p>
+
+<%= link_to 'Edit', edit_contact_path(@contact) %> |
+<%= link_to 'Back', contacts_path %>

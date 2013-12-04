@@ -1,0 +1,57 @@
+%h1.form-h1 
+  %strong Account Settings
+- if resource.errors.present?
+  .alert.alert-danger.alert-dismissable
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
+    %strong Oops!
+    Please see the errors below.
+
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+    
+  %h2.form-h2 Change Email
+  
+  %fieldset.form-section
+    .row
+      .col-xs-4
+        %div{class: "form-group #{resource.errors.include?(:email) ? 'has-error' : ''}"}
+          = f.label :email, "Email", :class => "control-label"
+          = f.email_field :email, :autofocus => true, :style => "width:100%"
+          %span.help-block= resource.errors.get(:email).join('; ')
+
+        - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+          %div
+            Currently waiting confirmation for: #{resource.unconfirmed_email}
+
+  %h2.form-h2 Change Password
+  
+  %fieldset.form-section
+    .row
+      .col-xs-4
+        %div{class: "form-group #{resource.errors.include?(:password) ? 'has-error' : ''}"}
+          = f.label :password, "Password", :class => "control-label"
+          = f.password_field :password, :style => "width:100%", :autocomplete => :off
+          %span.help-block= resource.errors.get(:password).join('; ')
+    .row
+      .col-xs-4
+        %div{class: "form-group #{resource.errors.include?(:password_confirmation) ? 'has-error' : ''}"}
+          = f.label :password_confirmation, "Password confirmation", :class => "control-label"
+          = f.password_field :password_confirmation, :style => "width:100%", :autocomplete => :off
+          %span.help-block= resource.errors.get(:password_confirmation).join('; ')
+    .row
+      .col-xs-4
+        %div{class: "form-group #{resource.errors.include?(:current_password) ? 'has-error' : ''}"}
+          = f.label :current_password, "Current password", :class => "control-label"
+          = f.password_field :current_password, :style => "width:100%", :autocomplete => :off
+          %span.help-block= resource.errors.get(:current_password).join('; ')
+  
+  %h2.form-h2 Cancel Account
+
+  %fieldset.form-section
+    %p 
+      To cancel your account, please email us at 
+      %strong=link_to "rhut@rsvpgenius.com","mailto:rhut@rsvpgenius.com"
+  .row
+    .col-xs-6
+      = f.submit "Update", :class => "btn btn-primary"
+      = link_to "Cancel", :back, :class => "btn btn-default"
+      

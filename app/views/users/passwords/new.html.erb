@@ -1,0 +1,32 @@
+<h1 class="text-center" style="font-family: 'Pacifico', cursive;color:#A7CC95;">RSVPgenius</h1>
+
+			<br>
+			<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+			<div class="row">
+			 	<div class="col-md-offset-4 col-md-4">
+					<div class="panel panel-default">
+					  <div class="panel-heading">
+					    <h2 class="panel-title">Reset your password</h2>
+					  </div>
+				<div class="panel-body">
+					
+		
+					<div class="form-group <%= resource.errors.include?(:email) ? 'has-error' : '' %>">					
+						<%= f.text_field :email, :autofocus => true, :class => "form-control", :placeholder => "Email", :autocomplete => :off %>
+						<span class="help-block"><%= resource.errors.get(:email).join('; ') %></span>
+					</div>
+					
+					<%= f.submit "Send reset password email", :class=> "btn btn-primary btn-block" %>
+
+			  </div>
+
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+ 	<div class="col-md-offset-4 col-md-4">
+		<%= link_to "Remember your password? <strong> Sign in.</strong>".html_safe, new_session_path(resource_name), :class => "btn btn-default btn-block" %>
+	</div>
+</div>
