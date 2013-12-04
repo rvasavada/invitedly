@@ -29,7 +29,7 @@ class OccasionsController < ApplicationController
 
     respond_to do |format|
       if @occasion.save
-        format.html { redirect_to @occasion, notice: 'Occasion was successfully created.' }
+        format.html { redirect_to occasion_events_path(@occasion), notice: 'Occasion was successfully created.' }
         format.json { render action: 'show', status: :created, location: @occasion }
       else
         format.html { render action: 'new' }
@@ -43,7 +43,7 @@ class OccasionsController < ApplicationController
   def update
     respond_to do |format|
       if @occasion.update(occasion_params)
-        format.html { redirect_to @occasion, notice: 'Occasion was successfully updated.' }
+        format.html { redirect_to occasion_events_path(@occasion), notice: 'Occasion was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

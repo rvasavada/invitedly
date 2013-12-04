@@ -15,12 +15,10 @@ $(document).ready ->
         count++
       
   if count > 0
-    $("#no_guest_found").hide()
-
-  $("#guest_count").html(count)
+    $("#no_row_found").hide()
       
   $("#response_tag").change ->
-    $("#no_guest_found").hide()
+    $("#no_row_found").hide()
     count = 0
     $(".panel").each (index) ->
       if $("#response_tag").val() is ""
@@ -33,17 +31,19 @@ $(document).ready ->
           count++
           $(this).show()
     if count == 0
-      $("#no_guest_found").show()
+      $("#no_row_found").show()
   
-    $("#guest_count").html(count)
+    $("#row_count").html(count)
   
 
   $(".edit_invite").on("ajax:success", (e, data, status, xhr) ->
+    alert($("#row_count"))
     $("#alert_success").text(data.response).fadeIn(300).delay(2000).fadeOut(300 )
   ).bind "ajax:error", (e, xhr, status, error) ->
     $("#alert_danger").text("Sorry, there was an error. Please try again.").fadeIn(300).delay(2000).fadeOut(300 )
 
   $("a[data-remote]").on("ajax:success", (e, data, status, xhr) ->
+    $("#row_count").text($("#row_count").html()-1)
     $("#row"+data.id).fadeOut(300)
     $("#alert_success").text(data.response).fadeIn(300).delay(2000).fadeOut(300 )
     

@@ -2,7 +2,7 @@
   = link_to 'Create event', new_occasion_event_path(@occasion), :class => "btn btn-primary pull-right"
   Events
   %small
-    %strong#guest_count
+    %strong#row_count=@events.count
     events found
 .panel-group#accordion
   - @events.each do |event|
@@ -19,7 +19,7 @@
               = link_to "<span class='glyphicon glyphicon-pencil'></span> Edit details".html_safe, edit_occasion_event_path(@occasion, event), :class => "btn btn-default btn-sm"              
               /= link_to "Invite guests", new_occasion_invite_path(@occasion, :event => event), :class => "btn btn-primary btn-sm"
             .btn-group
-              = link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, occasion_event_path(@occasion,event), method: :delete,  remote: true,data: {confirm: 'Are you sure you want to delete this event?'}, :class => "btn btn-danger btn-sm"
+              = link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, occasion_event_path(@occasion, event), method: :delete,  remote: true, 'data-type' => 'json', data: {confirm: 'Are you sure you want to delete this event?'}, :class => "btn btn-danger btn-sm"
               
           #event_details
             %span.glyphicon.glyphicon-calendar
@@ -50,5 +50,5 @@
             = event.description
 
 
-%p.text-center#no_guest_found 
+%p.text-center#no_row_found 
   %em No events found

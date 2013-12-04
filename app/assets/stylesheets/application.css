@@ -40,7 +40,7 @@ h2 { color:#333; font-family:"proxima-nova"; font-weight:400; font-style:normal;
 h3 { color:#333; font-size:14px; font-weight:bold; line-height:12px; margin:0px; margin-bottom:4px; padding:0px; }
 h4 { font-size:12px; margin:0px; padding:0px; }
 ul { margin:5px 0px 2px 0px; padding-left:20px; }
-li { margin-bottom:3px; }
+/*li { margin-bottom:3px; }*/
 .clear { clear:both; float:none; height:0; }
 
 /* Layout */

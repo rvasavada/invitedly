@@ -28,7 +28,7 @@
             .row
               .col-sm-12 
                 - if user_signed_in? & params[:occasion_id].present?
-                  %nav.navbar.navbar-default{role: "navigation", style: "background-color:#99B3CC"}
+                  %nav.navbar.navbar-default{role: "navigation"}
                     / Brand and toggle get grouped for better mobile display
                     .navbar-header
                       %button.navbar-toggle{"data-target" => ".navbar-ex1-collapse", "data-toggle" => "collapse", type: "button"}
@@ -36,11 +36,11 @@
                         %span.icon-bar
                         %span.icon-bar
                         %span.icon-bar
-                      .navbar-brand{:style => "color:white;"}=@occasion.name
+                      = link_to @occasion.name, @occasion, :class => "navbar-brand"
                     / Collect the nav links, forms, and other content for toggling
                     .collapse.navbar-collapse.navbar-ex1-collapse
                       %ul.nav.navbar-nav
-                        %li= link_to "Events", occasion_events_path(@occasion), :style => "color:white;"
+                        %li.active= link_to "Events", occasion_events_path(@occasion)
                         /%li= link_to "Invites", occasion_invites_path(@occasion), :style => "color:white;"           
             .row
               .col-sm-12

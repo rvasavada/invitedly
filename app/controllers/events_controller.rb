@@ -90,7 +90,7 @@ class EventsController < ApplicationController
     @event.destroy
     respond_to do |format|
       format.html { redirect_to events_url }
-      format.json { head :no_content }
+      format.json { render :json => {id: @event.id, response: "Event was deleted."} }
     end
   end
 

@@ -16,20 +16,20 @@
 %h1.form-h1
   Address Book
   %small
-    %strong#guest_count
+    %strong#row_count=@contacts.count
     contacts found
 
-.well.well-sm
-  .row
-    .col-xs-4
-      %strong.text-muted Filters:
-      %br
-      =label_tag :facebook, "Only Facebook", {:class=> "control-label"}
-      %br
-      =select_tag :response, options_for_select(%w[Yes No]), :id => "facebook_tag", :prompt => "Please select"
+-#.well.well-sm
+  -#.row
+    -#.col-xs-4
+      -#%strong.text-muted Filters:
+      -#%br
+      -#=label_tag :facebook, "Only Facebook", {:class=> "control-label"}
+      -#%br
+      -#=select_tag :response, options_for_select(%w[Yes No]), :id => "facebook_tag", :prompt => "Please select"
 
 .panel-group#accordion
-  - @contacts.order(:last_name).each do |contact|
+  - @contacts.paginate(:page => params[:page]).each do |contact|
     .panel.panel-default{id: "row#{contact.id}"}
       .panel-body
         %span.pull-right
@@ -47,5 +47,7 @@
         /= link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, guest_path(guest), data: {confirm: 'Are you sure you want to delete this guest?'}, remote: true, method: :delete, :class => "btn btn-danger btn-sm"
         %br
         = "<i>#{contact.notes}</i>".html_safe if contact.notes.present?
-%p.text-center#no_guest_found
-  %em No guests found
+%p.text-center#no_row_found
+  %em No contacts found
+
+=will_paginate(@contacts.paginate(:page => params[:page]), :renderer => 'BootstrapPaginationHelper::LinkRenderer', :class=>"text-center")
