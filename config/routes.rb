@@ -14,6 +14,7 @@ Invitedly::Application.routes.draw do
   resources :occasions do
     resources :events
     resources :invitations
+    resources :manage_invitations    
   end
   
   devise_for :users, :controllers => { :registrations => "users/registrations",

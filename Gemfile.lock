@@ -146,6 +146,8 @@ GEM
       json (>= 1.8.0)
     warden (1.2.3)
       rack (>= 1.0)
+    wicked (1.0.2)
+      rails (>= 3.0.7)
     will_paginate (3.0.5)
 
 PLATFORMS
@@ -168,4 +170,5 @@ DEPENDENCIES
   sqlite3
   turbolinks
   uglifier (>= 1.3.0)
+  wicked (~> 1.0.2)
   will_paginate (~> 3.0.5)
