@@ -27,27 +27,29 @@
       -#=label_tag :facebook, "Only Facebook", {:class=> "control-label"}
       -#%br
       -#=select_tag :response, options_for_select(%w[Yes No]), :id => "facebook_tag", :prompt => "Please select"
-.content-full
-  .panel-group#accordion
-    - @contacts.paginate(:page => params[:page]).each do |contact|
-      .panel.panel-default{id: "row#{contact.id}"}
-        .panel-body
-          %span.pull-right
-            = "#{contact.address_1} #{contact.address_2 if contact.address_2.present? } <br>".html_safe if contact.address_1.present?
-            = "#{contact.city}, #{contact.state} #{contact.zip} <br>".html_safe if ((contact.city.present? or contact.zip.present?) and (contact.country == 'United States'))
-            = "#{contact.city}, #{contact.region} #{contact.postal_code} <br>".html_safe if ((!contact.region.blank? or !contact.postal_code.blank?) and (contact.country != 'United States'))
-            = "#{contact.country} <br>".html_safe if contact.country != 'United States'
-            = "<abbr title='Email'>E:</abbr> <a href='mailto:#{contact.email}'>#{contact.email}</a> <br>".html_safe  if !contact.email.blank?
-            = "<abbr title='Home'>H:</abbr> #{contact.home_phone}<br>".html_safe if !contact.home_phone.blank?
-            = "<abbr title='Mobile'>M:</abbr> #{contact.cell_phone}".html_safe if !contact.cell_phone.blank?
-          %strong=contact.invite_name
-          %span.text-muted
-            ="(#{pluralize(contact.max_guests,'person')})"
-          %small= link_to "edit", edit_contact_path(contact)
-          /= link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, guest_path(guest), data: {confirm: 'Are you sure you want to delete this guest?'}, remote: true, method: :delete, :class => "btn btn-danger btn-sm"
-          %br
-          = "<i>#{contact.notes}</i>".html_safe if contact.notes.present?
-  %p.text-center#no_row_found
-    %em No contacts found
+/.content-full
+.panel-group#accordion
+  - @contacts.paginate(:page => params[:page]).each do |contact|
+    .panel.panel-default{id: "row#{contact.id}"}
+      .panel-body
+        %span.pull-right
+          %small= link_to "edit", edit_contact_path(contact), :class => "pull-right"
+          = "#{contact.address_1} #{contact.address_2 if contact.address_2.present? } <br>".html_safe if contact.address_1.present?
+          = "#{contact.city}, #{contact.state} #{contact.zip} <br>".html_safe if ((contact.city.present? or contact.zip.present?) and (contact.country == 'United States'))
+          = "#{contact.city}, #{contact.region} #{contact.postal_code} <br>".html_safe if ((!contact.region.blank? or !contact.postal_code.blank?) and (contact.country != 'United States'))
+          = "#{contact.country} <br>".html_safe if contact.country != 'United States'
+          = "<abbr title='Email'>E:</abbr> <a href='mailto:#{contact.email}'>#{contact.email}</a> <br>".html_safe  if !contact.email.blank?
+          = "<abbr title='Home'>H:</abbr> #{contact.home_phone}<br>".html_safe if !contact.home_phone.blank?
+          = "<abbr title='Mobile'>M:</abbr> #{contact.cell_phone}".html_safe if !contact.cell_phone.blank?
+        %strong=contact.invite_name
+        %span.text-muted
+          ="(#{pluralize(contact.max_guests,'person')})"
+        - if contact.facebook_uid.present?
+          %span.label.label-primary Facebook
+        /= link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, guest_path(guest), data: {confirm: 'Are you sure you want to delete this guest?'}, remote: true, method: :delete, :class => "btn btn-danger btn-sm"
+        %br
+        = "<i>#{contact.notes}</i>".html_safe if contact.notes.present?
+%p.text-center#no_row_found
+  %em No contacts found
 
 =will_paginate(@contacts.paginate(:page => params[:page]), :renderer => 'BootstrapPaginationHelper::LinkRenderer', :class=>"text-center")

@@ -4,8 +4,10 @@ class Event < ActiveRecord::Base
   
   belongs_to :occasions
   has_many :invitations
+  has_many :contacts, :through => :invitations
   default_scope { order('start_date ASC, start_time ASC') } 
   validates_presence_of :name,:location,:start_time,:start_date,:description
+  accepts_nested_attributes_for :invitations, :reject_if => :all_blank, :allow_destroy => true
 
   def address
 		if country == "United States"

@@ -87,7 +87,6 @@ ActiveRecord::Schema.define(version: 20131204103807) do
     t.integer  "num_guests"
     t.string   "message"
     t.string   "response"
-    t.boolean  "is_visible"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

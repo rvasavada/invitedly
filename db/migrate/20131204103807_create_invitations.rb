@@ -6,8 +6,6 @@ class CreateInvitations < ActiveRecord::Migration
       t.integer :num_guests
       t.string :message
       t.string :response
-      t.boolean :is_visible
-
       t.timestamps
     end
   end

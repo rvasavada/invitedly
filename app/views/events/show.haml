@@ -1,6 +1,5 @@
 .btn-group.pull-right
-  = link_to 'Add contact', new_contact_path, :class => "btn btn-default"
-  = link_to 'Invite guests', new_occasion_invitation_path(@occasion, :event => @event), :class => "btn btn-primary"
+  = link_to "Invite more guests", occasion_event_invite_guests_path(@occasion,@event), :class => "btn btn-primary", data: {remote: true}
 
 %h1.form-h1
   =@event.name
@@ -14,19 +13,20 @@
       =label_tag :response, "Response", {:class=> "control-label"}
       %br
       =select_tag :response, options_from_collection_for_select(@response, :name, :name, :selected => params[:response]), :id => "response_tag", :prompt => "Please select"
-
 .panel-group#accordion
   - @invites.each do |invite|
-    - guest = Guest.find(invite.guest_id)
+    - guest = Contact.find(invite.contact_id)
     .panel.panel-default{id: "row#{invite.id}", data: {response: invite.response}}
       .panel-body{:style => "font-size: 14px;"}      
         %strong=guest.invite_name
-        %span.text-muted
-          ="(#{pluralize(invite.num_guests,'person')})"
         
         %span.pull-right
-          =link_to invite.response, "#invite_#{invite.id}", data: {toggle: "collapse", parent: "#accordion"}          
+          =link_to invite.response, "#invite_#{invite.id}", data: {toggle: "collapse", parent: "#accordion"}
+          - if invite.response == "Attending"
+            %span.text-muted
+              ="(#{pluralize(invite.num_guests,'person')})"          
       .panel-collapse.collapse{id: "invite_#{invite.id}"}        
         = render "invite_fields", :guest => guest, :invite => invite
 %p.text-center#no_guest_found{:style => "font-size: 14px;"} 
   %em No guests found
+= render "layouts/modal"

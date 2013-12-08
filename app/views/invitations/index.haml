@@ -1,5 +1,5 @@
 .btn-group.pull-right
-  = link_to 'Invite guests', occasion_manage_invitations_path(@occasion), :class => "btn btn-primary"
+  = link_to 'Invite guests', occasion_manage_invitations_path(@occasion, :event => @event), :class => "btn btn-primary"
 
 %h1.form-h1
   Invites

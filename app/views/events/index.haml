@@ -11,7 +11,6 @@
         .btn-toolbar.pull-right
           .btn-group
             = link_to "<span class='glyphicon glyphicon-pencil'></span> Edit details".html_safe, edit_occasion_event_path(@occasion, event), :class => "btn btn-default btn-sm"              
-            = link_to "Invite guests", new_occasion_invitation_path(@occasion, :event => event), :class => "btn btn-primary btn-sm"
           .btn-group
             = link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, occasion_event_path(@occasion, event), method: :delete,  remote: true, 'data-type' => 'json', data: {confirm: 'Are you sure you want to delete this event?'}, :class => "btn btn-danger btn-sm"
       
@@ -19,7 +18,7 @@
           %strong= event.name
           %small=link_to "(see event details)", "#event_#{event.id}", data: {toggle: "collapse", parent: "#accordion"}
         %span
-          - invited = event.invitations.where(:is_visible => true)
+          - invited = event.invitations
           - attending = invited.where(:response => "Attending")
           - might_attend = invited.where(:response => "Might Attend")
           - not_attend = invited.where(:response => "Not Attending")
@@ -62,3 +61,4 @@
 
 %p.text-center#no_row_found 
   %em No events found
+= render "layouts/modal"

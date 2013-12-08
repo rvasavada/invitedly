@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require jquery-ui-1.10.3.custom.min
 //= require jquery.timepicker.min
-//= require turbolinks
 //= require_tree .
 
 $("document").ready(function(){

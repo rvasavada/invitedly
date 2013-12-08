@@ -1,1 +1,11 @@
-test
+%h1.form-h1
+  Manage Invitations
+  %small Select guests
+
+= form_for [@occasion,@event], :url => wizard_path, :html => {:role =>"form"} do |f|
+  %div{:style => 'height:300px;overflow: auto;'}
+    %table.table.table-striped
+      %tbody
+        = f.fields_for :invitations do |invitation|
+          = render "guest_fields", :f => invitation
+  %br=f.submit "Save", :class => "btn btn-primary"

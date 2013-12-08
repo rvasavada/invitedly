@@ -6,13 +6,16 @@ Invitedly::Application.routes.draw do
   get 'privacy' => 'static#privacy'
   get 'address_book' => 'contacts#index'
   
-  resources :events
+
 
   resources :contacts, :except => [:index,:show] do
    get :get_facebook_contacts, :on => :collection
   end
   resources :occasions do
-    resources :events
+    resources :events do
+      get :invite_guests
+      put :update_invites, :on => :collection
+    end
     resources :invitations
     resources :manage_invitations    
   end

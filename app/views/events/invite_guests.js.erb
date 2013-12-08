@@ -1,0 +1,10 @@
+$('.clickable tbody').click(function() {
+  alert('35');
+   var c = $(this).find(':checkbox').filter(':first');
+   c.attr('checked', !c.attr('checked'));
+   $(this).toggleClass('success');
+});
+$modal = $('.modal'),
+$modalContent = $('.modal .modal-content'),
+$modalContent.html("<%= escape_javascript(render "invite_guests") %>");
+$modal.modal();

@@ -30,7 +30,7 @@ font-weight:700;
 font-family:"proxima-nova",sans-serif;
 }
 
-body { background-color:#ECE8DE; color:#000000; font-family:"proxima-nova"; font-weight:400; font-style:normal; font-size:14px; line-height:18px; margin:0px; padding:0px; background-image:url(bg.png); background-repeat:repeat-x;}
+body { background-color:#fff; color:#000000; font-family:"proxima-nova"; font-weight:400; font-style:normal; font-size:14px; line-height:18px; margin:0px; padding:0px; background-image:url(bg.png); background-repeat:repeat-x;}
 
 form { margin:0px; padding:0px; }
 p { margin-bottom:10px; }
@@ -57,7 +57,7 @@ ul { margin:5px 0px 2px 0px; padding-left:20px; }
 .signout-link { color:#99B3CC; cursor:pointer; display:block; float:left; font-size:15px; line-height:27px; padding-right:5px; }
 .signout-link:hover { text-decoration:none; color:#F2BF24; }
 #content { width:940px; }
-.content-full { background-color:#fff; border-radius:6px; -moz-border-radius:6px; padding:40px 70px 40px 70px; }
+.content-full { background-color:#ECE8DE; border-radius:6px; -moz-border-radius:6px; padding:30px 40px 30px 40px; }
 .button { display:block; float:left; color:#FEFEFE; cursor:pointer; position:relative; padding-left:30px; padding-right:30px; height:49px; font-weight:bold; line-height:49px; font-size:16px; border-radius:6px; -moz-border-radius:6px; text-align:center; }
 .button-small { line-height:36px; height:36px; font-size:15px; padding-left:20px; padding-right:20px; }
 .button:visited { color:#FFF; }
@@ -110,7 +110,7 @@ ul { margin:5px 0px 2px 0px; padding-left:20px; }
 /* New Event */
 .content-full-newevent { font-size:15px; background-image:url(icon_reminder.png); background-repeat:no-repeat; background-position:27px 37px; padding-left:80px; padding-right:80px; width:780px; }
 .content-full-newmessage { font-size:15px; background-image:url(icon_message.png); background-repeat:no-repeat; background-position:28px 42px; padding-left:80px; padding-right:80px; width:780px; }
-.form-h1 { margin-bottom:38px; }
+.form-h1 { margin-bottom:24px; }
 .form-h2 { border-bottom:1px dashed #ded9c8; padding-bottom:15px; margin-bottom:20px; }
 .form-required { color:red; font-weight:normal; font-size:19px; }
 .form-helptext { color:#888671; font-weight:normal; font-size:14px; padding-left:5px;}

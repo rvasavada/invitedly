@@ -18,7 +18,7 @@ class EventsController < ApplicationController
     @event = Event.friendly.find(params[:id])
     
     
-    @invites = @event.invitations.where(:is_visible => 't')
+    @invites = @event.invitations
     @response = ResponseType.all
     
     @title = Title.all.order("name ASC")
@@ -103,6 +103,28 @@ class EventsController < ApplicationController
       format.html { redirect_to events_url }
       format.json { render :json => {id: @event.id, response: "Event was deleted."} }
     end
+  end
+  
+  def invite_guests
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    @event = Event.friendly.find(params[:event_id])
+    @contacts = current_user.contacts
+    @uninvited = @contacts - @event.contacts 
+    respond_to do |format|
+      format.html
+      format.js { render :layout => false }
+    end
+  end
+  
+  def update_invites
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    @event = Event.friendly.find(params[:event_id])
+    invitations = []
+    params[:guest_ids].each do |guest|
+      invitations << Invitation.new(event_id: @event.id, contact_id: guest, response: "Not Responded")
+    end
+    Invitation.import invitations
+    redirect_to occasion_event_path(@occasion,@event), notice: 'Invitations were successfully created.'
   end
 
   private

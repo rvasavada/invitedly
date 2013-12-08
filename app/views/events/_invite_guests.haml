@@ -1,0 +1,21 @@
+= form_tag update_invites_occasion_events_path(@occasion,:event_id => @event), :method => :put, :html => {:role =>"form"} do |f|
+
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
+    .modal-title
+      %h3.text-muted=@event.name
+      %h2 Invite guests
+  .modal-body
+    %p Click on the guests below that you would like to invite.
+    %div{:style => 'height:300px;overflow: auto;'}
+      .btn-group-vertical.btn-block{data: {toggle: "buttons"}}
+        - @uninvited.each do |guest|
+      
+          %label.btn.btn-default.btn-block
+            = check_box_tag "guest_ids[]", guest.id
+            =guest.invite_name
+            %small.text-muted="#{pluralize(guest.max_guests,'person')} allowed"
+  .modal-footer
+    %button.btn.btn-default{"data-dismiss" => "modal", type: "button"} Close
+    =submit_tag "Save", :class => "btn btn-primary"
+    
