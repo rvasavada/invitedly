@@ -121,7 +121,7 @@ class EventsController < ApplicationController
     @event = Event.friendly.find(params[:event_id])
     invitations = []
     params[:guest_ids].each do |guest|
-      invitations << Invitation.new(event_id: @event.id, contact_id: guest, response: "Not Responded")
+      invitations << Invitation.new(event_id: @event.id, contact_id: guest, num_guests: 0, response: "Not Responded")
     end
     Invitation.import invitations
     redirect_to occasion_event_path(@occasion,@event), notice: 'Invitations were successfully created.'

@@ -35,7 +35,6 @@ $(document).ready ->
   
     $("#row_count").html(count)
   
-  ###
   $(".edit_invite").on("ajax:success", (e, data, status, xhr) ->
     alert($("#row_count"))
     $("#alert_success").text(data.response).fadeIn(300).delay(2000).fadeOut(300 )
@@ -43,10 +42,10 @@ $(document).ready ->
     $("#alert_danger").text("Sorry, there was an error. Please try again.").fadeIn(300).delay(2000).fadeOut(300 )
 
   $("a[data-remote]").on("ajax:success", (e, data, status, xhr) ->
+    console.log(e)
     $("#row_count").text($("#row_count").html()-1)
     $("#row"+data.id).fadeOut(300)
     $("#alert_success").text(data.response).fadeIn(300).delay(2000).fadeOut(300 )
     
   ).bind "ajax:error", (e, xhr, status, error) ->
     $("#alert_danger").text("Sorry, there was an error. Please try again.").fadeIn(300).delay(2000).fadeOut(300 )
-  ###

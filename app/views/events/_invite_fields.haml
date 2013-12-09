@@ -1,6 +1,6 @@
 .panel-footer 
-  = link_to "<span class='glyphicon glyphicon-trash'></span> Rescind Invite".html_safe, occasion_invitation_path(@occasion,invite), data: {confirm: 'Are you sure you want to rescind the invite?'}, remote: true, :method => :delete, :class => "btn btn-danger btn-sm pull-right"
-
+  = link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, occasion_invitation_path(@occasion,invite), data: {confirm: 'Are you sure you want to rescind the invite?'}, remote: true, :method => :delete, :class => "btn btn-danger btn-sm pull-right"
+  
   = form_for [@occasion,invite], remote: true, :html => {:role =>"form"} do |f|
     = f.hidden_field :contact_id
     = f.hidden_field :event_id
@@ -12,7 +12,8 @@
       .col-xs-3
         .form-group
           = f.label :num_guests, "Guests attending", :class => "control-label"
-          = f.number_field :num_guests, min:1, max: guest.max_guests, class: "form-control"
+          = f.select :num_guests, options_for_select((1..guest.max_guests), {:selected => guest.max_guests}), {}, class: "form-control"
+          
           .form-helptext Host sets max guests allowed
           
     = f.label :message, "Message from guest", :class => "control-label"

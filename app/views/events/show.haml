@@ -3,16 +3,16 @@
 
 %h1.form-h1
   =@event.name
-  %strong Guestlist
+  %strong Invitations
 %h2.form-h2
-  %strong#guest_count
-  guests found
+  %strong#row_count=@invites.count
+  invitations found
 .well.well-sm
   .row
     .col-xs-4
       =label_tag :response, "Response", {:class=> "control-label"}
       %br
-      =select_tag :response, options_from_collection_for_select(@response, :name, :name, :selected => params[:response]), :id => "response_tag", :prompt => "Please select"
+      =select_tag :response, options_from_collection_for_select(@response, :name, :name, :selected => params[:response]), :id => "response_tag", :prompt => "Please select", class: "form-control"
 .panel-group#accordion
   - @invites.each do |invite|
     - guest = Contact.find(invite.contact_id)
@@ -27,6 +27,6 @@
               ="(#{pluralize(invite.num_guests,'person')})"          
       .panel-collapse.collapse{id: "invite_#{invite.id}"}        
         = render "invite_fields", :guest => guest, :invite => invite
-%p.text-center#no_guest_found{:style => "font-size: 14px;"} 
-  %em No guests found
+%p.text-center#no_row_found{:style => "font-size: 14px;"} 
+  %em No invitations found
 = render "layouts/modal"
