@@ -2,7 +2,7 @@
   = link_to 'Invite guests', occasion_manage_invitations_path(@occasion, :event => @event), :class => "btn btn-primary"
 
 %h1.form-h1
-  Invites
+  Guestlist
   %small
     %strong#row_count=@guests.count
     guests invited
@@ -14,10 +14,10 @@
         %strong=link_to guest.invite_name, "#guest_#{guest.id}", data: {toggle: "collapse", parent: "#accordion"}          
       .panel-collapse.collapse{id: "guest_#{guest.id}"}
         .panel-footer
-          - invites = Invite.where(guest_id: guest.id, is_visible: 't')          
+          - invites = Invitation.where(contact_id: guest.id)          
           - invites.each do |invite|
             %ul.list-group{id: "row#{invite.id}"}
               %li.list-group-item
-                = render "event_invite_fields", :guest => guest, :invite => invite
+                = render "invite_fields", :guest => guest, :invite => invite
 %p.text-center#no_row_found
   %em No guests invited

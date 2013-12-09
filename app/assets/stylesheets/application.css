@@ -30,7 +30,7 @@ font-weight:700;
 font-family:"proxima-nova",sans-serif;
 }
 
-body { background-color:#fff; color:#000000; font-family:"proxima-nova"; font-weight:400; font-style:normal; font-size:14px; line-height:18px; margin:0px; padding:0px; background-image:url(bg.png); background-repeat:repeat-x;}
+body { background-color:#fff; color:#000000; font-family:"proxima-nova"; font-weight:400; font-style:normal; font-size:14px; line-height:18px; margin:0px; padding:0px; }
 
 form { margin:0px; padding:0px; }
 p { margin-bottom:10px; }
@@ -114,7 +114,7 @@ ul { margin:5px 0px 2px 0px; padding-left:20px; }
 .form-h2 { border-bottom:1px dashed #ded9c8; padding-bottom:15px; margin-bottom:20px; }
 .form-required { color:red; font-weight:normal; font-size:19px; }
 .form-helptext { color:#888671; font-weight:normal; font-size:14px; padding-left:5px;}
-.form-section { margin-bottom:50px; }
+.form-section { margin-bottom:25px; }
 .form-lastsection { margin-bottom:0; }
 .form-field { margin-bottom:20px; }
 .form-label { float:left; width:140px; }

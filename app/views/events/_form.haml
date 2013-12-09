@@ -9,23 +9,23 @@
       .col-sm-4
         %div{class: "form-group #{@event.errors.include?(:name) ? 'has-error' : ''}"}
           = f.label :name, "Event Title <font color='red'>*</font>".html_safe, :class=> "control-label"
-          = f.text_field :name, :autofocus => true, :maxlength => 50, :style => "width:100%"
+          = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control"
           %span.help-block= @event.errors.get(:name).join('; ')
     .row
       .col-xs-6.col-sm-3
         %div{class: "form-group #{@event.errors.include?(:start_date) ? 'has-error' : ''}"}
           = f.label :start_date, "Event Date <font color='red'>*</font>".html_safe, :class => "control-label"
-          = f.text_field :start_date, :style => "width:100%", class: "datepicker", :value => @event.start_date.blank? ? nil : @event.start_date.strftime("%b %e, %Y")
+          = f.text_field :start_date, class: "form-control datepicker", :value => @event.start_date.blank? ? nil : @event.start_date.strftime("%b %e, %Y")
           %span.help-block= @event.errors.get(:start_date).join('; ')
       .col-xs-6.col-sm-3
         .form-group
           = f.label :start_time, "Event Time <font color='red'>*</font>".html_safe, :class=>"control-label"
-          = f.text_field :start_time, :id => "spinner", :style => "width:100%"
+          = f.text_field :start_time, :id => "spinner", class: "form-control"
     .row
       .col-sm-6
         .form_group{:class => "#{@event.errors.include?(:description) ? 'has-error' : ''}"}
           = f.label :description, "Description <font color='red'>*</font>".html_safe, :class => "control-label"
-          = f.text_area :description, :rows => 3, :maxlength => 250, :style => "width:100%"
+          = f.text_area :description, :rows => 3, :maxlength => 250, class: "form-control"
           %span.help-block= @event.errors.get(:description).join('; ')
 
   %h2.form-h2 
@@ -36,43 +36,43 @@
       .col-sm-4
         .form-group{class: " #{@event.errors.include?(:location) ? 'has-error' : ''}"}
           = f.label :location, "Location Name <font color='red'>*</font>".html_safe, :class => "control-label"
-          = f.text_field :location, :rows => 3, :maxlength => 100, :style => "width:100%"
+          = f.text_field :location, :rows => 3, :maxlength => 100, class: "form-control"
           %span.help-block= @event.errors.get(:location).join('; ')
     .row
       .col-sm-4
         .form-group
           = f.label :address_1, "Address 1", :class => "control-label"
-          = f.text_field :address_1, :maxlength => 100, :style => "width:100%"
+          = f.text_field :address_1, :maxlength => 100, class: "form-control"
       .col-sm-3
         .form-group
           = f.label :address_2, "Address 2", :class => "control-label"
-          = f.text_field :address_2, :maxlength => 100, :style => "width:100%"
+          = f.text_field :address_2, :maxlength => 100, class: "form-control"
     .row
       .col-sm-3
         .form-group
           = f.label :city, "City", :class=> "control-label"
-          = f.text_field :city, :maxlength => 100, :style => "width:100%"
-      .domestic.col-sm-2
+          = f.text_field :city, :maxlength => 100, class: "form-control"
+      .domestic.col-sm-3
         .form-group
           = f.label :state, "State", :class=> "control-label"
-          %br= f.collection_select(:state,	@state, :name, :name, {},:style => "width:100%")
+          = f.collection_select(:state,	@state, :name, :name,{}, class: "form-control")
       .domestic.col-sm-2
         .form-group
           = f.label :zip, "Zip", :class=> "control-label"
-          = f.text_field :zip, :maxlength => 5, :style => "width:100%"
-      .international.col-sm-2
+          = f.text_field :zip, :maxlength => 5, class: "form-control"
+      .international.col-sm-3
         .form-group
           = f.label :region, "Region", :class=> "control-label"
-          = f.text_field :region, :maxlength => 100, :style => "width:100%"
+          = f.text_field :region, :maxlength => 100, class: "form-control"
       .international.col-sm-2
         .form-group
           = f.label :postal_code, "Postal Code", :class=> "control-label"
-          = f.text_field :postal_code, :maxlength => 20, :style => "width:100%"
+          = f.text_field :postal_code, :maxlength => 20, class: "form-control"
     .row  
-      .col-sm-5
+      .col-sm-6
         .form-group
           = f.label :country, "Country", :class => "control-label"
-          %br= f.collection_select(:country,	@country, :name, :name, {:selected => @event.country.blank? ? "United States" : @event.country}, :id => "countrySelect",:style => "width:100%")
+          = f.collection_select(:country,	@country, :name, :name, {:selected => @event.country.blank? ? "United States" : @event.country}, :id => "countrySelect", class: "form-control")
 
   = f.submit "Save", :class => "btn btn-primary"
   = f.submit "Save & Add another event", :class => "btn btn-primary"

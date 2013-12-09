@@ -11,10 +11,8 @@ class InvitationsController < ApplicationController
        INNER JOIN invitations ON contacts.id = invitations.contact_id
        WHERE events.occasion_id = '#{@occasion.id}'
          AND contacts.user_id = #{current_user.id}
-         AND invitations.is_visible = 't'
        ORDER BY lower(last_name) ASC").uniq
-        
-    @response = ResponseType.where(:active => true)
+    @response = ResponseType.all
   end
 
   # GET /invitations/1

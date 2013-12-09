@@ -4,8 +4,7 @@ Invitedly::Application.routes.draw do
   get 'about' => 'static#about'
   get 'terms' => 'static#terms'
   get 'privacy' => 'static#privacy'
-  get 'address_book' => 'contacts#index'
-  
+  get 'address_book' => 'contacts#index'  
 
 
   resources :contacts, :except => [:index,:show] do
@@ -16,6 +15,8 @@ Invitedly::Application.routes.draw do
       get :invite_guests
       put :update_invites, :on => :collection
     end
+    get 'guestlist' => 'invitations#index'
+    
     resources :invitations
     resources :manage_invitations    
   end

@@ -5,94 +5,94 @@
     %span.form-helptext (We need this so we know who is coming)
   %fieldset.form-section
     .row
-      .col-xs-4.col-sm-2.col-lg-1
+      .col-sm-2
         .form-group
           = f.label :title, "Title", :class => "control-label"
-          = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, :style => "width:100%")
-      .col-xs-4.col-sm-3
+          = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, class: "form-control")
+      .col-sm-3
         %div{class: "form-group #{@contact.errors.include?(:first_name) ? 'has-error' : ''}"}
           = f.label :first_name, "First Name <font color='red'>*</font>".html_safe, :class => "control-label"
-          = f.text_field :first_name, :autofocus => true,:maxlength => 50, :style => "width:100%"
+          = f.text_field :first_name, :autofocus => true,:maxlength => 50, class: "form-control"
           %span.help-block= @contact.errors.get(:first_name).join('; ')
-      .col-xs-4.col-sm-3
+      .col-sm-3
         %div{class: "form-group #{@contact.errors.include?(:last_name) ? 'has-error' : ''}"}
           = f.label :last_name, "Last Name <font color='red'>*</font>".html_safe, :class => "control-label"
-          = f.text_field :last_name, :autofocus => true,:maxlength => 50, :style => "width:100%"
+          = f.text_field :last_name, :autofocus => true,:maxlength => 50, class: "form-control"
           %span.help-block= @contact.errors.get(:last_name).join('; ')
     .row
-      .col-xs-4.col-sm-2.col-lg-1
+      .col-sm-2
         .form-group
-          = f.label :spouse_title, "Spouse<br> Title".html_safe, :class => "control-label"
-          = f.collection_select(:spouse_title,	@title, :name, :name, {:include_blank => true}, :style => "width:100%")
-      .col-xs-4.col-sm-3
+          = f.label :spouse_title, "Spouse Title".html_safe, :class => "control-label"
+          = f.collection_select(:spouse_title,	@title, :name, :name, {:include_blank => true}, class: "form-control")
+      .col-sm-3
         .form-group
-          = f.label :spouse_first_name, "Spouse<br> First Name".html_safe, :class => "control-label"
-          = f.text_field :spouse_first_name, :autofocus => true,:maxlength => 50, :style => "width:100%"
-      .col-xs-4.col-sm-3
+          = f.label :spouse_first_name, "Spouse First Name".html_safe, :class => "control-label"
+          = f.text_field :spouse_first_name, :autofocus => true,:maxlength => 50, class: "form-control"
+      .col-sm-3
         .form-group
-          = f.label :spouse_last_name, "Spouse<br> Last Name".html_safe, :class => "control-label"
-          = f.text_field :spouse_last_name, :autofocus => true,:maxlength => 50, :style => "width:100%"
+          = f.label :spouse_last_name, "Spouse Last Name".html_safe, :class => "control-label"
+          = f.text_field :spouse_last_name, :autofocus => true,:maxlength => 50, class: "form-control"
     .row
-      .col-xs-2.col-sm-3
+      .col-sm-2
         .form-group
           = f.label :max_guests, "Maximum allowed guests", :class => "control-label"
-          = f.select :max_guests, options_for_select(%w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20], {:selected => @contact.max_guests}), :style => "width:100%"
+          = f.select :max_guests, options_for_select(%w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20], {:selected => @contact.max_guests}), {}, class: "form-control"
 
   %h2.form-h2 
-    Contact info
+    Contact information
     %span.form-helptext (Optionally, how can we get in touch with the guest)
-  
+
   %fieldset.form-section
     .row
-      .col-sm-4.col-md-3
+      .col-sm-4
         .form-group
           = f.label :email, "Preferred Email", :class => "control-label"
-          = f.email_field :email, :type => "email", :style => "width:100%"
+          = f.email_field :email, :type => "email", class: "form-control"
     .row
-      .col-sm-4.col-md-3
+      .col-sm-4
         .form-group
           = f.label :address_1, "Address 1", :class => "control-label"
-          = f.text_field :address_1, :maxlength => 100, :style => "width:100%"
-      .col-sm-3.col-md-2
+          = f.text_field :address_1, :maxlength => 100, class: "form-control"
+      .col-sm-3
         .form-group
           = f.label :address_2, "Address 2", :class => "control-label"
-          = f.text_field :address_2, :maxlength => 100, :style => "width:100%"
+          = f.text_field :address_2, :maxlength => 100, class: "form-control"
     .row
       .col-sm-3
         .form-group
           = f.label :city, "City", :class=> "control-label"
-          = f.text_field :city, :maxlength => 100, :style => "width:100%"
-      .domestic.col-sm-3.col-md-2
+          = f.text_field :city, :maxlength => 100, class: "form-control"
+      .domestic.col-sm-3
         .form-group
           = f.label :state, "State", :class=> "control-label"
-          = f.collection_select(:state,	@state, :name, :name,{}, :style => "width:100%")
-      .domestic.col-sm-3.col-md-2
+          = f.collection_select(:state,	@state, :name, :name,{}, class: "form-control")
+      .domestic.col-sm-2
         .form-group
           = f.label :zip, "Zip", :class=> "control-label"
-          = f.text_field :zip, :maxlength => 5, :style => "width:100%"
-      .international.col-xs-4.col-sm-2
+          = f.text_field :zip, :maxlength => 5, class: "form-control"
+      .international.col-sm-3
         .form-group
           = f.label :region, "Region", :class=> "control-label"
-          = f.text_field :region, :maxlength => 100, :style => "width:100%"
-      .international.col-xs-4.col-sm-2
+          = f.text_field :region, :maxlength => 100, class: "form-control"
+      .international.col-sm-2
         .form-group
           = f.label :postal_code, "Postal Code", :class=> "control-label"
-          = f.text_field :postal_code, :maxlength => 20, :style => "width:100%"
+          = f.text_field :postal_code, :maxlength => 20, class: "form-control"
     .row  
-      .col-sm-4
+      .col-sm-6
         .form-group
           = f.label :country, "Country", :class => "control-label"
-          = f.collection_select(:country,	@country, :name, :name, {:selected => @contact.country.blank? ? "United States" : @contact.country}, :id => "countrySelect", :style => "width:100%")
+          = f.collection_select(:country,	@country, :name, :name, {:selected => @contact.country.blank? ? "United States" : @contact.country}, :id => "countrySelect", class: "form-control")
     .row
-      .col-xs-6.col-sm-3.col-lg-2
+      .col-xs-6.col-sm-3
         .form-group
           = f.label :home_phone, "Home Phone", :class => "control-label"
-          = f.telephone_field :home_phone, :style => "width:100%", :type => "tel"
-      .col-xs-6.col-sm-3.col-lg-2
+          = f.telephone_field :home_phone, class: "form-control", :type => "tel"
+      .col-xs-6.col-sm-3
         .form-group
           = f.label :cell_phone, "Cell Phone", :class => "control-label"
-          = f.telephone_field :cell_phone, :style => "width:100%", :type => "tel"
-
+          = f.telephone_field :cell_phone, class: "form-control", :type => "tel"
+        
   %h2.form-h2 
     Private notes
     %span.form-helptext (Leave a note about the guest, e.g. travel/food/seating arrangements)
@@ -102,8 +102,8 @@
       .col-md-9
         .form-group
           = f.label :notes, "Notes", :class => "control-label"
-          = f.text_area :notes, :style => "width:100%", :rows => 3
-          %p.help-block Private and   visible only to you.
+          = f.text_area :notes, class: "form-control", :rows => 3
+          %p.help-block Private and visible only to you.
 
   
   = f.submit "Save", :class => "btn btn-primary"

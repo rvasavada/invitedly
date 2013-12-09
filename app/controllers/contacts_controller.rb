@@ -4,15 +4,12 @@ class ContactsController < ApplicationController
   # GET /contacts
   # GET /contacts.json
   def index
-    @contacts = current_user.contacts
-        
-    @response = ResponseType.where(:active => true)
-    
-    @title = Title.all.order("name ASC")
-    @country = Country.all.order("name ASC")
-    @state = State.all.order("name ASC")
-    @event = params[:event]
-    @filter_response = params[:response]
+    if params[:letter].present?
+      @contacts = current_user.contacts.where('lower(last_name) LIKE ?', "#{params[:letter].downcase}%")
+    else
+      @contacts = current_user.contacts.where('lower(last_name) LIKE ?', "a%")
+      params[:letter] = "A"
+    end
   end
 
   # GET /contacts/1
