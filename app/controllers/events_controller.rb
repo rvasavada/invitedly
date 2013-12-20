@@ -19,6 +19,10 @@ class EventsController < ApplicationController
     
     
     @invites = @event.invitations
+    @attending = @invites.where(:response => "Attending")
+    @might_attend = @invites.where(:response => "Might Attend")
+    @not_attend = @invites.where(:response => "Not Attending")
+    @not_responded = @invites.where(:response => "Not Responded")
     @response = ResponseType.all
     
     @title = Title.all.order("name ASC")
