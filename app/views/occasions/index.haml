@@ -4,25 +4,19 @@
   %small
     %strong#row_count=@occasions.count
     occasions found
-    
-%table.table.table-condensed.table-hover
-  %tbody
-    - if @occasions.present?
-      - @occasions.each do |occasion|
-        %tr
-          %td
-            %h2
-              %strong= occasion.name
-            %span
-              .text-muted
-                = occasion.description
-                = link_to 'edit', edit_occasion_path(occasion)
-            .text-right
-              = link_to "Events", occasion_events_path(occasion), :class => "btn btn-default"
-              = link_to "Guestlist", occasion_guestlist_path(occasion), :class => "btn btn-default"
-    -else
-      %td{:colspan => 2}
-    
-        %p.text-center
-          There are no occasions!
-          %span= link_to '<strong>Add occasion.</strong>'.html_safe, new_occasion_path
+
+- @occasions.each do |occasion|
+  .panel.panel-default{ :style => "margin-bottom:5px;"}
+    .panel-heading
+      %h2
+        %strong= occasion.name
+    .panel-body
+      %span
+        .text-muted
+          = occasion.description
+          = link_to 'edit', edit_occasion_path(occasion)
+    .panel-footer
+      .btn-group
+        = link_to "Events", occasion_events_path(occasion), :class => "btn btn-default"
+        = link_to "Guestlist", occasion_guestlist_path(occasion), :class => "btn btn-default"
+      
