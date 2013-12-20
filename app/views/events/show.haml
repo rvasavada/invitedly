@@ -13,8 +13,8 @@
   
     .panel-group#accordion
       .panel.panel-info#details
-        .panel-heading
-          %h2
+        .panel-body
+          %h2.form-h2
             .btn-group.pull-right
               %button.btn.btn-xs.btn-default.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
                 %span.caret
@@ -23,8 +23,7 @@
                 %li= link_to "Edit event", edit_occasion_event_path(@occasion, @event)
                 %li.divider
                 %li= link_to "Delete event", occasion_event_path(@occasion, @event), method: :delete,  remote: true, 'data-type' => 'json', data: {confirm: 'Are you sure you want to delete this event?'}
-            %strong Details
-        .panel-body          
+            Details
           %h3
             -if @attending.present?
               %strong.text-success 
@@ -70,13 +69,11 @@
           %br
           = @event.description
       .panel.panel-info#guests
-        .panel-heading
-          %h2
-            %strong="Guests (#{@invites.sum(:num_guests)})"
-        -if @invites.present?
-          %ul.list-group
-            -if @attending.present?
-              %li.list-group-item
+        .panel-body
+          %h2.form-h2
+            ="Guests (#{@invites.sum(:num_guests)})"
+            -if @invites.present?
+              -if @attending.present?
                 %h3.text-success="Attending (#{@attending.sum(:num_guests)})"
                 - @attending.each do |invite|
                   - guest = Contact.find(invite.contact_id)
@@ -85,20 +82,18 @@
                     %span.text-muted="+#{pluralize(invite.num_guests,'guest')}"
                     %span
                       %em=invite.message
-            -if @might_attend.present?
-              %li.list-group-item
+                %hr
+              -if @might_attend.present?
                 %h3.text-warning="Might Attend (#{@might_attend.sum(:num_guests)})"
                 - @might_attend.each do |invite|
                   - guest = Contact.find(invite.contact_id)
                   %p=guest.invite_name
-            -if @not_attend.present?
-              %li.list-group-item
+              -if @not_attend.present?
                 %h3.text-danger="Not Attending (#{@not_attend.sum(:num_guests)})"
                 - @not_attend.each do |invite|
                   - guest = Contact.find(invite.contact_id)
                   %p=guest.invite_name              
-            -if @not_responded.present?
-              %li.list-group-item
+              -if @not_responded.present?
                 %h3="Not Responded (#{@not_responded.sum(:num_guests)})"
                 - @not_responded.each do |invite|
                   - guest = Contact.find(invite.contact_id)
