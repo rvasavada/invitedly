@@ -36,8 +36,8 @@ form { margin:0px; padding:0px; }
 p { margin-bottom:10px; }
 img { border:0; }
 h1 { color:#333; font-family:"proxima-nova"; font-weight:400; font-style:normal; font-size:26px; margin:0px; padding:0px; }
-h2 { color:#333; font-family:"proxima-nova"; font-weight:400; font-style:normal; font-size:20px; margin:0px; margin-bottom:10px; padding:0px; }
-h3 { color:#333; font-size:14px; font-weight:bold; line-height:12px; margin:0px; margin-bottom:4px; padding:0px; }
+h2 { color:#333; font-family:"proxima-nova"; font-weight:400; font-style:normal; font-size:20px; margin:0px; padding:0px; }
+h3 { color:#333; font-family:"proxima-nova"; font-size:16px; margin:0px; margin-bottom:10px; padding:0px; }
 h4 { font-size:12px; margin:0px; padding:0px; }
 ul { margin:5px 0px 2px 0px; padding-left:20px; }
 /*li { margin-bottom:3px; }*/
