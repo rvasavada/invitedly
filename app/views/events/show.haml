@@ -3,30 +3,93 @@
 
 %h1.form-h1
   =@event.name
-  %strong Invitations
-%h2.form-h2
-  %strong#row_count=@invites.count
-  invitations found
-.well.well-sm
-  .row
-    .col-xs-4
-      =label_tag :response, "Response", {:class=> "control-label"}
-      %br
-      =select_tag :response, options_from_collection_for_select(@response, :name, :name, :selected => params[:response]), :id => "response_tag", :prompt => "Please select", class: "form-control"
-.panel-group#accordion
-  - @invites.each do |invite|
-    - guest = Contact.find(invite.contact_id)
-    .panel.panel-default{id: "row#{invite.id}", data: {response: invite.response}}
-      .panel-body{:style => "font-size: 14px;"}      
-        %strong=guest.invite_name
-        
-        %span.pull-right
-          =link_to invite.response, "#invite_#{invite.id}", data: {toggle: "collapse", parent: "#accordion"}
-          - if invite.response == "Attending"
-            %span.text-muted
-              ="(#{pluralize(invite.num_guests,'person')})"          
-      .panel-collapse.collapse{id: "invite_#{invite.id}"}        
-        = render "invite_fields", :guest => guest, :invite => invite
-%p.text-center#no_row_found{:style => "font-size: 14px;"} 
-  %em No invitations found
+.row
+  .col-sm-3
+    %ul.nav.nav-pills.nav-stacked
+      %li.active=link_to "Details", "#details"
+      %li=link_to "Guests", "#guests"
+      
+  .col-sm-9
+  
+    .panel-group#accordion
+      .panel.panel-default#details
+        .panel-heading
+          %h2.panel-title
+            .btn-group.pull-right
+              %button.btn.btn-xs.btn-default.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
+                %span.caret
+              %ul.dropdown-menu
+                %li= link_to "Manage guest list", occasion_event_invite_guests_path(@occasion,@event), data: {remote: true}
+                %li= link_to "Edit event", edit_occasion_event_path(@occasion, @event)
+                %li.divider
+                %li= link_to "Delete event", occasion_event_path(@occasion, @event), method: :delete,  remote: true, 'data-type' => 'json', data: {confirm: 'Are you sure you want to delete this event?'}
+            %strong Details
+        .panel-body 
+          - invited = @event.invitations
+          - attending = invited.where(:response => "Attending")
+          - might_attend = invited.where(:response => "Might Attend")
+          - not_attend = invited.where(:response => "Not Attending")
+          - not_responded = invited.where(:response => "Not Responded")
+          
+          %h3
+            %strong.text-success 
+              =attending.count
+              attending,
+            %strong.text-warning
+              =might_attend.count
+              might attend,
+            %strong.text-danger
+              =not_attend.count
+              not attending,
+            %strong
+              =not_responded.count
+              not responded
+          
+          %br
+
+          %span.glyphicon.glyphicon-calendar
+          %strong Date and Time
+          %br
+          = @event.start_date.strftime("%A, %B %e, %Y")
+          at
+          = @event.start_time
+          %br
+          %br
+
+          %span.glyphicon.glyphicon-map-marker
+          %strong Location
+          %br
+          = link_to @event.location, "https://maps.google.com/maps?q=#{@event.address}",:target => "_blank"
+          %br
+          = "#{@event.address_1} #{@event.address_2 if @event.address_2.present? } <br>".html_safe if @event.address_1.present?
+          = "#{@event.city}, #{@event.state} #{@event.zip}".html_safe if ((@event.city.present? or @event.zip.present?) and (@event.country == 'United States'))
+          = "#{event.city}, #{event.region} #{event.postal_code} <br>".html_safe if ((!@event.region.blank? or !@event.postal_code.blank?) and (@event.country != 'United States'))
+          = "#{event.country}" if @event.country != 'United States'
+
+          %br
+          %br
+
+          %span.glyphicon.glyphicon-info-sign
+          %strong Description
+          %br
+          = @event.description
+      .panel.panel-default#guests
+        .panel-heading
+          %h2.panel-title
+            %strong 
+              Guests
+              ="(#{@invites.count})"
+        .panel-body
+          %h3
+            %strong.text-success 
+              =attending.count
+              attending
+          %table.table
+            %tbody
+              - attending.each do |invite|
+                - guest = Contact.find(invite.contact_id)
+                %tr
+                  %td 
+                    %strong=guest.invite_name
+
 = render "layouts/modal"

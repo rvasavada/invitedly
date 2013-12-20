@@ -1,16 +1,18 @@
 = form_for @occasion do |f|
   .row
-    .col-sm-4
+    .col-sm-6
       %div{class: "form-group #{@occasion.errors.include?(:name) ? 'has-error' : ''}"}
         = f.label :name, "Name <font color='red'>*</font>".html_safe, :class=> "control-label"
         = f.text_field :name, :autofocus => true, :maxlength => 50, :class => "form-control"
         %span.help-block= @occasion.errors.get(:name).join('; ')
 
   .row
-    .col-sm-4
+    .col-sm-6
       %div{class: "form-group #{@occasion.errors.include?(:slug) ? 'has-error' : ''}"}
         = f.label :slug, "Occasion handle <font color='red'>*</font>".html_safe, :class=> "control-label"
-        = f.text_field :slug, :placeholder => "hetalandrhut", :maxlength => 50, :class => "form-control"
+        .input-group
+          %span.input-group-addon invitedly.com/
+          = f.text_field :slug, :placeholder => "hetalandrhut", :maxlength => 50, :class => "form-control"
         %span.help-block= @occasion.errors.get(:slug).join('; ')
 
   .row

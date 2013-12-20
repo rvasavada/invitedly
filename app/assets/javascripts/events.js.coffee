@@ -41,6 +41,7 @@ $(document).ready ->
   ).bind "ajax:error", (e, xhr, status, error) ->
     $("#alert_danger").text("Sorry, there was an error. Please try again.").fadeIn(300).delay(2000).fadeOut(300 )
 
+###
   $("a[data-remote]").on("ajax:success", (e, data, status, xhr) ->
     console.log(e)
     $("#row_count").text($("#row_count").html()-1)
@@ -49,3 +50,4 @@ $(document).ready ->
     
   ).bind "ajax:error", (e, xhr, status, error) ->
     $("#alert_danger").text("Sorry, there was an error. Please try again.").fadeIn(300).delay(2000).fadeOut(300 )
+###
