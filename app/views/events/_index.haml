@@ -1,0 +1,13 @@
+%h2.form-h2
+  Events
+  %small="#{pluralize(@events.count, 'event')} found"
+
+- if @events.present?
+  - @events.each do |event|
+    %h3
+      = link_to event.name, occasion_event_path(@occasion,event)
+      %span.text-muted= event.description
+-else 
+  %p.text-center
+    %em No events found
+= render "layouts/modal"

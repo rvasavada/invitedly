@@ -1,0 +1,22 @@
+.btn-group.pull-right
+  = link_to 'Create event', new_occasion_event_path(@occasion), :class => "btn btn-primary pull-right"
+
+%h1.form-h1
+  =@occasion.name
+
+.row
+  .col-sm-3
+    %ul.nav.nav-pills.nav-stacked
+      %li.active=link_to "Details", "#details"
+      %li=link_to "Events", "#events"
+      %li=link_to "Guests", "#guests"
+
+  .col-sm-9
+    .panel-group#accordion
+      .panel.panel-info#events
+        .panel-body
+          = render 'events/index'
+      .panel.panel-info#guests
+        .panel-body
+          = render 'invitations/index'
+        

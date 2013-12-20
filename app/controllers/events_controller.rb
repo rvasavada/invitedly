@@ -17,18 +17,11 @@ class EventsController < ApplicationController
     @occasion = Occasion.friendly.find(params[:occasion_id])
     @event = Event.friendly.find(params[:id])
     
-    
     @invites = @event.invitations
     @attending = @invites.where(:response => "Attending")
     @might_attend = @invites.where(:response => "Might Attend")
     @not_attend = @invites.where(:response => "Not Attending")
     @not_responded = @invites.where(:response => "Not Responded")
-    @response = ResponseType.all
-    
-    @title = Title.all.order("name ASC")
-    @country = Country.all.order("name ASC")
-    @state = State.all.order("name ASC")
-    @filter_response = params[:response]
   end
 
   # GET /events/new

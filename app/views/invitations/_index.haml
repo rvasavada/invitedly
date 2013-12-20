@@ -1,11 +1,6 @@
-.btn-group.pull-right
-  = link_to 'Invite guests', occasion_manage_invitations_path(@occasion, :event => @event), :class => "btn btn-primary"
-
-%h1.form-h1
-  Guestlist
-  %small
-    %strong#row_count=@guests.count
-    guests invited
+%h2.form-h2
+  Guest list
+  %small="#{pluralize(@guests.count, 'guest')} found"
 
 .panel-group#accordion
   - @guests.each do |guest|
@@ -18,6 +13,8 @@
           - invites.each do |invite|
             %ul.list-group{id: "row#{invite.id}"}
               %li.list-group-item
-                = render "invite_fields", :guest => guest, :invite => invite
+                = render "invitations/invite_fields", :guest => guest, :invite => invite
 %p.text-center#no_row_found
   %em No guests invited
+
+

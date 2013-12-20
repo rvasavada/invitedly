@@ -11,6 +11,14 @@ class OccasionsController < ApplicationController
   # GET /occasions/1
   # GET /occasions/1.json
   def show
+    @events = @occasion.events
+    @guests = Contact.find_by_sql("SELECT contacts.* FROM contacts
+       INNER JOIN events ON invitations.event_id = events.id
+       INNER JOIN invitations ON contacts.id = invitations.contact_id
+       WHERE events.occasion_id = '#{@occasion.id}'
+         AND contacts.user_id = #{current_user.id}
+       ORDER BY lower(last_name) ASC").uniq
+    @response = ResponseType.all
   end
 
   # GET /occasions/new
