@@ -45,19 +45,18 @@
       =link_to "Z", address_book_path(:letter => "Z"), class: params[:letter] == "Z" ? "tiny button" : "secondary tiny button"
     %table{style: "width:100%;"}
       %thead
-        %td{style: "width:45%;"} Guest name (Total guests)
-        %td{style: "width:30%;"} Address
-        %td{style: "width:15%;"} Actions
+        %td{style: "width:40%;"} Guest name (Total guests)
+        %td{style: "width:40%;"} Address
+        %td{style: "width:20%;"} Actions
       %tbody
         -if @contacts.present?
           - @contacts.each do |contact|
             %tr
               %td
                 - if contact.notes.present?
-                  %strong.has-tip{"data-tooltip" => true,title:contact.notes}= contact.invite_name
+                  %span.has-tip{"data-tooltip" => true,title:contact.notes}="#{contact.invite_name} (#{contact.max_guests})"
                 - else
-                  %strong= contact.invite_name
-                ="(#{pluralize(contact.max_guests,'person')})"
+                  ="#{contact.invite_name} (#{contact.max_guests})"
               %td
                 = "#{contact.address_1} #{contact.address_2 if contact.address_2.present? } <br>".html_safe if contact.address_1.present?
                 = "#{contact.city}, #{contact.state} #{contact.zip} <br>".html_safe if ((contact.city.present? or contact.zip.present?) and (contact.country == 'United States'))
