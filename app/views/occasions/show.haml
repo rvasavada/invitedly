@@ -1,23 +1,22 @@
-.btn-group.pull-right
-  = link_to 'Create event', new_occasion_event_path(@occasion), :class => "btn btn-primary pull-right"
-
-%h1.form-h1
-  =@occasion.name
-
 .row
-  .columns.small-12
-    %ul.nav.nav-pills.nav-stacked
-      %li.active=link_to "Details", "#details"
-      %li=link_to "Events", "#events"
-      %li=link_to "Guest List", "#guestlist"
+  .small-12.columns
+    %ul.breadcrumbs
+      %li.current= @occasion.name
+    = link_to 'Create event', new_occasion_event_path(@occasion), :class => "button small right"
+      
+    %h1=@occasion.name
+    
+    %dl.sub-nav
+      %dd=link_to "Events", "#recent"
+      %dd=link_to "Guest List", "#guestlist"
 
-  .columns.small-12
-    .panel-group#accordion
-      .panel.panel-info#events
-        .panel-body
-          = render 'events/index'
-      .panel.panel-info#guestlist
-        .panel-body
-          = render 'invitations/index'
+    .row
+      .columns.medium-6
+
+      .columns.medium-6
+        .panel#events
+          = render 'events'
+        .panel#guestlist
+          = render 'invitations'
         
 = render "layouts/modal"

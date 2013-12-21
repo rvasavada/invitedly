@@ -1,5 +1,4 @@
 $('.clickable tbody').click(function() {
-  alert('35');
    var c = $(this).find(':checkbox').filter(':first');
    c.attr('checked', !c.attr('checked'));
    $(this).toggleClass('success');

@@ -1,15 +1,13 @@
 .row
   .small-12.columns
     %h2
-    Events
-    %small="#{pluralize(@events.count, 'event')}"
-.row
-  .small-12.columns
+      Events
+      %small="#{pluralize(@events.count, 'event')}"
+
     - if @events.present?
       - @events.each do |event|
         %h5= link_to event.name, occasion_event_path(@occasion,event)
-        %p= event.description
-        %hr
+        %p.subheader= event.description
     -else 
       %p.text-center
         You have no events.
