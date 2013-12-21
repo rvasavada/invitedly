@@ -43,7 +43,8 @@
       =link_to "X", address_book_path(:letter => "X"), class: params[:letter] == "X" ? "tiny button" : "secondary tiny button"
       =link_to "Y", address_book_path(:letter => "Y"), class: params[:letter] == "Y" ? "tiny button" : "secondary tiny button"
       =link_to "Z", address_book_path(:letter => "Z"), class: params[:letter] == "Z" ? "tiny button" : "secondary tiny button"
-      
+    
+    %hr
 
     -if @contacts.present?
       - @contacts.each do |contact|
@@ -55,11 +56,14 @@
             
         - if contact.notes.present?
           %h5
-            ="#{contact.invite_name} (#{contact.max_guests})"
-            %small.has-tip{"data-tooltip" => true,title:contact.notes} notes
+            %strong="#{contact.invite_name}" 
+            ="(#{contact.max_guests})"
+            %small.subheader.has-tip{"data-tooltip" => true,title:contact.notes} notes
         - else
-          %h5="#{contact.invite_name} (#{contact.max_guests})"
-        %p
+          %h5
+            %strong="#{contact.invite_name}"
+            ="(#{contact.max_guests})"
+        %p.subheader
           = "#{contact.address_1} #{contact.address_2 if contact.address_2.present? } <br>".html_safe if contact.address_1.present?
           = "#{contact.city}, #{contact.state} #{contact.zip} <br>".html_safe if ((contact.city.present? or contact.zip.present?) and (contact.country == 'United States'))
           = "#{contact.city}, #{contact.region} #{contact.postal_code} <br>".html_safe if ((!contact.region.blank? or !contact.postal_code.blank?) and (contact.country != 'United States'))
