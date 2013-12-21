@@ -1,5 +1,5 @@
 .row
-  .small-12
+  .small-12.columns
   
     = link_to "Add contact", user_omniauth_authorize_path(:facebook), :class => "button right", data: {:toggle=> "modal", :target=>"#myModal"}
 
@@ -43,37 +43,38 @@
       =link_to "X", address_book_path(:letter => "X"), class: params[:letter] == "X" ? "tiny button" : "secondary tiny button"
       =link_to "Y", address_book_path(:letter => "Y"), class: params[:letter] == "Y" ? "tiny button" : "secondary tiny button"
       =link_to "Z", address_book_path(:letter => "Z"), class: params[:letter] == "Z" ? "tiny button" : "secondary tiny button"
-    %table{style: "width:100%;"}
-      %thead
-        %td{style: "width:40%;"} Guest name (Total guests)
-        %td{style: "width:40%;"} Address
-        %td{style: "width:20%;"} Actions
-      %tbody
-        -if @contacts.present?
-          - @contacts.each do |contact|
-            %tr
-              %td
-                - if contact.notes.present?
-                  %span.has-tip{"data-tooltip" => true,title:contact.notes}="#{contact.invite_name} (#{contact.max_guests})"
-                - else
-                  ="#{contact.invite_name} (#{contact.max_guests})"
-              %td
-                = "#{contact.address_1} #{contact.address_2 if contact.address_2.present? } <br>".html_safe if contact.address_1.present?
-                = "#{contact.city}, #{contact.state} #{contact.zip} <br>".html_safe if ((contact.city.present? or contact.zip.present?) and (contact.country == 'United States'))
-                = "#{contact.city}, #{contact.region} #{contact.postal_code} <br>".html_safe if ((!contact.region.blank? or !contact.postal_code.blank?) and (contact.country != 'United States'))
-                = "#{contact.country} <br>".html_safe if contact.country != 'United States'
-                = "<abbr title='Email'>E:</abbr> <a href='mailto:#{contact.email}'>#{contact.email}</a> <br>".html_safe  if !contact.email.blank?
-                = "<abbr title='Home'>H:</abbr> #{contact.home_phone}, ".html_safe if !contact.home_phone.blank?
-                = "<abbr title='Mobile'>M:</abbr> #{contact.cell_phone}".html_safe if !contact.cell_phone.blank?
-              %td
-                .button-group
-                  = link_to "Edit", edit_contact_path(contact), :class=> "tiny button"
-                  = link_to "Delete", contact, data: {confirm: 'Are you sure you want to delete this guest?'}, remote: true, method: :delete, :class=> "tiny button alert"
+      
 
-        -else
-          %tr
-            %td{:colspan => 3}
-              .text-center
-                %em No contacts here!
+    -if @contacts.present?
+      - @contacts.each do |contact|
+        =link_to "Actions","#",class: "tiny button dropdown right", "data-dropdown" =>"drop"
+        %ul.f-dropdown#drop{"data-dropdown-content" => true}
+          %li=link_to "Edit contact", edit_contact_path(contact)
+          %li.divider
+          %li=link_to "Delete contact", contact, data: {confirm: 'Are you sure you want to delete this contact?'}, remote: true, method: :delete
+            
+        - if contact.notes.present?
+          %h5
+            ="#{contact.invite_name} (#{contact.max_guests})"
+            %small.has-tip{"data-tooltip" => true,title:contact.notes} notes
+        - else
+          %h5="#{contact.invite_name} (#{contact.max_guests})"
+        %p
+          = "#{contact.address_1} #{contact.address_2 if contact.address_2.present? } <br>".html_safe if contact.address_1.present?
+          = "#{contact.city}, #{contact.state} #{contact.zip} <br>".html_safe if ((contact.city.present? or contact.zip.present?) and (contact.country == 'United States'))
+          = "#{contact.city}, #{contact.region} #{contact.postal_code} <br>".html_safe if ((!contact.region.blank? or !contact.postal_code.blank?) and (contact.country != 'United States'))
+          = "#{contact.country} <br>".html_safe if contact.country != 'United States'
+          = "<abbr title='Email'>E:</abbr> <a href='mailto:#{contact.email}'>#{contact.email}</a> <br>".html_safe  if !contact.email.blank?
+          = "<abbr title='Home'>H:</abbr> #{contact.home_phone}, ".html_safe if !contact.home_phone.blank?
+          = "<abbr title='Mobile'>M:</abbr> #{contact.cell_phone}".html_safe if !contact.cell_phone.blank?
+
+        %hr
+                  
+                  
+    -else
+      %tr
+        %td{:colspan => 3}
+          .text-center
+            %em No contacts here!
 
 -#=will_paginate(@contacts.paginate(:page => params[:page]), :renderer => 'BootstrapPaginationHelper::LinkRenderer', :class=>"text-center")

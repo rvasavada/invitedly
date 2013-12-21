@@ -1,13 +1,16 @@
-%h2.form-h2
-  Events
-  %small="#{pluralize(@events.count, 'event')}"
-
-- if @events.present?
-  - @events.each do |event|
-    %h3
-      = link_to event.name, occasion_event_path(@occasion,event)
-      %span.text-muted= event.description
--else 
-  %p.text-center
-    You have no events.
-    =link_to "Add an event!", new_occasion_event_path(@occasion)
+.row
+  .small-12.columns
+    %h2
+    Events
+    %small="#{pluralize(@events.count, 'event')}"
+.row
+  .small-12.columns
+    - if @events.present?
+      - @events.each do |event|
+        %h5= link_to event.name, occasion_event_path(@occasion,event)
+        %p= event.description
+        %hr
+    -else 
+      %p.text-center
+        You have no events.
+        =link_to "Add an event!", new_occasion_event_path(@occasion)

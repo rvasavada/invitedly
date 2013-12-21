@@ -18,5 +18,5 @@
     = f.text_area :description, {class: "#{@occasion.errors.include?(:description) ? 'error' : ''}",:maxlength => 140, :rows => 5}
     %small{class: "#{@occasion.errors.include?(:description) ? 'error' : ''}"}= @occasion.errors.get(:description).join('; ')
 
-    = f.submit "Save", :class=> "button"
-    = link_to "Cancel", occasions_path, :class=> "secondary button"
+  = f.submit "Save", :class=> "button"
+  = link_to "Cancel", :back, :class=> "secondary button"

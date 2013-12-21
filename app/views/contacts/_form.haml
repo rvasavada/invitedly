@@ -77,6 +77,5 @@
     = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "These notes are private and visible only to you."}
 
   = f.submit "Save", :class => "button"
-  = link_to 'Cancel', address_book_path, :class=> "secondary button"
-  %p.text-center or
+  = link_to 'Cancel', :back, :class=> "secondary button"
   = f.submit "Save & Add another contact", :class => "button", style: "width:100%;"

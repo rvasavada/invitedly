@@ -1,26 +1,28 @@
-= link_to 'New occasion', new_occasion_path, :class=>"btn btn-info pull-right"
-%h1.form-h1
-  Occasions
-  %small="#{pluralize(@occasions.count, 'occasion')} found"
+.row
+  .small-12.columns
+    = link_to 'New occasion', new_occasion_path, :class=>"button right"
+    %h1 
+      Occasions
+      %small="#{pluralize(@occasions.count, 'occasion')}"
 
-
-- if @occasions.present?
-  - @occasions.each do |occasion|
-    %h2
-      .dropdown.pull-right
-        %button.btn.btn-xs.btn-default.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}      
-          %span.caret
-        %ul.dropdown-menu
+.row
+  .small-12.columns
+    - if @occasions.present?
+      - @occasions.each do |occasion|
+      
+        =link_to "Actions","#",class: "tiny button dropdown right", "data-dropdown" =>"drop"
+        %ul.f-dropdown#drop{"data-dropdown-content" => true}
           %li= link_to "Edit occasion", edit_occasion_path(occasion)
           %li.divider
-          %li= link_to "Delete event", occasion, method: :delete,  remote: true, 'data-type' => 'json', data: {confirm: 'Are you sure you want to delete this occasion?'}
-      =link_to occasion.name, occasion
-    %p.text-muted
-      = occasion.description
-    %hr
--else 
-  %p.text-center
-    You have no occasions.
-    =link_to "Add an occasion!", new_occasion_path
+          %li= link_to "Delete occasion", occasion, method: :delete,  remote: true, 'data-type' => 'json', data: {confirm: 'Are you sure you want to delete this occasion?'}
+      
+      
+        %h5=link_to occasion.name, occasion
+        %p= occasion.description
+        %hr
+    -else 
+      %p.text-center
+        You have no occasions.
+        =link_to "Add an occasion!", new_occasion_path
 
-= render "layouts/modal"
+    = render "layouts/modal"
