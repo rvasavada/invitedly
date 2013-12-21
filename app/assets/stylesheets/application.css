@@ -30,7 +30,7 @@ font-weight:700;
 font-family:"proxima-nova",sans-serif;
 }
 
-body { background-color:#fff; color:#000000; font-family:"proxima-nova"; font-weight:400; font-style:normal; font-size:14px; line-height:18px; margin:0px; padding:0px; }
+body { background-color:#F6F0F4; color:#000000; font-family:"proxima-nova"; font-weight:400; font-style:normal; font-size:14px; line-height:18px; margin:0px; padding:0px; }
 
 form { margin:0px; padding:0px; }
 p { margin-bottom:10px; }
@@ -46,7 +46,7 @@ ul { margin:5px 0px 2px 0px; padding-left:20px; }
 /* Layout */
 #main { margin:auto; width:940px; }
 #header{ width:940px; height:66px; padding-top:27px; }
-#logo { display:block; float:left; height:36px; width:175px; margin-right:76px;color:#92b452;font-family: 'Pacifico', cursive; }
+#logo { display:block; float:left; height:36px; width:175px; margin-right:76px;color:#92b452;font-family: 'Pacifico', cursive; font-weight:200;}
 #nav { float:left; margin-top:4px; }
 #nav .link { color:#b3e5e5; cursor:pointer; display:block; float:left; font-size:15px; line-height:27px; padding-left:20px; padding-right:20px; border-right: 1px solid #0A9E9E; }
 #nav .link:hover { text-decoration:none; color:#fff; }

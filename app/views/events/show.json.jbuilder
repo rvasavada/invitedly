@@ -1,1 +1,0 @@
-json.extract! @event, :name, :description, :occasion_id, :start_date, :start_time, :address_1, :address_2, :city, :state, :zip, :country, :region, :postal_code, :location, :slug, :created_at, :updated_at
