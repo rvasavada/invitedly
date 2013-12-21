@@ -9,14 +9,14 @@
     %ul.nav.nav-pills.nav-stacked
       %li.active=link_to "Details", "#details"
       %li=link_to "Events", "#events"
-      %li=link_to "Guests", "#guests"
+      %li=link_to "Guest List", "#guestlist"
 
   .col-sm-9
     .panel-group#accordion
       .panel.panel-info#events
         .panel-body
           = render 'events/index'
-      .panel.panel-info#guests
+      .panel.panel-info#guestlist
         .panel-body
           = render 'invitations/index'
         

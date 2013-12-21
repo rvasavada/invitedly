@@ -1,4 +1,4 @@
-= link_to 'New occasion', new_occasion_path, :class=>"btn btn-primary pull-right"
+= link_to 'New occasion', new_occasion_path, :class=>"btn btn-info pull-right"
 %h1.form-h1
   Occasions
   %small="#{pluralize(@occasions.count, 'occasion')} found"
@@ -20,5 +20,7 @@
     %hr
 -else 
   %p.text-center
-    %em No occasions found
+    You have no occasions.
+    =link_to "Add an occasion!", new_occasion_path
+
 = render "layouts/modal"

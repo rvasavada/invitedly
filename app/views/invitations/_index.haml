@@ -1,12 +1,15 @@
 %h2.form-h2
-  Guest list
-  %small="#{pluralize(@guests.count, 'guest')} found"
+  Guest List
+  %small="#{pluralize(@guests.count, 'invitation')}"
 
-- @guests.each do |guest|
-  %p
-    =link_to guest.invite_name, occasion_invitations_path(@occasion, guest_id: guest), data: {remote: true}
-    
-%p.text-center#no_row_found
-  %em No guests invited
-
-
+-if @guests.present?
+  - @guests.each do |guest|
+    %p=link_to guest.invite_name, occasion_invitations_path(@occasion, guest_id: guest), data: {remote: true}
+- else    
+  %p.text-center
+    -if current_user.contacts.present?
+      No guests invited. Click on an event, and add guests!
+    -else 
+      You have no contacts.
+      = link_to "Add contacts!", user_omniauth_authorize_path(:facebook), :class => "btn btn-primary pull-right", data: {:toggle=> "modal", :target=>"#myModal"}
+      

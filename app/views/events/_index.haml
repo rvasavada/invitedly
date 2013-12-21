@@ -1,6 +1,6 @@
 %h2.form-h2
   Events
-  %small="#{pluralize(@events.count, 'event')} found"
+  %small="#{pluralize(@events.count, 'event')}"
 
 - if @events.present?
   - @events.each do |event|
@@ -9,4 +9,5 @@
       %span.text-muted= event.description
 -else 
   %p.text-center
-    %em No events found
+    You have no events.
+    =link_to "Add an event!", new_occasion_event_path(@occasion)

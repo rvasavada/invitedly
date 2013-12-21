@@ -1,16 +1,3 @@
-.modal.fade#myModal
-  .modal-dialog
-    .modal-content
-      .modal-header
-        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
-        %h3.modal-title Add contacts
-      .modal-body
-        %p
-          You can import from Facebook or manually add contacts to your address book.
-        .btn-group-vertical
-          = link_to "#{image_tag('http://www.underconsideration.com/brandnew/archives/facebook_logo_detail.gif', width: '3%', height: '3%')} Import from Facebook".html_safe, user_omniauth_authorize_path(:facebook), :class => "btn btn-default btn-block", "data-loading-text" => "Importing...", :id => "import_fb"   
-          = link_to 'Manually add contacts', new_contact_path, :class => "btn btn-default btn-block"
-          
 = link_to "Add contact", user_omniauth_authorize_path(:facebook), :class => "btn btn-primary pull-right", data: {:toggle=> "modal", :target=>"#myModal"}
 
 %h1.form-h1
