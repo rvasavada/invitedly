@@ -1,52 +1,49 @@
 !!!
-%html
+%html{lang: "en"}    
   %head
     %title Invitedly
     %link{href: "http://fonts.googleapis.com/css?family=Pacifico", rel: "stylesheet", type: "text/css"}
-    %link{:href=>"//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css", :rel=>"stylesheet"}
+    %meta{charset: "utf-8"}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1.0"}
     = stylesheet_link_tag    "application", media: "all"
+    = javascript_include_tag "vendor/modernizr"
     = csrf_meta_tags
-    %body{:style => "padding-top: 20px;" }
-      .container
-        .row
-          .col-sm-12
+    %body
+      %nav.top-bar{"data-topbar"=> true}
+        %ul.title-area
+          %li.name
             %h1#logo= link_to "Invitedly", root_url
-          
-            - if user_signed_in?
-              %ul.list-inline.text-right
-                %li= link_to "Address Book", address_book_path, :class => "signout-link"
-                %li= link_to "Occasions", occasions_path, :class => "signout-link"
-                %li= link_to "Settings", edit_user_registration_path, :class => "signout-link"
-                %li=link_to "Sign out", destroy_user_session_path, method: :delete, :class => "signout-link"
+          %li.toggle-topbar.menu-icon
+            =link_to "#" do
+              %span Menu
+            
+        %section.top-bar-section
+          %ul.right
+            - if user_signed_in?              
+              %li= link_to "Address Book", address_book_path
+              %li= link_to "Occasions", occasions_path
+              %li= link_to "Settings", edit_user_registration_path
+              %li= link_to "Sign out", destroy_user_session_path, method: :delete
             -else
-              %ul.list-inline.text-right
-                %li= link_to "Sign in",new_user_session_path, :class => " signout-link"
-                %li=link_to "Sign up", new_user_registration_path, :class => "signout-link"
-        %br
-        .row
-          .col-sm-12
-            - if notice.present?
-              .alert.alert-success.alert-dismissable
-                %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
-                = notice.html_safe
-            - if alert.present?
-              .alert.alert-danger.alert-dismissable
-                %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
-                = alert.html_safe
-            .alert.alert-success.alert-dismissable{id: "alert_success", style: "display:none;position:fixed;width:100%;top:0;left:0;z-index: 5000;"}
-              %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
-            .alert.alert-danger.alert-dismissable{id: "alert_danger", style: "display:none;position:fixed;width:100%;top:0;left:0;z-index: 5000;"}
-              %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
+              %li= link_to "Sign in",new_user_session_path
+              %li.has-form= link_to "Sign up", new_user_registration_path, class: "button"
 
-            = yield
-  
-        %footer#footer
-          %ul.list-inline#legal
-            %li= link_to "About", about_path
-            %li= link_to "Privacy", privacy_path
-            %li= link_to "Terms", terms_path
-            %li RSVPgenius © 2013
+      - if notice.present?
+        .alert-box{"data-alert" => true}
+          =notice
+          =link_to "&times;".html_safe, "#", class: "close"
+      - if alert.present?
+        .warning.alert-box{"data-alert" => true}
+          =alert
+          =link_to "&times;".html_safe, "#", class: "close"
+      
+      = yield
+
+      %footer#footer
+        %ul.list-inline#legal
+          %li= link_to "About", about_path
+          %li= link_to "Privacy", privacy_path
+          %li= link_to "Terms", terms_path
+          %li RSVPgenius © 2013
 
       = javascript_include_tag "application"
-      %script{:src=>"//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"}            
-    

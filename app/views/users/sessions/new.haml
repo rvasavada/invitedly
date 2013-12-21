@@ -1,21 +1,26 @@
-%h1.form-h1 Sign in
 .row
-  .col-md-4
+  .small-10.small-offset-1.columns.medium-6.medium-offset-3
+    %h2 Invitedly
     = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-  
-      .form-group
-        = f.label :email, "Email", :class => "control-label"
-        = f.text_field :email, :autofocus => true, class: "form-control"
-      .form-group
-        = f.label :password, "Password", :class => "control-label"
-        = f.password_field :password, class: "form-control"
-  
-      - if devise_mapping.rememberable?
-        .checkbox
-          = f.check_box :remember_me
-          = f.label :remember_me, "Remember me"
-          = link_to "Forgot password?", new_password_path(resource_name), :class => "pull-right"
       
-      = f.submit "Sign in", :class=> "btn btn-primary"
-      %span.text-muted{style: "padding-left:12px;font-size:17px;"} or
-      = link_to "Sign up", new_registration_path(resource_name), :class => "btn btn-link"
+      %fieldset 
+        %legend Sign into your account
+        = f.label :email, "Email"
+        = f.text_field :email, :autofocus => true
+
+        = f.label :password, "Password"
+        = f.password_field :password
+  
+        - if devise_mapping.rememberable?
+          = f.check_box :remember_me, :checked => true
+          = f.label :remember_me, "Remember me"
+      
+        = f.submit "Sign in", :class=> "button", style: "width:100%;"
+
+    = link_to "Don't have an account? <strong>Sign up</strong>.".html_safe, new_registration_path(resource_name), :class => "button secondary", style: "width:100%;"
+          
+%ul.inline-list.right
+  %li= link_to "Forgot password?", new_password_path(resource_name)
+  %li= link_to "Privacy", privacy_path
+  %li= link_to "Terms", terms_path
+  %li RSVPgenius © 2013

@@ -1,18 +1,18 @@
-%h1.form-h1 Account Settings
-- if resource.errors.present?
-  .alert.alert-danger.alert-dismissable
-    %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
-    %strong Oops!
-    Please see the errors below.
+.row
+  .small-12.columns.medium-8.medium-offset-2.large-6.large-offset-3
+    %h1.form-h1 Account Settings
+    - if resource.errors.present?
+      .alert.alert-danger.alert-dismissable
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
+        %strong Oops!
+        Please see the errors below.
 
-= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
-    
-  %h2.form-h2 Change Username
-  
-  %fieldset.form-section
-    .row
-      .col-md-4
-        %div{class: "form-group #{resource.errors.include?(:email) ? 'has-error' : ''}"}
+    = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+      
+      %fieldset
+        %legend Change Username
+
+        %div{class: "form-group #{resource.errors.include?(:username) ? 'has-error' : ''}"}
           = f.label :username, "Username", :class => "control-label"
           = f.email_field :username, :autofocus => true, class: "form-control"
           %span.help-block= resource.errors.get(:username).join('; ')
@@ -20,133 +20,102 @@
         - if devise_mapping.confirmable? && resource.pending_reconfirmation?
           %div
             Currently waiting confirmation for: #{resource.unconfirmed_email}
-
-  %h2.form-h2 Change Password
   
-  %fieldset.form-section
-    .row
-      .col-sm-4
+      %fieldset
+        %legend Change Password
         %div{class: "form-group #{resource.errors.include?(:password) ? 'has-error' : ''}"}
           = f.label :password, "Password", :class => "control-label"
           = f.password_field :password, class: "form-control", :autocomplete => :off
           %span.help-block= resource.errors.get(:password).join('; ')
-    .row
-      .col-sm-4
+
         %div{class: "form-group #{resource.errors.include?(:password_confirmation) ? 'has-error' : ''}"}
           = f.label :password_confirmation, "Password confirmation", :class => "control-label"
           = f.password_field :password_confirmation, class: "form-control", :autocomplete => :off
           %span.help-block= resource.errors.get(:password_confirmation).join('; ')
-    .row
-      .col-sm-4
+
         %div{class: "form-group #{resource.errors.include?(:current_password) ? 'has-error' : ''}"}
           = f.label :current_password, "Current password", :class => "control-label"
           = f.password_field :current_password, class: "form-control", :autocomplete => :off
           %span.help-block= resource.errors.get(:current_password).join('; ')
 
-  %h2.form-h2 
-    Contact details
-    %span.form-required *
-    %span.form-helptext (We need this so we know who is coming)
-  %fieldset.form-section
-    .row
-      .col-sm-2
-        .form-group
-          = f.label :title, "Title", :class => "control-label"
-          = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, class: "form-control")
-      .col-sm-3
-        %div{class: "form-group #{current_user.errors.include?(:first_name) ? 'has-error' : ''}"}
-          = f.label :first_name, "First Name <font color='red'>*</font>".html_safe, :class => "control-label"
-          = f.text_field :first_name, :autofocus => true,:maxlength => 50, class: "form-control"
-          %span.help-block= current_user.errors.get(:first_name).join('; ')
-      .col-sm-3
-        %div{class: "form-group #{current_user.errors.include?(:last_name) ? 'has-error' : ''}"}
-          = f.label :last_name, "Last Name <font color='red'>*</font>".html_safe, :class => "control-label"
-          = f.text_field :last_name, :autofocus => true,:maxlength => 50, class: "form-control"
-          %span.help-block= current_user.errors.get(:last_name).join('; ')
-    .row
-      .col-sm-2
-        .form-group
-          = f.label :spouse_title, "Spouse Title".html_safe, :class => "control-label"
-          = f.collection_select(:spouse_title,	@title, :name, :name, {:include_blank => true}, class: "form-control")
-      .col-sm-3
-        .form-group
-          = f.label :spouse_first_name, "Spouse First Name".html_safe, :class => "control-label"
-          = f.text_field :spouse_first_name, :autofocus => true,:maxlength => 50, class: "form-control"
-      .col-sm-3
-        .form-group
-          = f.label :spouse_last_name, "Spouse Last Name".html_safe, :class => "control-label"
-          = f.text_field :spouse_last_name, :autofocus => true,:maxlength => 50, class: "form-control"
-    .row
-      .col-sm-2
-        .form-group
-          = f.label :max_guests, "Maximum allowed guests", :class => "control-label"
-          = f.select :max_guests, options_for_select(%w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20], {:selected => current_user.max_guests}), {}, class: "form-control"
-
-  %h2.form-h2 
-    Contact information
-    %span.form-helptext (Optionally, how can we get in touch with the guest)
+      %fieldset
+        %legend
+          Contact details
+        .row
+          .columns.medium-3
+            = f.label :title, "Title"
+            = f.collection_select(:title,	@title, :name, :name, {:include_blank => true})
+          .columns.medium-4
+            = f.label :first_name, "First Name <font color='red'>*</font>".html_safe
+            = f.text_field :first_name, :autofocus => true,:maxlength => 50
+          .columns.medium-5
+            = f.label :last_name, "Last Name <font color='red'>*</font>".html_safe
+            = f.text_field :last_name, :autofocus => true,:maxlength => 50
+        .row
+          .columns.medium-3
+            = f.label :spouse_title, "Spouse Title"
+            = f.collection_select(:spouse_title,	@title, :name, :name, {:include_blank => true})
+          .columns.medium-4
+            = f.label :spouse_first_name, "Spouse First Name <font color='red'>*</font>".html_safe
+            = f.text_field :spouse_first_name, :autofocus => true,:maxlength => 50
+          .columns.medium-5
+            = f.label :spouse_last_name, "Spouse Last Name <font color='red'>*</font>".html_safe
+            = f.text_field :spouse_last_name, :autofocus => true,:maxlength => 50
+        .row
+          .columns.medium-3
+            = f.label :max_guests, "Total guests", :class => "control-label"
+            = f.select :max_guests, options_for_select((1..20).to_a, {:selected => current_user.max_guests}), {}, class: "form-control"
   
-  %fieldset.form-section
-    .row
-      .col-sm-4
-        .form-group
-          = f.label :email, "Preferred Email", :class => "control-label"
-          = f.email_field :email, :type => "email", class: "form-control"
-    .row
-      .col-sm-4
-        .form-group
-          = f.label :address_1, "Address 1", :class => "control-label"
-          = f.text_field :address_1, :maxlength => 100, class: "form-control"
-      .col-sm-3
-        .form-group
-          = f.label :address_2, "Address 2", :class => "control-label"
-          = f.text_field :address_2, :maxlength => 100, class: "form-control"
-    .row
-      .col-sm-3
-        .form-group
-          = f.label :city, "City", :class=> "control-label"
-          = f.text_field :city, :maxlength => 100, class: "form-control"
-      .domestic.col-sm-3
-        .form-group
-          = f.label :state, "State", :class=> "control-label"
-          = f.collection_select(:state,	@state, :name, :name,{}, class: "form-control")
-      .domestic.col-sm-2
-        .form-group
-          = f.label :zip, "Zip", :class=> "control-label"
-          = f.text_field :zip, :maxlength => 5, class: "form-control"
-      .international.col-sm-3
-        .form-group
-          = f.label :region, "Region", :class=> "control-label"
-          = f.text_field :region, :maxlength => 100, class: "form-control"
-      .international.col-sm-2
-        .form-group
-          = f.label :postal_code, "Postal Code", :class=> "control-label"
-          = f.text_field :postal_code, :maxlength => 20, class: "form-control"
-    .row  
-      .col-sm-6
-        .form-group
-          = f.label :country, "Country", :class => "control-label"
-          = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, :id => "countrySelect", class: "form-control")
-    .row
-      .col-xs-6.col-sm-3
-        .form-group
-          = f.label :home_phone, "Home Phone", :class => "control-label"
-          = f.telephone_field :home_phone, class: "form-control", :type => "tel"
-      .col-xs-6.col-sm-3
-        .form-group
-          = f.label :cell_phone, "Cell Phone", :class => "control-label"
-          = f.telephone_field :cell_phone, class: "form-control", :type => "tel"
-                    
-  %h2.form-h2 Cancel Account
+      %fieldset
+        %legend Contact information
 
-  %fieldset.form-section
-    %p 
-      To cancel your account, please email us at 
-      %strong=link_to "rhut@rsvpgenius.com","mailto:rhut@rsvpgenius.com"
+        = f.label :email, "Preferred Email"
+        = f.email_field :email, :type => "email"
+        
+        .row
+          .columns.medium-7
+            .form-group
+              = f.label :address_1, "Address 1"
+              = f.text_field :address_1, :maxlength => 100
+          .columns.medium-5
+            .form-group
+              = f.label :address_2, "Address 2"
+              = f.text_field :address_2, :maxlength => 100
+        .row
+          .columns.medium-5
+            = f.label :city, "City"
+            = f.text_field :city, :maxlength => 100
+          .columns.medium-4.domestic
+            = f.label :state, "State"
+            = f.collection_select(:state,	@state, :name, :name,{})
+          .domestic.columns.medium-3
+            = f.label :zip, "Zip"
+            = f.text_field :zip, :maxlength => 5
+          .international.columns.medium-4
+            = f.label :region, "Region"
+            = f.text_field :region, :maxlength => 100
+          .international.columns.medium-3
+            = f.label :postal_code, "Postal Code"
+            = f.text_field :postal_code, :maxlength => 20
 
-  .btn-toolbar
-    .btn-group
-      = f.submit "Update", :class => "btn btn-primary"
-    .btn-group
-      = link_to "Cancel", :back, :class => "btn btn-default"
+        = f.label :country, "Country"
+        = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, :id => "countrySelect")
+        
+        .row
+          .columns.medium-6
+            = f.label :home_phone, "Home Phone"
+            = f.telephone_field :home_phone, :type => "tel"
+          .columns.medium-6
+            = f.label :cell_phone, "Cell Phone"
+            = f.telephone_field :cell_phone, :type => "tel"
+
+      %fieldset
+        %legend Cancel Account
+        %p 
+          To cancel your account, please email us at 
+          %strong=link_to "rhut@rsvpgenius.com","mailto:rhut@rsvpgenius.com"
+
+
+      = f.submit "Update", :class => "button"
+      = link_to "Cancel", :back, :class => "secondary button"
   

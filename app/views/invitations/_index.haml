@@ -8,7 +8,7 @@
 - else    
   %p.text-center
     -if current_user.contacts.present?
-      No guests invited. Click on an event, and add guests!
+      No guests invited. Select or add an event, and invite guests!
     -else 
       You have no contacts.
       = link_to "Add contacts!", user_omniauth_authorize_path(:facebook), :class => "btn btn-primary pull-right", data: {:toggle=> "modal", :target=>"#myModal"}
