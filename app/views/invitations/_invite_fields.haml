@@ -18,12 +18,9 @@
           .col-sm-3
             .form-group
               = f.label :num_guests, "Total guests", :class => "control-label"
-              = f.select(:num_guests, options_for_select((1..@guest.max_guests).to_a),{}, class: "form-control")
-        .form-group
-          = f.label :message, "Message from guest", :class => "control-label"
-          = f.text_area :message, maxlength: 300, rows:3, class: "form-control"
-
-    
+              = f.select(:num_guests, options_for_select((1..@guest.max_guests).to_a,{:selected => @guest.max_guests}),{}, class: "form-control")
+        = f.label :message, "Message from guest", :class => "control-label"
+        = f.text_area :message, maxlength: 300, rows:3, class: "form-control"
   .modal-footer
     %button.btn.btn-default{"data-dismiss" => "modal", type: "button"} Close
     =submit_tag "Done", :class => "btn btn-primary"
