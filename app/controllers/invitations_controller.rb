@@ -5,14 +5,14 @@ class InvitationsController < ApplicationController
   # GET /invitations.json
   def index
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    @events = @occasion.events
-    @guests = Contact.find_by_sql("SELECT contacts.* FROM contacts
-       INNER JOIN events ON invitations.event_id = events.id
-       INNER JOIN invitations ON contacts.id = invitations.contact_id
-       WHERE events.occasion_id = '#{@occasion.id}'
-         AND contacts.user_id = #{current_user.id}
-       ORDER BY lower(last_name) ASC").uniq
+    @guest = Contact.find(params[:guest_id])
+    @invitations = @guest.invitations
     @response = ResponseType.all
+    
+    respond_to do |format|
+      format.html
+      format.js { render :layout => false }
+    end
   end
 
   # GET /invitations/1

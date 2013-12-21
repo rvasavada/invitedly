@@ -24,23 +24,6 @@
                 %li=link_to "Sign up", new_user_registration_path, :class => "signout-link"
         %br
         .row
-          .col-sm-12 
-            - if user_signed_in? & params[:occasion_id].present?
-              %nav.navbar.navbar-default{role: "navigation"}
-                / Brand and toggle get grouped for better mobile display
-                .navbar-header
-                  %button.navbar-toggle{"data-target" => ".navbar-ex1-collapse", "data-toggle" => "collapse", type: "button"}
-                    %span.sr-only Toggle navigation
-                    %span.icon-bar
-                    %span.icon-bar
-                    %span.icon-bar
-                  = link_to @occasion.name, @occasion, :class => "navbar-brand"
-                / Collect the nav links, forms, and other content for toggling
-                .collapse.navbar-collapse.navbar-ex1-collapse
-                  %ul.nav.navbar-nav
-                    %li= link_to "Events", occasion_events_path(@occasion)
-                    %li= link_to "Guest list", occasion_guestlist_path(@occasion)
-        .row
           .col-sm-12
             - if notice.present?
               .alert.alert-success.alert-dismissable

@@ -14,9 +14,7 @@ Invitedly::Application.routes.draw do
     resources :events do
       get :invite_guests
       put :update_invites, :on => :collection
-    end
-    get 'guestlist' => 'invitations#index'
-    
+    end    
     resources :invitations
     resources :manage_invitations    
   end

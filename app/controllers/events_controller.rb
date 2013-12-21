@@ -115,13 +115,19 @@ class EventsController < ApplicationController
   
   def update_invites
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    @event = Event.friendly.find(params[:event_id])
-    invitations = []
-    params[:guest_ids].each do |guest|
-      invitations << Invitation.new(event_id: @event.id, contact_id: guest, num_guests: 0, response: "Not Responded")
+    if params[:event_id].present?
+      @event = Event.friendly.find(params[:event_id])
+      invitations = []
+      params[:guest_ids].each do |guest|
+
+        invitations << Invitation.new(event_id: @event.id, contact_id: guest, num_guests: Contact.find(guest).max_guests, response: "Not Responded")
+      end
+      Invitation.import invitations
+      redirect_to occasion_event_path(@occasion,@event), notice: 'Invitations were successfully created.'
+    else
+      @invitations= Invitation.update(params[:invitations].keys, params[:invitations].values).reject { |p| p.errors.empty? }
+      redirect_to @occasion, notice: 'Invitations were successfully updated.'
     end
-    Invitation.import invitations
-    redirect_to occasion_event_path(@occasion,@event), notice: 'Invitations were successfully created.'
   end
 
   private

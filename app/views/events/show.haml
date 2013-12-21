@@ -2,12 +2,13 @@
   = link_to "Invite more guests", occasion_event_invite_guests_path(@occasion,@event), :class => "btn btn-primary", data: {remote: true}
 
 %h1.form-h1
+  %strong=link_to @occasion.name, @occasion
   =@event.name
 .row
   .col-sm-3
     %ul.nav.nav-pills.nav-stacked
       %li.active=link_to "Details", "#details"
-      %li=link_to "Guests", "#guests"
+      %li=link_to "Guest list", "#guests"
       
   .col-sm-9
   
@@ -53,7 +54,7 @@
       .panel.panel-info#guests
         .panel-body
           %h2.form-h2
-            ="Guests (#{@invites.sum(:num_guests)})"
+            ="Guest list (#{@invites.sum(:num_guests)})"
             -if @invites.present?
               -if @attending.present?
                 %h3.text-success="Attending (#{@attending.sum(:num_guests)})"
