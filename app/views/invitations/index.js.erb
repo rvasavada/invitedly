@@ -5,5 +5,5 @@ $('.clickable tbody').click(function() {
 });
 $modal = $('.modal'),
 $modalContent = $('.modal .modal-content'),
-$modalContent.html("<%= escape_javascript(render "invite_fields") %>");
+$modalContent.html("<%= escape_javascript(render "list_invites") %>");
 $modal.modal();

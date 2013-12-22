@@ -5,17 +5,12 @@
     = link_to 'Create event', new_occasion_event_path(@occasion), :class => "button right"
       
     %h1=@occasion.name
-    
-    %dl.sub-nav
-      %dd=link_to "Events", "#recent"
-      %dd=link_to "Guest List", "#guestlist"
 
     .row
       .columns.medium-6
-
-      .columns.medium-6
         .panel#events
           = render 'events'
+      .columns.medium-6
         .panel#guestlist
           = render 'invitations'
         
