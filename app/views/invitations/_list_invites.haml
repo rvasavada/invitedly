@@ -7,19 +7,19 @@
   
     = form_tag update_invites_occasion_events_path(@occasion,:guest_id => @guest), :method => :put, :html => {:role =>"form"} do |f|
       - @invitations.each do |invitation|
-        %hr
-        %h5
-          %strong=Event.find(invitation.event_id).name
-        = fields_for "invitations[]", invitation do |f|
-          .row
-            .columns.medium-4
-              = f.label :response
-              = f.collection_select(:response,	@response, :name, :name)
-            .columns.medium-3
-              = f.label :num_guests, "Total Guests"
-              = f.select(:num_guests, options_for_select((1..@guest.max_guests).to_a,{:selected => @guest.max_guests}))
-            .columns.medium-5
+        .panel
+          %h5
+            %strong=Event.find(invitation.event_id).name
+          = fields_for "invitations[]", invitation do |f|
+            .row
+              .columns.medium-4
+                = f.label :response
+                = f.collection_select(:response,	@response, :name, :name)
+              .columns.medium-3
+                = f.label :num_guests, "Total Guests"
+                = f.select(:num_guests, options_for_select((1..@guest.max_guests).to_a,{:selected => @guest.max_guests}))
+              .columns.medium-5
             
-          = f.label :message, "Message From Guest", :class => "control-label"
-          = f.text_area :message, maxlength: 300, rows:3, class: "form-control"
+            = f.label :message, "Message From Guest", :class => "control-label"
+            = f.text_area :message, maxlength: 300, rows:3, class: "form-control"
       =submit_tag "Done", :class => "button"

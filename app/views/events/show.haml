@@ -13,7 +13,7 @@
 .row
   .columns.medium-6
     .panel#recent
-      %h3 Recent Activity
+      %h2 Recent Activity
   .columns.medium-6
     .panel#details
       =link_to "Actions","#",class: "tiny button dropdown right", "data-dropdown" =>"drop"
@@ -23,7 +23,7 @@
         %li.divider
         %li= link_to "Delete event", occasion_event_path(@occasion, @event), method: :delete,  remote: true, 'data-type' => 'json', data: {confirm: 'Are you sure you want to delete this event?'}
 
-      %h3 Details
+      %h2 Details
       %p            
         %span.glyphicon.glyphicon-calendar
         %strong Date and Time
@@ -49,45 +49,52 @@
         = @event.description
 
     .panel#guestlist
-      %h3="Guest List (#{@invites.sum(:num_guests)})"
+      %h2
+        ="Guest List"
+        %small="#{pluralize(@invites.sum(:num_guests),'guest')}"
+      %br
       -if @invites.present?
         -if @attending.present?
-          %h5="Attending (#{@attending.sum(:num_guests)})"
+          %h5#attending
+            ="Attending (#{@attending.sum(:num_guests)})"
           %p
             - @attending.each do |invite|
               - guest = Contact.find(invite.contact_id)
-              =link_to guest.invite_name, occasion_invitations_path(@occasion, guest_id: guest), data: {remote: true}
-              %span="#{pluralize(invite.num_guests,'guest')}"
-              %span.text-muted=invite.message
+              =link_to guest.invite_name, occasion_invitations_path(@occasion, guest_id: guest), data: {remote: true, "reveal-id" => "myModal"}
+              %span.subheader="(#{invite.num_guests})"
+              - if invite.message.present?
+                %span.subheader.has-tip{"data-tooltip" => true,title:invite.message} message
               %br
-          %hr
         -if @might_attend.present?
-          %h5.text-warning="Might Attend (#{@might_attend.sum(:num_guests)})"
+          %h5#might_attend
+            ="Might Attend (#{@might_attend.sum(:num_guests)})"
           %p
             - @might_attend.each do |invite|
               - guest = Contact.find(invite.contact_id)
-              =link_to guest.invite_name, occasion_invitations_path(@occasion, guest_id: guest), data: {remote: true}
-              %span="#{pluralize(invite.num_guests,'guest')}"
+              =link_to guest.invite_name, occasion_invitations_path(@occasion, guest_id: guest), data: {remote: true, "reveal-id" => "myModal"}
+              %span.subheader="(#{invite.num_guests})"
               %span.text-muted=invite.message
               %br
           %hr
         -if @not_attend.present?
-          %h5.text-danger="Not Attending (#{@not_attend.sum(:num_guests)})"
+          %h5#not_attend
+            ="Not Attending (#{@not_attend.sum(:num_guests)})"
           %p
             - @not_attend.each do |invite|
               - guest = Contact.find(invite.contact_id)
-              =link_to guest.invite_name, occasion_invitations_path(@occasion, guest_id: guest), data: {remote: true}
-              %span="#{pluralize(invite.num_guests,'guest')}"
+              =link_to guest.invite_name, occasion_invitations_path(@occasion, guest_id: guest), data: {remote: true, "reveal-id" => "myModal"}
+              %span.subheader="(#{invite.num_guests})"
               %span.text-muted=invite.message
               %br
           %hr
         -if @not_responded.present?
-          %h5="Not Responded (#{@not_responded.sum(:num_guests)})"
+          %h5#not_responded
+            ="Not Responded (#{@not_responded.sum(:num_guests)})"
           %p
             - @not_responded.each do |invite|
               - guest = Contact.find(invite.contact_id)
-              =link_to guest.invite_name, occasion_invitations_path(@occasion, guest_id: guest), data: {remote: true}
-              %span="(#{invite.num_guests})"
+              =link_to guest.invite_name, occasion_invitations_path(@occasion, guest_id: guest), data: {remote: true, "reveal-id" => "myModal"}
+              %span.subheader="(#{invite.num_guests})"
               %span.text-muted=invite.message
               %br
 = render "layouts/modal"

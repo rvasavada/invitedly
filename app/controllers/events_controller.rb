@@ -126,7 +126,7 @@ class EventsController < ApplicationController
       redirect_to occasion_event_path(@occasion,@event), notice: 'Invitations were successfully created.'
     else
       @invitations= Invitation.update(params[:invitations].keys, params[:invitations].values).reject { |p| p.errors.empty? }
-      redirect_to @occasion, notice: 'Invitations were successfully updated.'
+      redirect_to :back, notice: 'Invitations were successfully updated.'
     end
   end
 
