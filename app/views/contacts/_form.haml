@@ -12,6 +12,8 @@
       .columns.medium-5
         = f.label :last_name, "Last Name <font color='red'>*</font>".html_safe
         = f.text_field :last_name, :autofocus => true,:maxlength => 50
+    =link_to "Add spouse/partner", "#", class: "button tiny secondary"
+    =link_to "Add family", "#", class: "button tiny secondary"
     .row
       .columns.medium-3
         = f.label :spouse_title, "Spouse Title"

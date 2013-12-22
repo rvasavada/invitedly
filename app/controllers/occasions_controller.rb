@@ -45,7 +45,7 @@ class OccasionsController < ApplicationController
   def destroy
     @occasion.destroy
     respond_to do |format|
-      format.html { redirect_to occasions_url }
+      format.html { redirect_to occasions_url, notice: 'Occasion was successfully deleted.' }
       format.json { head :no_content }
     end
   end
