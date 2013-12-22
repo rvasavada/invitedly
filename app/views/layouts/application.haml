@@ -36,14 +36,16 @@
         .warning.alert-box{"data-alert" => true}
           =alert
           =link_to "&times;".html_safe, "#", class: "close"
-      
-      = yield
-
-      %footer#footer
-        %ul.list-inline#legal
-          %li= link_to "About", about_path
-          %li= link_to "Privacy", privacy_path
-          %li= link_to "Terms", terms_path
-          %li RSVPgenius © 2013
+      .row
+        .small-12.columns
+          = yield
+      .row
+        .columns.small-12
+          %footer
+            %ul.inline-list.right
+              %li= link_to "About", about_path
+              %li= link_to "Privacy", privacy_path
+              %li= link_to "Terms", terms_path
+              %li RSVPgenius © 2013
 
       = javascript_include_tag "application"
