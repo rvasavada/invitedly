@@ -81,7 +81,5 @@
   %a.close-reveal-modal &#215;
 
   %h1 Add contacts
-  %p
-    You can import from Facebook or manually add contacts to your address book.
-    = link_to "Import from Facebook", user_omniauth_authorize_path(:facebook), :class => "button secondary", :style => "width:100%"
-    = link_to 'Manually add contacts', new_contact_path, :class => "button secondary", :style => "width:100%"
+  = link_to "Import from Facebook", user_omniauth_authorize_path(:facebook), :class => "button secondary", :style => "width:100%"
+  = link_to 'Manually add contacts', new_contact_path, :class => "button secondary", :style => "width:100%"

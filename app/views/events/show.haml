@@ -1,7 +1,7 @@
 %ul.breadcrumbs
   %li=link_to @occasion.name, @occasion
   %li.current=@event.name
-= link_to "Invite more guests", occasion_event_invite_guests_path(@occasion,@event), :class => "button small right", data: {remote: true, "reveal-id" => "myModal"}
+= link_to "Invite more guests", occasion_event_invite_guests_path(@occasion,@event), :class => "button right", data: {remote: true, "reveal-id" => "myModal"}
 
 %h1=@event.name
 

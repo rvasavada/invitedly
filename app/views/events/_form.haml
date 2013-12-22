@@ -1,31 +1,30 @@
 = form_for [@occasion,@event], :html => { :role => "form"} do |f|
   %fieldset
     %legend Event info
-
-    %div{class: "form-group #{@event.errors.include?(:name) ? 'has-error' : ''}"}
-      = f.label :name, "Event Title <font color='red'>*</font>".html_safe, :class=> "control-label"
-      = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control"
-      %span.help-block= @event.errors.get(:name).join('; ')
+    
+    = f.label :name, "Event Title <font color='red'>*</font>".html_safe, class: "#{@event.errors.include?(:name) ? 'error' : ''}"
+    = f.text_field :name, :autofocus => true, :maxlength => 50, class: "#{@event.errors.include?(:name) ? 'error' : ''}"
+    %small{class: "#{@event.errors.include?(:name) ? 'error' : ''}"}= @event.errors.get(:name).join('; ')
     .row
       .columns.small-6
-        %div{class: "form-group #{@event.errors.include?(:start_date) ? 'has-error' : ''}"}
-          = f.label :start_date, "Event Date <font color='red'>*</font>".html_safe, :class => "control-label"
-          = f.text_field :start_date, class: "form-control datepicker", :value => @event.start_date.blank? ? nil : @event.start_date.strftime("%b %e, %Y")
-          %span.help-block= @event.errors.get(:start_date).join('; ')
+        = f.label :start_date, "Event Date <font color='red'>*</font>".html_safe, class: "#{@event.errors.include?(:start_date) ? 'error' : ''}"
+        = f.text_field :start_date, :value => @event.start_date.blank? ? nil : @event.start_date.strftime("%b %e, %Y"), class: "datepicker #{@event.errors.include?(:start_date) ? 'error' : ''}"
+        %small{class: "#{@event.errors.include?(:start_date) ? 'error' : ''}"}= @event.errors.get(:start_date).join('; ')
       .columns.small-6
-        = f.label :start_time, "Event Time <font color='red'>*</font>".html_safe, :class=>"control-label"
-        = f.text_field :start_time, :id => "spinner", class: "form-control"
-    .form_group{:class => "#{@event.errors.include?(:description) ? 'has-error' : ''}"}
-      = f.label :description, "Description <font color='red'>*</font>".html_safe, :class => "control-label"
-      = f.text_area :description, :rows => 3, :maxlength => 250, class: "form-control"
-      %span.help-block= @event.errors.get(:description).join('; ')
+        = f.label :start_time, "Event Time <font color='red'>*</font>".html_safe, :class => "#{@event.errors.include?(:start_time) ? 'error' : ''}"
+        = f.text_field :start_time, :id => "spinner", :class => "#{@event.errors.include?(:start_time) ? 'error' : ''}"
+        %small{:class => "#{@event.errors.include?(:start_time) ? 'error' : ''}"}= @event.errors.get(:start_time).join('; ')
+        
+    = f.label :description, "Description <font color='red'>*</font>".html_safe, :class => "#{@event.errors.include?(:description) ? 'error' : ''}"
+    = f.text_area :description, :rows => 3, :maxlength => 250, :class => "#{@event.errors.include?(:description) ? 'error' : ''}"
+    %small{:class => "#{@event.errors.include?(:description) ? 'error' : ''}"}= @event.errors.get(:description).join('; ')
 
   %fieldset
     %legend Venue info
-    .form-group{class: " #{@event.errors.include?(:location) ? 'has-error' : ''}"}
-      = f.label :location, "Location Name <font color='red'>*</font>".html_safe, :class => "control-label"
-      = f.text_field :location, :rows => 3, :maxlength => 100, class: "form-control"
-      %span.help-block= @event.errors.get(:location).join('; ')
+
+    = f.label :location, "Location Name <font color='red'>*</font>".html_safe, class: "#{@event.errors.include?(:location) ? 'error' : ''}"
+    = f.text_field :location, :rows => 3, :maxlength => 100, class: "#{@event.errors.include?(:location) ? 'error' : ''}"
+    %small{class: "#{@event.errors.include?(:location) ? 'error' : ''}"}= @event.errors.get(:location).join('; ')
     .row
       .columns.medium-7
         .form-group
