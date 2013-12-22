@@ -44,6 +44,6 @@ $("document").ready(function(){
 		$(".international").show();
 		$(".domestic").hide();
 	}
-
+	
 });
 $(function(){ $(document).foundation(); });

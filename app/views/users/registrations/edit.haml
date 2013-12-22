@@ -1,12 +1,6 @@
 .row
   .small-12.columns.medium-8.medium-offset-2.large-6.large-offset-3
     %h1.form-h1 Account Settings
-    - if resource.errors.present?
-      .alert.alert-danger.alert-dismissable
-        %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
-        %strong Oops!
-        Please see the errors below.
-
     = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
       
       -#%fieldset
@@ -23,21 +17,17 @@
   
       %fieldset
         %legend Change Password
-        %div{class: "form-group #{resource.errors.include?(:password) ? 'has-error' : ''}"}
-          = f.label :password, "Password", :class => "control-label"
-          = f.password_field :password, class: "form-control", :autocomplete => :off
-          %span.help-block= resource.errors.get(:password).join('; ')
+        = f.label :password, "Password", class: "#{resource.errors.include?(:password) ? 'error' : ''}"
+        = f.password_field :password, :autocomplete => :off, class: "#{resource.errors.include?(:password) ? 'error' : ''}"
+        %small{class: "#{resource.errors.include?(:password) ? 'error' : ''}"}= resource.errors.get(:password).join('; ')
+        = f.label :password_confirmation, "Password Confirmation", class: "#{resource.errors.include?(:password_confirmation) ? 'error' : ''}"
+        = f.password_field :password_confirmation, class: "#{resource.errors.include?(:password_confirmation) ? 'error' : ''}"
+        %small{class: "#{resource.errors.include?(:password_confirmation) ? 'error' : ''}"}= resource.errors.get(:password_confirmation).join('; ')
 
-        %div{class: "form-group #{resource.errors.include?(:password_confirmation) ? 'has-error' : ''}"}
-          = f.label :password_confirmation, "Password confirmation", :class => "control-label"
-          = f.password_field :password_confirmation, class: "form-control", :autocomplete => :off
-          %span.help-block= resource.errors.get(:password_confirmation).join('; ')
-
-        %div{class: "form-group #{resource.errors.include?(:current_password) ? 'has-error' : ''}"}
-          = f.label :current_password, "Current password", :class => "control-label"
-          = f.password_field :current_password, class: "form-control", :autocomplete => :off
-          %span.help-block= resource.errors.get(:current_password).join('; ')
-
+        = f.label :current_password, "Current Password", class: "#{resource.errors.include?(:current_password) ? 'error' : ''}"
+        = f.password_field :current_password, :autocomplete => :off, class: "#{resource.errors.include?(:current_password) ? 'error' : ''}"
+        %small{class: "#{resource.errors.include?(:current_password) ? 'error' : ''}"}= resource.errors.get(:current_password).join('; ')
+        
       -#%fieldset
         %legend
           Contact details

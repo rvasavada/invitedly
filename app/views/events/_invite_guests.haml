@@ -1,13 +1,16 @@
-= form_tag update_invites_occasion_events_path(@occasion,:event_id => @event), :method => :put, :html => {:role =>"form"} do |f|
-  %h5=@event.name
-  %h1 Invite guests
-  .panel
-    %p.subheader Click on the guests below that you would like to invite.
-    %div{:style => 'height:200px;overflow: auto;'}
-      %table{style: "width:100%;"}
-        - @uninvited.each do |guest|
-          %tr
-            %td= check_box_tag "guest_ids[]", guest.id
-            %td=guest.invite_name
-  =submit_tag "Save", :class => "button"
+.row
+  .columns.small-12
+    %h3
+      %small=@event.name
+      %br
+      Invite guests
+    = form_tag update_invites_occasion_events_path(@occasion,:event_id => @event), :method => :put, :html => {:role =>"form"} do |f|
+      %p.subheader Click on the guests below that you would like to invite.
+      %div{:style => 'height:200px;overflow: auto;'}
+        %table{style: "width:100%;"}
+          - @uninvited.each do |guest|
+            %tr
+              %td= check_box_tag "guest_ids[]", guest.id
+              %td=guest.invite_name
+      =submit_tag "Save", :class => "button"
     
