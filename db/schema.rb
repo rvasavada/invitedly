@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131204103807) do
+ActiveRecord::Schema.define(version: 20131223030105) do
 
   create_table "contacts", force: true do |t|
     t.integer  "user_id"
@@ -25,12 +25,6 @@ ActiveRecord::Schema.define(version: 20131204103807) do
     t.string   "country"
     t.string   "region"
     t.string   "postal_code"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "title"
-    t.string   "spouse_title"
-    t.string   "spouse_first_name"
-    t.string   "spouse_last_name"
     t.string   "cell_phone"
     t.string   "home_phone"
     t.integer  "max_guests"
@@ -38,6 +32,8 @@ ActiveRecord::Schema.define(version: 20131204103807) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "facebook_uid"
+    t.string   "household_name"
+    t.string   "code"
   end
 
   create_table "countries", force: true do |t|

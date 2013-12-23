@@ -6,42 +6,12 @@
 
 -#.well.well-sm
   .row
-    .col-xs-4
+    .columns.small-4
       %strong.text-muted Filters:
       %br
       =label_tag :facebook, "Only Facebook", {:class=> "control-label"}
       %br
       =select_tag :response, options_for_select(%w[Yes No]), :id => "facebook_tag", :prompt => "Please select"
-
-.button-bar
-  =link_to "A", address_book_path(:letter => "A"), class: params[:letter] == "A" ? "tiny button" : "secondary tiny button"
-  =link_to "B", address_book_path(:letter => "B"), class: params[:letter] == "B" ? "tiny button" : "secondary tiny button"
-  =link_to "C", address_book_path(:letter => "C"), class: params[:letter] == "C" ? "tiny button" : "secondary tiny button"
-  =link_to "D", address_book_path(:letter => "D"), class: params[:letter] == "D" ? "tiny button" : "secondary tiny button"
-  =link_to "E", address_book_path(:letter => "E"), class: params[:letter] == "E" ? "tiny button" : "secondary tiny button"
-  =link_to "F", address_book_path(:letter => "F"), class: params[:letter] == "F" ? "tiny button" : "secondary tiny button"
-  =link_to "G", address_book_path(:letter => "G"), class: params[:letter] == "G" ? "tiny button" : "secondary tiny button"
-  =link_to "H", address_book_path(:letter => "H"), class: params[:letter] == "H" ? "tiny button" : "secondary tiny button"
-  =link_to "I", address_book_path(:letter => "I"), class: params[:letter] == "I" ? "tiny button" : "secondary tiny button"
-  =link_to "J", address_book_path(:letter => "J"), class: params[:letter] == "J" ? "tiny button" : "secondary tiny button"
-  =link_to "K", address_book_path(:letter => "K"), class: params[:letter] == "K" ? "tiny button" : "secondary tiny button"
-  =link_to "L", address_book_path(:letter => "L"), class: params[:letter] == "L" ? "tiny button" : "secondary tiny button"
-  =link_to "M", address_book_path(:letter => "M"), class: params[:letter] == "M" ? "tiny button" : "secondary tiny button"
-  =link_to "N", address_book_path(:letter => "N"), class: params[:letter] == "N" ? "tiny button" : "secondary tiny button"
-  =link_to "O", address_book_path(:letter => "O"), class: params[:letter] == "O" ? "tiny button" : "secondary tiny button"
-  =link_to "P", address_book_path(:letter => "P"), class: params[:letter] == "P" ? "tiny button" : "secondary tiny button"
-  =link_to "Q", address_book_path(:letter => "Q"), class: params[:letter] == "Q" ? "tiny button" : "secondary tiny button"
-  =link_to "R", address_book_path(:letter => "R"), class: params[:letter] == "R" ? "tiny button" : "secondary tiny button"
-  =link_to "S", address_book_path(:letter => "S"), class: params[:letter] == "S" ? "tiny button" : "secondary tiny button"
-  =link_to "T", address_book_path(:letter => "T"), class: params[:letter] == "T" ? "tiny button" : "secondary tiny button"
-  =link_to "U", address_book_path(:letter => "U"), class: params[:letter] == "U" ? "tiny button" : "secondary tiny button"
-  =link_to "V", address_book_path(:letter => "V"), class: params[:letter] == "V" ? "tiny button" : "secondary tiny button"
-  =link_to "W", address_book_path(:letter => "W"), class: params[:letter] == "W" ? "tiny button" : "secondary tiny button"
-  =link_to "X", address_book_path(:letter => "X"), class: params[:letter] == "X" ? "tiny button" : "secondary tiny button"
-  =link_to "Y", address_book_path(:letter => "Y"), class: params[:letter] == "Y" ? "tiny button" : "secondary tiny button"
-  =link_to "Z", address_book_path(:letter => "Z"), class: params[:letter] == "Z" ? "tiny button" : "secondary tiny button"
-
-%hr
 
 -if @contacts.present?
   - @contacts.each do |contact|
@@ -53,12 +23,12 @@
         
     - if contact.notes.present?
       %h5
-        %strong="#{contact.invite_name}" 
+        %strong="#{contact.household_name}" 
         ="(#{contact.max_guests})"
         %small.subheader.has-tip{"data-tooltip" => true,title:contact.notes} notes
     - else
       %h5
-        %strong="#{contact.invite_name}"
+        %strong="#{contact.household_name}"
         ="(#{contact.max_guests})"
     %p.subheader
       = "#{contact.address_1} #{contact.address_2 if contact.address_2.present? } <br>".html_safe if contact.address_1.present?

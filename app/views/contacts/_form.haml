@@ -1,29 +1,10 @@
 = form_for [@occasion,@contact], :html => {:role =>"form"} do |f|
   %fieldset
-    %legend
-      Contact details
-    .row
-      .columns.medium-3
-        = f.label :title, "Title"
-        = f.collection_select(:title,	@title, :name, :name, {:include_blank => true})
-      .columns.medium-4
-        = f.label :first_name, "First Name <font color='red'>*</font>".html_safe
-        = f.text_field :first_name, :autofocus => true,:maxlength => 50
-      .columns.medium-5
-        = f.label :last_name, "Last Name <font color='red'>*</font>".html_safe
-        = f.text_field :last_name, :autofocus => true,:maxlength => 50
-    =link_to "Add spouse/partner", "#", class: "button tiny secondary"
-    =link_to "Add family", "#", class: "button tiny secondary"
-    .row
-      .columns.medium-3
-        = f.label :spouse_title, "Spouse Title"
-        = f.collection_select(:spouse_title,	@title, :name, :name, {:include_blank => true})
-      .columns.medium-4
-        = f.label :spouse_first_name, "Spouse First Name <font color='red'>*</font>".html_safe
-        = f.text_field :spouse_first_name, :autofocus => true,:maxlength => 50
-      .columns.medium-5
-        = f.label :spouse_last_name, "Spouse Last Name <font color='red'>*</font>".html_safe
-        = f.text_field :spouse_last_name, :autofocus => true,:maxlength => 50
+    %legend Contact details
+
+    = f.label :household_name, "Contact/Household Name <font color='red'>*</font>".html_safe
+    = f.text_field :household_name, :autofocus => true,:maxlength => 200
+
     .row
       .columns.medium-3
         = f.label :max_guests, "Total guests", :class => "control-label"

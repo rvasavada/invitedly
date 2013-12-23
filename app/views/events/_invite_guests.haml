@@ -11,6 +11,6 @@
           - @uninvited.each do |guest|
             %tr
               %td= check_box_tag "guest_ids[]", guest.id
-              %td=guest.invite_name
+              %td=guest.household_name
       =submit_tag "Save", :class => "button"
     

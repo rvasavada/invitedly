@@ -4,12 +4,7 @@ class ContactsController < ApplicationController
   # GET /contacts
   # GET /contacts.json
   def index
-    if params[:letter].present?
-      @contacts = current_user.contacts.where('lower(last_name) LIKE ?', "#{params[:letter].downcase}%")
-    else
-      @contacts = current_user.contacts.where('lower(last_name) LIKE ?', "a%")
-      params[:letter] = "A"
-    end
+    @contacts = current_user.contacts
   end
 
   # GET /contacts/1
@@ -114,9 +109,7 @@ class ContactsController < ApplicationController
          title = "Ms."
        end
        Contact.find_or_create_by(user_id: current_user.id, facebook_uid: contact['uid'],
-                    :first_name => contact['first_name'],
-                    :last_name => contact['last_name'],
-                    :title => title,
+                    :household_name => "#{title} #{contact['first_name']} #{contact['last_name']}",
                     :max_guests => 1,
                     :user_id => current_user.id)       
      end
@@ -132,6 +125,6 @@ class ContactsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def contact_params
-      params.require(:contact).permit(:email, :notes, :user_id, :contact_id, :address_1, :address_2, :city, :state, :zip, :country, :region, :postal_code, :first_name, :last_name, :title, :spouse_title, :spouse_first_name, :spouse_last_name, :cell_phone, :home_phone, :max_guests)
+      params.require(:contact).permit(:email, :notes, :user_id, :contact_id, :address_1, :address_2, :city, :state, :zip, :country, :region, :postal_code, :household_name, :cell_phone, :home_phone, :max_guests)
     end
 end

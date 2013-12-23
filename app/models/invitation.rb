@@ -8,7 +8,7 @@ class Invitation < ActiveRecord::Base
   before_create :set_defaults
   
   def self.default_scope
-    includes(:contact).order("contacts.last_name")
+    includes(:contact).order("contacts.household_name")
   end
   
   def set_defaults

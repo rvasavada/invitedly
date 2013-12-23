@@ -13,7 +13,7 @@ class OccasionsController < ApplicationController
        INNER JOIN invitations ON contacts.id = invitations.contact_id
        WHERE events.occasion_id = '#{@occasion.id}'
          AND contacts.user_id = #{current_user.id}
-       ORDER BY lower(last_name) ASC").uniq
+       ORDER BY lower(household_name) ASC").uniq
     @response = ResponseType.all
   end
 
