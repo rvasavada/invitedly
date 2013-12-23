@@ -1,0 +1,37 @@
+!!!
+%html{lang: "en"}
+  %head
+    %title Invitedly
+    %link{href: "http://fonts.googleapis.com/css?family=Pacifico", rel: "stylesheet", type: "text/css"}
+    %meta{charset: "utf-8"}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1.0"}
+    = stylesheet_link_tag "application", media: "all"
+    = javascript_include_tag "vendor/modernizr"
+    = csrf_meta_tags
+    =favicon_link_tag "/assets/favicon.ico"
+    %body{style: "background: url('/assets/HR-01_0286.jpg') no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;"}
+      - if notice.present?
+        .alert-box{"data-alert" => true}
+          =notice
+          =link_to "&times;".html_safe, "#", class: "close"
+      - if alert.present?
+        .warning.alert-box{"data-alert" => true}
+          =alert
+          =link_to "&times;".html_safe, "#", class: "close"
+      .row
+        .small-12.columns
+          %h1{style:"color: #F0F8FF;text-shadow: #000 0px 0px 10px;"}="#{@occasion.name}"
+        
+          .row
+            .medium-6.columns
+              %p{style:"color: #F0F8FF;text-shadow: #000 0px 0px 10px;"}="#{@occasion.description}"
+            
+              =form_tag occasion_rsvp_path(@occasion, :id => "contact_info") do
+                %p.lead{style:"color: #F0F8FF;text-shadow: #000 0px 0px 10px;"} 
+                  Please enter your code below:                  
+                  =text_field_tag "code", nil,:placeholder => "Invitation Code"
+
+              
+
+
+      = javascript_include_tag "application"
