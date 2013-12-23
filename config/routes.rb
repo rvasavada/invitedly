@@ -12,6 +12,8 @@ Invitedly::Application.routes.draw do
   end
   resources :occasions do
     resources :events do
+      get :manage_guestlist
+      put :destroy_invites, :on => :collection
       get :invite_guests
       put :update_invites, :on => :collection
     end    

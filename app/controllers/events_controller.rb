@@ -112,7 +112,27 @@ class EventsController < ApplicationController
       format.js { render :layout => false }
     end
   end
+
+  def manage_guestlist
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    @event = Event.friendly.find(params[:event_id])
+    @contacts = current_user.contacts
+    @uninvited = @event.contacts 
+    respond_to do |format|
+      format.html
+      format.js { render :layout => false }
+    end
+  end
   
+  def destroy_invites
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    @event = Event.friendly.find(params[:event_id])
+    params[:guest_ids].each do |guest|
+      @event.invitations.where(contact_id: guest).destroy_all
+    end
+    redirect_to occasion_event_path(@occasion,@event), notice: 'Invitations were successfully deleted.'
+  end
+    
   def update_invites
     @occasion = Occasion.friendly.find(params[:occasion_id])
     if params[:event_id].present?
