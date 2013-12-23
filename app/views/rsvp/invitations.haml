@@ -1,25 +1,57 @@
-.row
-  .columns.small-12
-    %h3
-      %small=@guest.household_name
-      %br
-      Invitations
-  
-    = form_tag update_invites_occasion_events_path(@occasion,:guest_id => @guest), :method => :put, :html => {:role =>"form"} do |f|
-      - @invitations.each do |invitation|
-        .panel
-          %h5
-            %strong=Event.find(invitation.event_id).name
-          = fields_for "invitations[]", invitation do |f|
-            .row
-              .columns.medium-4
-                = f.label :response
-                = f.collection_select(:response,	@response, :name, :name)
-              .columns.medium-3
-                = f.label :num_guests, "Total Guests"
-                = f.select(:num_guests, options_for_select((1..@guest.max_guests).to_a,{:selected => @guest.max_guests}))
-              .columns.medium-5
+!!!
+%html{lang: "en"}
+  %head
+    %title 
+      =@occasion.name
+      @ Invitedly
+    %link{href: "http://fonts.googleapis.com/css?family=Pacifico", rel: "stylesheet", type: "text/css"}
+    %meta{charset: "utf-8"}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1.0"}
+    = stylesheet_link_tag "application", media: "all"
+    = javascript_include_tag "vendor/modernizr"
+    = csrf_meta_tags
+    =favicon_link_tag "/assets/favicon.ico"
+    %body{style: "background: url('/assets/HR-01_0286.jpg') no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;"}
+      - if notice.present?
+        .alert-box{"data-alert" => true}
+          =notice
+          =link_to "&times;".html_safe, "#", class: "close"
+      - if alert.present?
+        .warning.alert-box{"data-alert" => true}
+          =alert
+          =link_to "&times;".html_safe, "#", class: "close"
+      .row
+        .small-12.columns.medium-6
+          %ul.inline-list
+            %li{style:"color: #CCC;text-shadow: #000 0px 0px 7px;"} 1. Guest info
+            %li
+              %strong{style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"} 2. RSVP
+            %li{style:"color: #CCC;text-shadow: #000 0px 0px 7px;"} 3. Confirmation
+          
+          %h1{style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"} 
+            %strong Invitations
+          
+          %p{style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"} Please enter your responses, number of guests attending each event and add any notes or comments for the host.
+
+
             
-            = f.label :message, "Message From Guest", :class => "control-label"
-            = f.text_area :message, maxlength: 300, rows:3, class: "form-control"
-      =submit_tag "Done", :class => "button"
+          = form_for @contact, :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
+            - @invitations.each do |invitation|
+              .panel
+                %h5
+                  %strong=Event.find(invitation.event_id).name
+                = fields_for "invitations[]", invitation do |f|
+                  .row
+                    .columns.medium-4
+                      = f.label :response
+                      = f.collection_select(:response,	@response, :name, :name)
+                    .columns.medium-3
+                      = f.label :num_guests, "Total Guests"
+                      = f.select(:num_guests, options_for_select((1..@contact.max_guests).to_a,{:selected => @contact.max_guests}))
+                    .columns.medium-5
+
+                  = f.label :message, "Message", :class => "control-label"
+                  = f.text_area :message, maxlength: 300, rows:3, class: "form-control"
+            =submit_tag "Done", :class => "button"
+          
+    = javascript_include_tag "application"

@@ -1,7 +1,9 @@
 !!!
 %html{lang: "en"}
   %head
-    %title Invitedly
+    %title 
+      =@occasion.name
+      @ Invitedly
     %link{href: "http://fonts.googleapis.com/css?family=Pacifico", rel: "stylesheet", type: "text/css"}
     %meta{charset: "utf-8"}
     %meta{name: "viewport", content: "width=device-width, initial-scale=1.0"}
@@ -20,16 +22,20 @@
           =link_to "&times;".html_safe, "#", class: "close"
       .row
         .small-12.columns
-          %h1{style:"color: #F0F8FF;text-shadow: #000 0px 0px 10px;"}="#{@occasion.name}"
+          %h1{style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"}="#{@occasion.name}"
         
           .row
             .medium-6.columns
-              %p{style:"color: #F0F8FF;text-shadow: #000 0px 0px 10px;"}="#{@occasion.description}"
+              %p{style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"}="#{@occasion.description}"
             
-              =form_tag occasion_rsvp_path(@occasion, :id => "contact_info") do
-                %p.lead{style:"color: #F0F8FF;text-shadow: #000 0px 0px 10px;"} 
+              =form_tag occasion_rsvp_path(@occasion, :id => "contact_info"), :method => :get do
+                %p.lead{style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"} 
                   Please enter your code below:                  
-                  =text_field_tag "code", nil,:placeholder => "Invitation Code"
+                  .row.collapse
+                    .small-10.columns
+                      =text_field_tag "code", nil,:placeholder => "Invitation Code"           
+                    .small-2.columns
+                      =submit_tag "RSVP", :class => "secondary button postfix"
 
               
 

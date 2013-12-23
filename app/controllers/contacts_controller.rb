@@ -16,7 +16,7 @@ class ContactsController < ApplicationController
   def new
     @contact = current_user.contacts.new
     
-    @response = ResponseType.where(:active => true)
+    @response = ResponseType.all
     @title = Title.all.order("name ASC")
     @country = Country.all.order("name ASC")
     @state = State.all.order("name ASC")
@@ -24,7 +24,7 @@ class ContactsController < ApplicationController
 
   # GET /contacts/1/edit
   def edit
-    @response = ResponseType.where(:active => true)
+    @response = ResponseType.all
     @title = Title.all.order("name ASC")
     @country = Country.all.order("name ASC")
     @state = State.all.order("name ASC")
@@ -47,7 +47,7 @@ class ContactsController < ApplicationController
         format.json { render action: 'show', status: :created, location: @contact }
       else
         format.html { 
-          @response = ResponseType.where(:active => true)
+          @response = ResponseType.all
           @title = Title.all.order("name ASC")
           @country = Country.all.order("name ASC")
           @state = State.all.order("name ASC")
@@ -73,7 +73,7 @@ class ContactsController < ApplicationController
         format.json { head :no_content }
       else
         format.html { 
-          @response = ResponseType.where(:active => true)
+          @response = ResponseType.all
           @title = Title.all.order("name ASC")
           @country = Country.all.order("name ASC")
           @state = State.all.order("name ASC")

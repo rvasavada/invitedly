@@ -1,58 +1,85 @@
-= form_for [@occasion,@contact], :html => {:role =>"form"} do |f|
-  %fieldset
-    %legend Contact details
+!!!
+%html{lang: "en"}
+  %head
+    %title 
+      =@occasion.name
+      @ Invitedly
+    %link{href: "http://fonts.googleapis.com/css?family=Pacifico", rel: "stylesheet", type: "text/css"}
+    %meta{charset: "utf-8"}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1.0"}
+    = stylesheet_link_tag "application", media: "all"
+    = javascript_include_tag "vendor/modernizr"
+    = csrf_meta_tags
+    =favicon_link_tag "/assets/favicon.ico"
+    %body{style: "background: url('/assets/HR-01_0286.jpg') no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;"}
+      - if notice.present?
+        .alert-box{"data-alert" => true}
+          =notice
+          =link_to "&times;".html_safe, "#", class: "close"
+      - if alert.present?
+        .warning.alert-box{"data-alert" => true}
+          =alert
+          =link_to "&times;".html_safe, "#", class: "close"
+      .row
+        .small-12.columns.medium-6
+          %ul.inline-list
+            %li
+              %strong{style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"} 1. Guest info
+            %li{style:"color: #CCC;text-shadow: #000 0px 0px 7px;"} 2. RSVP
+            %li{style:"color: #CCC;text-shadow: #000 0px 0px 7px;"} 3. Confirmation
+          
+          %h1{style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"} 
+            %strong Guest Info
+          
+          %p{style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"} Please enter your contact information so that we may get in touch with you in the future.
 
-    = f.label :household_name, "Contact/Household Name <font color='red'>*</font>".html_safe
-    = f.text_field :household_name, :autofocus => true,:maxlength => 200
+          = form_for @contact, :url => wizard_path, :method => :put do |f|
+            = f.hidden_field :id
+            
+            = f.label :household_name, "Name <font color='red'>*</font>".html_safe,style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"
+            = f.text_field :household_name, :autofocus => true,:maxlength => 200
 
-    .row
-      .columns.medium-3
-        = f.label :max_guests, "Total guests", :class => "control-label"
-        = f.select :max_guests, options_for_select((1..20).to_a, {:selected => current_user.max_guests}), {}, class: "form-control"
+            = f.label :email, "Preferred Email",style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"
+            = f.email_field :email, :type => "email"
 
-  %fieldset
-    %legend Contact information
+            .row
+              .columns.medium-7
+                .form-group
+                  = f.label :address_1, "Address 1",style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"
+                  = f.text_field :address_1, :maxlength => 100
+              .columns.medium-5
+                .form-group
+                  = f.label :address_2, "Address 2",style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"
+                  = f.text_field :address_2, :maxlength => 100
+            .row
+              .columns.medium-5
+                = f.label :city, "City",style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"
+                = f.text_field :city, :maxlength => 100
+              .columns.medium-4.domestic
+                = f.label :state, "State",style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"
+                = f.collection_select(:state,	@state, :name, :name,{})
+              .domestic.columns.medium-3
+                = f.label :zip, "Zip",style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"
+                = f.text_field :zip, :maxlength => 5
+              .international.columns.medium-4
+                = f.label :region, "Region",style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"
+                = f.text_field :region, :maxlength => 100
+              .international.columns.medium-3
+                = f.label :postal_code, "Postal Code",style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"
+                = f.text_field :postal_code, :maxlength => 20
 
-    = f.label :email, "Preferred Email"
-    = f.email_field :email, :type => "email"
-  
-    .row
-      .columns.medium-7
-        .form-group
-          = f.label :address_1, "Address 1"
-          = f.text_field :address_1, :maxlength => 100
-      .columns.medium-5
-        .form-group
-          = f.label :address_2, "Address 2"
-          = f.text_field :address_2, :maxlength => 100
-    .row
-      .columns.medium-5
-        = f.label :city, "City"
-        = f.text_field :city, :maxlength => 100
-      .columns.medium-4.domestic
-        = f.label :state, "State"
-        = f.collection_select(:state,	@state, :name, :name,{})
-      .domestic.columns.medium-3
-        = f.label :zip, "Zip"
-        = f.text_field :zip, :maxlength => 5
-      .international.columns.medium-4
-        = f.label :region, "Region"
-        = f.text_field :region, :maxlength => 100
-      .international.columns.medium-3
-        = f.label :postal_code, "Postal Code"
-        = f.text_field :postal_code, :maxlength => 20
+            = f.label :country, "Country",style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"
+            = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, :id => "countrySelect")
 
-    = f.label :country, "Country"
-    = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, :id => "countrySelect")
-  
-    .row
-      .columns.medium-6
-        = f.label :home_phone, "Home Phone"
-        = f.telephone_field :home_phone, :type => "tel"
-      .columns.medium-6
-        = f.label :cell_phone, "Cell Phone"
-        = f.telephone_field :cell_phone, :type => "tel"
-        
-  = f.submit "Save", :class => "button"
-  = link_to 'Cancel', :back, :class=> "secondary button"
-  = f.submit "Save & Add another contact", :class => "button", style: "width:100%;"
+            .row
+              .columns.medium-6
+                = f.label :home_phone, "Home Phone",style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"
+                = f.telephone_field :home_phone, :type => "tel"
+              .columns.medium-6
+                = f.label :cell_phone, "Cell Phone",style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"
+                = f.telephone_field :cell_phone, :type => "tel"
+
+            = f.submit "Save", :class => "button"
+            = link_to "Skip", next_wizard_path(code: params[:code]), :class => "secondary button"
+    = javascript_include_tag "application"
+      
