@@ -17,7 +17,7 @@ class OccasionsController < ApplicationController
          ORDER BY lower(household_name) ASC").uniq
       @response = ResponseType.all
     else
-      render "rsvp/login", :layout => false
+      render "rsvp/home", :layout => false
     end
   end
 

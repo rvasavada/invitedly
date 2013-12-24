@@ -11,7 +11,7 @@
     = javascript_include_tag "vendor/modernizr"
     = csrf_meta_tags
     =favicon_link_tag "/assets/favicon.ico"
-    %body{style: "background: url('/assets/HR-01_0286.jpg') no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;"}
+    %body
       - if notice.present?
         .alert-box{"data-alert" => true}
           =notice
@@ -22,14 +22,25 @@
           =link_to "&times;".html_safe, "#", class: "close"
       .row
         .small-12.columns
-          %h1{style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"}="#{@occasion.name}"
+          %h1="#{@occasion.name}"
+          %p="#{@occasion.description}"
         
+          =link_to "Fill up our address book!", "#"
+          =link_to "RSVP", "#"
           .row
             .medium-6.columns
-              %p{style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"}="#{@occasion.description}"
             
+            =form_tag occasion_begin_rsvp_flow_path(@occasion) do
+              %p 
+                Please enter your code below:                  
+                .row.collapse
+                  .small-10.columns
+                    =text_field_tag "contact_id", nil,:placeholder => "Invitation Code"           
+                  .small-2.columns
+                    =submit_tag "RSVP", :class => "secondary button postfix"
+
               =form_tag occasion_begin_rsvp_flow_path(@occasion) do
-                %p.lead{style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"} 
+                %p 
                   Please enter your code below:                  
                   .row.collapse
                     .small-10.columns
