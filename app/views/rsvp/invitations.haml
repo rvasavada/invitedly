@@ -34,24 +34,26 @@
           %p{style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"} Please enter your responses, number of guests attending each event and add any notes or comments for the host.
 
 
-            
           = form_for @contact, :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
-            - @invitations.each do |invitation|
+            = f.hidden_field :id
+  
+            = f.fields_for :invitations do |invitation|
               .panel
+                = invitation.hidden_field :id
+              
                 %h5
-                  %strong=Event.find(invitation.event_id).name
-                = fields_for "invitations[]", invitation do |f|
-                  .row
-                    .columns.medium-4
-                      = f.label :response
-                      = f.collection_select(:response,	@response, :name, :name)
-                    .columns.medium-3
-                      = f.label :num_guests, "Total Guests"
-                      = f.select(:num_guests, options_for_select((1..@contact.max_guests).to_a,{:selected => @contact.max_guests}))
-                    .columns.medium-5
-
-                  = f.label :message, "Message", :class => "control-label"
-                  = f.text_area :message, maxlength: 300, rows:3, class: "form-control"
-            =submit_tag "Done", :class => "button"
-          
+                  %strong= Event.find_by_id(invitation.object.event_id).name
+                  = invitation.hidden_field :event_id
+                .row
+                  .columns.medium-4
+                    = invitation.label :response
+                    = invitation.collection_select(:response,	@response, :name, :name)
+                  .columns.medium-3
+                    = invitation.label :num_guests, "Total Guests"
+                    = invitation.select(:num_guests, options_for_select((1..@contact.max_guests).to_a,{:selected => @contact.max_guests}))
+                  .columns.medium-5
+                = invitation.label :message, "Message"
+                = invitation.text_area :message, maxlength: 300, rows:3
+            = f.submit "Save", :class => "button"
+            = link_to "Skip", next_wizard_path(code: params[:code]), :class => "secondary button"
     = javascript_include_tag "application"

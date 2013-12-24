@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131223030105) do
+ActiveRecord::Schema.define(version: 20131224072301) do
 
   create_table "contacts", force: true do |t|
     t.integer  "user_id"
@@ -33,7 +33,6 @@ ActiveRecord::Schema.define(version: 20131223030105) do
     t.datetime "updated_at"
     t.string   "facebook_uid"
     t.string   "household_name"
-    t.string   "code"
   end
 
   create_table "countries", force: true do |t|
@@ -85,6 +84,7 @@ ActiveRecord::Schema.define(version: 20131223030105) do
     t.string   "response"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "rsvp_id"
   end
 
   create_table "occasions", force: true do |t|
@@ -100,6 +100,15 @@ ActiveRecord::Schema.define(version: 20131223030105) do
 
   create_table "response_types", force: true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rsvps", force: true do |t|
+    t.integer  "occasion_id"
+    t.integer  "contact_id"
+    t.boolean  "has_responded"
+    t.string   "code"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

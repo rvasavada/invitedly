@@ -33,8 +33,7 @@
           
           %p{style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"} Please enter your contact information so that we may get in touch with you in the future.
 
-          = form_for @contact, :url => wizard_path, :method => :put do |f|
-            = f.hidden_field :id
+          = form_for @contact, :url => wizard_path(:contact_info, :contact_id => @contact), :method => :put do |f|
             
             = f.label :household_name, "Name <font color='red'>*</font>".html_safe,style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"
             = f.text_field :household_name, :autofocus => true,:maxlength => 200
@@ -69,7 +68,7 @@
                 = f.text_field :postal_code, :maxlength => 20
 
             = f.label :country, "Country",style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"
-            = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, :id => "countrySelect")
+            = f.collection_select(:country,	@country, :name, :name, {:selected => @contact.country.blank? ? "United States" : @contact.country}, :id => "countrySelect")
 
             .row
               .columns.medium-6

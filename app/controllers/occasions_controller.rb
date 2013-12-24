@@ -53,6 +53,16 @@ class OccasionsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def begin_rsvp_flow
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    @contact = Contact.find_by_id(params[:contact_id])
+    if @contact.blank?
+      redirect_to :back, :notice => "Sorry, you entered an invalid code!"
+    else
+      redirect_to occasion_rsvp_path(@occasion, :contact_info, :contact_id => @contact)
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

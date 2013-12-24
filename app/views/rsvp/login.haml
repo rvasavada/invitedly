@@ -28,12 +28,12 @@
             .medium-6.columns
               %p{style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"}="#{@occasion.description}"
             
-              =form_tag occasion_rsvp_path(@occasion, :id => "contact_info"), :method => :get do
+              =form_tag occasion_begin_rsvp_flow_path(@occasion) do
                 %p.lead{style:"color: #F0F8FF;text-shadow: #000 0px 0px 7px;"} 
                   Please enter your code below:                  
                   .row.collapse
                     .small-10.columns
-                      =text_field_tag "code", nil,:placeholder => "Invitation Code"           
+                      =text_field_tag "contact_id", nil,:placeholder => "Invitation Code"           
                     .small-2.columns
                       =submit_tag "RSVP", :class => "secondary button postfix"
 

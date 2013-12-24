@@ -11,6 +11,8 @@ Invitedly::Application.routes.draw do
    get :get_facebook_contacts, :on => :collection
   end
   resources :occasions do
+    post :begin_rsvp_flow
+    
     resources :events do
       get :manage_guestlist
       put :destroy_invites, :on => :collection
@@ -19,6 +21,7 @@ Invitedly::Application.routes.draw do
     end    
     resources :invitations
     resources :rsvp
+    
   end
   
   devise_for :users, :controllers => { :registrations => "users/registrations",

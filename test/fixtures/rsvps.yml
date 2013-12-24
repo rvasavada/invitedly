@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  occasion_id: 1
+  contact_id: 1
+  has_responded: false
+
+two:
+  occasion_id: 1
+  contact_id: 1
+  has_responded: false

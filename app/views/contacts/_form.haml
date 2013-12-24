@@ -8,7 +8,7 @@
     .row
       .columns.medium-3
         = f.label :max_guests, "Total guests", :class => "control-label"
-        = f.select :max_guests, options_for_select((1..20).to_a, {:selected => current_user.max_guests}), {}, class: "form-control"
+        = f.select :max_guests, options_for_select((1..20).to_a, {:selected => @contact.max_guests}), {}, class: "form-control"
 
   %fieldset
     %legend Contact information
@@ -43,7 +43,7 @@
         = f.text_field :postal_code, :maxlength => 20
 
     = f.label :country, "Country"
-    = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, :id => "countrySelect")
+    = f.collection_select(:country,	@country, :name, :name, {:selected => @contact.country.blank? ? "United States" : @contact.country}, :id => "countrySelect")
   
     .row
       .columns.medium-6
