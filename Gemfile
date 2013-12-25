@@ -52,7 +52,7 @@ gem 'will_paginate', '~> 3.0.5'
 gem 'wicked', '~> 1.0.2'
 gem 'activerecord-import', '~> 0.4.1'
 gem 'thin', '~> 1.6.1'
-gem 'foundation-rails', '~> 5.0.2.0'
+#gem 'foundation-rails', '~> 5.0.2.0'
 
 group :development do
   gem 'sqlite3'

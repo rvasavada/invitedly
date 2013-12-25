@@ -2,14 +2,16 @@
   .small-12.columns
     %ul.breadcrumbs
       %li.current= @occasion.name
-    = link_to 'Create event', new_occasion_event_path(@occasion), :class => "button right"
+    = link_to 'Create event', new_occasion_event_path(@occasion), :class => "btn btn-primary"
       
     %h1=@occasion.name
 
     .row
       .columns.medium-6
-        .panel#events
-          = render 'events'
+        %h2 Events      
+        .panel.panel-default#events
+          .panel-body
+            = render 'events'
       .columns.medium-6
         .panel#guestlist
           = render 'invitations'

@@ -1,22 +1,24 @@
 = form_for @occasion do |f|
 
-  %fieldset
-    %legend Occasion details
-    = f.label :name, "Name <font color='red'>*</font>".html_safe, class: "#{@occasion.errors.include?(:name) ? 'error' : ''}"
-    = f.text_field :name, :autofocus => true, :maxlength => 50, class: "#{@occasion.errors.include?(:name) ? 'error' : ''}"
-    %small{class: "#{@occasion.errors.include?(:name) ? 'error' : ''}"}= @occasion.errors.get(:name).join('; ')
+  .panel.panel-default
+    .panel-heading
+      %h3.panel-title Occasion details
+    .panel-body
+      = f.label :name, "Name <font color='red'>*</font>".html_safe, class: "#{@occasion.errors.include?(:name) ? 'error' : ''}"
+      = f.text_field :name, :autofocus => true, :maxlength => 50, class: "#{@occasion.errors.include?(:name) ? 'error' : ''}"
+      %small{class: "#{@occasion.errors.include?(:name) ? 'error' : ''}"}= @occasion.errors.get(:name).join('; ')
 
-    = f.label :slug, "Occasion handle <font color='red'>*</font>".html_safe, class: "#{@occasion.errors.include?(:slug) ? 'error' : ''}"
-    .row.collapse
-      .columns.small-5
-        %span.prefix invitedly.com/
-      .columns.small-7
-        = f.text_field :slug, :placeholder => "johnsbirthday", :maxlength => 50, class: "#{@occasion.errors.include?(:slug) ? 'error' : ''}"
-    %small{class: "#{@occasion.errors.include?(:slug) ? 'error' : ''}"}= @occasion.errors.get(:slug).join('; ')
+      = f.label :slug, "Occasion handle <font color='red'>*</font>".html_safe, class: "#{@occasion.errors.include?(:slug) ? 'error' : ''}"
+      .row.collapse{style:"display:block;"}
+        .columns.small-5
+          %span.prefix invitedly.com/
+        .columns.small-7
+          = f.text_field :slug, :placeholder => "johnsbirthday", :maxlength => 50, class: "#{@occasion.errors.include?(:slug) ? 'error' : ''}"
+      %small{class: "#{@occasion.errors.include?(:slug) ? 'error' : ''}"}= @occasion.errors.get(:slug).join('; ')
 
-    = f.label :description, "Description <font color='red'>*</font>".html_safe, class: "#{@occasion.errors.include?(:description) ? 'error' : ''}"
-    = f.text_area :description, {class: "#{@occasion.errors.include?(:description) ? 'error' : ''}",:maxlength => 140, :rows => 5}
-    %small{class: "#{@occasion.errors.include?(:description) ? 'error' : ''}"}= @occasion.errors.get(:description).join('; ')
+      = f.label :description, "Description <font color='red'>*</font>".html_safe, class: "#{@occasion.errors.include?(:description) ? 'error' : ''}"
+      = f.text_area :description, {class: "#{@occasion.errors.include?(:description) ? 'error' : ''}",:maxlength => 300, :rows => 5}
+      %small{class: "#{@occasion.errors.include?(:description) ? 'error' : ''}"}= @occasion.errors.get(:description).join('; ')
 
-  = f.submit "Save", :class=> "button"
-  = link_to "Cancel", :back, :class=> "secondary button"
+  = f.submit "Save", :class=> "btn btn-primary form-btn"
+  = link_to "Cancel", :back, :class=> "btn btn-default form-btn"

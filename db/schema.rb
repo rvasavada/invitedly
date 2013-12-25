@@ -32,6 +32,12 @@ ActiveRecord::Schema.define(version: 20131224072301) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "facebook_uid"
+    t.string   "spouse_last_name"
+    t.string   "spouse_first_name"
+    t.string   "spouse_title"
+    t.string   "title"
+    t.string   "last_name"
+    t.string   "first_name"
     t.string   "household_name"
   end
 
@@ -77,14 +83,12 @@ ActiveRecord::Schema.define(version: 20131224072301) do
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
 
   create_table "invitations", force: true do |t|
+    t.integer  "occasion_id"
     t.integer  "contact_id"
-    t.integer  "event_id"
-    t.integer  "num_guests"
-    t.string   "message"
-    t.string   "response"
+    t.boolean  "status"
+    t.string   "code"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "rsvp_id"
   end
 
   create_table "occasions", force: true do |t|
@@ -105,12 +109,16 @@ ActiveRecord::Schema.define(version: 20131224072301) do
   end
 
   create_table "rsvps", force: true do |t|
-    t.integer  "occasion_id"
+    t.integer  "user_id"
     t.integer  "contact_id"
-    t.boolean  "has_responded"
-    t.string   "code"
+    t.integer  "occasion_id"
+    t.integer  "event_id"
+    t.integer  "num_guests"
+    t.string   "message"
+    t.string   "response"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "invitation_id"
   end
 
   create_table "states", force: true do |t|

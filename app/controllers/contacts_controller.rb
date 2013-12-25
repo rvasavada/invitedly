@@ -1,18 +1,11 @@
 class ContactsController < ApplicationController
-  before_action :set_contact, only: [:show, :edit, :update, :destroy]
+  before_action :set_contact, only: [:edit, :update, :destroy]
+  before_filter :authenticate_user!, only: [:index, :edit, :new]
 
-  # GET /contacts
-  # GET /contacts.json
   def index
     @contacts = current_user.contacts
   end
 
-  # GET /contacts/1
-  # GET /contacts/1.json
-  def show
-  end
-
-  # GET /contacts/new
   def new
     @contact = current_user.contacts.new
     
@@ -22,7 +15,6 @@ class ContactsController < ApplicationController
     @state = State.all.order("name ASC")
   end
 
-  # GET /contacts/1/edit
   def edit
     @response = ResponseType.all
     @title = Title.all.order("name ASC")
@@ -30,62 +22,40 @@ class ContactsController < ApplicationController
     @state = State.all.order("name ASC")
   end
 
-  # POST /contacts
-  # POST /contacts.json
   def create
     @contact = current_user.contacts.new(contact_params)
 
-    respond_to do |format|
       if @contact.save
-        format.html { 
-          unless params[:commit] == "Save & Add another contact" 
-            redirect_to address_book_path, notice: 'contact was successfully created.'
-          else
-            redirect_to new_contact_path, notice: 'Contact was successfully created.' 
-          end
-        }
-        format.json { render action: 'show', status: :created, location: @contact }
+        unless params[:commit] == "Save & Add another contact" 
+          redirect_to address_book_path, notice: 'Contact was successfully created.'
+        else
+          redirect_to new_contact_path, notice: 'Contact was successfully created.' 
+        end
       else
-        format.html { 
-          @response = ResponseType.all
-          @title = Title.all.order("name ASC")
-          @country = Country.all.order("name ASC")
-          @state = State.all.order("name ASC")
-          render action: 'new' 
-        }
-        format.json { render json: @contact.errors, status: :unprocessable_entity }
+        @response = ResponseType.all
+        @title = Title.all.order("name ASC")
+        @country = Country.all.order("name ASC")
+        @state = State.all.order("name ASC")
+        render action: 'new' 
       end
-    end
   end
 
-  # PATCH/PUT /contacts/1
-  # PATCH/PUT /contacts/1.json
   def update
-    respond_to do |format|
-      if @contact.update(contact_params)
-        format.html { 
-          unless params[:commit] == "Save & Add another contact" 
-            redirect_to address_book_path, notice: 'Contact was successfully updated.'
-          else
-            redirect_to new_contact_path, notice: 'Contact was successfully updated.' 
-          end
-        }
-        format.json { head :no_content }
+    if @contact.update(contact_params)
+      unless params[:commit] == "Save & Add another contact" 
+        redirect_to address_book_path, notice: 'Contact was successfully updated.'
       else
-        format.html { 
-          @response = ResponseType.all
-          @title = Title.all.order("name ASC")
-          @country = Country.all.order("name ASC")
-          @state = State.all.order("name ASC")
-          render action: 'edit' 
-        }
-        format.json { render json: @contact.errors, status: :unprocessable_entity }
+        redirect_to new_contact_path, notice: 'Contact was successfully updated.' 
       end
+    else
+      @response = ResponseType.all
+      @title = Title.all.order("name ASC")
+      @country = Country.all.order("name ASC")
+      @state = State.all.order("name ASC")
+      render action: 'edit' 
     end
   end
 
-  # DELETE /contacts/1
-  # DELETE /contacts/1.json
   def destroy
     @contact.destroy
     respond_to do |format|

@@ -5,8 +5,9 @@
     %link{href: "http://fonts.googleapis.com/css?family=Pacifico", rel: "stylesheet", type: "text/css"}
     %meta{charset: "utf-8"}
     %meta{name: "viewport", content: "width=device-width, initial-scale=1.0"}
+    %link{:href=>"//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css", :rel=>"stylesheet"}
     = stylesheet_link_tag "application", media: "all"
-    = javascript_include_tag "vendor/modernizr"
+    
     = csrf_meta_tags
     =favicon_link_tag "/assets/favicon.ico"
     %body
@@ -50,3 +51,5 @@
               %li Invitedly © 2014
 
       = javascript_include_tag "application"
+      %script{:src=>"//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"}            
+      

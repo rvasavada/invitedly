@@ -17,7 +17,13 @@ class OccasionsController < ApplicationController
          ORDER BY lower(household_name) ASC").uniq
       @response = ResponseType.all
     else
-      render "rsvp/home", :layout => false
+      @contact = User.find(@occasion.user_id).contacts.new
+
+      @response = ResponseType.all
+      @title = Title.all.order("name ASC")
+      @country = Country.all.order("name ASC")
+      @state = State.all.order("name ASC")
+      render "home"
     end
   end
 

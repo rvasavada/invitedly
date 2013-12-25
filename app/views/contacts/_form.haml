@@ -1,64 +1,75 @@
-= form_for [@occasion,@contact], :html => {:role =>"form"} do |f|
-  %fieldset
-    %legend Contact details
+= form_for @contact, :html => {:role =>"form"} do |f|
 
-    = f.label :household_name, "Contact/Household Name <font color='red'>*</font>".html_safe
-    = f.text_field :household_name, :autofocus => true,:maxlength => 200
+  %h3 Contact details
+  .panel.panel-default
+    .panel-body
+      = f.label :household_name, "Contact/Household Name <font color='red'>*</font>".html_safe, class: "#{@contact.errors.include?(:household_name) ? 'error' : ''}"
+      = f.text_field :household_name, :autofocus => true, :maxlength => 200, class: "#{@contact.errors.include?(:household_name) ? 'error' : ''}"
+      %small{class: "#{@contact.errors.include?(:household_name) ? 'error' : ''}"}= @contact.errors.get(:household_name).join('; ')
 
-    .row
-      .columns.medium-3
-        = f.label :max_guests, "Total guests", :class => "control-label"
-        = f.select :max_guests, options_for_select((1..20).to_a, {:selected => @contact.max_guests}), {}, class: "form-control"
+      .row
+        .columns.small-3
+          = f.label :max_guests, "Total guests"
+          = f.select :max_guests, options_for_select((1..20).to_a, {:selected => @contact.max_guests}), {}
 
-  %fieldset
-    %legend Contact information
 
-    = f.label :email, "Preferred Email"
-    = f.email_field :email, :type => "email"
+  %h3 Contact information
+  .panel.panel-default
+    .panel-body
+
+      = f.label :email, "Preferred Email"
+      = f.email_field :email, :type => "email"
   
-    .row
-      .columns.medium-7
-        .form-group
-          = f.label :address_1, "Address 1"
-          = f.text_field :address_1, :maxlength => 100
-      .columns.medium-5
-        .form-group
-          = f.label :address_2, "Address 2"
-          = f.text_field :address_2, :maxlength => 100
-    .row
-      .columns.medium-5
-        = f.label :city, "City"
-        = f.text_field :city, :maxlength => 100
-      .columns.medium-4.domestic
-        = f.label :state, "State"
-        = f.collection_select(:state,	@state, :name, :name,{})
-      .domestic.columns.medium-3
-        = f.label :zip, "Zip"
-        = f.text_field :zip, :maxlength => 5
-      .international.columns.medium-4
-        = f.label :region, "Region"
-        = f.text_field :region, :maxlength => 100
-      .international.columns.medium-3
-        = f.label :postal_code, "Postal Code"
-        = f.text_field :postal_code, :maxlength => 20
+      .row
+        .columns.small-7
+          .form-group
+            = f.label :address_1, "Address 1"
+            = f.text_field :address_1, :maxlength => 100
+        .columns.small-5
+          .form-group
+            = f.label :address_2, "Address 2"
+            = f.text_field :address_2, :maxlength => 100
+      .row
+        .columns.small-5
+          = f.label :city, "City"
+          = f.text_field :city, :maxlength => 100
+        .columns.small-4.domestic
+          = f.label :state, "State"
+          = f.collection_select(:state,	@state, :name, :name,{})
+        .domestic.columns.small-3
+          = f.label :zip, "Zip"
+          = f.text_field :zip, :maxlength => 5
+        .international.columns.small-4
+          = f.label :region, "Region"
+          = f.text_field :region, :maxlength => 100
+        .international.columns.small-3
+          = f.label :postal_code, "Postal Code"
+          = f.text_field :postal_code, :maxlength => 20
 
-    = f.label :country, "Country"
-    = f.collection_select(:country,	@country, :name, :name, {:selected => @contact.country.blank? ? "United States" : @contact.country}, :id => "countrySelect")
-  
-    .row
-      .columns.medium-6
-        = f.label :home_phone, "Home Phone"
-        = f.telephone_field :home_phone, :type => "tel"
-      .columns.medium-6
-        = f.label :cell_phone, "Cell Phone"
-        = f.telephone_field :cell_phone, :type => "tel"
+      = f.label :country, "Country"
+      = f.collection_select(:country,	@country, :name, :name, {:selected => @contact.country.blank? ? "United States" : @contact.country}, :id => "countrySelect")
 
-  %fieldset
-    %legend Notes
+      .row
+        .columns.small-6
+          = f.label :home_phone, "Home Phone"
+          = f.telephone_field :home_phone, :type => "tel"
+        .columns.small-6
+          = f.label :cell_phone, "Cell Phone"
+          = f.telephone_field :cell_phone, :type => "tel"
 
-    = f.label :notes, "Notes", :class => "control-label"
-    = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "These notes are private and visible only to you."}
+  - if user_signed_in?
+    %h3 Notes
+    .panel.panel-default
+      .panel-body
+        = f.label :notes, "Notes"
+        = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "These notes are private and visible only to you."}
+    
 
-  = f.submit "Save", :class => "button"
-  = link_to 'Cancel', :back, :class=> "secondary button"
-  = f.submit "Save & Add another contact", :class => "button", style: "width:100%;"
+
+  - if user_signed_in?
+    .pull-right
+      = f.submit "Save & Add more", :class => "btn btn-primary form-btn"
+      = f.submit "Save & Finish", :class => "btn btn-success form-btn"
+    = link_to 'Cancel', :back, :class=> "btn btn-default form-btn"
+  - else
+    = f.submit "Submit info", :class => "btn btn-primary form-btn right"
