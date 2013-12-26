@@ -19,5 +19,5 @@
       %small{class: "#{@occasion.errors.include?(:description) ? 'error' : ''}"}= @occasion.errors.get(:description).join('; ')
 
   .pull-right
-    = f.submit "Submit", :class => "btn btn-success form-btn"
+    = f.submit "Save occasion", :class => "btn btn-success form-btn"
   = link_to 'Cancel', :back, :class=> "btn btn-default form-btn"
