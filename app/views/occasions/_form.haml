@@ -8,9 +8,9 @@
 
       = f.label :slug, "Occasion handle <font color='red'>*</font>".html_safe, class: "#{@occasion.errors.include?(:slug) ? 'error' : ''}"
       .row.collapse{style:"display:block;"}
-        .columns.small-5
+        .columns.small-3
           %span.prefix invitedly.com/
-        .columns.small-7
+        .columns.small-9
           = f.text_field :slug, :placeholder => "johnsbirthday", :maxlength => 50, class: "#{@occasion.errors.include?(:slug) ? 'error' : ''}"
       %small{class: "#{@occasion.errors.include?(:slug) ? 'error' : ''}"}= @occasion.errors.get(:slug).join('; ')
 

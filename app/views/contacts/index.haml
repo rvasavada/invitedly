@@ -2,69 +2,69 @@
   = link_to "Add contacts", user_omniauth_authorize_path(:facebook), :class => "btn btn-primary form-btn pull-right", data: {:toggle=> "modal", :target=>"#myModal"}
 
   %h1 Address Book
-  .btn-group.btn-group-justified
-    =link_to "A", address_book_path(:letter => "A"), class: params[:letter] == "A" ? "btn btn-primary" : "btn btn-default"
-    =link_to "B", address_book_path(:letter => "B"), class: params[:letter] == "B" ? "btn btn-primary" : "btn btn-default"
-    =link_to "C", address_book_path(:letter => "C"), class: params[:letter] == "C" ? "btn btn-primary" : "btn btn-default"
-    =link_to "D", address_book_path(:letter => "D"), class: params[:letter] == "D" ? "btn btn-primary" : "btn btn-default"
-    =link_to "E", address_book_path(:letter => "E"), class: params[:letter] == "E" ? "btn btn-primary" : "btn btn-default"
-    =link_to "F", address_book_path(:letter => "F"), class: params[:letter] == "F" ? "btn btn-primary" : "btn btn-default"
-    =link_to "G", address_book_path(:letter => "G"), class: params[:letter] == "G" ? "btn btn-primary" : "btn btn-default"
-    =link_to "H", address_book_path(:letter => "H"), class: params[:letter] == "H" ? "btn btn-primary" : "btn btn-default"
-    =link_to "I", address_book_path(:letter => "I"), class: params[:letter] == "I" ? "btn btn-primary" : "btn btn-default"
-    =link_to "J", address_book_path(:letter => "J"), class: params[:letter] == "J" ? "btn btn-primary" : "btn btn-default"
-    =link_to "K", address_book_path(:letter => "K"), class: params[:letter] == "K" ? "btn btn-primary" : "btn btn-default"
-    =link_to "L", address_book_path(:letter => "L"), class: params[:letter] == "L" ? "btn btn-primary" : "btn btn-default"
-    =link_to "M", address_book_path(:letter => "M"), class: params[:letter] == "M" ? "btn btn-primary" : "btn btn-default"
-    =link_to "N", address_book_path(:letter => "N"), class: params[:letter] == "N" ? "btn btn-primary" : "btn btn-default"
-    =link_to "O", address_book_path(:letter => "O"), class: params[:letter] == "O" ? "btn btn-primary" : "btn btn-default"
-    =link_to "P", address_book_path(:letter => "P"), class: params[:letter] == "P" ? "btn btn-primary" : "btn btn-default"
-    =link_to "Q", address_book_path(:letter => "Q"), class: params[:letter] == "Q" ? "btn btn-primary" : "btn btn-default"
-    =link_to "R", address_book_path(:letter => "R"), class: params[:letter] == "R" ? "btn btn-primary" : "btn btn-default"
-    =link_to "S", address_book_path(:letter => "S"), class: params[:letter] == "S" ? "btn btn-primary" : "btn btn-default"
-    =link_to "T", address_book_path(:letter => "T"), class: params[:letter] == "T" ? "btn btn-primary" : "btn btn-default"
-    =link_to "U", address_book_path(:letter => "U"), class: params[:letter] == "U" ? "btn btn-primary" : "btn btn-default"
-    =link_to "V", address_book_path(:letter => "V"), class: params[:letter] == "V" ? "btn btn-primary" : "btn btn-default"
-    =link_to "W", address_book_path(:letter => "W"), class: params[:letter] == "W" ? "btn btn-primary" : "btn btn-default"
-    =link_to "X", address_book_path(:letter => "X"), class: params[:letter] == "X" ? "btn btn-primary" : "btn btn-default"
-    =link_to "Y", address_book_path(:letter => "Y"), class: params[:letter] == "Y" ? "btn btn-primary" : "btn btn-default"
-    =link_to "Z", address_book_path(:letter => "Z"), class: params[:letter] == "Z" ? "btn btn-primary" : "btn btn-default"
-  %br
-  -if @contacts.present?
-    - @contacts.each do |contact|
-      .btn-group.pull-right
-        %button.btn.btn-primary.dropdown-toggle{"data-toggle" => "dropdown"}
-          Action
-          %span.caret
-        %ul.dropdown-menu{role: "menu"}
-          %li=link_to "Edit contact", edit_contact_path(contact)
-          %li=link_to "Delete contact", contact, data: {confirm: 'Are you sure you want to delete this contact?'}, method: :delete
+  .row
+    .small-12.columns
+      .btn-group.btn-group-justified
+        =link_to "A", address_book_path(:letter => "A"), class: params[:letter] == "A" ? "btn btn-primary" : "btn btn-default"
+        =link_to "B", address_book_path(:letter => "B"), class: params[:letter] == "B" ? "btn btn-primary" : "btn btn-default"
+        =link_to "C", address_book_path(:letter => "C"), class: params[:letter] == "C" ? "btn btn-primary" : "btn btn-default"
+        =link_to "D", address_book_path(:letter => "D"), class: params[:letter] == "D" ? "btn btn-primary" : "btn btn-default"
+        =link_to "E", address_book_path(:letter => "E"), class: params[:letter] == "E" ? "btn btn-primary" : "btn btn-default"
+        =link_to "F", address_book_path(:letter => "F"), class: params[:letter] == "F" ? "btn btn-primary" : "btn btn-default"
+        =link_to "G", address_book_path(:letter => "G"), class: params[:letter] == "G" ? "btn btn-primary" : "btn btn-default"
+        =link_to "H", address_book_path(:letter => "H"), class: params[:letter] == "H" ? "btn btn-primary" : "btn btn-default"
+        =link_to "I", address_book_path(:letter => "I"), class: params[:letter] == "I" ? "btn btn-primary" : "btn btn-default"
+        =link_to "J", address_book_path(:letter => "J"), class: params[:letter] == "J" ? "btn btn-primary" : "btn btn-default"
+        =link_to "K", address_book_path(:letter => "K"), class: params[:letter] == "K" ? "btn btn-primary" : "btn btn-default"
+        =link_to "L", address_book_path(:letter => "L"), class: params[:letter] == "L" ? "btn btn-primary" : "btn btn-default"
+        =link_to "M", address_book_path(:letter => "M"), class: params[:letter] == "M" ? "btn btn-primary" : "btn btn-default"
+        =link_to "N", address_book_path(:letter => "N"), class: params[:letter] == "N" ? "btn btn-primary" : "btn btn-default"
+        =link_to "O", address_book_path(:letter => "O"), class: params[:letter] == "O" ? "btn btn-primary" : "btn btn-default"
+        =link_to "P", address_book_path(:letter => "P"), class: params[:letter] == "P" ? "btn btn-primary" : "btn btn-default"
+        =link_to "Q", address_book_path(:letter => "Q"), class: params[:letter] == "Q" ? "btn btn-primary" : "btn btn-default"
+        =link_to "R", address_book_path(:letter => "R"), class: params[:letter] == "R" ? "btn btn-primary" : "btn btn-default"
+        =link_to "S", address_book_path(:letter => "S"), class: params[:letter] == "S" ? "btn btn-primary" : "btn btn-default"
+        =link_to "T", address_book_path(:letter => "T"), class: params[:letter] == "T" ? "btn btn-primary" : "btn btn-default"
+        =link_to "U", address_book_path(:letter => "U"), class: params[:letter] == "U" ? "btn btn-primary" : "btn btn-default"
+        =link_to "V", address_book_path(:letter => "V"), class: params[:letter] == "V" ? "btn btn-primary" : "btn btn-default"
+        =link_to "W", address_book_path(:letter => "W"), class: params[:letter] == "W" ? "btn btn-primary" : "btn btn-default"
+        =link_to "X", address_book_path(:letter => "X"), class: params[:letter] == "X" ? "btn btn-primary" : "btn btn-default"
+        =link_to "Y", address_book_path(:letter => "Y"), class: params[:letter] == "Y" ? "btn btn-primary" : "btn btn-default"
+        =link_to "Z", address_book_path(:letter => "Z"), class: params[:letter] == "Z" ? "btn btn-primary" : "btn btn-default"
 
-      - if contact.notes.present?
-        %h3
-          %strong="#{contact.household_name}" 
-          ="(#{contact.max_guests})"
-          %small.subheader.has-tip{"data-tooltip" => true,title:contact.notes} notes
-      - else
-        %h3
-          %strong="#{contact.household_name}"
-          ="(#{contact.max_guests})"
-      %p
-        = "#{contact.address_1} #{contact.address_2 if contact.address_2.present? } <br>".html_safe if contact.address_1.present?
-        = "#{contact.city}, #{contact.state} #{contact.zip} <br>".html_safe if ((contact.city.present? or contact.zip.present?) and (contact.country == 'United States'))
-        = "#{contact.city}, #{contact.region} #{contact.postal_code} <br>".html_safe if ((!contact.region.blank? or !contact.postal_code.blank?) and (contact.country != 'United States'))
-        = "#{contact.country} <br>".html_safe if contact.country != 'United States'
-        = "<abbr title='Email'>E:</abbr> <a href='mailto:#{contact.email}'>#{contact.email}</a> <br>".html_safe  if !contact.email.blank?
-        = "<abbr title='Home'>H:</abbr> #{contact.home_phone}, ".html_safe if !contact.home_phone.blank?
-        = "<abbr title='Mobile'>M:</abbr> #{contact.cell_phone}".html_safe if !contact.cell_phone.blank?
+  .row
+    .small-12.columns
+      -if @contacts.present?
+        - @contacts.each do |contact|
+          .btn-group.pull-right
+            = link_to "<span class='glyphicon glyphicon-pencil'></span>".html_safe, edit_contact_path(contact),class: "btn btn-link btn-lg info-btn", data: {container: 'body', content: "edit this contact", trigger: "hover", toggle: "popover"}
+            = link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, contact, method: :delete, data: {confirm: 'Are you sure you want to delete this contact?'},class: "btn btn-link btn-lg info-btn", data: {container: 'body', content: "delete this contact", trigger: "hover", toggle: "popover"}
 
-        %hr
+          - if contact.notes.present?
+            %h4
+              %strong="#{contact.household_name}" 
+              ="(#{contact.max_guests})"
+              %small.subheader.has-tip{"data-tooltip" => true,title:contact.notes} notes
+          - else
+            %h4
+              %strong="#{contact.household_name}"
+              ="(#{contact.max_guests})"
+          %p
+            = "#{contact.address_1} #{contact.address_2 if contact.address_2.present? } <br>".html_safe if contact.address_1.present?
+            = "#{contact.city}, #{contact.state} #{contact.zip} <br>".html_safe if ((contact.city.present? or contact.zip.present?) and (contact.country == 'United States'))
+            = "#{contact.city}, #{contact.region} #{contact.postal_code} <br>".html_safe if ((!contact.region.blank? or !contact.postal_code.blank?) and (contact.country != 'United States'))
+            = "#{contact.country} <br>".html_safe if contact.country != 'United States'
+            = "<abbr title='Email'>E:</abbr> <a href='mailto:#{contact.email}'>#{contact.email}</a> <br>".html_safe  if !contact.email.blank?
+            = "<abbr title='Home'>H:</abbr> #{contact.home_phone}, ".html_safe if !contact.home_phone.blank?
+            = "<abbr title='Mobile'>M:</abbr> #{contact.cell_phone}".html_safe if !contact.cell_phone.blank?
+
+            %hr
       
       
-  -else
-    %p.text-center
-      No contacts here.
-      = link_to "Add contacts now!", user_omniauth_authorize_path(:facebook), data: {:toggle=> "modal", :target=>"#myModal"}
+      -else
+        %p.text-center
+          No contacts here.
+          = link_to "Add contacts now!", user_omniauth_authorize_path(:facebook), data: {:toggle=> "modal", :target=>"#myModal"}
       
 
 .modal.fade#myModal

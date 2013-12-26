@@ -23,7 +23,7 @@ img { border:0; }
 h1 {font-family:"proxima-nova";}
 h2 {font-family:"proxima-nova"; }
 h3 {font-family:"proxima-nova"; }
-h4 { font-size:12px; margin:0px; padding:0px; }
+h4 {font-family:"proxima-nova"; }
 .form-btn { font-size: 16px; padding: 12px;}
 ul { margin:5px 0px 2px 0px; padding-left:20px; }
 /*li { margin-bottom:3px; }*/
