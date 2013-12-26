@@ -1420,28 +1420,6 @@ select {
   .column.xxlarge-uncentered.opposite,
   .columns.xxlarge-uncentered.opposite {
     float: right !important; } }
-button, .button {
-  cursor: pointer;
-  font-weight: normal;
-  line-height: normal;
-  margin: 0 0 1.25rem;
-  position: relative;
-  text-decoration: none;
-  text-align: center;
-  display: inline-block;
-  padding-top: 1rem;
-  padding-right: 2rem;
-  padding-bottom: 1.0625rem;
-  padding-left: 2rem;
-  font-size: 1rem;
-  /*     @else                            { font-size: $padding - rem-calc(2); } */
-  background-color: #2ba6cb;
-  border-color: #2795b6;
-  color: white;
-  -webkit-transition: background-color 300ms ease-out;
-  -moz-transition: background-color 300ms ease-out;
-  transition: background-color 300ms ease-out;
-  padding-top: 1.0625rem;
 
 /* Standard Forms */
 form {
