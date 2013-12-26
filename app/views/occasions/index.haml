@@ -6,12 +6,10 @@
     %br
     %small Select one to see more details
   - if @occasions.present?
-
-
     - @occasions.each do |occasion|
       .btn-group.pull-right
-        = link_to "<span class='glyphicon glyphicon-pencil'></span>".html_safe, edit_occasion_path(occasion),class: "btn"
-        = link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, occasion, method: :delete, data: {confirm: 'Are you sure you want to delete this occasion?'},class: "btn"
+        = link_to "<span class='glyphicon glyphicon-pencil'></span>".html_safe, edit_occasion_path(occasion),class: "btn btn-link btn-lg info-btn", data: {container: 'body', content: "edit this occasion", trigger: "hover", toggle: "popover"}
+        = link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, occasion, method: :delete, data: {confirm: 'Are you sure you want to delete this occasion?'},class: "btn btn-link btn-lg info-btn", data: {container: 'body', content: "delete this occasion", trigger: "hover", toggle: "popover"}
 
       %h3
         %strong=link_to occasion.name, occasion

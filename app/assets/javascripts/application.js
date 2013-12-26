@@ -24,7 +24,7 @@ $("document").ready(function(){
 			});
 	});
   
-	$('#spinner').timepicker({ 'scrollDefaultNow': true });
+	$('.info-btn').popover({placement:'top'});
 	
 	$("#countrySelect").change(function() {
 		if($("#countrySelect").val() == "United States") {
@@ -45,4 +45,3 @@ $("document").ready(function(){
 	}
 	
 });
-$(function(){ $(document).foundation(); });
