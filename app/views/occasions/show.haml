@@ -1,11 +1,16 @@
 .content-full
   .row
     .small-12.columns
-      = link_to 'Create event', new_occasion_event_path(@occasion), :class => "btn btn-primary pull-right form-btn"
+      .pull-right
+        = link_to 'Invite guests', "#", :class => "btn btn-primary form-btn"
+        = link_to 'Add events', new_occasion_event_path(@occasion), :class => "btn btn-primary form-btn"
       %h1=@occasion.name
 
       .row
         .columns.medium-6
+          %h2 Updates      
+          .panel.panel-default#updates
+            .panel-body
         .columns.medium-6
           %h2 Events      
           .panel.panel-default#events
