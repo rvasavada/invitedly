@@ -1,13 +1,15 @@
-.row
-  .small-12.columns
-    - if @events.present?
-      - @events.each do |event|
-        %h3
+- if @events.present?
+  - @events.each_with_index do |event,index|
+    .row
+      .small-12.columns
+        %h4
           %strong= link_to event.name, occasion_event_path(@occasion,event)
         %p= event.description
-        %hr
-      %p.text-center=link_to "Add an event!", new_occasion_event_path(@occasion)
-    -else 
+        -if (index+1) != @events.count
+          %hr
+-else
+  .row
+    .small-12.columns
       %p.text-center
         You have no events.
         =link_to "Add an event!", new_occasion_event_path(@occasion)

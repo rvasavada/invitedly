@@ -1,19 +1,19 @@
-.row
-  .small-12.columns
-    %ul.breadcrumbs
-      %li.current= @occasion.name
-    = link_to 'Create event', new_occasion_event_path(@occasion), :class => "btn btn-primary"
-      
-    %h1=@occasion.name
+.content-full
+  .row
+    .small-12.columns
+      = link_to 'Create event', new_occasion_event_path(@occasion), :class => "btn btn-primary pull-right form-btn"
+      %h1=@occasion.name
 
-    .row
-      .columns.medium-6
-        %h2 Events      
-        .panel.panel-default#events
-          .panel-body
-            = render 'events'
-      .columns.medium-6
-        .panel#guestlist
-          = render 'invitations'
+      .row
+        .columns.medium-6
+        .columns.medium-6
+          %h2 Events      
+          .panel.panel-default#events
+            .panel-body
+              = render 'events'
+          %h2 Invitations      
+          .panel.panel-default#invitations
+            .panel-body
+            = render 'invitations'
         
 = render "layouts/modal"

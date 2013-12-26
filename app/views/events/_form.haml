@@ -56,7 +56,7 @@
       = f.label :country, "Country"
       = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, :id => "countrySelect")
 
-  = f.submit "Save", :class => "btn btn-primary"
-  = link_to 'Cancel', :back, :class=> "btn btn-default"
-  = f.submit "Save & Add another event", :class => "btn btn-block"
-  
+  .pull-right
+    = f.submit "Save & Add more", :class => "btn btn-primary form-btn"
+    = f.submit "Save & Finish", :class => "btn btn-success form-btn"
+  = link_to 'Cancel', :back, :class=> "btn btn-default form-btn"

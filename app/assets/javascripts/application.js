@@ -24,6 +24,8 @@ $("document").ready(function(){
 			});
 	});
   
+	$('#spinner').timepicker({ 'scrollDefaultNow': true });
+
 	$('.info-btn').popover({placement:'top'});
 	
 	$("#countrySelect").change(function() {

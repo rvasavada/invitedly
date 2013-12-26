@@ -3,7 +3,7 @@ class Occasion < ActiveRecord::Base
   friendly_id :name, use: :slugged
   
   has_many :events, dependent: :destroy
-  has_many :invitations, :through => :events, dependent: :destroy
+  has_many :rsvps, :through => :events, dependent: :destroy
   
   belongs_to :user
 
