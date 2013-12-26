@@ -15,7 +15,7 @@ font-weight:700;
 font-family:"proxima-nova",sans-serif;
 }
 
-body { background-color:#F7F9FF; color:#000000; font-family:"proxima-nova"; font-weight:400; font-style:normal; font-size:14px; line-height:18px; margin:0px; padding:0px; }
+body {color:#000000; font-family:"proxima-nova"; font-weight:400; font-style:normal; font-size:14px; line-height:18px; margin:0px; padding:0px;background-image:url('natural_paper.png');background-repeat:repeat; }
 
 form { margin:0px; padding:0px; }
 p { margin-bottom:10px; }
@@ -32,7 +32,7 @@ ul { margin:5px 0px 2px 0px; padding-left:20px; }
 /* Layout */
 #main { margin:auto; width:940px; }
 #header{ width:940px; height:66px; padding-top:27px; }
-#logo { display:block; float:left; height:48px; width:175px; margin-right:76px;color:#428bca;font-family: 'Pacifico', cursive; font-weight:200;}
+#logo { display:block; float:left; height:48px; width:175px; margin-right:76px;color:#92b452;font-family: 'Pacifico', cursive; font-weight:200;}
 #nav { float:left; margin-top:4px; }
 #nav .link { color:#b3e5e5; cursor:pointer; display:block; float:left; font-size:15px; line-height:27px; padding-left:20px; padding-right:20px; border-right: 1px solid #0A9E9E; }
 #nav .link:hover { text-decoration:none; color:#fff; }
@@ -40,10 +40,10 @@ ul { margin:5px 0px 2px 0px; padding-left:20px; }
 #nav .on:hover { text-decoration:none; }
 #signout { float:right; margin-top:4px; }
 .signout-photo { float:left; margin-right:10px; }
-.signout-link { color:#428bca; cursor:pointer; display:block; float:left; line-height:27px; padding-right:5px; }
-.signout-link:hover { text-decoration:none; color:#92b452; }
+.signout-link { color:#92b452; cursor:pointer; display:block; float:left; line-height:27px; padding-right:5px; }
+.signout-link:hover { text-decoration:none; color:#428bca; }
 #content { width:940px; }
-.content-full { background-color:#FDFDFC; box-shadow: 0 3px 4px rgba(0,0,0,.1);-moz-box-shadow: 0 3px 4px rgba(0,0,0,.1);-webkit-box-shadow: 0 3px 4px rgba(0,0,0,.1); padding:30px 40px 30px 40px; }
+.content-full { background-color:#FDFDFC; box-shadow: 0 3px 4px rgba(0,0,0,.1);-moz-box-shadow: 0 3px 4px rgba(0,0,0,.1);-webkit-box-shadow: 0 3px 4px rgba(0,0,0,.1); padding:10px 40px 30px 40px; }
 .button { display:block; float:left; color:#FEFEFE; cursor:pointer; position:relative; padding-left:30px; padding-right:30px; height:49px; font-weight:bold; line-height:49px; font-size:16px; border-radius:6px; -moz-border-radius:6px; text-align:center; }
 .button-small { line-height:36px; height:36px; font-size:15px; padding-left:20px; padding-right:20px; }
 .button:visited { color:#FFF; }
@@ -57,7 +57,7 @@ ul { margin:5px 0px 2px 0px; padding-left:20px; }
 .button-darkpurple { background-color:#9D347E; border:1px solid #7E2966; }
 .button-darkyellow { background-color:#E3A82A; border:1px solid #C69224; }
 .button-grey { background-color:#e8e7d9; color:#b2b19f; }
-#footer {color:#aaa; font-size:13px; margin-top:20px; text-align:right; }
+#footer {color:#aaa; font-size:14px; margin-top:5px; text-align:right; }
 
 /* Reminders Toolbar */
 #toolbar { height:58px; }
