@@ -3,9 +3,9 @@
     %h1 Invitedly
   
     = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+
+      %h3 Create a new account
       .panel.panel-default 
-        .panel-heading
-          %h3.panel-title Create a new account
         .panel-body
           = f.label :email, "Email", class: "#{resource.errors.include?(:email) ? 'error' : ''}"
           = f.text_field :email, :autofocus => true, :autocomplete => :off, class: "#{resource.errors.include?(:email) ? 'error' : ''}"
@@ -17,5 +17,5 @@
           = f.password_field :password_confirmation, class: "#{resource.errors.include?(:password_confirmation) ? 'error' : ''}"
           %small{class: "#{resource.errors.include?(:password_confirmation) ? 'error' : ''}"}= resource.errors.get(:password_confirmation).join('; ')
         
-          = f.submit "Sign up", :class=> "btn btn-primary btn-block"
-      = link_to "Already have an account? <strong>Sign in</strong>.".html_safe, new_session_path(resource_name), :class=> "btn btn-default btn-block"
+          = f.submit "Sign up", :class=> "btn btn-primary btn-block form-btn"
+      = link_to "Already have an account? <strong>Sign in</strong>.".html_safe, new_session_path(resource_name), :class=> "btn btn-default btn-block form-btn"

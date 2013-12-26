@@ -2,18 +2,15 @@
   .small-10.small-offset-1.columns.medium-6.medium-offset-3
     %h1 Invitedly
     = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
-
+      %h3 Reset your password
       .panel.panel-default 
-        .panel-heading
-          .panel-title
-            %h3 Reset your password
         .panel-body
 
           %div{class: "#{resource.errors.include?(:email) ? 'has-error' : ''}"}
             = f.label :email, "Email"
             = f.text_field :email, :autofocus => true, :autocomplete => :off
             %span.help-block= resource.errors.get(:email).join('; ')
-            = f.submit "Send reset password email", :class=> "btn btn-primary btn-block"
+            = f.submit "Send reset password email", :class=> "btn btn-primary btn-block form-btn"
     
     %p.text-center
       Remember your password?

@@ -1,8 +1,6 @@
 .row
   .small-12.columns
-    %h1 Occasions 
-
-
+    %h1 Occasions
 .row
   .small-12.columns
     - if @occasions.present?
@@ -23,7 +21,9 @@
             %p.subheader= occasion.description
             %hr
           %p.text-center=link_to "Add another occasion!", new_occasion_path
-    -else 
-      %p.text-center
-        You have no occasions.
-        =link_to "Add an occasion!", new_occasion_path
+    -else
+      .panel.panel-default
+        .panel-body
+          %p.text-center
+            You have no occasions.
+            =link_to "Add an occasion!", new_occasion_path

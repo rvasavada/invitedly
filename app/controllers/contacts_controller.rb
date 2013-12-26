@@ -26,7 +26,7 @@ class ContactsController < ApplicationController
     @contact = current_user.contacts.new(contact_params)
 
       if @contact.save
-        unless params[:commit] == "Save & Add another contact" 
+        unless params[:commit] == "Save & Add more" 
           redirect_to address_book_path, notice: 'Contact was successfully created.'
         else
           redirect_to new_contact_path, notice: 'Contact was successfully created.' 
@@ -42,7 +42,7 @@ class ContactsController < ApplicationController
 
   def update
     if @contact.update(contact_params)
-      unless params[:commit] == "Save & Add another contact" 
+      unless params[:commit] == "Save & Add more" 
         redirect_to address_book_path, notice: 'Contact was successfully updated.'
       else
         redirect_to new_contact_path, notice: 'Contact was successfully updated.' 
