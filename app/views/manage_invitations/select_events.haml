@@ -1,0 +1,21 @@
+.content-full
+  .row
+    .columns.small-12
+      %h1 
+        Select events
+        %br
+        %small Click on the events to which this guest is invited.
+        
+      = form_tag :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
+        - @events.each do |event|
+          .row
+            .columns.small-12
+              =check_box_tag "event_ids[]", event.id
+              =label_tag "event_ids[]", event.name
+              
+              
+        =submit_tag "Next", :class => "btn form-btn btn-primary"
+    
+
+  = link_to 'previous', previous_wizard_path
+  = link_to 'skip', next_wizard_path

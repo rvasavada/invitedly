@@ -1,5 +1,4 @@
 Invitedly::Application.routes.draw do
-  resources :invitations
 
   get 'about' => 'static#about'
   get 'terms' => 'static#terms'
@@ -11,17 +10,16 @@ Invitedly::Application.routes.draw do
    get :get_facebook_contacts, :on => :collection
   end
   resources :occasions do
-    post :begin_rsvp_flow
+    #post :begin_rsvp_flow
     
     resources :events do
-      get :manage_guestlist
-      put :destroy_invites, :on => :collection
-      get :invite_guests
-      put :update_invites, :on => :collection
+      #get :manage_guestlist
+      #put :destroy_invites, :on => :collection
+      #get :invite_guests
+      #put :update_invites, :on => :collection
     end    
-    resources :invitations
-    resources :rsvp
-    
+    resources :manage_invitations
+    #resources :rsvp
   end
   
   devise_for :users, :controllers => { :registrations => "users/registrations",

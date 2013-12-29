@@ -1,0 +1,21 @@
+.content-full
+  .row
+    .columns.small-12
+      %h1 
+        Select guests
+        %br
+        %small Click on the guests below that you would like to invite.
+        
+      = form_tag :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
+        - @contacts.each do |guest|
+          .row
+            .columns.small-12
+              =check_box_tag "guest_ids[]", guest.id
+              =label_tag "guest_ids[]", guest.household_name
+              
+              
+        =submit_tag "Next", :class => "btn form-btn btn-primary"
+    
+
+  = link_to 'previous', previous_wizard_path
+  = link_to 'skip', next_wizard_path
