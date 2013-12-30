@@ -1,0 +1,16 @@
+.modal-header
+  %button.close{type: "button", "data-dismiss" => "modal", "aria-hidden" => "true"} &times;
+  %h3
+    Invite guests
+    %br
+    %small Select the guest that you would like to create an invitation for.
+.modal-body
+  = form_tag [@occasion,@invitation], :html => {:role =>"form"} do |f|
+    .row
+      .columns.small-12
+        =label_tag :guest_id, "Guest name"
+        = select_tag(:guest_id,	options_from_collection_for_select(@uninvited, :household_name, :household_name))
+
+        =submit_tag "Invite guest", :class => "btn btn-primary form-btn"
+
+

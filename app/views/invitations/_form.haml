@@ -1,0 +1,32 @@
+.row
+  .columns.small-12
+    = select_tag(:guest_id,	options_from_collection_for_select(@contacts, :household_name, :household_name), { :prompt => 'Select Guest' })
+
+= form_for [@occasion,@invitation], :html => { :role => "form"} do |f|
+        
+  %h2 Invitation info
+  .panel.panel-default
+    .panel-body
+          
+      = fields_for :rsvps do |rsvp|
+        = rsvp.hidden_field :guest_id
+
+        = rsvp.label :event_id
+        = rsvp.collection_select(:event_id,	@occasion.events, :name, :name)
+
+
+  %h2 Invitation details
+  .panel.panel-default
+    .panel-body
+      .row
+        .columns.small-12
+          Invite by email or code
+          Send date
+          Reminders every x days/weeks
+          Format type:  neither, email, paper, both
+          Ask for gift?
+          
+          = f.label :code
+          = f.text_field :code
+          -#=label_tag :guest_id, "Guest name"
+          -#= f.collection_select(:guest_id,	@contacts, :household_name, :household_name)

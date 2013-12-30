@@ -1,8 +1,6 @@
 class InvitationsController < ApplicationController
   before_action :set_invitation, only: [:show, :edit, :update, :destroy]
 
-  # GET /invitations
-  # GET /invitations.json
   def index
     @occasion = Occasion.friendly.find(params[:occasion_id])
     @guest = Contact.find(params[:guest_id])
@@ -20,10 +18,9 @@ class InvitationsController < ApplicationController
   def show
   end
 
-  # GET /invitations/new
   def new
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    
+    @contacts = current_user.contacts
     @invitation = Invitation.new
   end
 

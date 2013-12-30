@@ -73,17 +73,6 @@ class EventsController < ApplicationController
       format.json { render :json => {id: @event.id, response: "Event was deleted."} }
     end
   end
-  
-  def invite_guests
-    @occasion = Occasion.friendly.find(params[:occasion_id])
-    @event = Event.friendly.find(params[:event_id])
-    @contacts = current_user.contacts
-    @uninvited = @contacts - @event.contacts 
-    respond_to do |format|
-      format.html
-      format.js { render :layout => false }
-    end
-  end
 
   def manage_guestlist
     @occasion = Occasion.friendly.find(params[:occasion_id])

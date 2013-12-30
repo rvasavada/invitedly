@@ -2,7 +2,7 @@
   .row
     .small-12.columns
       .pull-right
-        = link_to 'Invite guests', "#", :class => "btn btn-primary form-btn"
+        = link_to 'Invite guests', new_occasion_invitation_path(@occasion), :class => "btn btn-primary form-btn"
         = link_to 'Add events', new_occasion_event_path(@occasion), :class => "btn btn-primary form-btn"
       %h1=@occasion.name
 

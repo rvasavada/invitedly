@@ -60,6 +60,20 @@ class OccasionsController < ApplicationController
     end
   end
   
+  
+  #to create a list of guests and select which ones to invite
+  def invite_guests
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    @contacts = current_user.contacts
+    @uninvited = @contacts
+    respond_to do |format|
+      format.html
+      format.js { render :layout => false }
+    end
+  end
+  
+  
+  #useless one
   def begin_rsvp_flow
     @occasion = Occasion.friendly.find(params[:occasion_id])
     @contact = Contact.find_by_id(params[:contact_id])
