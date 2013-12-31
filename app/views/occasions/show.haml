@@ -2,23 +2,20 @@
   .row
     .small-12.columns
       .pull-right
-        = link_to 'Invite guests', new_occasion_invitation_path(@occasion), :class => "btn btn-primary form-btn"
+        = link_to 'Invite more guests', new_occasion_invitation_path(@occasion), :class => "btn btn-primary form-btn"
         = link_to 'Add events', new_occasion_event_path(@occasion), :class => "btn btn-primary form-btn"
-      %h1=@occasion.name
-
+      %h1
+        =@occasion.name
       .row
-        .columns.medium-6
-          %h2 Updates      
+        .columns.medium-3
+          .list-group
+            =link_to "Updates", "#", class: "list-group-item active"
+            =link_to "Events", occasion_events_path(@occasion), class: "list-group-item"
+            =link_to "Invitations", occasion_invitations_path(@occasion), class: "list-group-item"
+            
+        .columns.medium-9
           .panel.panel-default#updates
             .panel-body
-        .columns.medium-6
-          %h2 Events      
-          .panel.panel-default#events
-            .panel-body
-              = render 'events'
-          %h2 Invitations      
-          .panel.panel-default#invitations
-            .panel-body
-            = render 'invitations'
+
         
 = render "layouts/modal"

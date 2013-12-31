@@ -3,7 +3,6 @@ class EventsController < ApplicationController
 
   def index
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    @event = Event.friendly.find(params[:event])
     @response = ResponseType.all
     
     @events = @occasion.events
@@ -13,7 +12,7 @@ class EventsController < ApplicationController
     @occasion = Occasion.friendly.find(params[:occasion_id])
     @event = Event.friendly.find(params[:id])
     
-    @invites = @event.invitations
+    @invites = @event.rsvps
     @attending = @invites.where(:response => "Attending")
     @might_attend = @invites.where(:response => "Might Attend")
     @not_attend = @invites.where(:response => "Not Attending")

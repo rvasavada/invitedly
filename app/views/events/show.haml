@@ -1,7 +1,7 @@
 %ul.breadcrumbs
   %li=link_to @occasion.name, @occasion
   %li.current=@event.name
-= link_to "Invite more guests", occasion_event_invite_guests_path(@occasion,@event), :class => "button right", data: {remote: true, "reveal-id" => "myModal"}
+  = link_to 'Invite more guests', new_occasion_invitation_path(@occasion), :class => "btn btn-primary form-btn"
 
 %h1=@event.name
 
@@ -44,8 +44,8 @@
     .panel#guestlist
       =link_to "Actions","#",class: "tiny button dropdown right", "data-dropdown" =>"dropGuest"
       %ul.f-dropdown#dropGuest{"data-dropdown-content" => true}
-        %li= link_to "Manage guest list", occasion_event_manage_guestlist_path(@occasion,@event), data: {remote: true, "reveal-id" => "myModal"}
-        %li= link_to "Invite more guests", occasion_event_invite_guests_path(@occasion,@event), data: {remote: true, "reveal-id" => "myModal"}
+        %li= link_to "Manage guest list", new_occasion_invitation_path(@occasion), :class => "btn btn-primary form-btn"
+        %li= link_to "Invite more guests", new_occasion_invitation_path(@occasion), :class => "btn btn-primary form-btn"
     
       %h2
         ="Guest List"

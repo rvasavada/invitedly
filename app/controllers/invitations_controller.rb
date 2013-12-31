@@ -3,9 +3,6 @@ class InvitationsController < ApplicationController
 
   def index
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    @guest = Contact.find(params[:guest_id])
-    @invitations = @guest.invitations
-    @response = ResponseType.all
     
     respond_to do |format|
       format.html
