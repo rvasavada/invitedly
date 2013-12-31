@@ -1,9 +1,11 @@
 .content-full
-  %h1 
-    Create an invitation for 
-    %strong=@occasion.name
-    %br
-    %small Choose a guest, select the events they are invited to, and fill in the invitation details.
-  .row
-    .small-12.columns
-      = render 'form'
+  .content-header
+    %h1 
+      Create an invitation for 
+      %strong=@occasion.name
+      %br
+      %small Choose a guest, select the events they are invited to, and fill in the invitation details.
+  .content-body
+    .row
+      .small-7.columns
+        = render 'form'

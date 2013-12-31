@@ -3,7 +3,7 @@ class InvitationsController < ApplicationController
 
   def index
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    
+    @guests = @occasion.rsvps
     respond_to do |format|
       format.html
       format.js { render :layout => false }
@@ -19,6 +19,9 @@ class InvitationsController < ApplicationController
     @occasion = Occasion.friendly.find(params[:occasion_id])
     @contacts = current_user.contacts
     @invitation = Invitation.new
+    @occasion.events.each do |event|
+      @invitation.rsvps.build(:event_id => event.id)
+    end
   end
 
   # GET /invitations/1/edit

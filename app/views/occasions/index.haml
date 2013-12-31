@@ -1,27 +1,27 @@
 .content-full
-  =link_to "Add occasion", new_occasion_path, :class => "btn btn-primary form-btn pull-right"
+  .content-header
+    %h1 Here are all of your occasions
+  .content-toolbar
+    %h3
+      =link_to "Add occasion", new_occasion_path, :class => "btn btn-primary form-btn pull-right", style: "margin-top: -13px;"
+      ="#{pluralize(@occasions.count, 'occasion')} found"
+  .content-body
+    - if @occasions.present?
+      - @occasions.each do |occasion|
+        .results-row
+          .row
+            .small-12.columns            
+              .btn-group.pull-right
+                = link_to "<span class='glyphicon glyphicon-pencil'></span>".html_safe, edit_occasion_path(occasion),class: "btn btn-link btn-lg info-btn", data: {container: 'body', content: "edit this occasion", trigger: "hover", toggle: "popover"}
+                = link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, occasion, method: :delete, data: {confirm: 'Are you sure you want to delete this occasion?'},class: "btn btn-link btn-lg info-btn", data: {container: 'body', content: "delete this occasion", trigger: "hover", toggle: "popover"}
 
-  %h1 
-    Here are all of your occasions
-    %br
-    %small Select one to see more details
-    
-  - if @occasions.present?
-    - @occasions.each_with_index do |occasion,index|
+              %h4
+                %strong=link_to occasion.name, occasion
+              %p.subheader= occasion.description
+
+    -else
       .row
         .small-12.columns
-          .btn-group.pull-right
-            = link_to "<span class='glyphicon glyphicon-pencil'></span>".html_safe, edit_occasion_path(occasion),class: "btn btn-link btn-lg info-btn", data: {container: 'body', content: "edit this occasion", trigger: "hover", toggle: "popover"}
-            = link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, occasion, method: :delete, data: {confirm: 'Are you sure you want to delete this occasion?'},class: "btn btn-link btn-lg info-btn", data: {container: 'body', content: "delete this occasion", trigger: "hover", toggle: "popover"}
-
-          %h3
-            %strong=link_to occasion.name, occasion
-          %p.subheader= occasion.description
-          -if (index+1) != @occasions.count
-            %hr
-  -else
-    .row
-      .small-12.columns
-        %p.text-center
-          You have no occasions.
-          =link_to "Add an occasion!", new_occasion_path
+          %p.text-center
+            You have no occasions.
+            =link_to "Add an occasion!", new_occasion_path

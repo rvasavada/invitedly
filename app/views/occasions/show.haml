@@ -1,21 +1,18 @@
 .content-full
-  .row
-    .small-12.columns
-      .pull-right
+  .content-nav
+    %ul.list-inline
+      %li=link_to "Updates", @occasion, style: "font-weight:bold;"
+      %li=link_to "Events", occasion_events_path(@occasion)
+      %li=link_to "Invitations", occasion_invitations_path(@occasion)
+  .content-header
+    %h1=@occasion.name
+  .content-toolbar
+    %h2
+      .pull-right{style: "margin-top: -13px;"}
         = link_to 'Invite more guests', new_occasion_invitation_path(@occasion), :class => "btn btn-primary form-btn"
         = link_to 'Add events', new_occasion_event_path(@occasion), :class => "btn btn-primary form-btn"
-      %h1
-        =@occasion.name
-      .row
-        .columns.medium-3
-          .list-group
-            =link_to "Updates", "#", class: "list-group-item active"
-            =link_to "Events", occasion_events_path(@occasion), class: "list-group-item"
-            =link_to "Invitations", occasion_invitations_path(@occasion), class: "list-group-item"
-            
-        .columns.medium-9
-          .panel.panel-default#updates
-            .panel-body
+      Updates
+  .content-body
 
         
 = render "layouts/modal"

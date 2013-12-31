@@ -1,36 +1,37 @@
 .content-full
-  .row
-    .small-12.columns
-      .pull-right
-        = link_to 'Invite more guests', new_occasion_invitation_path(@occasion), :class => "btn btn-primary form-btn"
-        = link_to 'Add events', new_occasion_event_path(@occasion), :class => "btn btn-primary form-btn"
-      %h1
-        =@occasion.name
-      .row
-        .columns.medium-3
-          .list-group
-            =link_to "Updates", @occasion, class: "list-group-item"
-            =link_to "Events", occasion_events_path(@occasion), class: "list-group-item"
-            =link_to "Invitations", "#", class: "list-group-item active"
-            
-        .columns.medium-9
-          .panel.panel-default#updates
-            .panel-body
+  .content-nav
+    %ul.list-inline
+      %li=link_to "Updates", @occasion
+      %li=link_to "Events", occasion_events_path(@occasion)
+      %li=link_to "Invitations", occasion_invitations_path(@occasion), style: "font-weight:bold;"
+  .content-header
+    %h1
+      %strong Invitations
+      ="for #{@occasion.name}"
+    
+  .content-toolbar
+    %h2
+      ="#{pluralize(@guests.count,'invitation')} found"
+      = link_to 'Invite more guests', new_occasion_invitation_path(@occasion), :class => "btn btn-primary form-btn pull-right", style: "margin-top: -13px;"
+  
+  .content-body
 
-              -if @guests.present?
-                %p
-                  - @guests.each do |guest|
-                    .row
-                      .small-12.columns
-                        =link_to guest.household_name, occasion_invitations_path(@occasion, guest_id: guest), data: {remote: true, "reveal-id" => "myModal"}
-              - else
-                .row
-                  .small-12.columns
-                    %p.text-center
-                      -if current_user.contacts.present?
-                        No guests invited. Select or add an event and invite guests!
-                      -else 
-                        You have no contacts.
-                        = link_to "Add contacts!", user_omniauth_authorize_path(:facebook), :class => "btn btn-primary pull-right", data: {:toggle=> "modal", :target=>"#myModal"}
-      
+
+    -if @guests.present?
+      %p
+        - @guests.each do |guest|
+          .row
+            .small-12.columns
+              =link_to guest.household_name, occasion_invitations_path(@occasion, guest_id: guest), data: {remote: true, "reveal-id" => "myModal"}
+    - else
+      .row
+        .small-12.columns
+          %p.text-center
+            -if current_user.contacts.present?
+              No guests invited. 
+              = link_to 'Invite guests!', new_occasion_invitation_path(@occasion)
+            -else 
+              You have no contacts.
+              = link_to "Add contacts!", user_omniauth_authorize_path(:facebook)
+
 = render "layouts/modal"
