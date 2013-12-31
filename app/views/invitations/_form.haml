@@ -1,32 +1,50 @@
-.row
-  .columns.small-12
-    = select_tag(:guest_id,	options_from_collection_for_select(@contacts, :household_name, :household_name), { :prompt => 'Select Guest' })
 
+    
 = form_for [@occasion,@invitation], :html => { :role => "form"} do |f|
-        
-  %h2 Invitation info
+    
   .panel.panel-default
     .panel-body
-          
-      = fields_for :rsvps do |rsvp|
-        = rsvp.hidden_field :guest_id
-
-        = rsvp.label :event_id
-        = rsvp.collection_select(:event_id,	@occasion.events, :name, :name)
-
-
-  %h2 Invitation details
-  .panel.panel-default
-    .panel-body
+      =f.select(:contact_id,	options_from_collection_for_select(@contacts, :id, :household_name), { :prompt => 'Choose a guest...' })
+      
       .row
         .columns.small-12
-          Invite by email or code
-          Send date
-          Reminders every x days/weeks
-          Format type:  neither, email, paper, both
-          Ask for gift?
-          
-          = f.label :code
-          = f.text_field :code
-          -#=label_tag :guest_id, "Guest name"
-          -#= f.collection_select(:guest_id,	@contacts, :household_name, :household_name)
+          %h3 Is invited to...
+          - @occasion.events.each do |event|
+            = check_box_tag "event_ids[]", event.id
+            =event.name
+            
+          -#= fields_for :rsvps do |rsvp|
+            = rsvp.hidden_field :guest_id
+
+            = rsvp.label :event_id
+            = rsvp.collection_select(:event_id,	@occasion.events, :name, :name)
+          %hr
+          .row
+            .columns.small-12
+              %h3 Invitation details
+              .row
+                .columns.small-6
+                  = label_tag :send_date, "Send Date"
+                  = text_field_tag :send_date,"", :class => "datepicker"
+                .columns.small-6
+                  = label_tag :send_reminder, "Send Reminder"
+                  =select_tag(:send_reminder,	options_from_collection_for_select(@contacts, :household_name, :household_name), { :prompt => 'Send a reminder every...' })
+              .row
+                .columns.small-12              
+                  %label Would you like us to send an additional invitation via email?
+                  = radio_button_tag :send_via_email, "Yes"
+                  = label_tag :send_via_email_Yes, "Yes"
+                  = radio_button_tag :send_via_email, "No"
+                  = label_tag :send_via_email_No, "No"
+              .row
+                .columns.small-12              
+                  %label Would you want us to present the option to send a gift, even if the guest can't make it?
+                  = radio_button_tag :ask_for_gift, "Yes"
+                  = label_tag :ask_for_gift_Yes, "Yes"
+                  = radio_button_tag :ask_for_gift, "No"
+                  = label_tag :ask_for_gift_No, "No"
+              
+              = f.label :code, "In case we don't have an email address for the guest, you can give them this special link:"
+              = f.text_field :code
+              -#=label_tag :guest_id, "Guest name"
+              -#= f.collection_select(:guest_id,	@contacts, :household_name, :household_name)
