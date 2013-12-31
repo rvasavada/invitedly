@@ -3,8 +3,9 @@ class Occasion < ActiveRecord::Base
   friendly_id :name, use: :slugged
   
   has_many :events, dependent: :destroy
-  has_many :rsvps, :through => :events, dependent: :destroy
-  
+  has_many :invitations, dependent: :destroy
+  has_many :contacts, :through => :invitations
+  has_many :rsvps, dependent: :destroy  
   belongs_to :user
 
   validates :slug, :format => { :with => /\A[a-z0-9_-]{3,}\Z/, :message => "at least 3 characters; only letters, digits, underscores, and hyphens allowed" }

@@ -87,6 +87,10 @@ ActiveRecord::Schema.define(version: 20131224072301) do
     t.integer  "contact_id"
     t.boolean  "status"
     t.string   "code"
+    t.boolean  "send_email"
+    t.string   "send_date"
+    t.string   "send_reminder"
+    t.boolean  "include_gift_option"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

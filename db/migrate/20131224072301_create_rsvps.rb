@@ -5,6 +5,10 @@ class CreateRsvps < ActiveRecord::Migration
       t.integer :contact_id
       t.boolean :status
       t.string :code
+      t.boolean :send_email
+      t.string :send_date
+      t.string :send_reminder
+      t.boolean :include_gift_option
       t.timestamps
     end
     

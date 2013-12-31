@@ -1,38 +1,40 @@
 = form_for [@occasion,@invitation], :html => { :role => "form"} do |f|
   %h3 Invitation details
   =f.label :contact_id, "Guest name"
-  =f.select(:contact_id,	options_from_collection_for_select(@contacts, :id, :household_name), { :prompt => 'Choose a guest...' })
-
+  = f.hidden_field(:contact_id)
+  
+  %strong=@guest.household_name
+  
+  %br
+  %br
+  
   =f.label :rsvps, "Events"
   = f.fields_for :rsvps do |rsvp|
     = rsvp.hidden_field(:event_id)
-    = Event.find(rsvp.object.event_id).name
+    = rsvp.check_box :response
+    = rsvp.label :response, Event.find(rsvp.object.event_id).name
 
   %h3 Invitation settings
-
-  .row
-    .columns.small-6
-      = label_tag :send_date, "Send Invitation Date"
-      = text_field_tag :send_date,"", :class => "datepicker"
-    .columns.small-6
-      = label_tag :send_reminder, "Send Reminder"
-      =select_tag(:send_reminder,	options_from_collection_for_select(@contacts, :household_name, :household_name), { :prompt => 'Send a reminder every...' })
   .row
     .columns.small-12              
-      %label Would you like us to send an additional invitation via email?
-      = radio_button_tag :send_via_email, "Yes", checked: true
-      = label_tag :send_via_email_Yes, "Yes"
-      = radio_button_tag :send_via_email, "No"
-      = label_tag :send_via_email_No, "No"
+      %p Would you like us to send the guest an email to rsvp?
+      = f.check_box :send_email, checked: true
+      = f.label :send_email, "Yes"
+      
+  .row
+    .columns.small-6
+      = f.label :send_date, "Send Invitation Date"
+      = f.text_field :send_date, :class => "datepicker"
+    .columns.small-6
+      = f.label :send_reminder, "Send a reminder"
+      =f.select(:send_reminder,	options_from_collection_for_select(@contacts, :household_name, :household_name), { :prompt => 'Send a reminder every...' })
   .row
     .columns.small-12              
-      %label Would you want us to present the option to send a gift, even if the guest can't make it?
-      = radio_button_tag :ask_for_gift, "Yes", checked: true
-      = label_tag :ask_for_gift_Yes, "Yes"
-      = radio_button_tag :ask_for_gift, "No"
-      = label_tag :ask_for_gift_No, "No"
+      %p Would you want us to present the option to send a gift, even if the guest can't make it?
+      = f.check_box :include_gift_option, checked: true
+      = f.label :include_gift_option, "Yes"
 
-  = f.label :code, "In case we don't have an email address for the guest, you can give them this special link:"
+  %p In case we don't have an email address for the guest, you can give them this special link:
   = f.text_field :code, {:value => "http://www.invitedly.com/occasionname/invitationcode", :disabled => true}
       
   .pull-right

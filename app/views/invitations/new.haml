@@ -8,4 +8,14 @@
   .content-body
     .row
       .small-7.columns
-        = render 'form'
+        -if @guest.blank?
+          %h3 Choose a guest
+          =form_tag new_occasion_invitation_path(@occasion), :method => "get", :html => { :role => "form"} do
+            =select_tag(:guest_id,	options_from_collection_for_select(@contacts, :id, :household_name), { :prompt => 'Choose a guest...' })
+            .pull-right
+              = submit_tag "Next", :class => "btn btn-success form-btn"
+            = link_to 'Cancel', :back, :class=> "btn btn-default form-btn"
+        -else
+          = render 'form'
+        
+        

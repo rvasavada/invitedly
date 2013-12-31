@@ -40,7 +40,7 @@ class EventsController < ApplicationController
       unless params[:commit] == "Save & Add more" 
         redirect_to occasion_event_path(@occasion,@event), notice: 'Event was successfully created.'
       else
-        redirect_to new_occasion_event_path, notice: 'Event was successfully created.' 
+        redirect_to new_occasion_event_path(@occasion), notice: 'Event was successfully created.' 
       end
     else
       @country = Country.all.order("name ASC")

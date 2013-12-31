@@ -11,18 +11,18 @@
     
   .content-toolbar
     %h2
-      ="#{pluralize(@guests.count,'invitation')} found"
+      ="#{pluralize(@invitations.count,'invitation')} found"
       = link_to 'Invite more guests', new_occasion_invitation_path(@occasion), :class => "btn btn-primary form-btn pull-right", style: "margin-top: -13px;"
   
   .content-body
 
 
-    -if @guests.present?
+    -if @invitations.present?
       %p
-        - @guests.each do |guest|
+        - @invitations.each do |invitation|
           .row
             .small-12.columns
-              =link_to guest.household_name, occasion_invitations_path(@occasion, guest_id: guest), data: {remote: true, "reveal-id" => "myModal"}
+              =link_to Contact.find(invitation.contact_id).household_name, occasion_invitation_path(@occasion, invitation), data: {remote: true, "reveal-id" => "myModal"}
     - else
       .row
         .small-12.columns

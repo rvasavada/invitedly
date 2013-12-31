@@ -9,8 +9,9 @@ Invitedly::Application.routes.draw do
   resources :contacts, :except => [:index,:show] do
    get :get_facebook_contacts, :on => :collection
   end
+  
   resources :occasions do
-    get :invite_guests
+    #get :invite_guests
     resources :invitations
     
     resources :events do
@@ -18,7 +19,7 @@ Invitedly::Application.routes.draw do
       #put :destroy_invites, :on => :collection
       #put :update_invites, :on => :collection
     end    
-    resources :manage_invitations
+    #resources :manage_invitations
     #post :begin_rsvp_flow
     #resources :rsvp
   end
