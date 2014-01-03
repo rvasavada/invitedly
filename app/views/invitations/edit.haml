@@ -1,8 +1,14 @@
 .content-full
-  %h1 
-    Edit your Invitation Card
-    %br
-    %small You can edit the invitation invite for this guest.
-  .row
-    .small-7.columns
-      = render 'form'
+  .content-nav
+    %ul.list-inline
+      %li=@occasion.name
+      %li 
+        %strong Invitations
+  .content-header
+    %h1="Edit <strong>#{@guest.household_name}</strong>'s invitation".html_safe
+      
+  .content-body
+    .row
+      .small-7.columns
+        = render 'form'
+

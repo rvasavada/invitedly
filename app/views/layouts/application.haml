@@ -25,13 +25,16 @@
               %li= link_to "Sign in",new_user_session_path, class: "signout-link"
               %li.has-form= link_to "Sign up", new_user_registration_path, class: "signout-link"
             
-      .row
-        .small-12.columns
-          - if notice.present?
+
+      - if notice.present?
+        .row
+          .small-12.columns
             .alert.alert-success.alert-dismissable
               %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
               = notice.html_safe
-          - if alert.present?
+      - if alert.present?
+        .row
+          .small-12.columns
             .alert.alert-danger.alert-dismissable
               %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
               = alert.html_safe

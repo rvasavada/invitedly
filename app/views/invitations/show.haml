@@ -1,0 +1,11 @@
+.content-full
+  %h1=@guest.household_name
+  %p= @invitation.status
+
+  -@invitation.rsvps.each do |rsvp|
+    %h3=Event.find(rsvp.event_id).name
+    =rsvp.message
+    =rsvp.response
+    =rsvp.num_guests
+    =rsvp.updated_at
+      

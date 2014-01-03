@@ -5,20 +5,13 @@
     .row
       .small-7.columns
         = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
-      
-          -#%fieldset
-            %legend Change Username
+          %h3 Contact information
 
-            %div{class: "form-group #{resource.errors.include?(:username) ? 'has-error' : ''}"}
-              = f.label :username, "Username", :class => "control-label"
-              = f.email_field :username, :autofocus => true, class: "form-control"
-              %span.help-block= resource.errors.get(:username).join('; ')
+          = f.label :email, "Preferred Email"
+          = f.email_field :email, :type => "email"
 
-            - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-              %div
-                Currently waiting confirmation for: #{resource.unconfirmed_email}
   
-          %h3 Change Password
+          %h3 Change password
 
           = f.label :password, "Password", class: "#{resource.errors.include?(:password) ? 'error' : ''}"
           = f.password_field :password, :autocomplete => :off, class: "#{resource.errors.include?(:password) ? 'error' : ''}"
@@ -30,82 +23,7 @@
           = f.label :current_password, "Current Password", class: "#{resource.errors.include?(:current_password) ? 'error' : ''}"
           = f.password_field :current_password, :autocomplete => :off, class: "#{resource.errors.include?(:current_password) ? 'error' : ''}"
           %small{class: "#{resource.errors.include?(:current_password) ? 'error' : ''}"}= resource.errors.get(:current_password).join('; ')
-        
-          -#%fieldset
-            %legend
-              Contact details
-            .row
-              .columns.medium-3
-                = f.label :title, "Title"
-                = f.collection_select(:title,	@title, :name, :name, {:include_blank => true})
-              .columns.medium-4
-                = f.label :first_name, "First Name <font color='red'>*</font>".html_safe
-                = f.text_field :first_name, :autofocus => true,:maxlength => 50
-              .columns.medium-5
-                = f.label :last_name, "Last Name <font color='red'>*</font>".html_safe
-                = f.text_field :last_name, :autofocus => true,:maxlength => 50
-            .row
-              .columns.medium-3
-                = f.label :spouse_title, "Spouse Title"
-                = f.collection_select(:spouse_title,	@title, :name, :name, {:include_blank => true})
-              .columns.medium-4
-                = f.label :spouse_first_name, "Spouse First Name <font color='red'>*</font>".html_safe
-                = f.text_field :spouse_first_name, :autofocus => true,:maxlength => 50
-              .columns.medium-5
-                = f.label :spouse_last_name, "Spouse Last Name <font color='red'>*</font>".html_safe
-                = f.text_field :spouse_last_name, :autofocus => true,:maxlength => 50
-            .row
-              .columns.medium-3
-                = f.label :max_guests, "Total guests", :class => "control-label"
-                = f.select :max_guests, options_for_select((1..20).to_a, {:selected => current_user.max_guests}), {}, class: "form-control"
-  
-          %h3 Contact information
-
-          = f.label :email, "Preferred Email"
-          = f.email_field :email, :type => "email"
-    
-          -#.row
-            .columns.medium-7
-              .form-group
-                = f.label :address_1, "Address 1"
-                = f.text_field :address_1, :maxlength => 100
-            .columns.medium-5
-              .form-group
-                = f.label :address_2, "Address 2"
-                = f.text_field :address_2, :maxlength => 100
-          -#.row
-            .columns.medium-5
-              = f.label :city, "City"
-              = f.text_field :city, :maxlength => 100
-            .columns.medium-4.domestic
-              = f.label :state, "State"
-              = f.collection_select(:state,	@state, :name, :name,{})
-            .domestic.columns.medium-3
-              = f.label :zip, "Zip"
-              = f.text_field :zip, :maxlength => 5
-            .international.columns.medium-4
-              = f.label :region, "Region"
-              = f.text_field :region, :maxlength => 100
-            .international.columns.medium-3
-              = f.label :postal_code, "Postal Code"
-              = f.text_field :postal_code, :maxlength => 20
-
-          -#= f.label :country, "Country"
-          -#= f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, :id => "countrySelect")
-    
-          -#.row
-            .columns.medium-6
-              = f.label :home_phone, "Home Phone"
-              = f.telephone_field :home_phone, :type => "tel"
-            .columns.medium-6
-              = f.label :cell_phone, "Cell Phone"
-              = f.telephone_field :cell_phone, :type => "tel"
-
-          %h3 Cancel Account
-          %p 
-            To cancel your account, please email us at 
-            %strong=link_to "rhut@rsvpgenius.com","mailto:rhut@rsvpgenius.com"
-
+          
           .pull-right
             = f.submit "Update settings", :class => "btn btn-success form-btn"
           = link_to 'Cancel', :back, :class=> "btn btn-default form-btn"

@@ -15,15 +15,18 @@
       = link_to 'Invite more guests', new_occasion_invitation_path(@occasion), :class => "btn btn-primary form-btn pull-right", style: "margin-top: -13px;"
   
   .content-body
-
-
-    -if @invitations.present?
-      %p
-        - @invitations.each do |invitation|
+    - if @invitations.present?
+      - @invitations.each do |invitation|
+        .results-row
           .row
             .small-12.columns
-              =link_to Contact.find(invitation.contact_id).household_name, occasion_invitation_path(@occasion, invitation), data: {remote: true, "reveal-id" => "myModal"}
-    - else
+              .btn-group.pull-right
+                = link_to "<span class='glyphicon glyphicon-pencil'></span>".html_safe, edit_occasion_invitation_path(@occasion,invitation),class: "btn btn-link btn-lg info-btn", data: {container: 'body', content: "edit this invitation", trigger: "hover", toggle: "popover"}
+                = link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, occasion_invitation_path(@occasion, invitation), method: :delete, data: {confirm: 'Are you sure you want to delete this invitation?'},class: "btn btn-link btn-lg info-btn", data: {container: 'body', content: "delete this invitation", trigger: "hover", toggle: "popover"}
+
+              %h4=link_to Contact.find(invitation.contact_id).household_name, occasion_invitation_path(@occasion, invitation)
+
+    -else
       .row
         .small-12.columns
           %p.text-center

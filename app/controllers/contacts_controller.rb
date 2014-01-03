@@ -58,10 +58,7 @@ class ContactsController < ApplicationController
 
   def destroy
     @contact.destroy
-    respond_to do |format|
-      format.html { redirect_to contacts_url }
-      format.json { render :json => {id: @contact.id, response: "Guest was deleted."} }
-    end
+    redirect_to address_book_path
   end
 
   def get_facebook_contacts

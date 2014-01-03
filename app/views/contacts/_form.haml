@@ -14,10 +14,10 @@
 
   %h3 Contact information
 
-
-  = f.label :email, "Preferred Email"
-  = f.email_field :email, :type => "email"
-
+  = f.label :email, "Preferred Email <font color='red'>*</font>".html_safe, class: "#{@contact.errors.include?(:email) ? 'error' : ''}"
+  = f.email_field :email, :maxlength => 200, class: "#{@contact.errors.include?(:email) ? 'error' : ''}"
+  %small{class: "#{@contact.errors.include?(:email) ? 'error' : ''}"}= @contact.errors.get(:email).join('; ')
+  
   .row
     .columns.small-7
       .form-group
@@ -66,6 +66,6 @@
     .pull-right
       = f.submit "Save & Add more", :class => "btn btn-primary form-btn"
       = f.submit "Save & Finish", :class => "btn btn-success form-btn"
-    = link_to 'Cancel', :back, :class=> "btn btn-default form-btn"
+    = link_to 'Cancel', address_book_path, :class=> "btn btn-default form-btn"
   - else
     = f.submit "Submit info", :class => "btn btn-success form-btn pull-right"

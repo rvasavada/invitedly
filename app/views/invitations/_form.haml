@@ -1,30 +1,25 @@
 = form_for [@occasion,@invitation], :html => { :role => "form"} do |f|
   %h3 Invitation details
-  =f.label :contact_id, "Guest name"
   = f.hidden_field(:contact_id)
   
-  %strong=@guest.household_name
-  
-  %br
-  %br
-  
   =f.label :rsvps, "Events"
-  = f.fields_for :rsvps do |rsvp|
-    = rsvp.hidden_field(:event_id)
-    = rsvp.check_box :response
-    = rsvp.label :response, Event.find(rsvp.object.event_id).name
+  %ul.list-unstyled
+    = f.fields_for :rsvps do |rsvp|
+      %li
+        = rsvp.hidden_field(:event_id)
+        = rsvp.check_box :response
+        = rsvp.label :response, Event.find(rsvp.object.event_id).name
 
   %h3 Invitation settings
   .row
     .columns.small-12              
-      %p Would you like us to send the guest an email to rsvp?
       = f.check_box :send_email, checked: true
-      = f.label :send_email, "Yes"
+      = f.label :send_email, "Send guest an email to rsvp?"
       
   .row
     .columns.small-6
       = f.label :send_date, "Send Invitation Date"
-      = f.text_field :send_date, :class => "datepicker"
+      = f.text_field :send_date, :class => "datepicker", :value => Date.today
     -#.columns.small-6
       = f.label :send_reminder, "Send a reminder"
       =f.select(:send_reminder,	options_from_collection_for_select(@contacts, :household_name, :household_name), { :prompt => 'Send a reminder every...' })
@@ -40,4 +35,4 @@
   .pull-right
     = f.submit "Save & Invite more", :class => "btn btn-primary form-btn"
     = f.submit "Save & Finish", :class => "btn btn-success form-btn"
-  = link_to 'Cancel', :back, :class=> "btn btn-default form-btn"
+  = link_to 'Cancel', occasion_invitations_path(@occasion), :class=> "btn btn-default form-btn"

@@ -1,21 +1,26 @@
 .content-full
+  .content-nav
+    %ul.list-inline
+      %li=@occasion.name
+      %li 
+        %strong Invitations
   .content-header
-    %h1 
-      Create an invitation for 
-      %strong=@occasion.name
-      %br
-      %small Select a guest and the events they are invited to
+    -if @guest.present?
+      %h1="Create an invitation for <strong>#{@guest.household_name}</strong>".html_safe
+    -else
+      %h1 Create invitations
+      
   .content-body
-    .row
-      .small-7.columns
-        -if @guest.blank?
-          %h3 Select a guest
-          =form_tag new_occasion_invitation_path(@occasion), :method => "get", :html => { :role => "form"} do
+    -if @guest.blank?
+      %h3 <strong>First</strong>, select a guest to invite
+      =form_tag new_occasion_invitation_path(@occasion), :method => "get", :html => { :role => "form"} do
+        .row
+          .small-7.columns
             =select_tag(:guest_id,	options_from_collection_for_select(@contacts, :id, :household_name), { :prompt => 'Choose a guest...' })
+        .row
+          .small-7.columns
             .pull-right
               = submit_tag "Next", :class => "btn btn-success form-btn"
             = link_to 'Cancel', :back, :class=> "btn btn-default form-btn"
-        -else
-          = render 'form'
-        
-        
+    -else
+      = render 'form'

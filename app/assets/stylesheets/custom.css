@@ -15,15 +15,10 @@ font-weight:700;
 font-family:"proxima-nova",sans-serif;
 }
 
-body {color:#000000; font-family:"proxima-nova"; font-weight:400; font-style:normal; font-size:14px; line-height:18px; margin:0px; padding:0px;background-color:#428bca;}
+body {font-family:"proxima-nova"; background-color:#428bca;}
+h1,h2,h3,h4 {font-family:"proxima-nova"; }
 
-form { margin:0px; padding:0px; }
-p { margin-bottom:10px; }
 img { border:0; }
-h1 {font-family:"proxima-nova";}
-h2 {font-family:"proxima-nova"; }
-h3 {font-family:"proxima-nova"; }
-h4 {font-family:"proxima-nova"; }
 a{color:#000;text-decoration:none}
 a:hover{color:#000;text-decoration:underline}
 a:active{color:#000}
@@ -33,7 +28,7 @@ a:active{color:#000}
 .content-toolbar {background-color:#F5F5E9;margin: 0px -40px 0px;padding: 5px 40px 10px;}
 .content-nav{margin-bottom:20px;}
 
-ul { margin:5px 0px 2px 0px; padding-left:20px; }
+/*ul { margin:5px 0px 2px 0px; padding-left:20px; }*/
 /*li { margin-bottom:3px; }*/
 .clear { clear:both; float:none; height:0; }
 
@@ -65,7 +60,7 @@ ul { margin:5px 0px 2px 0px; padding-left:20px; }
 .button-darkpurple { background-color:#9D347E; border:1px solid #7E2966; }
 .button-darkyellow { background-color:#E3A82A; border:1px solid #C69224; }
 .button-grey { background-color:#e8e7d9; color:#b2b19f; }
-#footer {color:#aaa; font-size:14px; margin-top:5px; text-align:right; }
+#footer {margin-top:10px;}
 
 /* Reminders Toolbar */
 #toolbar { height:58px; }

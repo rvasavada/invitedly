@@ -7,6 +7,9 @@ class InvitationsController < ApplicationController
   end
 
   def show
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    @guest = Contact.find(@invitation.contact_id)
+    
   end
 
   def new
@@ -14,9 +17,7 @@ class InvitationsController < ApplicationController
     @guest = Contact.find_by_id(params[:guest_id])
     
     @contacts = current_user.contacts - @occasion.contacts
-    
-    
-    
+
     @invitation = Invitation.new(:contact_id => params[:guest_id])
     @occasion.events.each do |event|
       @invitation.rsvps.build(:event_id => event.id)
@@ -24,6 +25,9 @@ class InvitationsController < ApplicationController
   end
 
   def edit
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    @guest = Contact.find(@invitation.contact_id)
+    
   end
 
   def create
@@ -62,15 +66,36 @@ class InvitationsController < ApplicationController
   # PATCH/PUT /invitations/1
   # PATCH/PUT /invitations/1.json
   def update
-    respond_to do |format|
-      if @invitation.update(invitation_params)
-        format.html { redirect_to @invitation, notice: 'Invitation was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @invitation.errors, status: :unprocessable_entity }
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    @contacts = current_user.contacts
+    
+    @invitation = Invitation.new(invitation_params)
+    @invitation.occasion_id = @occasion.id
+    @invitation.status = "Not sent"
+    @guest = Contact.find(@invitation.contact_id)
+    @invitation.rsvps.each do |rsvp|
+      if rsvp.response == "1"
+        rsvp.response == "Not Responded"
+        rsvp.contact_id = @invitation.contact_id
+        rsvp.num_guests = @guest.max_guests
+        rsvp.user_id = current_user.id
+        rsvp.occasion_id = @occasion.id
+      else 
+        rsvp.destroy
       end
     end
+    
+    if @invitation.update(invitation_params)
+      unless params[:commit] == "Save & Invite more" 
+        redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully updated.'
+      else
+        redirect_to new_occasion_invitation_path(@occasion), notice: 'Invitation was successfully updated.'
+      end
+    else
+      @guest = Contact.find(@invitation.contact_id)
+      render action: 'edit' 
+    end
+    
   end
 
   # DELETE /invitations/1

@@ -11,8 +11,12 @@
       .pull-right{style: "margin-top: -13px;"}
         = link_to 'Invite more guests', new_occasion_invitation_path(@occasion), :class => "btn btn-primary form-btn"
         = link_to 'Add events', new_occasion_event_path(@occasion), :class => "btn btn-primary form-btn"
-      Updates
+      Updates        
   .content-body
+    -@occasion.invitations.each do |invitation|
+      %p
+        -if (invitation.updated_at != invitation.created_at)
+          %strong="#{Contact.find(invitation.contact_id).household_name} has responded:"
 
         
 = render "layouts/modal"

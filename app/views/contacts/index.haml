@@ -47,13 +47,13 @@
               - if contact.notes.present?
                 %h4
                   %strong="#{contact.household_name}" 
-                  ="(#{contact.max_guests})"
+                  ="(#{pluralize(contact.max_guests,'guest')})"
                   %small.subheader.has-tip{"data-tooltip" => true,title:contact.notes} notes
               - else
-                %h4
-                  %strong="#{contact.household_name}"
-                  ="(#{contact.max_guests})"
-              %p
+                %strong
+                  ="#{contact.household_name}"
+                  ="(#{pluralize(contact.max_guests,'guest')})"
+              %address
                 = "#{contact.address_1} #{contact.address_2 if contact.address_2.present? } <br>".html_safe if contact.address_1.present?
                 = "#{contact.city}, #{contact.state} #{contact.zip} <br>".html_safe if ((contact.city.present? or contact.zip.present?) and (contact.country == 'United States'))
                 = "#{contact.city}, #{contact.region} #{contact.postal_code} <br>".html_safe if ((!contact.region.blank? or !contact.postal_code.blank?) and (contact.country != 'United States'))
@@ -77,7 +77,10 @@
         %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
         %h3.modal-title Add contacts
         %p
-          You can import from Facebook or manually add contacts to your address book.
-          .btn-group-vertical.btn-block
-            = link_to "Import from Facebook", user_omniauth_authorize_path(:facebook), :class => "btn btn-primary form-btn"
-            = link_to 'Manually add contacts', new_contact_path, :class => "btn btn-default form-btn"
+          You can add contacts in one of 3 ways:
+          %ol
+            %li= link_to "Import from Facebook", user_omniauth_authorize_path(:facebook)
+            %li= link_to 'Manually add contacts', new_contact_path
+            %li 
+              Or, send this link to your friends and family:
+              %pre &lt;p&gt;Sample text here...&lt;/p&gt;
