@@ -1,18 +1,18 @@
 = form_for @contact, :html => {:role =>"form"} do |f|
 
-  %h3 Contact details
+  %h3 Contact Details
 
-  = f.label :household_name, "Contact/Household Name <font color='red'>*</font>".html_safe, class: "#{@contact.errors.include?(:household_name) ? 'error' : ''}"
+  = f.label :household_name, "Name <font color='red'>*</font>".html_safe, class: "#{@contact.errors.include?(:household_name) ? 'error' : ''}"
   = f.text_field :household_name, :autofocus => true, :maxlength => 200, class: "#{@contact.errors.include?(:household_name) ? 'error' : ''}"
   %small{class: "#{@contact.errors.include?(:household_name) ? 'error' : ''}"}= @contact.errors.get(:household_name).join('; ')
 
   .row
     .columns.small-3
-      = f.label :max_guests, "Total guests"
+      = f.label :max_guests
       = f.select :max_guests, options_for_select((1..20).to_a, {:selected => @contact.max_guests}), {}
 
 
-  %h3 Contact information
+  %h3 Contact Information
 
   = f.label :email, "Preferred Email <font color='red'>*</font>".html_safe, class: "#{@contact.errors.include?(:email) ? 'error' : ''}"
   = f.email_field :email, :maxlength => 200, class: "#{@contact.errors.include?(:email) ? 'error' : ''}"
@@ -56,7 +56,7 @@
       = f.telephone_field :cell_phone, :type => "tel"
 
   - if user_signed_in?
-    %h3 Notes
+    %h3 Private Notes
     = f.label :notes, "Notes"
     = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "These notes are private and visible only to you."}
     

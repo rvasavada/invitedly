@@ -13,6 +13,7 @@ Invitedly::Application.routes.draw do
   resources :occasions do
     #get :invite_guests
     resources :invitations
+    resources :rsvps
     
     resources :events do
       #get :manage_guestlist

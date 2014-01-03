@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class RsvpControllerTest < ActionController::TestCase
+class RsvpsControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end
