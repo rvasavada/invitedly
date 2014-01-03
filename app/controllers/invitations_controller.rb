@@ -47,7 +47,7 @@ class InvitationsController < ApplicationController
     end
     
     if @invitation.save
-      unless params[:commit] == "Save & Add more" 
+      unless params[:commit] == "Save & Invite more" 
         redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully created.'
       else
         redirect_to new_occasion_invitation_path(@occasion), notice: 'Invitation was successfully created.'

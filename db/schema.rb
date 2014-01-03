@@ -31,13 +31,13 @@ ActiveRecord::Schema.define(version: 20131224072301) do
     t.string   "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "facebook_uid"
     t.string   "spouse_last_name"
     t.string   "spouse_first_name"
     t.string   "spouse_title"
     t.string   "title"
     t.string   "last_name"
     t.string   "first_name"
+    t.string   "facebook_uid"
     t.string   "household_name"
   end
 

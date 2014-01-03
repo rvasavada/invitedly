@@ -7,16 +7,7 @@ class OccasionsController < ApplicationController
   end
 
   def show
-    if user_signed_in? and @occasion.user_id == current_user.id and params[:preview] != "true"
-      @events = @occasion.events
-      @guests = Contact.find_by_sql("SELECT contacts.* FROM contacts
-         INNER JOIN events ON rsvps.event_id = events.id
-         INNER JOIN rsvps ON contacts.id = rsvps.contact_id
-         WHERE events.occasion_id = '#{@occasion.id}'
-           AND contacts.user_id = #{current_user.id}
-         ORDER BY lower(household_name) ASC").uniq
-      @response = ResponseType.all
-    else
+    unless user_signed_in? and @occasion.user_id == current_user.id and params[:preview] != "true"
       @contact = User.find(@occasion.user_id).contacts.new
 
       @response = ResponseType.all

@@ -25,17 +25,17 @@
     .columns.small-6
       = f.label :send_date, "Send Invitation Date"
       = f.text_field :send_date, :class => "datepicker"
-    .columns.small-6
+    -#.columns.small-6
       = f.label :send_reminder, "Send a reminder"
       =f.select(:send_reminder,	options_from_collection_for_select(@contacts, :household_name, :household_name), { :prompt => 'Send a reminder every...' })
-  .row
+  -#.row
     .columns.small-12              
       %p Would you want us to present the option to send a gift, even if the guest can't make it?
       = f.check_box :include_gift_option, checked: true
       = f.label :include_gift_option, "Yes"
 
-  %p In case we don't have an email address for the guest, you can give them this special link:
-  = f.text_field :code, {:value => "http://www.invitedly.com/occasionname/invitationcode", :disabled => true}
+  -#%p In case we don't have an email address for the guest, you can give them this special link:
+  -#= f.text_field :code, {:value => "http://www.invitedly.com/occasionname/invitationcode", :disabled => true}
       
   .pull-right
     = f.submit "Save & Invite more", :class => "btn btn-primary form-btn"

@@ -4,12 +4,12 @@
       Create an invitation for 
       %strong=@occasion.name
       %br
-      %small Choose a guest, select the events they are invited to, and fill in the invitation details.
+      %small Select a guest and the events they are invited to
   .content-body
     .row
       .small-7.columns
         -if @guest.blank?
-          %h3 Choose a guest
+          %h3 Select a guest
           =form_tag new_occasion_invitation_path(@occasion), :method => "get", :html => { :role => "form"} do
             =select_tag(:guest_id,	options_from_collection_for_select(@contacts, :id, :household_name), { :prompt => 'Choose a guest...' })
             .pull-right
