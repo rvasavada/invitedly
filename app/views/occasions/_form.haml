@@ -6,11 +6,7 @@
   %small{class: "#{@occasion.errors.include?(:name) ? 'error' : ''}"}= @occasion.errors.get(:name).join('; ')
 
   = f.label :slug, "Occasion handle <font color='red'>*</font>".html_safe, class: "#{@occasion.errors.include?(:slug) ? 'error' : ''}"
-  .row.collapse{style:"display:block;"}
-    .columns.small-3
-      %span.prefix invitedly.com/
-    .columns.small-9
-      = f.text_field :slug, :placeholder => "johnsbirthday", :maxlength => 50, class: "#{@occasion.errors.include?(:slug) ? 'error' : ''}"
+  = f.text_field :slug, :placeholder => "johnsbirthday", :maxlength => 50, class: "#{@occasion.errors.include?(:slug) ? 'error' : ''}"
   %small{class: "#{@occasion.errors.include?(:slug) ? 'error' : ''}"}= @occasion.errors.get(:slug).join('; ')
 
   = f.label :description, "Description <font color='red'>*</font>".html_safe, class: "#{@occasion.errors.include?(:description) ? 'error' : ''}"

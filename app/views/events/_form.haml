@@ -1,56 +1,77 @@
 = form_for [@occasion,@event], :html => { :role => "form"} do |f|
-  %h3 Event info
+  %h2 Event info
   
-  = f.label :name, "Event Title <font color='red'>*</font>".html_safe, class: "#{@event.errors.include?(:name) ? 'error' : ''}"
-  = f.text_field :name, :autofocus => true, :maxlength => 50, class: "#{@event.errors.include?(:name) ? 'error' : ''}"
-  %small{class: "#{@event.errors.include?(:name) ? 'error' : ''}"}= @event.errors.get(:name).join('; ')
+  .form-group{class: @event.errors.include?(:name) ? 'has-error' : ''}
+    = f.label :name, class: "control-label" do
+      Event Title
+      %span{style: "color:red"}*
+    = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control"
+    %span.help-block= @event.errors.get(:name).join('; ')
   .row
-    .columns.small-6
-      = f.label :start_date, "Event Date <font color='red'>*</font>".html_safe, class: "#{@event.errors.include?(:start_date) ? 'error' : ''}"
-      = f.text_field :start_date, :value => @event.start_date.blank? ? nil : @event.start_date.strftime("%b %e, %Y"), class: "datepicker #{@event.errors.include?(:start_date) ? 'error' : ''}"
-      %small{class: "#{@event.errors.include?(:start_date) ? 'error' : ''}"}= @event.errors.get(:start_date).join('; ')
-    .columns.small-6
-      = f.label :start_time, "Event Time <font color='red'>*</font>".html_safe, :class => "#{@event.errors.include?(:start_time) ? 'error' : ''}"
-      = f.text_field :start_time, :id => "spinner", :class => "#{@event.errors.include?(:start_time) ? 'error' : ''}"
-      %small{:class => "#{@event.errors.include?(:start_time) ? 'error' : ''}"}= @event.errors.get(:start_time).join('; ')
-  
-  = f.label :description, "Description <font color='red'>*</font>".html_safe, :class => "#{@event.errors.include?(:description) ? 'error' : ''}"
-  = f.text_area :description, :rows => 3, :maxlength => 250, :class => "#{@event.errors.include?(:description) ? 'error' : ''}"
-  %small{:class => "#{@event.errors.include?(:description) ? 'error' : ''}"}= @event.errors.get(:description).join('; ')
+    .col-xs-6
+      .form-group{class: @event.errors.include?(:start_date) ? 'has-error' : ''}
+        = f.label :start_date, class: "control-label" do
+          Event Date
+          %span{style: "color:red"}*
+        = f.text_field :start_date, :value => @event.start_date.blank? ? nil : @event.start_date.strftime("%b %e, %Y"), class: "form-control datepicker"
+        %span.help-block= @event.errors.get(:start_date).join('; ')
+    .col-xs-6
+      .form-group{class: @event.errors.include?(:start_time) ? 'has-error' : ''}
+        = f.label :start_time, class: "control-label" do
+          Event Time
+          %span{style: "color:red"}*
+        = f.text_field :start_time, :id => "spinner", :class => " form-control"
+        %span.help-block= @event.errors.get(:start_time).join('; ')
+  .form-group{class: @event.errors.include?(:description) ? 'has-error' : ''}
+    = f.label :description, class: "control-label" do
+      Description
+      %span{style: "color:red"}*
+    = f.text_area :description, :rows => 3, :maxlength => 250, :class => "form-control"
+    %span.help-block= @event.errors.get(:description).join('; ')
 
-  %h3 Venue info
+  %h2 Venue info
 
-  = f.label :location, "Location Name <font color='red'>*</font>".html_safe, class: "#{@event.errors.include?(:location) ? 'error' : ''}"
-  = f.text_field :location, :rows => 3, :maxlength => 100, class: "#{@event.errors.include?(:location) ? 'error' : ''}"
-  %small{class: "#{@event.errors.include?(:location) ? 'error' : ''}"}= @event.errors.get(:location).join('; ')
+  .form-group{class: @event.errors.include?(:location) ? 'has-error' : ''}
+    = f.label :location, class: "control-label" do
+      Location Name
+      %span{style: "color:red"}*
+    = f.text_field :location, :rows => 3, :maxlength => 100, class: "form-control"
+    %span.help-block= @event.errors.get(:location).join('; ')
   .row
-    .columns.medium-7
-      = f.label :address_1, "Address 1"
-      = f.text_field :address_1, :maxlength => 100
-    .columns.medium-5
-      = f.label :address_2, "Address 2"
-      = f.text_field :address_2, :maxlength => 100
+    .col-xs-7
+      .form-group
+        = f.label :address_1, "Address 1"
+        = f.text_field :address_1, :maxlength => 100, class: "form-control"
+    .col-xs-5
+      .form-group
+        = f.label :address_2, "Address 2"
+        = f.text_field :address_2, :maxlength => 100, class: "form-control"
   .row
-    .columns.medium-5
-      = f.label :city, "City"
-      = f.text_field :city, :maxlength => 100
-    .columns.medium-4.domestic
-      = f.label :state, "State"
-      = f.collection_select(:state,	@state, :name, :name, :prompt => "Please select...")
-    .domestic.columns.medium-3
-      = f.label :zip, "Zip"
-      = f.text_field :zip, :maxlength => 5
-    .international.columns.medium-4
-      = f.label :region, "Region"
-      = f.text_field :region, :maxlength => 100
-    .international.columns.medium-3
-      = f.label :postal_code, "Postal Code"
-      = f.text_field :postal_code, :maxlength => 20
-
-  = f.label :country, "Country"
-  = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, :id => "countrySelect")
+    .col-xs-5
+      .form-group      
+        = f.label :city, "City"
+        = f.text_field :city, :maxlength => 100, class: "form-control"
+    .col-xs-4.domestic
+      .form-group
+        = f.label :state, "State"
+        = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
+    .domestic.col-xs-3
+      .form-group
+        = f.label :zip, "Zip"
+        = f.text_field :zip, :maxlength => 5, class: "form-control"
+    .international.col-xs-4
+      .form-group
+        = f.label :region, "Region"
+        = f.text_field :region, :maxlength => 100, class: "form-control"
+    .international.col-xs-3
+      .form-group
+        = f.label :postal_code, "Postal Code"
+        = f.text_field :postal_code, :maxlength => 20, class: "form-control"
+  .form-group
+    = f.label :country, "Country"
+    = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control",:id => "countrySelect"})
 
   .pull-right
-    = f.submit "Save & Add more", :class => "btn btn-primary form-btn"
-    = f.submit "Save & Finish", :class => "btn btn-success form-btn"
-  = link_to 'Cancel', :back, :class=> "btn btn-default form-btn"
+    = f.submit "Save & Add more", :class => "btn btn-primary btn-lg"
+    = f.submit "Save & Finish", :class => "btn btn-success btn-lg"
+  = link_to 'Cancel', :back, :class=> "btn btn-default btn-lg"

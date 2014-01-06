@@ -13,12 +13,11 @@ class InvitationsController < ApplicationController
   end
 
   def new
-    @occasion = Occasion.friendly.find(params[:occasion_id])
-    @guest = Contact.find_by_id(params[:guest_id])
-    
+    @occasion = Occasion.friendly.find(params[:occasion_id])  
     @contacts = current_user.contacts - @occasion.contacts
+    @response = ResponseType.all
 
-    @invitation = Invitation.new(:contact_id => params[:guest_id])
+    @invitation = Invitation.new
     @occasion.events.each do |event|
       @invitation.rsvps.build(:event_id => event.id)
     end
@@ -26,28 +25,25 @@ class InvitationsController < ApplicationController
 
   def edit
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    @guest = Contact.find(@invitation.contact_id)
-    
+    @contacts = @occasion.contacts
+
+    @response = ResponseType.all
+
   end
 
   def create
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    @contacts = current_user.contacts
     
     @invitation = Invitation.new(invitation_params)
     @invitation.occasion_id = @occasion.id
     @invitation.status = "Not sent"
     @guest = Contact.find(@invitation.contact_id)
     @invitation.rsvps.each do |rsvp|
-      if rsvp.response == "1"
-        rsvp.response == "Not Responded"
-        rsvp.contact_id = @invitation.contact_id
-        rsvp.num_guests = @guest.max_guests
-        rsvp.user_id = current_user.id
-        rsvp.occasion_id = @occasion.id
-      else 
-        rsvp.destroy
-      end
+      rsvp.response = "Not Responded"
+      rsvp.contact_id = @guest.id
+      rsvp.num_guests = @guest.max_guests
+      rsvp.user_id = current_user.id
+      rsvp.occasion_id = @occasion.id
     end
     
     if @invitation.save
@@ -57,7 +53,7 @@ class InvitationsController < ApplicationController
         redirect_to new_occasion_invitation_path(@occasion), notice: 'Invitation was successfully created.'
       end
     else
-      @guest = Contact.find_by_id(params[:guest_id])
+      @contacts = current_user.contacts - @occasion.contacts
       render action: 'new' 
     end
 
@@ -67,23 +63,6 @@ class InvitationsController < ApplicationController
   # PATCH/PUT /invitations/1.json
   def update
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    @contacts = current_user.contacts
-    
-    @invitation = Invitation.new(invitation_params)
-    @invitation.occasion_id = @occasion.id
-    @invitation.status = "Not sent"
-    @guest = Contact.find(@invitation.contact_id)
-    @invitation.rsvps.each do |rsvp|
-      if rsvp.response == "1"
-        rsvp.response == "Not Responded"
-        rsvp.contact_id = @invitation.contact_id
-        rsvp.num_guests = @guest.max_guests
-        rsvp.user_id = current_user.id
-        rsvp.occasion_id = @occasion.id
-      else 
-        rsvp.destroy
-      end
-    end
     
     if @invitation.update(invitation_params)
       unless params[:commit] == "Save & Invite more" 
@@ -92,7 +71,10 @@ class InvitationsController < ApplicationController
         redirect_to new_occasion_invitation_path(@occasion), notice: 'Invitation was successfully updated.'
       end
     else
+      @contacts = @occasion.contacts
       @guest = Contact.find(@invitation.contact_id)
+      @response = ResponseType.all
+      
       render action: 'edit' 
     end
     
@@ -102,10 +84,10 @@ class InvitationsController < ApplicationController
   # DELETE /invitations/1.json
   def destroy
     @invitation.destroy
-    respond_to do |format|
-      format.html { redirect_to invitations_url }
-      format.json { head :no_content }
-    end
+    
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    
+    redirect_to occasion_invitations_path(@occasion)
   end
 
   private
@@ -116,6 +98,6 @@ class InvitationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def invitation_params
-      params.require(:invitation).permit(:occasion_id,:contact_id,:status,:code,:send_email,:send_date,:send_reminder,:include_gift_option, rsvps_attributes: [:event_id, :response])
+      params.require(:invitation).permit(:occasion_id,:contact_id,:status,:code,:send_email,:send_date,:send_reminder,:include_gift_option, rsvps_attributes: [:id, :visibility, :message, :num_guests, :event_id, :response])
     end
 end

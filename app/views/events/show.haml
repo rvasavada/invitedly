@@ -3,47 +3,16 @@
     %ul.list-inline
       %li=link_to @occasion.name, @occasion
       %li=link_to "Recent Activity", @occasion
-      %li=link_to "Event Details", occasion_events_path(@occasion), style: "font-weight:bold;"
       %li=link_to "RSVPs", occasion_invitations_path(@occasion)
   .content-header
     %h1=@event.name
   .content-body
 
     .row
-      .columns.medium-6
+      .col-xs-6
         .panel#recent
           %h2 Recent Activity
-      .columns.medium-6
-        .panel#details
-          =link_to "Actions","#",class: "tiny button dropdown right", "data-dropdown" =>"dropEvent"
-          %ul.f-dropdown#dropEvent{"data-dropdown-content" => true}
-            %li= link_to "Edit event", edit_occasion_event_path(@occasion, @event)
-            %li= link_to "Delete event", occasion_event_path(@occasion, @event), method: :delete, 'data-type' => 'json', data: {confirm: 'Are you sure you want to delete this event?'}
 
-          %h2 Details
-          %p            
-            %span.glyphicon.glyphicon-calendar
-            %strong Date and Time
-            %br
-            = @event.start_date.strftime("%A, %B %e, %Y")
-            at
-            = @event.start_time
-          %p
-            %span.glyphicon.glyphicon-map-marker
-            %strong Location
-            %br
-            = link_to @event.location, "https://maps.google.com/maps?q=#{@event.address}",:target => "_blank"
-            %br
-            = "#{@event.address_1} #{@event.address_2 if @event.address_2.present? } <br>".html_safe if @event.address_1.present?
-            = "#{@event.city}, #{@event.state} #{@event.zip}".html_safe if ((@event.city.present? or @event.zip.present?) and (@event.country == 'United States'))
-            = "#{event.city}, #{event.region} #{event.postal_code} <br>".html_safe if ((!@event.region.blank? or !@event.postal_code.blank?) and (@event.country != 'United States'))
-            = "#{event.country}" if @event.country != 'United States'
-
-          %p
-            %span.glyphicon.glyphicon-info-sign
-            %strong Description
-            %br
-            = @event.description
 
         .panel#guestlist
           =link_to "Actions","#",class: "tiny button dropdown right", "data-dropdown" =>"dropGuest"

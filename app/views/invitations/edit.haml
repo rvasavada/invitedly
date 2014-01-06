@@ -1,14 +1,13 @@
 .content-full
   .content-nav
-    %ul.list-inline
-      %li=@occasion.name
-      %li 
-        %strong Invitations
+    %ol.breadcrumb
+      %li=link_to @occasion.name, @occasion
+      %li.active Invitations
   .content-header
-    %h1="Edit <strong>#{@guest.household_name}</strong>'s invitation".html_safe
+    %h1 Edit invitation
       
   .content-body
     .row
-      .small-7.columns
+      .col-xs-7
         = render 'form'
 

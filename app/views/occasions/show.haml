@@ -1,17 +1,16 @@
 .content-full
   .content-nav
     %ul.list-inline
-      %li=link_to "Updates", @occasion, style: "font-weight:bold;"
+      %li=@occasion.name
+      %li=link_to "Recent Activity", @occasion, style: "font-weight:bold;"
       %li=link_to "Events", occasion_events_path(@occasion)
       %li=link_to "Invitations", occasion_invitations_path(@occasion)
+    
   .content-header
-    %h1=@occasion.name
-  .content-toolbar
-    %h2
-      .pull-right{style: "margin-top: -13px;"}
-        = link_to 'Invite more guests', new_occasion_invitation_path(@occasion), :class => "btn btn-primary form-btn"
-        = link_to 'Add events', new_occasion_event_path(@occasion), :class => "btn btn-primary form-btn"
-      Updates        
+    %h2 Recent Activity
+    .pull-right
+      = link_to 'Invite more guests', new_occasion_invitation_path(@occasion), :class => "btn btn-primary form-btn"
+      = link_to 'Add events', new_occasion_event_path(@occasion), :class => "btn btn-primary form-btn"
   .content-body
     -@occasion.invitations.each do |invitation|
       %p

@@ -1,7 +1,13 @@
 .content-full
+  .content-nav
+    %ol.breadcrumb
+      %li=link_to @occasion.name, @occasion
+      %li.active Events
+      
   .content-header
     %h1 Edit Event
+    
   .content-body
     .row
-      .small-7.columns
+      .col-xs-7
         = render 'form'

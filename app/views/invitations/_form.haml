@@ -1,30 +1,43 @@
 = form_for [@occasion,@invitation], :html => { :role => "form"} do |f|
-  %h3 Invitation details
-  = f.hidden_field(:contact_id)
-  
-  =f.label :rsvps, "Events"
-  %ul.list-unstyled
-    = f.fields_for :rsvps do |rsvp|
-      %li
+  = f.label :contact_id, "Guest name"
+  - if @invitation.contact_id.present?
+    = f.collection_select :contact_id, @contacts, :id, :household_name,{}, {:disabled => true}
+  -else
+    = f.collection_select :contact_id, @contacts, :id, :household_name, {:prompt => "Please select a guest..."}
+    
+  = f.fields_for :rsvps do |rsvp|
+    .panel.panel-default
+      .panel-heading
         = rsvp.hidden_field(:event_id)
-        = rsvp.check_box :response
-        = rsvp.label :response, Event.find(rsvp.object.event_id).name
+        = rsvp.check_box :visibility
+        = rsvp.label :visibility, Event.find(rsvp.object.event_id).name
+      .panel-body
+        .row
+          .col-xs-6
+            = rsvp.label :response
+            = rsvp.collection_select(:response,	@response, :name, :name, {:selected => rsvp.object.response.blank? ? "Not Responded" : rsvp.object.response})
+          .col-xs-6
+            = rsvp.label :num_guests, "Total guests"
+            = rsvp.select :num_guests, options_for_select((1..20).to_a)
+        .row
+          .col-xs-12
+            = rsvp.label :message
+            = rsvp.text_area :message
 
-  %h3 Invitation settings
   .row
-    .columns.small-12              
+    .col-xs-12              
       = f.check_box :send_email, checked: true
       = f.label :send_email, "Send guest an email to rsvp?"
       
   .row
-    .columns.small-6
+    .col-xs-6
       = f.label :send_date, "Send Invitation Date"
-      = f.text_field :send_date, :class => "datepicker", :value => Date.today
-    -#.columns.small-6
+      = f.text_field :send_date, :value => @invitation.send_date.blank? ?  Date.today.strftime("%b%e, %Y") : @invitation.send_date, :class => "datepicker"
+    -#.col-xs-6
       = f.label :send_reminder, "Send a reminder"
       =f.select(:send_reminder,	options_from_collection_for_select(@contacts, :household_name, :household_name), { :prompt => 'Send a reminder every...' })
   -#.row
-    .columns.small-12              
+    .col-xs-12              
       %p Would you want us to present the option to send a gift, even if the guest can't make it?
       = f.check_box :include_gift_option, checked: true
       = f.label :include_gift_option, "Yes"

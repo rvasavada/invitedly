@@ -7,7 +7,7 @@
   %small{class: "#{@contact.errors.include?(:household_name) ? 'error' : ''}"}= @contact.errors.get(:household_name).join('; ')
 
   .row
-    .columns.small-3
+    .col-xs-3
       = f.label :max_guests
       = f.select :max_guests, options_for_select((1..20).to_a, {:selected => @contact.max_guests}), {}
 
@@ -19,28 +19,28 @@
   %small{class: "#{@contact.errors.include?(:email) ? 'error' : ''}"}= @contact.errors.get(:email).join('; ')
   
   .row
-    .columns.small-7
+    .col-xs-7
       .form-group
         = f.label :address_1, "Address 1"
         = f.text_field :address_1, :maxlength => 100
-    .columns.small-5
+    .col-xs-5
       .form-group
         = f.label :address_2, "Address 2"
         = f.text_field :address_2, :maxlength => 100
   .row
-    .columns.small-5
+    .col-xs-5
       = f.label :city, "City"
       = f.text_field :city, :maxlength => 100
-    .columns.small-4.domestic
+    .col-xs-4.domestic
       = f.label :state, "State"
       = f.collection_select(:state,	@state, :name, :name, :prompt => "Please select...")
-    .domestic.columns.small-3
+    .domestic.col-xs-3
       = f.label :zip, "Zip"
       = f.text_field :zip, :maxlength => 5
-    .international.columns.small-4
+    .international.col-xs-4
       = f.label :region, "Region"
       = f.text_field :region, :maxlength => 100
-    .international.columns.small-3
+    .international.col-xs-3
       = f.label :postal_code, "Postal Code"
       = f.text_field :postal_code, :maxlength => 20
 
@@ -48,10 +48,10 @@
   = f.collection_select(:country,	@country, :name, :name, {:selected => @contact.country.blank? ? "United States" : @contact.country}, :id => "countrySelect")
 
   .row
-    .columns.small-6
+    .col-xs-6
       = f.label :home_phone, "Home Phone"
       = f.telephone_field :home_phone, :type => "tel"
-    .columns.small-6
+    .col-xs-6
       = f.label :cell_phone, "Cell Phone"
       = f.telephone_field :cell_phone, :type => "tel"
 

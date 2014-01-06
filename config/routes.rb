@@ -11,18 +11,11 @@ Invitedly::Application.routes.draw do
   end
   
   resources :occasions do
-    #get :invite_guests
-    resources :invitations
-    resources :rsvps
-    
-    resources :events do
-      #get :manage_guestlist
-      #put :destroy_invites, :on => :collection
-      #put :update_invites, :on => :collection
-    end    
-    #resources :manage_invitations
-    #post :begin_rsvp_flow
-    #resources :rsvp
+    resources :events
+        
+    resources :invitations do
+      resources :rsvps
+    end
   end
   
   devise_for :users, :controllers => { :registrations => "users/registrations",
