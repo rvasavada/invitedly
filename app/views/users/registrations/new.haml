@@ -16,7 +16,7 @@
             = f.label :password, class: "control-label" do
               Password
               %span{style: "color:red"}*
-            = f.password_field :password, :autofocus => true, class: "form-control"
+            = f.password_field :password, class: "form-control"
             %span.help-block= resource.errors.get(:password).join('; ')
 
           .form-group{class: resource.errors.include?(:password_confirmation) ? 'has-error' : ''}

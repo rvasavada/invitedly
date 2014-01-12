@@ -1,25 +1,18 @@
-.content-full
-  .content-header
-    %h1 Occasions
-  .content-body
-    - if @occasions.present?
-  
-      .panel.panel-default
-        .panel-heading
-          %h3.panel-title=pluralize(@occasions.count, "occasion")
-        .list-group
-          .list-group-item.text-center
-        
-            =link_to "Add a new occasion", new_occasion_path
-        .list-group
-          - @occasions.each do |occasion|
-            .list-group-item
-              %h4.list-group-item-heading=link_to occasion.name, occasion
-              %p.list-group-item-text
-                =occasion.description
-                = link_to "Edit", edit_occasion_path(occasion)
-        
-    -else
-      .well.text-center
-        %h3 You have no occasions.
-        =link_to "Add an occasion!", new_occasion_path
+%h1 Occasions
+- if @occasions.present?
+
+  .list-group
+    .list-group-item.text-center
+
+      =link_to "Add a new occasion", new_occasion_path
+    - @occasions.each do |occasion|
+      .list-group-item
+        %h4.list-group-item-heading=link_to occasion.name, occasion
+        %p.list-group-item-text
+          =occasion.description
+          = link_to "Edit", edit_occasion_path(occasion)
+    
+-else
+  .well.text-center
+    %h3 You have no occasions.
+    =link_to "Add an occasion!", new_occasion_path

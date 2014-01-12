@@ -5,26 +5,45 @@
     .row
       .col-xs-7
         = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
-          %h3 Contact information
+          .panel.panel-default
+            .panel-heading
+              %h4.panel-title Contact information
+            .panel-body
 
-          = f.label :email, "Preferred Email"
-          = f.email_field :email, :type => "email"
+              .form-group{class: resource.errors.include?(:email) ? 'has-error' : ''}
+                = f.label :email, class: "control-label" do
+                  Email
+                  %span{style: "color:red"}*
+                = f.text_field :email, class: "form-control"
+                %span.help-block= resource.errors.get(:email).join('; ')
 
-  
-          %h3 Change password
+          .panel.panel-default
+            .panel-heading
+              %h4.panel-title Change password
+            .panel-body
 
-          = f.label :password, "Password", class: "#{resource.errors.include?(:password) ? 'error' : ''}"
-          = f.password_field :password, :autocomplete => :off, class: "#{resource.errors.include?(:password) ? 'error' : ''}"
-          %small{class: "#{resource.errors.include?(:password) ? 'error' : ''}"}= resource.errors.get(:password).join('; ')
-          = f.label :password_confirmation, "Password Confirmation", class: "#{resource.errors.include?(:password_confirmation) ? 'error' : ''}"
-          = f.password_field :password_confirmation, class: "#{resource.errors.include?(:password_confirmation) ? 'error' : ''}"
-          %small{class: "#{resource.errors.include?(:password_confirmation) ? 'error' : ''}"}= resource.errors.get(:password_confirmation).join('; ')
+              .form-group{class: resource.errors.include?(:password) ? 'has-error' : ''}
+                = f.label :password, class: "control-label" do
+                  Password
+                  %span{style: "color:red"}*
+                = f.password_field :password, class: "form-control"
+                %span.help-block= resource.errors.get(:password).join('; ')
 
-          = f.label :current_password, "Current Password", class: "#{resource.errors.include?(:current_password) ? 'error' : ''}"
-          = f.password_field :current_password, :autocomplete => :off, class: "#{resource.errors.include?(:current_password) ? 'error' : ''}"
-          %small{class: "#{resource.errors.include?(:current_password) ? 'error' : ''}"}= resource.errors.get(:current_password).join('; ')
+              .form-group{class: resource.errors.include?(:password_confirmation) ? 'has-error' : ''}
+                = f.label :password_confirmation, class: "control-label" do
+                  Password Confirmation
+                  %span{style: "color:red"}*
+                = f.password_field :password_confirmation, class: "form-control"
+                %span.help-block= resource.errors.get(:password_confirmation).join('; ')
+
+              .form-group{class: resource.errors.include?(:current_password) ? 'has-error' : ''}
+                = f.label :current_password, class: "control-label" do
+                  Current Password
+                  %span{style: "color:red"}*
+                = f.password_field :current_password, class: "form-control"
+                %span.help-block= resource.errors.get(:current_password).join('; ')
           
           .pull-right
-            = f.submit "Update settings", :class => "btn btn-success form-btn"
-          = link_to 'Cancel', :back, :class=> "btn btn-default form-btn"
+            = f.submit "Update settings", :class => "btn btn-success btn-lg"
+          = link_to 'Cancel', :back, :class=> "btn btn-default btn-lg"
   

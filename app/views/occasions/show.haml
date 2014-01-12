@@ -9,20 +9,17 @@
   .content-body
 
     .row
-      .col-xs-3
-        .list-group
-          =link_to "Recent Activity", @occasion, class:"list-group-item active"
-          =link_to occasion_events_path(@occasion), class:"list-group-item" do
-            Events
-            %span.badge=@occasion.events.count
-          =link_to occasion_invitations_path(@occasion), class:"list-group-item" do
-            Invitations
-            %span.badge=@occasion.invitations.count
-        .btn-group-vertical.btn-block
-          = link_to 'Invite more guests', new_occasion_invitation_path(@occasion),class: "btn btn-primary"
-          = link_to 'Add events', new_occasion_event_path(@occasion), :class => "btn btn-primary"
-      .col-xs-9
+      .col-xs-12
+        %ul.nav.nav-pills
+          %li.active=link_to "Recent Activity", @occasion
+          %li
+            =link_to occasion_events_path(@occasion) do
+              Events
+              %span.badge=@occasion.events.count
+          %li
+            =link_to occasion_invitations_path(@occasion) do
+              Invitations
+              %span.badge=@occasion.invitations.count
+
         .well.text-center
-          %h3 No updates just yet. 
-          
-= render "layouts/modal"
+          %h3 No updates just yet.

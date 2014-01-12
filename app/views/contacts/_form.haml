@@ -1,75 +1,83 @@
 = form_for @contact, :html => {:role =>"form"} do |f|
 
-  %h2 Contact Details
-  .form-group{class: @contact.errors.include?(:household_name) ? 'has-error' : ''}
-    = f.label :household_name, class: "control-label" do
-      Household Name
-      %span{style: "color:red"}*
-    = f.text_field :household_name, :autofocus => true, :maxlength => 50, class: "form-control"
-    %span.help-block= @contact.errors.get(:household_name).join('; ')
-  .row
-    .col-xs-3
-      = f.label :max_guests, class: "control-label"
-      = f.select :max_guests, options_for_select((1..20).to_a, {:selected => @contact.max_guests}),{},{class: "form-control"}
+  .panel.panel-default
+    .panel-heading
+      %h3.panel-title Contact information
+  
+    .panel-body
+      .form-group{class: @contact.errors.include?(:household_name) ? 'has-error' : ''}
+        = f.label :household_name, class: "control-label" do
+          Household Name
+          %span{style: "color:red"}*
+        = f.text_field :household_name, :autofocus => true, :maxlength => 50, class: "form-control"
+        %span.help-block= @contact.errors.get(:household_name).join('; ')
 
+      .form-group{class: @contact.errors.include?(:email) ? 'has-error' : ''}
+        = f.label :email, class: "control-label" do
+          Preferred Email
+          %span{style: "color:red"}*
+        = f.text_field :email, :maxlength => 50, class: "form-control"
+        %span.help-block= @contact.errors.get(:email).join('; ')
 
-  %h2 Contact Information
-  .form-group{class: @contact.errors.include?(:email) ? 'has-error' : ''}
-    = f.label :email, class: "control-label" do
-      Preferred Email
-      %span{style: "color:red"}*
-    = f.text_field :email, :maxlength => 50, class: "form-control"
-    %span.help-block= @contact.errors.get(:email).join('; ')
-      
-  .row
-    .col-xs-7
-      .form-group
-        = f.label :address_1, "Address 1"
-        = f.text_field :address_1, :maxlength => 100, class: "form-control"
-    .col-xs-5
-      .form-group
-        = f.label :address_2, "Address 2"
-        = f.text_field :address_2, :maxlength => 100, class: "form-control"
-  .row
-    .col-xs-5
-      .form-group      
-        = f.label :city, "City"
-        = f.text_field :city, :maxlength => 100, class: "form-control"
-    .col-xs-4.domestic
-      .form-group
-        = f.label :state, "State"
-        = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
-    .domestic.col-xs-3
-      .form-group
-        = f.label :zip, "Zip"
-        = f.text_field :zip, :maxlength => 5, class: "form-control"
-    .international.col-xs-4
-      .form-group
-        = f.label :region, "Region"
-        = f.text_field :region, :maxlength => 100, class: "form-control"
-    .international.col-xs-3
-      .form-group
-        = f.label :postal_code, "Postal Code"
-        = f.text_field :postal_code, :maxlength => 20, class: "form-control"
-  .form-group
-    = f.label :country, "Country"
-    = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control",:id => "countrySelect"})
+      .row
+        .col-xs-6
+          .form-group
+            = f.label :home_phone, "Home Phone", class: "control-label"
+            = f.telephone_field :home_phone, class: "form-control"
+        .col-xs-6
+          .form-group
+            = f.label :cell_phone, "Cell Phone", class: "control-label"
+            = f.telephone_field :cell_phone, class: "form-control"
+                    
+  .panel.panel-default
+    .panel-heading
+      %h3.panel-title Address
 
-  .row
-    .col-xs-6
+    .panel-body      
+      .row
+        .col-xs-7
+          .form-group
+            = f.label :address_1, "Address 1"
+            = f.text_field :address_1, :maxlength => 100, class: "form-control"
+        .col-xs-5
+          .form-group
+            = f.label :address_2, "Address 2"
+            = f.text_field :address_2, :maxlength => 100, class: "form-control"
+      .row
+        .col-xs-5
+          .form-group      
+            = f.label :city, "City"
+            = f.text_field :city, :maxlength => 100, class: "form-control"
+        .col-xs-4.domestic
+          .form-group
+            = f.label :state, "State"
+            = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
+        .domestic.col-xs-3
+          .form-group
+            = f.label :zip, "Zip"
+            = f.text_field :zip, :maxlength => 5, class: "form-control"
+        .international.col-xs-4
+          .form-group
+            = f.label :region, "Region"
+            = f.text_field :region, :maxlength => 100, class: "form-control"
+        .international.col-xs-3
+          .form-group
+            = f.label :postal_code, "Postal Code"
+            = f.text_field :postal_code, :maxlength => 20, class: "form-control"
       .form-group
-        = f.label :home_phone, "Home Phone", class: "control-label"
-        = f.telephone_field :home_phone, class: "form-control"
-    .col-xs-6
-      .form-group
-        = f.label :cell_phone, "Cell Phone", class: "control-label"
-        = f.telephone_field :cell_phone, class: "form-control"
+        = f.label :country, "Country"
+        = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control",:id => "countrySelect"})
+
 
   - if user_signed_in?
-    %h2 Private Notes
-    .form-group
-      = f.label :notes, "Notes", class: "control-label"
-      = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "These notes are private and visible only to you.", class: "form-control"}
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title Private Notes
+
+      .panel-body
+        .form-group
+          = f.label :notes, "Notes", class: "control-label"
+          = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "These notes are private and visible only to you.", class: "form-control"}
     
 
 

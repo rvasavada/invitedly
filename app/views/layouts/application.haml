@@ -36,9 +36,10 @@
                 %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
                 = alert.html_safe
 
-        .row
-          .col-xs-12
-            = yield
+        .full-container
+          .row
+            .col-xs-12
+              = yield
         .row
           .col-xs-12.bottom
             %footer#footer

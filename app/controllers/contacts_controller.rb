@@ -77,7 +77,6 @@ class ContactsController < ApplicationController
        end
        Contact.find_or_create_by(user_id: current_user.id, facebook_uid: contact['uid'],
                     :household_name => "#{title} #{contact['first_name']} #{contact['last_name']}",
-                    :max_guests => 1,
                     :user_id => current_user.id)       
      end
      
