@@ -1,9 +1,16 @@
-.content-full
-  .content-header
-    %h1 
-      Edit Occasion
-      %br
-      %small Tell us more about your special occasion!
-  .row
-    .small-7.columns
-      = render 'form'
+.row
+  .col-xs-offset-3.col-xs-6
+    %h1 Edit Occasion
+  
+    .panel.panel-default
+      .panel-heading
+        %h4.panel-title Occasion details
+      .panel-body
+        = render 'form'
+
+    .panel.panel-default      
+      .panel-heading
+        %h4.panel-title Delete occasion
+      .panel-body
+        = link_to "Delete Occasion", @occasion, method: :delete, class: "btn btn-danger"
+        

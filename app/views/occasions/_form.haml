@@ -1,18 +1,28 @@
-= form_for @occasion do |f|
-  %h3 Occasion details
+= form_for @occasion, :html => { :role => "form"} do |f|
 
-  = f.label :name, "Name <font color='red'>*</font>".html_safe, class: "#{@occasion.errors.include?(:name) ? 'error' : ''}"
-  = f.text_field :name, :autofocus => true, :maxlength => 50, class: "#{@occasion.errors.include?(:name) ? 'error' : ''}"
-  %small{class: "#{@occasion.errors.include?(:name) ? 'error' : ''}"}= @occasion.errors.get(:name).join('; ')
+  .form-group{class: @occasion.errors.include?(:name) ? 'has-error' : ''}
+    = f.label :name, class: "control-label" do
+      Name
+      %span{style: "color:red"}*
+    = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control"
+    %span.help-block= @occasion.errors.get(:name).join('; ')
+    
+  .form-group{class: @occasion.errors.include?(:slug) ? 'has-error' : ''}
+    = f.label :slug, class: "control-label" do
+      Occasion Handle
+      %span{style: "color:red"}*
+    = f.text_field :slug, :placeholder => "johnsbirthday", :maxlength => 50, class: "form-control"
+    %span.help-block= @occasion.errors.get(:slug).join('; ')
 
-  = f.label :slug, "Occasion handle <font color='red'>*</font>".html_safe, class: "#{@occasion.errors.include?(:slug) ? 'error' : ''}"
-  = f.text_field :slug, :placeholder => "johnsbirthday", :maxlength => 50, class: "#{@occasion.errors.include?(:slug) ? 'error' : ''}"
-  %small{class: "#{@occasion.errors.include?(:slug) ? 'error' : ''}"}= @occasion.errors.get(:slug).join('; ')
+  .form-group{class: @occasion.errors.include?(:description) ? 'has-error' : ''}
+    = f.label :description, class: "control-label" do
+      Description
+      %span{style: "color:red"}*
+    = f.text_area :description, :rows => 5, :maxlength => 300, :class => "form-control"
+    %span.help-block= @occasion.errors.get(:description).join('; ')
 
-  = f.label :description, "Description <font color='red'>*</font>".html_safe, class: "#{@occasion.errors.include?(:description) ? 'error' : ''}"
-  = f.text_area :description, {class: "#{@occasion.errors.include?(:description) ? 'error' : ''}",:maxlength => 300, :rows => 5}
-  %small{class: "#{@occasion.errors.include?(:description) ? 'error' : ''}"}= @occasion.errors.get(:description).join('; ')
+
 
   .pull-right
-    = f.submit "Save occasion", :class => "btn btn-success form-btn"
-  = link_to 'Cancel', :back, :class=> "btn btn-default form-btn"
+    = f.submit "Save occasion", :class => "btn btn-success"
+  = link_to 'Cancel', :back, :class=> "btn btn-default"

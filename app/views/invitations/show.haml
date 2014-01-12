@@ -1,11 +1,32 @@
 .content-full
-  %h1=@guest.household_name
-  %p= @invitation.status
+  .content-nav
+    %ol.breadcrumb
+      %li=link_to @occasion.name, @occasion
+      %li.active Invitations
+  
+  .content-header
+    %h1=@guest.household_name
+  .content-body
+    .row
+      .col-xs-7
+        %p= @invitation.status
 
-  -@invitation.rsvps.each do |rsvp|
-    %h3=Event.find(rsvp.event_id).name
-    =rsvp.message
-    =rsvp.response
-    =rsvp.num_guests
-    =rsvp.updated_at
-      
+        -@invitation.rsvps.where(:visibility => true).each do |rsvp|
+          .panel{:class => rsvp.response == "Not Responded" ? "panel-default" : rsvp.response == "Attending" ? "panel-success" : rsvp.response == "Might Attend" ? "panel-warning" : rsvp.response == "Not Attending" ? "panel-danger" : ""}
+            .panel-heading
+              %h3.panel-title=Event.find(rsvp.event_id).name
+            .panel-body
+              Response:
+              %strong=rsvp.response
+              -if rsvp.response == "Attending" || rsvp.response == "Might Attend"
+                %br
+                Total Guests:
+                %strong=rsvp.num_guests
+              -if rsvp.message.present?
+                %br
+                Message:
+                %strong=rsvp.message
+              %br
+              %small="Last Updated:  #{distance_of_time_in_words_to_now(rsvp.updated_at)} ago"
+        = link_to "Edit Invitation", edit_occasion_invitation_path(@occasion,@invitation),class: "btn btn-primary"
+        = link_to "Delete Invitation", occasion_invitation_path(@occasion, @invitation), method: :delete, data: {confirm: 'Are you sure you want to delete this invitation?'},class: "btn btn-danger"

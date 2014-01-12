@@ -11,9 +11,9 @@ Invitedly::Application.routes.draw do
   end
   
   resources :occasions do
-    resources :events
+    resources :invitations
         
-    resources :invitations do
+    resources :events do
       resources :rsvps
     end
   end

@@ -1,6 +1,6 @@
 .content-full
   .row
-    .columns.small-12
+    .col-xs-12
       %h1 
         Select events
         %br
@@ -9,7 +9,7 @@
       = form_tag :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
         - @events.each do |event|
           .row
-            .columns.small-12
+            .col-xs-12
               =check_box_tag "event_ids[]", event.id
               =label_tag "event_ids[]", event.name
               

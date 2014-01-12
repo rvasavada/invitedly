@@ -1,71 +1,26 @@
 .content-full
   .content-nav
-    %ul.list-inline
+    %ol.breadcrumb
       %li=link_to @occasion.name, @occasion
-      %li=link_to "Recent Activity", @occasion
-      %li=link_to "RSVPs", occasion_invitations_path(@occasion)
+      %li=link_to @event.name, [@occasion,@event]
+      %li.active Recent Activity
+
   .content-header
-    %h1=@event.name
+    %h1 Recent Activity
   .content-body
 
     .row
-      .col-xs-6
-        .panel#recent
-          %h2 Recent Activity
+      .col-xs-3
+        .list-group
+          =link_to "Recent Activity", [@occasion,@event], class:"list-group-item active"
+          =link_to occasion_event_rsvps_path(@occasion,@event), class:"list-group-item" do
+            Guests
+            %span.badge=@event.rsvps.count
 
-
-        .panel#guestlist
-          =link_to "Actions","#",class: "tiny button dropdown right", "data-dropdown" =>"dropGuest"
-          %ul.f-dropdown#dropGuest{"data-dropdown-content" => true}
-            %li= link_to "Manage guest list", new_occasion_invitation_path(@occasion), :class => "btn btn-primary form-btn"
-            %li= link_to "Invite more guests", new_occasion_invitation_path(@occasion), :class => "btn btn-primary form-btn"
-    
-          %h2
-            ="Guest List"
-            %small="#{pluralize(@invites.sum(:num_guests),'guest')}"
-          %br
-          -if @invites.present?
-            -if @attending.present?
-              %h5#attending
-                ="Attending (#{@attending.sum(:num_guests)})"
-              %p
-                - @attending.each do |invite|
-                  - guest = Contact.find(invite.contact_id)
-                  =link_to guest.household_name, occasion_invitations_path(@occasion, guest_id: guest), data: {remote: true, "reveal-id" => "myModal"}
-                  %span.subheader="(#{invite.num_guests})"
-                  - if invite.message.present?
-                    %span.subheader.has-tip{"data-tooltip" => true,title:invite.message} message
-                  %br
-            -if @might_attend.present?
-              %h5#might_attend
-                ="Might Attend (#{@might_attend.sum(:num_guests)})"
-              %p
-                - @might_attend.each do |invite|
-                  - guest = Contact.find(invite.contact_id)
-                  =link_to guest.household_name, occasion_invitations_path(@occasion, guest_id: guest), data: {remote: true, "reveal-id" => "myModal"}
-                  %span.subheader="(#{invite.num_guests})"
-                  %span.text-muted=invite.message
-                  %br
-              %hr
-            -if @not_attend.present?
-              %h5#not_attend
-                ="Not Attending (#{@not_attend.sum(:num_guests)})"
-              %p
-                - @not_attend.each do |invite|
-                  - guest = Contact.find(invite.contact_id)
-                  =link_to guest.household_name, occasion_invitations_path(@occasion, guest_id: guest), data: {remote: true, "reveal-id" => "myModal"}
-                  %span.subheader="(#{invite.num_guests})"
-                  %span.text-muted=invite.message
-                  %br
-              %hr
-            -if @not_responded.present?
-              %h5#not_responded
-                ="Not Responded (#{@not_responded.sum(:num_guests)})"
-              %p
-                - @not_responded.each do |invite|
-                  - guest = Contact.find(invite.contact_id)
-                  =link_to guest.household_name, occasion_invitations_path(@occasion, guest_id: guest), data: {remote: true, "reveal-id" => "myModal"}
-                  %span.subheader="(#{invite.num_guests})"
-                  %span.text-muted=invite.message
-                  %br
+        .btn-group-vertical.btn-block
+          = link_to 'Invite more guests', new_occasion_invitation_path(@occasion),class: "btn btn-primary"
+      .col-xs-9
+        .well.text-center
+          %h3 No updates just yet. 
+          
 = render "layouts/modal"

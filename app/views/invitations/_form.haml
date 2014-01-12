@@ -1,16 +1,19 @@
 = form_for [@occasion,@invitation], :html => { :role => "form"} do |f|
-  = f.label :contact_id, "Guest name"
-  - if @invitation.contact_id.present?
-    = f.collection_select :contact_id, @contacts, :id, :household_name,{}, {:disabled => true}
-  -else
-    = f.collection_select :contact_id, @contacts, :id, :household_name, {:prompt => "Please select a guest..."}
+  .form-group
+    = f.label :contact_id, "Guest name",class: "control-label"
+    - if @invitation.contact_id.present?
+      = f.collection_select :contact_id, @contacts, :id, :household_name,{}, {:disabled => true, class: "form-control"}
+    -else
+      = f.collection_select :contact_id, @contacts, :id, :household_name, {:prompt => "Please select a guest..."}
     
   = f.fields_for :rsvps do |rsvp|
     .panel.panel-default
       .panel-heading
         = rsvp.hidden_field(:event_id)
-        = rsvp.check_box :visibility
-        = rsvp.label :visibility, Event.find(rsvp.object.event_id).name
+        %h3.panel-title
+        .checkbox
+          = rsvp.check_box :visibility
+          = rsvp.label :visibility, Event.find(rsvp.object.event_id).name
       .panel-body
         .row
           .col-xs-6

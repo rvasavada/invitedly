@@ -1,5 +1,6 @@
 body {background-color:#f4f4f4;}
-.container {width: 970px !important;background-color:#fff; box-shadow: 0 3px 4px rgba(0,0,0,.1);-moz-box-shadow: 0 3px 4px rgba(0,0,0,.1);-webkit-box-shadow: 0 3px 4px rgba(0,0,0,.1); padding:10px 40px 30px 40px; }
+.container {width: 970px !important;}
+.form-container {width: 970px !important;background-color:#fff; box-shadow: 0 3px 4px rgba(0,0,0,.1);-moz-box-shadow: 0 3px 4px rgba(0,0,0,.1);-webkit-box-shadow: 0 3px 4px rgba(0,0,0,.1); padding:10px 40px 30px 40px; }
 #logo { display:block; float:left; height:48px; width:175px; margin-right:76px;color:#428bca;}
 .content-full { }
 .signout-link {cursor:pointer; display:block; float:left; line-height:27px; padding-right:5px; }

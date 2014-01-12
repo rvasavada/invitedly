@@ -1,6 +1,6 @@
 .content-full
   .row
-    .columns.small-12
+    .col-xs-12
       %h1 
         Select guests
         %br
@@ -9,7 +9,7 @@
       = form_tag :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
         - @contacts.each do |guest|
           .row
-            .columns.small-12
+            .col-xs-12
               =check_box_tag "guest_ids[]", guest.id
               =label_tag "guest_ids[]", guest.household_name
               

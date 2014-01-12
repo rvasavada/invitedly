@@ -3,7 +3,8 @@ class RsvpsController < ApplicationController
 
   def index
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    @rsvps = @occasion.invitations
+    @event = Event.friendly.find(params[:event_id])
+    @rsvps = @event.rsvps
   end
 
   def show

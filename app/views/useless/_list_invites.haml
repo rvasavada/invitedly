@@ -1,5 +1,5 @@
 .row
-  .columns.small-12
+  .col-xs-12
     %h3
       %small=@guest.household_name
       %br
@@ -12,13 +12,13 @@
             %strong=Event.find(invitation.event_id).name
           = fields_for "invitations[]", invitation do |f|
             .row
-              .columns.medium-4
+              .col-xs-4
                 = f.label :response
                 = f.collection_select(:response,	@response, :name, :name)
-              .columns.medium-3
+              .col-xs-3
                 = f.label :num_guests, "Total Guests"
                 = f.select(:num_guests, options_for_select((1..@guest.max_guests).to_a,{:selected => @guest.max_guests}))
-              .columns.medium-5
+              .col-xs-5
             
             = f.label :message, "Message From Guest", :class => "control-label"
             = f.text_area :message, maxlength: 300, rows:3, class: "form-control"

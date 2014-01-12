@@ -1,21 +1,28 @@
 .content-full
   .content-nav
-    %ul.list-inline
-      %li=@occasion.name
-      %li=link_to "Recent Activity", @occasion, style: "font-weight:bold;"
-      %li=link_to "Events", occasion_events_path(@occasion)
-      %li=link_to "Invitations", occasion_invitations_path(@occasion)
-    
-  .content-header
-    %h2 Recent Activity
-    .pull-right
-      = link_to 'Invite more guests', new_occasion_invitation_path(@occasion), :class => "btn btn-primary form-btn"
-      = link_to 'Add events', new_occasion_event_path(@occasion), :class => "btn btn-primary form-btn"
-  .content-body
-    -@occasion.invitations.each do |invitation|
-      %p
-        -if (invitation.updated_at != invitation.created_at)
-          %strong="#{Contact.find(invitation.contact_id).household_name} has responded:"
+    %ol.breadcrumb
+      %li=link_to @occasion.name, @occasion
+      %li.active Recent Activity
 
-        
+  .content-header
+    %h1 Recent Activity
+  .content-body
+
+    .row
+      .col-xs-3
+        .list-group
+          =link_to "Recent Activity", @occasion, class:"list-group-item active"
+          =link_to occasion_events_path(@occasion), class:"list-group-item" do
+            Events
+            %span.badge=@occasion.events.count
+          =link_to occasion_invitations_path(@occasion), class:"list-group-item" do
+            Invitations
+            %span.badge=@occasion.invitations.count
+        .btn-group-vertical.btn-block
+          = link_to 'Invite more guests', new_occasion_invitation_path(@occasion),class: "btn btn-primary"
+          = link_to 'Add events', new_occasion_event_path(@occasion), :class => "btn btn-primary"
+      .col-xs-9
+        .well.text-center
+          %h3 No updates just yet. 
+          
 = render "layouts/modal"

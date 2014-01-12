@@ -106,7 +106,7 @@ select {
   .row:after {
     clear: both; }
   .row.collapse > .column,
-  .row.collapse > .columns {
+  .row.collapse > .col-xs- {
     position: relative;
     padding-left: 0;
     padding-right: 0;
@@ -139,7 +139,7 @@ select {
         clear: both; }
 
 .column,
-.columns {
+.col-xs- {
   position: relative;
   padding-left: 0.9375em;
   padding-right: 0.9375em;
@@ -258,7 +258,7 @@ select {
     left: auto; }
 
   .column,
-  .columns {
+  .col-xs- {
     position: relative;
     padding-left: 0.9375em;
     padding-right: 0.9375em;
@@ -363,20 +363,20 @@ select {
     float: left; }
 
   .column.small-centered,
-  .columns.small-centered {
+  .col-xs-centered {
     position: relative;
     margin-left: auto;
     margin-right: auto;
     float: none !important; }
 
   .column.small-uncentered,
-  .columns.small-uncentered {
+  .col-xs-uncentered {
     margin-left: 0;
     margin-right: 0;
     float: left !important; }
 
   .column.small-uncentered.opposite,
-  .columns.small-uncentered.opposite {
+  .col-xs-uncentered.opposite {
     float: right !important; } }
 @media only screen and (min-width: 40.063em) {
   .medium-push-1 {
@@ -490,7 +490,7 @@ select {
     left: auto; }
 
   .column,
-  .columns {
+  .col-xs- {
     position: relative;
     padding-left: 0.9375em;
     padding-right: 0.9375em;
@@ -595,20 +595,20 @@ select {
     float: left; }
 
   .column.medium-centered,
-  .columns.medium-centered {
+  .col-xs-centered {
     position: relative;
     margin-left: auto;
     margin-right: auto;
     float: none !important; }
 
   .column.medium-uncentered,
-  .columns.medium-uncentered {
+  .col-xs-uncentered {
     margin-left: 0;
     margin-right: 0;
     float: left !important; }
 
   .column.medium-uncentered.opposite,
-  .columns.medium-uncentered.opposite {
+  .col-xs-uncentered.opposite {
     float: right !important; }
 
   .push-1 {
@@ -832,7 +832,7 @@ select {
     left: auto; }
 
   .column,
-  .columns {
+  .col-xs- {
     position: relative;
     padding-left: 0.9375em;
     padding-right: 0.9375em;
@@ -937,20 +937,20 @@ select {
     float: left; }
 
   .column.large-centered,
-  .columns.large-centered {
+  .col-xs-.large-centered {
     position: relative;
     margin-left: auto;
     margin-right: auto;
     float: none !important; }
 
   .column.large-uncentered,
-  .columns.large-uncentered {
+  .col-xs-.large-uncentered {
     margin-left: 0;
     margin-right: 0;
     float: left !important; }
 
   .column.large-uncentered.opposite,
-  .columns.large-uncentered.opposite {
+  .col-xs-.large-uncentered.opposite {
     float: right !important; } }
 @media only screen and (min-width: 90.063em) {
   .xlarge-push-1 {
@@ -1064,7 +1064,7 @@ select {
     left: auto; }
 
   .column,
-  .columns {
+  .col-xs- {
     position: relative;
     padding-left: 0.9375em;
     padding-right: 0.9375em;
@@ -1169,20 +1169,20 @@ select {
     float: left; }
 
   .column.xlarge-centered,
-  .columns.xlarge-centered {
+  .col-xs-.xlarge-centered {
     position: relative;
     margin-left: auto;
     margin-right: auto;
     float: none !important; }
 
   .column.xlarge-uncentered,
-  .columns.xlarge-uncentered {
+  .col-xs-.xlarge-uncentered {
     margin-left: 0;
     margin-right: 0;
     float: left !important; }
 
   .column.xlarge-uncentered.opposite,
-  .columns.xlarge-uncentered.opposite {
+  .col-xs-.xlarge-uncentered.opposite {
     float: right !important; } }
 @media only screen and (min-width: 120.063em) {
   .xxlarge-push-1 {
@@ -1296,7 +1296,7 @@ select {
     left: auto; }
 
   .column,
-  .columns {
+  .col-xs- {
     position: relative;
     padding-left: 0.9375em;
     padding-right: 0.9375em;
@@ -1401,20 +1401,20 @@ select {
     float: left; }
 
   .column.xxlarge-centered,
-  .columns.xxlarge-centered {
+  .col-xs-.xxlarge-centered {
     position: relative;
     margin-left: auto;
     margin-right: auto;
     float: none !important; }
 
   .column.xxlarge-uncentered,
-  .columns.xxlarge-uncentered {
+  .col-xs-.xxlarge-uncentered {
     margin-left: 0;
     margin-right: 0;
     float: left !important; }
 
   .column.xxlarge-uncentered.opposite,
-  .columns.xxlarge-uncentered.opposite {
+  .col-xs-.xxlarge-uncentered.opposite {
     float: right !important; } }
 
 /* Standard Forms */
@@ -1425,12 +1425,12 @@ form {
 form .row .row {
   margin: 0 -0.5rem; }
   form .row .row .column,
-  form .row .row .columns {
+  form .row .row .col-xs- {
     padding: 0 0.5rem; }
   form .row .row.collapse {
     margin: 0; }
     form .row .row.collapse .column,
-    form .row .row.collapse .columns {
+    form .row .row.collapse .col-xs- {
       padding: 0; }
     form .row .row.collapse input {
       -moz-border-radius-bottomright: 0;
@@ -1438,9 +1438,9 @@ form .row .row {
       -webkit-border-bottom-right-radius: 0;
       -webkit-border-top-right-radius: 0; }
 form .row input.column,
-form .row input.columns,
+form .row input.col-xs-,
 form .row textarea.column,
-form .row textarea.columns {
+form .row textarea.col-xs- {
   padding-left: 0.5rem; }
 
 /* Label Styles */
