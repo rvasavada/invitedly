@@ -1,12 +1,15 @@
 .row
-  .col-xs-offset-3.col-xs-6
-    %h1 Edit Occasion
-  
-    = render 'form'
-        
-    .panel.panel-default      
+  .col-xs-9
+    .panel.panel-default
       .panel-heading
-        %h4.panel-title Delete occasion
+        %h3.panel-title.panel-page-title Occasion Settings
       .panel-body
-        = link_to "Delete Occasion", @occasion, method: :delete, class: "btn btn-danger"
+        = render 'form'
+        %hr
+        
+        %fieldset.form-section
+          %h4 Delete Occasion
+          %p 
+            Occasion over or had enough?  Go ahead and
+            = link_to "delete it.", @occasion, method: :delete
       
