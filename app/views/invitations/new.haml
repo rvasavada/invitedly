@@ -1,12 +1,11 @@
-.content-full
-  .content-nav
-    %ol.breadcrumb
-      %li=link_to @occasion.name, @occasion
-      %li.active Invitations
-  .content-header
-    %h1 Create invitation
-      
-  .content-body
-    .row
-      .col-xs-7
+%ol.breadcrumb
+  %li=link_to @occasion.name, @occasion
+  %li.active Invitations
+  
+.row
+  .col-xs-7
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title.panel-page-title New Invitation
+      .panel-body
         = render 'form'

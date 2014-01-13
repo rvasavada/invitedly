@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140112092421) do
+ActiveRecord::Schema.define(version: 20140112234135) do
 
   create_table "contacts", force: true do |t|
     t.integer  "user_id"
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20140112092421) do
     t.boolean  "include_gift_option"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "max_guests"
   end
 
   create_table "occasions", force: true do |t|

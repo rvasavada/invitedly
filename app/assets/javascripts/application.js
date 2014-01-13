@@ -26,7 +26,7 @@ $("document").ready(function(){
   
 	$('#spinner').timepicker({ 'scrollDefaultNow': true });
 
-	$('.info-btn').popover({placement:'top'});
+	$('.event-info').popover({placement:'top'});
 	
 	$("#countrySelect").change(function() {
 		if($("#countrySelect").val() == "United States") {

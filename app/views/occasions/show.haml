@@ -1,25 +1,20 @@
-.content-full
-  .content-nav
-    %ol.breadcrumb
-      %li=link_to @occasion.name, @occasion
-      %li.active Recent Activity
+.row
+  .col-xs-3
+    .list-group
+      =link_to @occasion.name, @occasion, class:"list-group-item active", style: "font-weight:bold;"
+      =link_to occasion_events_path(@occasion), class:"list-group-item" do
+        Events
+        %span.badge=@occasion.events.count
+        =link_to occasion_invitations_path(@occasion), class:"list-group-item" do
+          Invitations
+          %span.badge=@occasion.invitations.count
 
-  .content-header
-    %h1 Recent Activity
-  .content-body
+  .col-xs-9
+    
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title.panel-page-title Recent Activity
+      .panel-body
 
-    .row
-      .col-xs-12
-        %ul.nav.nav-pills
-          %li.active=link_to "Recent Activity", @occasion
-          %li
-            =link_to occasion_events_path(@occasion) do
-              Events
-              %span.badge=@occasion.events.count
-          %li
-            =link_to occasion_invitations_path(@occasion) do
-              Invitations
-              %span.badge=@occasion.invitations.count
-
-        .well.text-center
+        .text-center
           %h3 No updates just yet.

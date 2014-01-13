@@ -13,9 +13,7 @@ Invitedly::Application.routes.draw do
   resources :occasions do
     resources :invitations
         
-    resources :events do
-      resources :rsvps
-    end
+    resources :events, :except => [:show]
   end
   
   devise_for :users, :controllers => { :registrations => "users/registrations",

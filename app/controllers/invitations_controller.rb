@@ -41,7 +41,7 @@ class InvitationsController < ApplicationController
     @invitation.rsvps.each do |rsvp|
       rsvp.response = "Not Responded"
       rsvp.contact_id = @guest.id
-      rsvp.num_guests = @guest.max_guests
+      rsvp.num_guests = @invitation.max_guests
       rsvp.user_id = current_user.id
       rsvp.occasion_id = @occasion.id
     end

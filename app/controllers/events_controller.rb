@@ -38,7 +38,7 @@ class EventsController < ApplicationController
 
     if @event.save
       unless params[:commit] == "Save & Add more" 
-        redirect_to occasion_event_path(@occasion,@event), notice: 'Event was successfully created.'
+        redirect_to occasion_events_path(@occasion), notice: 'Event was successfully created.'
       else
         redirect_to new_occasion_event_path(@occasion), notice: 'Event was successfully created.' 
       end
@@ -54,7 +54,7 @@ class EventsController < ApplicationController
     
     if @event.update(event_params)
       unless params[:commit] == "Save & Add more" 
-        redirect_to occasion_event_path(@occasion,@event), notice: 'Event was successfully updated.'
+        redirect_to occasion_events_path(@occasion), notice: 'Event was successfully updated.'
       else
         redirect_to new_occasion_event_path(@occasion), notice: 'Event was successfully updated.'
       end
@@ -66,9 +66,11 @@ class EventsController < ApplicationController
   end
 
   def destroy
+    @occasion = Occasion.friendly.find(params[:occasion_id])    
+    
     @event.destroy
     respond_to do |format|
-      format.html { redirect_to events_url }
+      format.html { redirect_to occasion_events_path(@occasion)}
       format.json { render :json => {id: @event.id, response: "Event was deleted."} }
     end
   end
