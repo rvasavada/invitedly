@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140112234135) do
+ActiveRecord::Schema.define(version: 20140115051812) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "contacts", force: true do |t|
     t.integer  "user_id"
@@ -25,19 +28,17 @@ ActiveRecord::Schema.define(version: 20140112234135) do
     t.string   "country"
     t.string   "region"
     t.string   "postal_code"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "title"
     t.string   "cell_phone"
     t.string   "home_phone"
     t.string   "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "spouse_last_name"
-    t.string   "spouse_first_name"
-    t.string   "spouse_title"
-    t.string   "title"
-    t.string   "last_name"
-    t.string   "first_name"
     t.string   "facebook_uid"
     t.string   "household_name"
+    t.boolean  "is_family"
   end
 
   create_table "countries", force: true do |t|
@@ -66,7 +67,7 @@ ActiveRecord::Schema.define(version: 20140112234135) do
     t.datetime "updated_at"
   end
 
-  add_index "events", ["slug"], name: "index_events_on_slug", unique: true
+  add_index "events", ["slug"], name: "index_events_on_slug", unique: true, using: :btree
 
   create_table "friendly_id_slugs", force: true do |t|
     t.string   "slug",                      null: false
@@ -76,10 +77,20 @@ ActiveRecord::Schema.define(version: 20140112234135) do
     t.datetime "created_at"
   end
 
-  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
-  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
-  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
-  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+
+  create_table "guests", force: true do |t|
+    t.string   "title"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.integer  "user_id"
+    t.integer  "contact_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "invitations", force: true do |t|
     t.integer  "occasion_id"
@@ -104,7 +115,7 @@ ActiveRecord::Schema.define(version: 20140112234135) do
     t.datetime "updated_at"
   end
 
-  add_index "occasions", ["slug"], name: "index_occasions_on_slug", unique: true
+  add_index "occasions", ["slug"], name: "index_occasions_on_slug", unique: true, using: :btree
 
   create_table "response_types", force: true do |t|
     t.string   "name"
@@ -175,7 +186,7 @@ ActiveRecord::Schema.define(version: 20140112234135) do
     t.string   "facebook_token"
   end
 
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["username"], name: "index_users_on_username", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
 end

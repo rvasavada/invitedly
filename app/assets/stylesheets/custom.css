@@ -7,4 +7,4 @@ body {background-color:#F1FCFC;}
 #logo { display:block; float:left; height:48px; width:175px; margin-right:76px;color:#428bca;}
 .content-full { }
 .signout-link {cursor:pointer; display:block; float:left; line-height:27px; padding-right:5px; }
-.signout-link:hover { text-decoration:none; font-weight:bold; }
+.signout-link:hover { text-decoration:underline; }

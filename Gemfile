@@ -53,12 +53,9 @@ gem 'wicked', '~> 1.0.2'
 gem 'activerecord-import', '~> 0.4.1'
 gem 'thin', '~> 1.6.1'
 #gem 'foundation-rails', '~> 5.0.2.0'
-
-group :development do
-  gem 'sqlite3'
-end
+gem 'pg', '~> 0.17.1'
+gem 'cocoon', '~> 1.2.5'
 
 group :production do
-  gem 'pg', '~> 0.17.1'
   gem 'rails_12factor', '~> 0.0.2'
 end

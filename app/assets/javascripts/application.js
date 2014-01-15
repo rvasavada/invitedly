@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery-ui-1.10.3.custom.min
 //= require jquery.timepicker.min
+//= require cocoon
 //= require_tree .
 
 $("document").ready(function(){
@@ -46,4 +47,7 @@ $("document").ready(function(){
 		$(".domestic").hide();
 	}
 	
+  if($('input[name=contact[is_family]]:checked').val() == 'Individual') {
+    alert('test');
+  }
 });
