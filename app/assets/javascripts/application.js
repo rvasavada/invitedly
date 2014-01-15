@@ -46,8 +46,19 @@ $("document").ready(function(){
 		$(".international").show();
 		$(".domestic").hide();
 	}
+  
+	$("#contact_is_family").change(function() {
+		if(this.checked) {
+			$('#household_name').fadeIn('slow');
+		} else {
+			$('#household_name').fadeOut('slow');
+		}
+	});
 	
-  if($('input[name=contact[is_family]]:checked').val() == 'Individual') {
-    alert('test');
-  }
+	if($('#contact_is_family').is(':checked')) {
+		$('#household_name').show();
+	} else {
+		$('#household_name').hide();
+	}
+	
 });

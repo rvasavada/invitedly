@@ -1,8 +1,19 @@
-%tr
-  %td{height: "30"} Name
-  %td{width: "15"}
-  %td{colspan: "2"}
-    = f.text_field :title, :maxlength => 5, :placeholder => "Title"
-    = f.text_field :first_name, :maxlength => 20, :placeholder => "First Name"
-    = f.text_field :last_name, :maxlength => 25, :placeholder => "Last Name"
-    
+.nested-fields
+  .row
+    .col-xs-2
+      .form-group
+        = f.label :title, class: "control-label"
+        = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control"})
+    .col-xs-3
+      .form-group
+        = f.label :first_name, class: "control-label"
+        = f.text_field :first_name, :maxlength => 50, class: "form-control"
+        %span.help-block= @contact.errors.get(:first_name).join('; ')            
+    .col-xs-5
+      .form-group
+        = f.label :last_name, class: "control-label"
+        = f.text_field :last_name, :maxlength => 50, class: "form-control"
+    .col-xs-2
+      %br
+      = link_to_remove_association "Remove", f, :class => "btn btn-danger btn-block"
+      

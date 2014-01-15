@@ -8,3 +8,6 @@ body {background-color:#F1FCFC;}
 .content-full { }
 .signout-link {cursor:pointer; display:block; float:left; line-height:27px; padding-right:5px; }
 .signout-link:hover { text-decoration:underline; }
+
+
+#footer { width:940px; color:#aaa; font-size:11px; margin-top:20px; text-align:right; }
