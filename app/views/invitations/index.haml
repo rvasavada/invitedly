@@ -25,7 +25,7 @@
               - @invitations.each do |invitation|
                 %tr
                   %td
-                    %strong=link_to Contact.find(invitation.contact_id).household_name, occasion_invitation_path(@occasion,invitation)
+                    %strong=link_to Contact.find(invitation.contact_id).contact_name, occasion_invitation_path(@occasion,invitation)
                   %td 
                     %ul.list-inline.pull-right
                       -invitation.rsvps.where(:visibility => true).each do |rsvp|

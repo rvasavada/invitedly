@@ -39,7 +39,6 @@ class InvitationsController < ApplicationController
     @invitation.status = "Not sent"
     @guest = Contact.find(@invitation.contact_id)
     @invitation.rsvps.each do |rsvp|
-      rsvp.response = "Not Responded"
       rsvp.contact_id = @guest.id
       rsvp.num_guests = @invitation.max_guests
       rsvp.user_id = current_user.id

@@ -38,7 +38,7 @@
   #guests
     = f.fields_for :guests do |guest|
       = render 'contacts/guest_fields', :f => guest
-    = link_to_add_association 'Add person', f, :guests, :class => "btn btn-primary"
+    = link_to_add_association 'Add another person', f, :guests, :class => "btn btn-primary"
   
   %br
   

@@ -9,9 +9,9 @@
         .form-group
           = f.label :contact_id, "Guest name",class: "control-label"
           - if @invitation.contact_id.present?
-            = f.collection_select :contact_id, @contacts, :id, :household_name,{}, {:disabled => true, class: "form-control"}
+            = f.collection_select :contact_id, @contacts, :id, :contact_name,{}, {:disabled => true, class: "form-control"}
           -else
-            = f.collection_select :contact_id, @contacts, :id, :household_name, {:prompt => "Please select a guest..."}, {class: "form-control"}
+            = f.collection_select :contact_id, @contacts, :id, :contact_name, {:prompt => "Please select a guest..."}, {class: "form-control"}
       .col-xs-3
         .form-group              
           = f.label :max_guests, "Max guests", class: "control-label"
@@ -20,14 +20,14 @@
       = f.label :send_email, class: "control-label" do
         = f.check_box :send_email, checked: true
         Send guest an email to rsvp?
-    .row
+    .row#invitation_send_date
       .col-xs-6
-        = f.label :send_date, "Send Invitation Date"
+        = f.label :send_date, "Invitation Send Date"
         = f.text_field :send_date, :value => @invitation.send_date.blank? ?  Date.today.strftime("%b %e, %Y") : @invitation.send_date, :class => "datepicker form-control"
           
   %fieldset.form-section
     %h4 Event Information
-    %p Select the events that this guest is invited to below.
+    %p Select the events that this guest is invited to below.  You can also mark their response, if known.
     %table.table
       %thead
         %tr

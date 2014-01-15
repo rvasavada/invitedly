@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140115051812) do
+ActiveRecord::Schema.define(version: 20140105214423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,7 +38,10 @@ ActiveRecord::Schema.define(version: 20140115051812) do
     t.datetime "updated_at"
     t.string   "facebook_uid"
     t.string   "household_name"
-    t.boolean  "is_family"
+    t.string   "spouse_last_name"
+    t.string   "spouse_first_name"
+    t.string   "spouse_title"
+    t.integer  "max_guests"
   end
 
   create_table "countries", force: true do |t|
@@ -82,16 +85,6 @@ ActiveRecord::Schema.define(version: 20140115051812) do
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
-  create_table "guests", force: true do |t|
-    t.string   "title"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.integer  "user_id"
-    t.integer  "contact_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "invitations", force: true do |t|
     t.integer  "occasion_id"
     t.integer  "contact_id"
@@ -103,7 +96,6 @@ ActiveRecord::Schema.define(version: 20140115051812) do
     t.boolean  "include_gift_option"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "max_guests"
   end
 
   create_table "occasions", force: true do |t|

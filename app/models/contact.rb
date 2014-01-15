@@ -23,4 +23,12 @@ class Contact < ActiveRecord::Base
     is_family
   end
   
+  def guest_names
+    guest_array = []
+    self.guests.each do |guest|
+      guest_array.push(guest.full_name)
+    end
+    guest_array.join(', ')
+  end
+  
 end

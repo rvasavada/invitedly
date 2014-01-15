@@ -8,8 +8,8 @@ class AddFamilyToContacts < ActiveRecord::Migration
   
   def self.down
     remove_column :contacts, :is_family
-    remove_column :contacts, :spouse_last_name, :string
-    remove_column :contacts, :spouse_first_name, :string
-    remove_column :contacts, :spouse_title, :string
+    add_column :contacts, :spouse_last_name, :string
+    add_column :contacts, :spouse_first_name, :string
+    add_column :contacts, :spouse_title, :string
   end
 end

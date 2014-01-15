@@ -60,5 +60,20 @@ $("document").ready(function(){
 	} else {
 		$('#household_name').hide();
 	}
+  
+  
+	$("#invitation_send_email").change(function() {
+		if(this.checked) {
+			$('#invitation_send_date').fadeIn('slow');
+		} else {
+			$('#invitation_send_date').fadeOut('slow');
+		}
+	});
 	
+	if($('#invitation_send_email').is(':checked')) {
+		$('#invitation_send_date').show();
+	} else {
+		$('#invitation_send_date').hide();
+	}
+  
 });
