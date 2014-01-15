@@ -25,6 +25,7 @@ class Contact < ActiveRecord::Base
   
   def guest_names
     guest_array = []
+    guest_array.push(title + " " + first_name + " " + last_name)
     self.guests.each do |guest|
       guest_array.push(guest.full_name)
     end

@@ -24,23 +24,28 @@ class ContactsController < ApplicationController
 
   def create
     @contact = current_user.contacts.new(contact_params)
+    
+    @contact.total_guest_count = @contact.guests.count + 1
+ 
 
-      if @contact.save
-        unless params[:commit] == "Save & Add more" 
-          redirect_to address_book_path, notice: 'Contact was successfully created.'
-        else
-          redirect_to new_contact_path, notice: 'Contact was successfully created.' 
-        end
+    if @contact.save
+      unless params[:commit] == "Save & Add more" 
+        redirect_to address_book_path, notice: 'Contact was successfully created.'
       else
-        @response = ResponseType.all
-        @title = Title.all.order("name ASC")
-        @country = Country.all.order("name ASC")
-        @state = State.all.order("name ASC")
-        render action: 'new' 
+        redirect_to new_contact_path, notice: 'Contact was successfully created.' 
       end
+    else
+      @response = ResponseType.all
+      @title = Title.all.order("name ASC")
+      @country = Country.all.order("name ASC")
+      @state = State.all.order("name ASC")
+      render action: 'new' 
+    end
   end
 
   def update
+    @contact.total_guest_count = @contact.guests.count + 1
+      
     if @contact.update(contact_params)
       unless params[:commit] == "Save & Add more" 
         redirect_to address_book_path, notice: 'Contact was successfully updated.'

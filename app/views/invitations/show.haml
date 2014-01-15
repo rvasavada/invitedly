@@ -9,7 +9,8 @@
   .content-body
     .row
       .col-xs-7
-        %p= @invitation.status
+        %strong Email status:
+        = @invitation.status
 
         -@invitation.rsvps.where(:visibility => true).each do |rsvp|
           .panel{:class => rsvp.response == "Not Responded" ? "panel-default" : rsvp.response == "Attending" ? "panel-success" : rsvp.response == "Might Attend" ? "panel-warning" : rsvp.response == "Not Attending" ? "panel-danger" : ""}

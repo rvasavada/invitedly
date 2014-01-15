@@ -27,10 +27,8 @@
 
               %p.list-group-item-text
         
-                - if contact.notes.present?
-                  %span.text-muted="#{contact.notes}"
+
                 -if contact.address_1.present?
-                  %br
                   ="#{contact.address_1} #{contact.address_2}"
                 -if ((contact.city.present? and contact.state.present?) and (contact.country == 'United States'))
                   %br
@@ -52,6 +50,10 @@
                 -if contact.cell_phone.present?
                   %abbr{title:'Mobile'}M:
                   = contact.cell_phone
+                - if contact.notes.present?
+                  %br
+                  %br
+                  %span.text-muted="#{contact.notes}"
 
       -else
         .panel-body
