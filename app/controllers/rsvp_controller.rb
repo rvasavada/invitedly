@@ -45,7 +45,7 @@ class RsvpController < ApplicationController
         redirect_to @occasion, :notice => "Sorry, you entered an invalid email address!"
       else
         if @contact.invitation.blank?
-          redirect_to @occasion, :notice => "Sorry, this is awkward.  You haven't been invited!")
+          redirect_to @occasion, :notice => "Sorry, this is awkward.  You haven't been invited!"
         else 
           redirect_to occasion_invitation_rsvp_path(@occasion, @contact.invitation, :contact_info)
         end
