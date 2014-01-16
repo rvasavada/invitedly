@@ -10,10 +10,6 @@
     =link_to occasion_contacts_path(@occasion) do
       Guests
       %span.badge=current_user.contacts.count
-  %li
-    =link_to occasion_invitations_path(@occasion) do
-      Invitations
-      %span.badge=@occasion.invitations.count
 
 %h1 
   .pull-right= link_to 'New Guest', new_occasion_contact_path(@occasion), class: "btn btn-success"
@@ -31,7 +27,6 @@
           
           =contact.contact_name
           %small=contact.guest_names
-
 
         %p.list-group-item-text
 
@@ -62,6 +57,12 @@
             %br
             %br
             %span.text-muted="#{contact.notes}"
+            
+          %ul.list-inline
+            - if contact.invitation.present?
+              - contact.invitation.rsvps.where(:visibility => true).each do |rsvp|
+                %li
+                  %span.label{:class => rsvp.response == "Not Responded" ? "label-default" : rsvp.response == "Attending" ? "label-success" : rsvp.response == "Might Attend" ? "label-warning" : rsvp.response == "Not Attending" ? "label-danger" : ""}=Event.find(rsvp.event_id).name
 
 -else
   .well.text-center

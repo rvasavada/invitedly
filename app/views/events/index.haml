@@ -10,10 +10,6 @@
     =link_to occasion_contacts_path(@occasion) do
       Guests
       %span.badge=current_user.contacts.count
-  %li
-    =link_to occasion_invitations_path(@occasion) do
-      Invitations
-      %span.badge=@occasion.invitations.count
 
 
 %h1 

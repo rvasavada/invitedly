@@ -64,7 +64,7 @@ $("document").ready(function(){
 	}
   
   
-	$("#invitation_send_email").change(function() {
+	$("#contact_invitations_send_email").change(function() {
 		if(this.checked) {
 			$('#invitation_send_date').fadeIn('slow');
 		} else {
@@ -72,7 +72,7 @@ $("document").ready(function(){
 		}
 	});
 	
-	if($('#invitation_send_email').is(':checked')) {
+	if($('#contact_invitations_send_email').is(':checked')) {
 		$('#invitation_send_date').show();
 	} else {
 		$('#invitation_send_date').hide();
