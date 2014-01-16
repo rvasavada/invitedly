@@ -19,10 +19,11 @@ Invitedly::Application.routes.draw do
   resources :occasions, :except => [:index], :path => '' do
     match 'rsvp/verify_email_address' => 'rsvp#verify_email_address', :via => :post
     
-    resources :guests, :as => :contacts, :controller => :contacts do
+    resources :guests, :as => :contacts, :controller => :contacts 
+    
+    resources :invitations, :except => [:index, :new, :edit, :show] do
       resources :rsvp
-      
-    end 
+    end
     resources :events, :except => [:show]
   end
 

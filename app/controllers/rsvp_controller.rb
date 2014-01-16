@@ -1,17 +1,18 @@
 class RsvpController < ApplicationController
   include Wicked::Wizard
   layout "wedding_page"
-  steps :contact_info, :invitation, :confirmation
+  steps :contact_info, :events, :confirmation
 
   def show
-    @contact = Contact.find(params[:contact_id])
+    @invitation = Invitation.friendly.find(params[:invitation_id])
+    @contact = @invitation.contact
     @occasion = Occasion.friendly.find(params[:occasion_id])
     case step
     when :contact_info
       @title = Title.all.order("name ASC")
       @country = Country.all.order("name ASC")
       @state = State.all.order("name ASC")
-    when :invitation
+    when :events
       @response = ResponseType.all
       
     when :confirmation
@@ -20,7 +21,8 @@ class RsvpController < ApplicationController
   end
   
   def update
-    @contact = Contact.find(params[:contact_id])
+    @invitation = Invitation.friendly.find(params[:invitation_id])
+    @contact = @invitation.contact
     @occasion = Occasion.friendly.find(params[:occasion_id])
     case step
     when :contact_info
@@ -28,7 +30,7 @@ class RsvpController < ApplicationController
       
       @contact.update(contact_params)
 
-    when :invitation
+    when :events
       @contact.update(contact_params)
     when :confirmation
     end
@@ -42,7 +44,7 @@ class RsvpController < ApplicationController
       if @contact.blank?
         redirect_to @occasion, :notice => "Sorry, you entered an invalid email address!"
       else 
-        redirect_to occasion_contact_rsvp_path(@occasion, @contact, :contact_info)
+        redirect_to occasion_invitation_rsvp_path(@occasion, @contact.invitation, :contact_info)
       end
     else
       redirect_to @occasion, :notice => "Please enter a email address.!"
