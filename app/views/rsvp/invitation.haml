@@ -1,1 +1,13 @@
-Invitation
+.content-full
+  .row
+    .col-xs-12
+      %h1 RSVP - Invitations
+      = form_for [@occasion,@contact], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
+
+
+        = f.fields_for :invitation do |invitation|
+          = render 'invitation_fields', :f => invitation
+        = link_to 'Back - Update contact info', previous_wizard_path, :class=> "btn btn-default"            
+        = f.submit "Save & Finish", :class => "btn btn-success"
+    
+

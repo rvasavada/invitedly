@@ -1,0 +1,33 @@
+%fieldset
+  %h3 Event Invitations
+  %p Select the events that you will be able to attend.
+  %table.table
+    %thead
+      %tr
+        %th Event name
+        %th Response
+        %th Special notes
+    %tbody
+    
+      = f.fields_for :rsvps do |rsvp|
+        %tr{style: rsvp.object.visibility ? "" : "display:none;"}
+          %td
+            = rsvp.hidden_field(:event_id)
+            %h4=Event.find(rsvp.object.event_id).name
+
+          %td
+            .btn-group{"data-toggle"=> "buttons"}
+              %label.btn.btn-success.btn-sm.response_btn
+                = rsvp.radio_button :response, "Attending"
+                Attending
+              %label.btn.btn-warning.btn-sm.response_btn
+                = rsvp.radio_button :response, "Might Attend"
+                Might Attend
+              %label.btn.btn-danger.btn-sm.response_btn
+                = rsvp.radio_button :response, "Not Attending"
+                Not Attending
+                
+        
+          %td
+            .form-group
+              = rsvp.text_area :message, :rows => 2, class: "form-control input-sm"

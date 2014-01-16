@@ -12,10 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap.min.js
 //= require jquery-ui-1.10.3.custom.min
 //= require jquery.timepicker.min
 //= require cocoon
+//= require bootstrap.min.js
 //= require_tree .
 
 $("document").ready(function(){

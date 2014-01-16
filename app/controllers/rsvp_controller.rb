@@ -8,11 +8,12 @@ class RsvpController < ApplicationController
     @occasion = Occasion.friendly.find(params[:occasion_id])
     case step
     when :contact_info
-      @response = ResponseType.all
       @title = Title.all.order("name ASC")
       @country = Country.all.order("name ASC")
       @state = State.all.order("name ASC")
     when :invitation
+      @response = ResponseType.all
+      
     when :confirmation
     end
     render_wizard
@@ -26,11 +27,7 @@ class RsvpController < ApplicationController
       @contact.total_guest_count = @contact.guests.count + 1
       
       @contact.update(contact_params)
-      
-      @response = ResponseType.all
-      @title = Title.all.order("name ASC")
-      @country = Country.all.order("name ASC")
-      @state = State.all.order("name ASC")
+
     when :invitation
     when :confirmation
     end

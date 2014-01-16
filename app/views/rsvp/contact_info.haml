@@ -1,7 +1,9 @@
 .content-full
   .row
     .col-xs-12
-      %h1 RSVP
+      %h1 
+        %strong RSVP
+        Contact info
       = form_for [@occasion,@contact], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
         .row
           .col-xs-6
@@ -101,7 +103,6 @@
 
         
 
-            = link_to 'Cancel', previous_wizard_path, :class=> "btn btn-default"            
             = f.submit "Next", :class => "btn btn-success"
           .col-xs-6
     
