@@ -1,15 +1,5 @@
+%h1 Edit Wedding
 .row
-  .col-xs-9
-    .panel.panel-default
-      .panel-heading
-        %h3.panel-title.panel-page-title Occasion Settings
-      .panel-body
-        = render 'form'
-        %hr
-        
-        %fieldset.form-section
-          %h4 Delete Occasion
-          %p 
-            Occasion over or had enough?  Go ahead and
-            = link_to "delete it.", @occasion, method: :delete
-      
+  .col-xs-6
+    = render 'form'
+

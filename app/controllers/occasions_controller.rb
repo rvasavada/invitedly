@@ -30,10 +30,9 @@ class OccasionsController < ApplicationController
 
   def create
     @occasion = Occasion.new(occasion_params)
-    @occasion.user_id = current_user
-    
+    @occasion.user_id = current_user.id
     if @occasion.save
-      redirect_to @occasion, notice: 'Occasion was successfully created.'
+      redirect_to new_occasion_event_path(@occasion), notice: 'Now, let\'s add some events...'
     else
       render action: 'new'
     end

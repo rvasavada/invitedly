@@ -7,15 +7,19 @@
       = f.label :name, class: "control-label" do
         Name
         %span{style: "color:red"}*
-      = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control input-sm"
+      = f.text_field :name, :autofocus => true, class: "form-control input-sm"
       %span.help-block= @occasion.errors.get(:name).join('; ')
 
     .form-group{class: @occasion.errors.include?(:slug) ? 'has-error' : ''}
       = f.label :slug, class: "control-label" do
-        Occasion Handle
+        Wedding Handle
         %span{style: "color:red"}*
-      = f.text_field :slug, :placeholder => "johnsbirthday", :maxlength => 50, class: "form-control input-sm"
-      %span.help-block= @occasion.errors.get(:slug).join('; ')
+      .input-group
+        %span.input-group-addon http://invitely.com/
+        = f.text_field :slug, :placeholder => "jimandpamswedding", :maxlength => 20, class: "form-control input-sm"      
+      %small Create your special wedding rsvp site!
+      %span.help-block
+        = @occasion.errors.get(:slug).join('; ')
 
     .form-group{class: @occasion.errors.include?(:description) ? 'has-error' : ''}
       = f.label :description, class: "control-label" do
@@ -26,5 +30,5 @@
 
 
 
-  = f.submit "Save occasion", :class => "btn btn-success"
+  = f.submit "Save Wedding", :class => "btn btn-success"
   = link_to 'Cancel', occasions_path, :class=> "btn btn-default"

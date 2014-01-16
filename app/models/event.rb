@@ -2,7 +2,7 @@ class Event < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: :slugged
   
-  belongs_to :occasions
+  belongs_to :occasion
   has_many :rsvps, dependent: :destroy
   has_many :contacts, through: :rsvps
   default_scope { order('start_date ASC, start_time ASC') } 

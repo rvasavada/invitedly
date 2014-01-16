@@ -12,12 +12,14 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap.min.js
 //= require jquery-ui-1.10.3.custom.min
 //= require jquery.timepicker.min
 //= require cocoon
 //= require_tree .
 
 $("document").ready(function(){
+    
 	//calendar feature on new events
 	$(document).ready(function(){	
 		$('.datepicker').datepicker({
@@ -75,5 +77,5 @@ $("document").ready(function(){
 	} else {
 		$('#invitation_send_date').hide();
 	}
-  
+    
 });
