@@ -1,9 +1,11 @@
-%h1 
-  %strong=@occasion.name
-  %br
-  %small We would love your contact information.
-.row
-  .col-xs-7
-
-   
-    = render 'contacts/form'
+.jumbotron
+  %h1=@occasion.name
+  %p#description=@occasion.description
+  %p
+    .row
+      .col-xs-6
+        = form_tag 'invitations/check_tag' do
+          .input-group
+            = text_field_tag :email,nil, :placeholder => "Enter email address", class: "form-control input-lg"
+            %span.input-group-btn
+              =submit_tag "RSVP now", class: "btn btn-primary btn-lg btn-danger", role: "button"

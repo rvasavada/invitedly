@@ -11,14 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140115085751) do
+ActiveRecord::Schema.define(version: 20140116075616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "contacts", force: true do |t|
     t.integer  "user_id"
-    t.integer  "friend_id"
     t.string   "email"
     t.string   "address_1"
     t.string   "address_2"
@@ -87,7 +86,6 @@ ActiveRecord::Schema.define(version: 20140115085751) do
     t.string   "title"
     t.string   "first_name"
     t.string   "last_name"
-    t.integer  "user_id"
     t.integer  "contact_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -110,7 +108,7 @@ ActiveRecord::Schema.define(version: 20140115085751) do
   create_table "occasions", force: true do |t|
     t.integer  "user_id"
     t.string   "name"
-    t.string   "description"
+    t.text     "description"
     t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -125,13 +123,10 @@ ActiveRecord::Schema.define(version: 20140115085751) do
   end
 
   create_table "rsvps", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "contact_id"
-    t.integer  "occasion_id"
     t.integer  "event_id"
     t.integer  "num_guests"
     t.string   "message"
-    t.string   "response"
+    t.string   "response",      default: "Not Responded"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "invitation_id"
@@ -174,9 +169,6 @@ ActiveRecord::Schema.define(version: 20140115085751) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "title"
-    t.string   "spouse_title"
-    t.string   "spouse_first_name"
-    t.string   "spouse_last_name"
     t.string   "cell_phone"
     t.string   "home_phone"
     t.integer  "max_guests"

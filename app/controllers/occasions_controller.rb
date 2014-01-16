@@ -14,7 +14,7 @@ class OccasionsController < ApplicationController
       @title = Title.all.order("name ASC")
       @country = Country.all.order("name ASC")
       @state = State.all.order("name ASC")
-      render "home"
+      render "home",  :layout => 'wedding_page'
     end
   end
 
@@ -63,18 +63,6 @@ class OccasionsController < ApplicationController
     respond_to do |format|
       format.html
       format.js { render :layout => false }
-    end
-  end
-  
-  
-  #useless one
-  def begin_rsvp_flow
-    @occasion = Occasion.friendly.find(params[:occasion_id])
-    @contact = Contact.find_by_id(params[:contact_id])
-    if @contact.blank?
-      redirect_to :back, :notice => "Sorry, you entered an invalid code!"
-    else
-      redirect_to occasion_rsvp_path(@occasion, :contact_info, :contact_id => @contact)
     end
   end
 

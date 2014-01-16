@@ -1,0 +1,20 @@
+!!!
+%html{lang: "en"}    
+  %head
+    %title=@occasion.name
+    = stylesheet_link_tag "application", media: "all"
+    
+    = csrf_meta_tags
+    =favicon_link_tag "/assets/favicon.ico"
+    %body#wedding
+      .container
+        .row
+          .col-xs-12
+            %h1#logo
+          
+        .fully-container
+          .row
+            .col-xs-12
+              = yield
+
+      = javascript_include_tag "application"      

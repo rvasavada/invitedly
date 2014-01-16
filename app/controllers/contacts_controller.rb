@@ -38,11 +38,8 @@ class ContactsController < ApplicationController
 
     @invitation = @contact.invitation
     @invitation.occasion_id = @occasion.id
-    @invitation.status = "Not sent"
     @invitation.rsvps.each do |rsvp|
       rsvp.num_guests = @contact.total_guest_count
-      rsvp.user_id = current_user.id
-      rsvp.occasion_id = @occasion.id
     end
     
     if @contact.save

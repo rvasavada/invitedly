@@ -1,8 +1,9 @@
 class Contact < ActiveRecord::Base
   belongs_to :user
+  
   has_one :invitation, :dependent => :destroy
   accepts_nested_attributes_for :invitation, :reject_if => :all_blank, :allow_destroy => true
-  has_many :rsvps, through: :invitations, :dependent => :destroy
+  has_many :rsvps, through: :invitation
   has_many :guests, :dependent => :destroy
   accepts_nested_attributes_for :guests, :reject_if => :all_blank, :allow_destroy => true
   

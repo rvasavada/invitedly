@@ -60,7 +60,7 @@
             
           %ul.list-inline
             - if contact.invitation.present?
-              - contact.invitation.rsvps.where(:visibility => true).each do |rsvp|
+              - contact.rsvps.where(:visibility => true).each do |rsvp|
                 %li
                   %span.label{:class => rsvp.response == "Not Responded" ? "label-default" : rsvp.response == "Attending" ? "label-success" : rsvp.response == "Might Attend" ? "label-warning" : rsvp.response == "Not Attending" ? "label-danger" : ""}=Event.find(rsvp.event_id).name
 
