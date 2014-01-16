@@ -1,7 +1,7 @@
-= form_for @contact, :html => {:role =>"form"} do |f|
+= form_for [@occasion,@contact], :html => {:role =>"form"} do |f|
 
 
-  %h3 Contact information
+  %h3 Guest Information
   .form-group
     .checkbox
       %label
@@ -12,33 +12,33 @@
     = f.label :household_name, class: "control-label" do
       Family, Group, or Household Name
       %span{style: "color:red"}*
-    = f.text_field :household_name, :autofocus => true, :maxlength => 50, class: "form-control"
+    = f.text_field :household_name, :autofocus => true, :maxlength => 50, class: "form-control input-sm"
     %span.help-block= @contact.errors.get(:household_name).join('; ')
   .row
     .col-xs-2
       .form-group{class: @contact.errors.include?(:title) ? 'has-error' : ''}
         = f.label :title, class: "control-label" do
           Title
-        = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control"})
+        = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control input-sm"})
         %span.help-block= @contact.errors.get(:title).join('; ')
     .col-xs-4
       .form-group{class: @contact.errors.include?(:first_name) ? 'has-error' : ''}
         = f.label :first_name, class: "control-label" do
           First Name
           %span{style: "color:red"}*
-        = f.text_field :first_name, :autofocus => true, :maxlength => 50, class: "form-control"
+        = f.text_field :first_name, :autofocus => true, :maxlength => 50, class: "form-control input-sm"
         %span.help-block= @contact.errors.get(:first_name).join('; ')            
     .col-xs-6
       .form-group{class: @contact.errors.include?(:last_name) ? 'has-error' : ''}
         = f.label :last_name, class: "control-label" do
           Last Name
           %span{style: "color:red"}*
-        = f.text_field :last_name, :autofocus => true, :maxlength => 50, class: "form-control"
+        = f.text_field :last_name, :autofocus => true, :maxlength => 50, class: "form-control input-sm"
         %span.help-block= @contact.errors.get(:last_name).join('; ')
   #guests
     = f.fields_for :guests do |guest|
       = render 'contacts/guest_fields', :f => guest
-    = link_to_add_association 'Add another person', f, :guests, :class => "btn btn-primary"
+    = link_to_add_association 'Add a +1', f, :guests, :class => "btn btn-primary btn-xs pull-right"
   
   %br
   
@@ -46,18 +46,18 @@
     = f.label :email, class: "control-label" do
       Preferred Email
       %span{style: "color:red"}*
-    = f.text_field :email, :maxlength => 50, class: "form-control"
+    = f.text_field :email, :maxlength => 50, class: "form-control input-sm"
     %span.help-block= @contact.errors.get(:email).join('; ')
 
   .row
     .col-xs-6
       .form-group
         = f.label :home_phone, "Home Phone", class: "control-label"
-        = f.telephone_field :home_phone, class: "form-control"
+        = f.telephone_field :home_phone, class: "form-control input-sm"
     .col-xs-6
       .form-group
         = f.label :cell_phone, "Cell Phone", class: "control-label"
-        = f.telephone_field :cell_phone, class: "form-control"
+        = f.telephone_field :cell_phone, class: "form-control input-sm"
                     
 
   %h3 Address
@@ -66,35 +66,35 @@
     .col-xs-7
       .form-group
         = f.label :address_1, "Address 1"
-        = f.text_field :address_1, :maxlength => 100, class: "form-control"
+        = f.text_field :address_1, :maxlength => 100, class: "form-control input-sm"
     .col-xs-5
       .form-group
         = f.label :address_2, "Address 2"
-        = f.text_field :address_2, :maxlength => 100, class: "form-control"
+        = f.text_field :address_2, :maxlength => 100, class: "form-control input-sm"
   .row
     .col-xs-5
       .form-group      
         = f.label :city, "City"
-        = f.text_field :city, :maxlength => 100, class: "form-control"
+        = f.text_field :city, :maxlength => 100, class: "form-control input-sm"
     .col-xs-4.domestic
       .form-group
         = f.label :state, "State"
-        = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
+        = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control input-sm"} 
     .domestic.col-xs-3
       .form-group
         = f.label :zip, "Zip"
-        = f.text_field :zip, :maxlength => 5, class: "form-control"
+        = f.text_field :zip, :maxlength => 5, class: "form-control input-sm"
     .international.col-xs-4
       .form-group
         = f.label :region, "Region"
-        = f.text_field :region, :maxlength => 100, class: "form-control"
+        = f.text_field :region, :maxlength => 100, class: "form-control input-sm"
     .international.col-xs-3
       .form-group
         = f.label :postal_code, "Postal Code"
-        = f.text_field :postal_code, :maxlength => 20, class: "form-control"
+        = f.text_field :postal_code, :maxlength => 20, class: "form-control input-sm"
   .form-group
     = f.label :country, "Country"
-    = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control",:id => "countrySelect"})
+    = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control input-sm",:id => "countrySelect"})
 
 
   - if user_signed_in?
@@ -102,14 +102,14 @@
 
     .form-group
       = f.label :notes, "Notes", class: "control-label"
-      = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "These notes are private and visible only to you.", class: "form-control"}
+      = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "These notes are private and visible only to you.", class: "form-control input-sm"}
 
 
 
   - if user_signed_in?
     .pull-right
-      = f.submit "Save & Add more", :class => "btn btn-primary btn-lg"
-      = f.submit "Save & Finish", :class => "btn btn-success btn-lg"
-    = link_to 'Cancel', address_book_path, :class=> "btn btn-default btn-lg"
+      = f.submit "Save & Add more", :class => "btn btn-primary"
+      = f.submit "Save & Finish", :class => "btn btn-success"
+    = link_to 'Cancel', occasion_contacts_path(@occasion), :class=> "btn btn-default"
   - else
     = f.submit "Submit info", :class => "btn btn-success form-btn btn-lg"

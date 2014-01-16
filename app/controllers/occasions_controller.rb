@@ -32,7 +32,7 @@ class OccasionsController < ApplicationController
     @occasion = Occasion.new(occasion_params)
     @occasion.user_id = current_user.id
     if @occasion.save
-      redirect_to new_occasion_event_path(@occasion), notice: 'Now, let\'s add some events...'
+      redirect_to new_occasion_event_path(@occasion), notice: 'Great!  Your occasion was saved.  Now, let\'s add some events...'
     else
       render action: 'new'
     end

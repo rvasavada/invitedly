@@ -1,52 +1,58 @@
-.row
-  .col-xs-3
-    .list-group
-      =link_to @occasion.name, @occasion, class:"list-group-item", style: "font-weight:bold;"
-      =link_to occasion_events_path(@occasion), class:"list-group-item active" do
-        Events
-        %span.badge=@occasion.events.count
-        =link_to occasion_invitations_path(@occasion), class:"list-group-item" do
-          Invitations
-          %span.badge=@occasion.invitations.count
-    = link_to 'New Event', new_occasion_event_path(@occasion),class: "btn btn-success btn-block"
-  .col-xs-9
-    .panel.panel-default
-      .panel-heading
-        %h3.panel-title.panel-page-title Events
-      .panel-body
-        - if @events.present?
+%ul.nav.nav-pills
+  %li
+    =link_to @occasion do
+      Recent Activity
+  %li.active
+    =link_to occasion_events_path(@occasion) do
+      Events
+      %span.badge=@occasion.events.count
+  %li
+    =link_to occasion_contacts_path(@occasion) do
+      Guests
+      %span.badge=current_user.contacts.count
+  %li
+    =link_to occasion_invitations_path(@occasion) do
+      Invitations
+      %span.badge=@occasion.invitations.count
+
+
+%h1 
+  .pull-right= link_to 'New Event', new_occasion_event_path(@occasion), class: "btn btn-success"
+  Events
+
+
+- if @events.present?
+
+  %table.table
+    %tbody
+    - @events.each do |event|
+      %tr
+        %td
         
-          %table.table
-            %thead
-              %tr
-                %th Event name
-                %th Actions
-            %tbody
-            - @events.each do |event|
-              %tr
-                %td
-                  %strong=link_to event.name, "#", data: {title:event.name, container: 'body', content: event.description, trigger: "hover", toggle: "popover"}, :class => "event-info"
-                  %ul.list-unstyled
-                    %li.text-muted
-                      = event.start_date.strftime("%A, %B %e, %Y")
-                      at
-                      = event.start_time
-                    %li.text-muted
-                      = link_to event.location, "https://maps.google.com/maps?q=#{event.address}",:target => "_blank"
-                      -if event.address_1.present?
-                        ="#{event.address_1} #{event.address_2}"
-                      -if ((event.city.present? and event.state.present?) and (event.country == 'United States'))
-                        ="#{event.city}, #{event.state} #{event.zip}" 
-                      -if ((event.city.present? and event.region.present?) and (event.country != 'United States'))
-                        ="#{event.city}, #{event.region} #{event.postal_code}"
-                      -if event.country != 'United States'
-                        = event.country
-                  
-                %td
-                  =link_to "Edit", edit_occasion_event_path(@occasion,event)
+          %h4=event.name
+          %p
+            .text-muted
+              =event.description
+              %span=link_to "edit", edit_occasion_event_path(@occasion,event)
+          %p
+            %strong= event.location
+            -if event.address_1.present?
+              ="#{event.address_1} #{event.address_2}"
+            -if ((event.city.present? and event.state.present?) and (event.country == 'United States'))
+              ="#{event.city}, #{event.state} #{event.zip}" 
+            -if ((event.city.present? and event.region.present?) and (event.country != 'United States'))
+              ="#{event.city}, #{event.region} #{event.postal_code}"
+            -if event.country != 'United States'
+              = event.country
+            %br
+            = event.start_date.strftime("%A, %B %e, %Y")
+            at
+            = event.start_time
+
+        
 
 
-        -else
-          .panel-body.text-center
-            %h3 No events found.
-            =link_to "Add an event!", new_occasion_event_path(@occasion)
+-else
+  .panel-body.text-center
+    %h3 No events found.
+    =link_to "Add an event!", new_occasion_event_path(@occasion)

@@ -16,7 +16,6 @@
               - if user_signed_in? 
                 - if current_user.occasion
                   %li= link_to current_user.occasion.name, current_user.occasion, class: "signout-link"
-                  %li= link_to "Address Book", address_book_path, class: "signout-link"
                 - else 
                   %li= link_to "Manange Wedding", new_occasion_path, class: "signout-link"
                 %li= link_to "Settings", edit_user_registration_path, class: "signout-link"

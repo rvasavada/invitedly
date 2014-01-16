@@ -1,41 +1,50 @@
-.row
-  .col-xs-3
-    .list-group
-      =link_to @occasion.name, @occasion, class: "list-group-item", style: "font-weight:bold;"
-      =link_to occasion_events_path(@occasion), class:"list-group-item" do
-        Events
-        %span.badge=@occasion.events.count
-        =link_to occasion_invitations_path(@occasion), class:"list-group-item active" do
-          Invitations
-          %span.badge=@occasion.invitations.count
-    = link_to 'Invite more guests', new_occasion_invitation_path(@occasion),class: "btn btn-success btn-block"  
-  .col-xs-9
-    .panel.panel-default
-      .panel-heading
-        %h3.panel-title.panel-page-title Invitations
-        
-      .panel-body
-        - if @invitations.present?
-          %table.table      
-            %thead
-              %tr
-                %th Guest name
-                %th
-            %tbody
-              - @invitations.each do |invitation|
-                %tr
-                  %td
-                    %strong=link_to Contact.find(invitation.contact_id).contact_name, occasion_invitation_path(@occasion,invitation)
-                  %td 
-                    %ul.list-inline.pull-right
-                      -invitation.rsvps.where(:visibility => true).each do |rsvp|
-                        %li
-                          %span.label{:class => rsvp.response == "Not Responded" ? "label-default" : rsvp.response == "Attending" ? "label-success" : rsvp.response == "Might Attend" ? "label-warning" : rsvp.response == "Not Attending" ? "label-danger" : ""}=Event.find(rsvp.event_id).name
-        -else
-          .panel-body.text-center
-            %h3 No guests invited. 
-        
-            -if current_user.contacts.present?
-              = link_to 'Invite guests!', new_occasion_invitation_path(@occasion)
-            -else
-              = link_to 'Invite guests!', user_omniauth_authorize_path(:facebook)
+%ul.nav.nav-pills
+  %li
+    =link_to @occasion do
+      Recent Activity
+  %li
+    =link_to occasion_events_path(@occasion) do
+      Events
+      %span.badge=@occasion.events.count
+  %li
+    =link_to occasion_contacts_path(@occasion) do
+      Guests
+      %span.badge=current_user.contacts.count
+  %li.active
+    =link_to occasion_invitations_path(@occasion) do
+      Invitations
+      %span.badge=@occasion.invitations.count
+
+
+%h1 
+  .pull-right= link_to 'New Invitation', new_occasion_invitation_path(@occasion),class: "btn btn-success"
+  Invitations
+
+- if @invitations.present?
+  "  
+
+  %table.table      
+    %thead
+      %tr
+        %th Guest name
+        %th
+    %tbody
+      - @invitations.each do |invitation|
+        %tr
+          %td
+            %strong=link_to Contact.find(invitation.contact_id).contact_name, occasion_invitation_path(@occasion,invitation)
+          %td 
+            %ul.list-inline.pull-right
+              -invitation.rsvps.where(:visibility => true).each do |rsvp|
+                %li
+                  %span.label{:class => rsvp.response == "Not Responded" ? "label-default" : rsvp.response == "Attending" ? "label-success" : rsvp.response == "Might Attend" ? "label-warning" : rsvp.response == "Not Attending" ? "label-danger" : ""}=Event.find(rsvp.event_id).name
+-else      
+  .well.text-center
+    
+
+    -if current_user.contacts.present?
+      %h3 No guests invited.
+      = link_to 'Invite guests!', new_occasion_invitation_path(@occasion)
+    -else
+      %h3 No guests to invite.
+      = link_to 'Add guests!', new_occasion_contact_path(@occasion)

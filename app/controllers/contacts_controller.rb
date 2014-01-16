@@ -3,10 +3,14 @@ class ContactsController < ApplicationController
   before_filter :authenticate_user!, only: [:index, :edit, :new]
 
   def index
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    
     @contacts = current_user.contacts
   end
 
   def new
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    
     @contact = current_user.contacts.new
     
     @response = ResponseType.all
@@ -16,6 +20,8 @@ class ContactsController < ApplicationController
   end
 
   def edit
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    
     @response = ResponseType.all
     @title = Title.all.order("name ASC")
     @country = Country.all.order("name ASC")
@@ -24,15 +30,14 @@ class ContactsController < ApplicationController
 
   def create
     @contact = current_user.contacts.new(contact_params)
-    
     @contact.total_guest_count = @contact.guests.count + 1
- 
+    @occasion = Occasion.friendly.find(params[:occasion_id])
 
     if @contact.save
       unless params[:commit] == "Save & Add more" 
-        redirect_to address_book_path, notice: 'Contact was successfully created.'
+        redirect_to occasion_contacts_path(@occasion), notice: 'Guest was successfully created.'
       else
-        redirect_to new_contact_path, notice: 'Contact was successfully created.' 
+        redirect_to new_occasion_contact_path(@occasion), notice: 'Guest was successfully created.' 
       end
     else
       @response = ResponseType.all
@@ -45,14 +50,15 @@ class ContactsController < ApplicationController
 
   def update
     @contact.total_guest_count = @contact.guests.count + 1
+    @occasion = Occasion.friendly.find(params[:occasion_id])
       
     if @contact.update(contact_params)
       unless params[:commit] == "Save & Add more" 
-        redirect_to address_book_path, notice: 'Contact was successfully updated.'
+        redirect_to occasion_contacts_path(@occasion), notice: 'Guest was successfully updated.'
       else
-        redirect_to new_contact_path, notice: 'Contact was successfully updated.' 
+        redirect_to new_occasion_contact_path(@occasion), notice: 'Guest was successfully updated.' 
       end
-    else
+    else      
       @response = ResponseType.all
       @title = Title.all.order("name ASC")
       @country = Country.all.order("name ASC")
@@ -62,8 +68,10 @@ class ContactsController < ApplicationController
   end
 
   def destroy
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    
     @contact.destroy
-    redirect_to address_book_path
+    redirect_to occasion_contacts_path(@occasion), notice: 'Guest was successfully deleted.' 
   end
 
   def get_facebook_contacts

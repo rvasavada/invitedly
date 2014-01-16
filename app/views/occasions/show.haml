@@ -1,20 +1,22 @@
-.row
-  .col-xs-3
-    .list-group
-      =link_to @occasion.name, @occasion, class:"list-group-item active", style: "font-weight:bold;"
-      =link_to occasion_events_path(@occasion), class:"list-group-item" do
-        Events
-        %span.badge=@occasion.events.count
-        =link_to occasion_invitations_path(@occasion), class:"list-group-item" do
-          Invitations
-          %span.badge=@occasion.invitations.count
+%ul.nav.nav-pills
+  %li.active
+    =link_to @occasion do
+      Recent Activity
+  %li
+    =link_to occasion_events_path(@occasion) do
+      Events
+      %span.badge=@occasion.events.count
+  %li
+    =link_to occasion_contacts_path(@occasion) do
+      Guests
+      %span.badge=current_user.contacts.count
+  %li
+    =link_to occasion_invitations_path(@occasion) do
+      Invitations
+      %span.badge=@occasion.invitations.count
 
-  .col-xs-9
-    
-    .panel.panel-default
-      .panel-heading
-        %h3.panel-title.panel-page-title Recent Activity
-      .panel-body
 
-        .text-center
-          %h3 No updates just yet.
+%h1 Recent Activity
+  
+.well.text-center
+  %h3 No updates just yet.

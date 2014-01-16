@@ -3,13 +3,13 @@ Invitedly::Application.routes.draw do
   get 'about' => 'static#about'
   get 'terms' => 'static#terms'
   get 'privacy' => 'static#privacy'
-  get 'address_book' => 'contacts#index'  
+  #get 'address_book' => 'contacts#index'  
 
-
+  /
   resources :contacts, :except => [:index,:show] do
    get :get_facebook_contacts, :on => :collection
   end
-  
+  /
   
   devise_for :users, :controllers => { :registrations => "users/registrations",
     :omniauth_callbacks => "users/omniauth_callbacks",
@@ -18,7 +18,7 @@ Invitedly::Application.routes.draw do
   
   resources :occasions, :except => [:index], :path => '' do
     resources :invitations
-        
+    resources :guests, :as => :contacts, :controller => :contacts    
     resources :events, :except => [:show]
   end
 
