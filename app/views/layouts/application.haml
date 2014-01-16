@@ -15,7 +15,7 @@
             %ul.list-inline.pull-right{style: "margin-top:32px;"}
               - if user_signed_in? 
                 - if current_user.occasion
-                  %li= link_to current_user.occasion.name, current_user.occasion, class: "signout-link"
+                  %li= link_to "Edit Wedding Details", edit_occasion_path(current_user.occasion), class: "signout-link"
                 - else 
                   %li= link_to "Manange Wedding", new_occasion_path, class: "signout-link"
                 %li= link_to "Settings", edit_user_registration_path, class: "signout-link"

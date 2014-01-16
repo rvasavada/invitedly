@@ -95,7 +95,7 @@
             = f.text_field :postal_code, :maxlength => 20, class: "form-control input-sm"
       .form-group
         = f.label :country, "Country"
-        = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control input-sm",:id => "countrySelect"})
+        = f.collection_select(:country,	@country, :name, :name, {:selected => @contact.country.blank? ? "United States" : @contact.country}, {class: "form-control input-sm",:id => "countrySelect"})
 
 
       - if user_signed_in?

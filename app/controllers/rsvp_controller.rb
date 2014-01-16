@@ -1,6 +1,6 @@
 class RsvpController < ApplicationController
   include Wicked::Wizard
-
+  layout "wedding_page"
   steps :contact_info, :invitation, :confirmation
 
   def show
@@ -29,6 +29,7 @@ class RsvpController < ApplicationController
       @contact.update(contact_params)
 
     when :invitation
+      @contact.update(contact_params)
     when :confirmation
     end
     render_wizard @contact
@@ -38,9 +39,13 @@ class RsvpController < ApplicationController
     @occasion = Occasion.friendly.find(params[:occasion_id])
     unless params[:email].blank?
       @contact = Contact.find_by_email(params[:email])
-      redirect_to occasion_contact_rsvp_path(@occasion, @contact, :contact_info)
+      if @contact.blank?
+        redirect_to @occasion, :notice => "Sorry, you entered an invalid email address!"
+      else 
+        redirect_to occasion_contact_rsvp_path(@occasion, @contact, :contact_info)
+      end
     else
-      redirect_to @occasion, :notice => "Sorry, you entered an invalid email address!"
+      redirect_to @occasion, :notice => "Please enter a email address.!"
     end
   end
   
@@ -48,7 +53,7 @@ class RsvpController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def contact_params
-      params.require(:contact).permit(:email, :notes, :user_id, :contact_id, :address_1, :address_2, :city, :state, :zip, :country, :region, :postal_code, :household_name, :cell_phone, :home_phone, :title, :first_name, :last_name, :is_family, guests_attributes: [:id, :title, :first_name, :last_name, :_destroy], invitation_attributes: [:occasion_id,:contact_id,:status,:code,:send_email,:send_date,:send_reminder,:include_gift_option, rsvps_attributes: [:id, :visibility, :message, :num_guests, :event_id, :response]])
+      params.require(:contact).permit(:email, :notes, :user_id, :contact_id, :address_1, :address_2, :city, :state, :zip, :country, :region, :postal_code, :household_name, :cell_phone, :home_phone, :title, :first_name, :last_name, :is_family, guests_attributes: [:id, :title, :first_name, :last_name, :_destroy], invitation_attributes: [:id, :occasion_id,:contact_id,:status,:code,:send_email,:send_date,:send_reminder,:include_gift_option, rsvps_attributes: [:id, :visibility, :message, :num_guests, :event_id, :response]])
     end
   
 end

@@ -15,6 +15,13 @@
         .fully-container
           .row
             .col-xs-12
+              - if notice.present?
+                .row
+                  .col-xs-12
+                    .alert.alert-success.alert-dismissable
+                      %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
+                      = notice.html_safe
+                    
               = yield
 
-      = javascript_include_tag "application"      
+      = javascript_include_tag "application"
