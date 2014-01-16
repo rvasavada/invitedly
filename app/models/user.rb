@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   devise :omniauthable, :omniauth_providers => [:facebook]
-  has_many :occasions, :dependent => :destroy
+  has_one :occasion, :dependent => :destroy
   has_many :events, :through => :occasions, :dependent => :destroy
   has_many :contacts, :dependent => :destroy
   

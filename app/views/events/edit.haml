@@ -1,14 +1,12 @@
+%h1 Edit Event
+
 .row
-  .col-xs-7
-    .panel.panel-default
-      .panel-heading
-        %h3.panel-title.panel-page-title Edit Event
-      .panel-body
-        = render 'form'
-        %hr
-        
-        %fieldset.form-section
-          %h4 Delete Event
-          %p 
-            Don't need this event?  Go ahead and
-            = link_to "delete it.", [@occasion,@event], method: :delete
+  .col-xs-6
+    = render 'form'
+
+%hr
+%fieldset
+  %h4 Delete Event
+  %p 
+    Don't need this event?  Go ahead and
+    = link_to "delete it.", [@occasion,@event], method: :delete

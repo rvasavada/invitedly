@@ -8,13 +8,14 @@
         =link_to occasion_invitations_path(@occasion), class:"list-group-item" do
           Invitations
           %span.badge=@occasion.invitations.count
-    = link_to 'Add more events', new_occasion_event_path(@occasion),class: "btn btn-success btn-block"
+    = link_to 'New Event', new_occasion_event_path(@occasion),class: "btn btn-success btn-block"
   .col-xs-9
     .panel.panel-default
       .panel-heading
         %h3.panel-title.panel-page-title Events
       .panel-body
         - if @events.present?
+        
           %table.table
             %thead
               %tr

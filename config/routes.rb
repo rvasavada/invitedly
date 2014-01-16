@@ -10,16 +10,18 @@ Invitedly::Application.routes.draw do
    get :get_facebook_contacts, :on => :collection
   end
   
-  resources :occasions do
-    resources :invitations
-        
-    resources :events, :except => [:show]
-  end
   
   devise_for :users, :controllers => { :registrations => "users/registrations",
     :omniauth_callbacks => "users/omniauth_callbacks",
     :sessions => "users/sessions"
      }
+  
+  resources :occasions, :except => [:index], :path => '' do
+    resources :invitations
+        
+    resources :events, :except => [:show]
+  end
+
      
   root 'static#home'
 

@@ -13,9 +13,12 @@
             %h1#logo Invitedly
           
             %ul.list-inline.pull-right{style: "margin-top:32px;"}
-              - if user_signed_in?              
-                %li= link_to "Address Book", address_book_path, class: "signout-link"
-                %li= link_to "Occasions", occasions_path, class: "signout-link"
+              - if user_signed_in? 
+                - if current_user.occasion
+
+                  %li= link_to current_user.occasion.name, current_user.occasion, class: "signout-link"
+                  %li= link_to "Address Book", address_book_path, class: "signout-link"
+                %li= link_to "Manange Wedding", new_occasion_path, class: "signout-link"
                 %li= link_to "Settings", edit_user_registration_path, class: "signout-link"
                 %li= link_to "Sign out", destroy_user_session_path, method: :delete, class: "signout-link"
               -else

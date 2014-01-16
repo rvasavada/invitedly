@@ -1,6 +1,6 @@
 class OccasionsController < ApplicationController
   before_action :set_occasion, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_user!, only: [:index, :edit, :new]
+  before_filter :authenticate_user!, only: [:edit, :new]
 
   def index
     @occasions = current_user.occasions
@@ -19,6 +19,9 @@ class OccasionsController < ApplicationController
   end
 
   def new
+    if current_user.occasion.present?
+      redirect_to current_user.occasion, notice: 'Sorry, you can\'t have more than one wedding...yet!'
+    end
     @occasion = Occasion.new
   end
 
@@ -26,8 +29,9 @@ class OccasionsController < ApplicationController
   end
 
   def create
-    @occasion = current_user.occasions.new(occasion_params)
-
+    @occasion = Occasion.new(occasion_params)
+    @occasion.user_id = current_user
+    
     if @occasion.save
       redirect_to @occasion, notice: 'Occasion was successfully created.'
     else
