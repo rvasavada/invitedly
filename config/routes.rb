@@ -17,7 +17,7 @@ Invitedly::Application.routes.draw do
      }
   
   resources :occasions, :except => [:index], :path => '' do
-    resources :invitations
+    resources :rsvps
     resources :guests, :as => :contacts, :controller => :contacts    
     resources :events, :except => [:show]
   end
