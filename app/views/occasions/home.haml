@@ -4,7 +4,7 @@
   %p
     .row
       .col-xs-6
-        = form_tag 'invitations/check_tag' do
+        = form_tag occasion_rsvp_verify_email_address_path(@occasion) do
           .input-group
             = text_field_tag :email,nil, :placeholder => "Enter email address", class: "form-control input-lg"
             %span.input-group-btn

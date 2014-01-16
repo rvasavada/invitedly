@@ -1,8 +1,8 @@
 Invitedly::Application.routes.draw do
 
-  get 'about' => 'static#about'
-  get 'terms' => 'static#terms'
-  get 'privacy' => 'static#privacy'
+  #get 'about' => 'static#about'
+  #get 'terms' => 'static#terms'
+  #get 'privacy' => 'static#privacy'
   #get 'address_book' => 'contacts#index'  
 
   /
@@ -17,8 +17,12 @@ Invitedly::Application.routes.draw do
      }
   
   resources :occasions, :except => [:index], :path => '' do
-    resources :rsvps
-    resources :guests, :as => :contacts, :controller => :contacts    
+    match 'rsvp/verify_email_address' => 'rsvp#verify_email_address', :via => :post
+    
+    resources :guests, :as => :contacts, :controller => :contacts do
+      resources :rsvp
+      
+    end 
     resources :events, :except => [:show]
   end
 

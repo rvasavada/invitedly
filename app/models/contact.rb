@@ -10,6 +10,8 @@ class Contact < ActiveRecord::Base
   validates_presence_of :first_name, :last_name, :email
   validates_presence_of :household_name, :if => :needs_family_name?
   
+  validates_uniqueness_of :email
+  
   #default_scope { order('household_name ASC') }
   
 
