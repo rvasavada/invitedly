@@ -1,9 +1,8 @@
 .row
   .col-xs-offset-3.col-xs-6
+    %h1 Sign into your account
     = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
       .panel.panel-default 
-        .panel-heading
-          %h3.panel-title Sign into your account
         .panel-body
           .form-group
             = f.label :email, "Email", class: "control-label"
@@ -13,12 +12,18 @@
             = f.label :password, "Password", class: "control-label"
             = f.password_field :password, class: "form-control"
   
-          .checkbox
-            = f.check_box :remember_me, :checked => true
-            = f.label :remember_me, "Remember me"
-            
+          .form-group
+            .checkbox
+              = f.check_box :remember_me, :checked => true
+              = f.label :remember_me, "Remember me"
+              
           
-          = f.submit "Sign in", :class=> "btn btn-primary btn-block"
-      = link_to "Don't have an account? <strong>Sign up</strong>.".html_safe, new_registration_path(resource_name), :class=> "btn btn-default btn-block"
-      
-      = link_to "Forgot password?", new_password_path(resource_name), :class => "btn btn-link"
+          = f.submit "Sign in", :class=> "btn btn-success btn-lg btn-block"
+      .row
+        .col-xs-8
+          = link_to new_registration_path(resource_name), :class=> "btn btn-default btn-block" do
+            Don't have an account?
+            %strong Sign up
+        .col-xs-4
+          = link_to new_password_path(resource_name), :class=> "btn btn-link" do
+            Forgot password?
