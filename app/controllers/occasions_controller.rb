@@ -40,7 +40,7 @@ class OccasionsController < ApplicationController
 
   def update
     if @occasion.update(occasion_params)
-      redirect_to @occasion, notice: 'Occasion was successfully updated.'
+      redirect_to occasion_contacts_path(@occasion), notice: 'Occasion was successfully updated.'
     else
       render action: 'edit'
     end
@@ -51,18 +51,6 @@ class OccasionsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to occasions_url, notice: 'Occasion was successfully deleted.' }
       format.json { head :no_content }
-    end
-  end
-  
-  
-  #to create a list of guests and select which ones to invite
-  def invite_guests
-    @occasion = Occasion.friendly.find(params[:occasion_id])
-    @contacts = current_user.contacts
-    @uninvited = @contacts
-    respond_to do |format|
-      format.html
-      format.js { render :layout => false }
     end
   end
 

@@ -1,33 +1,23 @@
 = form_for @occasion, :html => { :role => "form"} do |f|
 
-  %fieldset
-    %h3 Wedding Details
-    
+  %h3 Wedding Details
+  %p Give us the title and brief description about the wedding.  This will publicly be displayed on your RSVP page.
+  %fieldset    
     .form-group{class: @occasion.errors.include?(:name) ? 'has-error' : ''}
-      = f.label :name, class: "control-label" do
-        Name
-        %span{style: "color:red"}*
-      = f.text_field :name, :autofocus => true, class: "form-control input-sm"
+      = f.text_field :name, :autofocus => true, class: "form-control input-lg", :placeholder => "Title"
       %span.help-block= @occasion.errors.get(:name).join('; ')
 
+    .form-group{class: @occasion.errors.include?(:description) ? 'has-error' : ''}
+      = f.text_area :description, :rows => 5, :class => "form-control", :placeholder => "Description"
+      %span.help-block= @occasion.errors.get(:description).join('; ')
+
     .form-group{class: @occasion.errors.include?(:slug) ? 'has-error' : ''}
-      = f.label :slug, class: "control-label" do
-        Wedding Handle
-        %span{style: "color:red"}*
       .input-group
         %span.input-group-addon http://invitely.com/
-        = f.text_field :slug, :placeholder => "jimandpamswedding", :maxlength => 20, class: "form-control input-sm"      
-      %small Create your special wedding rsvp site!
+        = f.text_field :slug, :placeholder => "uniqueweddinghandle", :maxlength => 20, class: "form-control"      
+      %small For your unique wedding rsvp page!
       %span.help-block
         = @occasion.errors.get(:slug).join('; ')
 
-    .form-group{class: @occasion.errors.include?(:description) ? 'has-error' : ''}
-      = f.label :description, class: "control-label" do
-        Description
-        %span{style: "color:red"}*
-      = f.text_area :description, :rows => 5, :class => "form-control input-sm"
-      %span.help-block= @occasion.errors.get(:description).join('; ')
 
-
-
-  = f.submit "Save Wedding", :class => "btn btn-success"
+  = f.submit "Save Wedding", :class => "btn btn-success btn-lg pull-right"
