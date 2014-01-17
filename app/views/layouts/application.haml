@@ -7,26 +7,8 @@
     
     = csrf_meta_tags
     =favicon_link_tag "/assets/favicon.ico"
-    %body
+    %body{style:"padding-top: 20px;"}
       .container#main
-        .row
-          .col-xs-12
-            %h1#logo Invitedly
-          
-            %ul.list-inline.pull-right{style: "margin-top:32px;"}
-              - if user_signed_in? 
-                - if current_user.occasion
-                  %li= link_to "Edit Wedding Details", edit_occasion_path(current_user.occasion), class: "signout-link"
-                  %li= link_to "Preview Wedding Page", occasion_path(current_user.occasion, :preview => "true"), class: "signout-link"
-                  
-                - else 
-                  %li= link_to "Manange Wedding", new_occasion_path, class: "signout-link"
-                %li= link_to "Settings", edit_user_registration_path, class: "signout-link"
-                %li= link_to "Sign out", destroy_user_session_path, method: :delete, class: "signout-link"
-              -else
-                %li= link_to "Sign in",new_user_session_path, class: "signout-link"
-                %li.has-form= link_to "Sign up", new_user_registration_path, class: "signout-link"
-            
 
         - if notice.present?
           .row
