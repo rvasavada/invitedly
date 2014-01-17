@@ -38,20 +38,33 @@ class RsvpController < ApplicationController
   end
   
   def verify_email_address
+    
     @occasion = Occasion.friendly.find(params[:occasion_id])
     unless params[:email].blank?
       @contact = Contact.find_by_email(params[:email])
       if @contact.blank?
-        redirect_to @occasion, :notice => "Sorry, you entered an invalid email address!"
+        if params[:preview] == "true"
+          redirect_to occasion_path(@occasion, :preview=> true), :notice => "Sorry, you entered an unrecognized email address!"
+        else
+          redirect_to @occasion, :notice => "Sorry, you entered an unrecognized email address!"
+        end
       else
         if @contact.invitation.blank?
-          redirect_to @occasion, :notice => "Sorry, this is awkward.  You haven't been invited!"
+          if params[:preview] == "true"
+            redirect_to occasion_path(@occasion, :preview=> "true"), :notice => "Sorry, you entered an unrecognized email address!"
+          else
+            redirect_to @occasion, :notice => "Sorry, you entered an unrecognized email address!"
+          end
         else 
           redirect_to occasion_invitation_rsvp_path(@occasion, @contact.invitation, :contact_info)
         end
       end
     else
-      redirect_to @occasion, :notice => "Please enter a email address!"
+      if params[:preview] == "true"
+        redirect_to occasion_path(@occasion, :preview=> true), :notice => "Please enter a email address!"
+      else
+        redirect_to @occasion, :notice => "Please enter a email address!"
+      end
     end
   end
   

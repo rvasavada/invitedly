@@ -38,7 +38,7 @@
   %h1=@occasion.name
   %p#description=@occasion.description
 
-  = form_tag occasion_rsvp_verify_email_address_path(@occasion) do
+  = form_tag occasion_rsvp_verify_email_address_path(@occasion, :preview => "true") do
     .row
       .col-md-6
         .input-group
