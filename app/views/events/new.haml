@@ -28,7 +28,7 @@
               %li= link_to "Edit Wedding Details", edit_occasion_path(current_user.occasion)
               %li= link_to "Preview Wedding Page", occasion_path(current_user.occasion, :preview => "true")
         - else
-          = link_to "New Wedding", new_occasion_path
+          %li= link_to "New Wedding", new_occasion_path
       - if user_signed_in? 
         %li= link_to "Settings", edit_user_registration_path
         %li= link_to "Sign out", destroy_user_session_path, method: :delete
