@@ -3,6 +3,7 @@
   %head
     %title Invitedly
     = stylesheet_link_tag "application", media: "all"
+    = analytics_init if Rails.env.production?
     
     = csrf_meta_tags
     =favicon_link_tag "/assets/favicon.ico"

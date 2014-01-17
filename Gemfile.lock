@@ -54,6 +54,7 @@ GEM
       multipart-post (~> 1.2.0)
     friendly_id (5.0.1)
       activerecord (~> 4.0.0)
+    google-analytics-rails (0.0.4)
     haml (4.0.4)
       tilt
     hashie (2.0.5)
@@ -173,6 +174,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   devise (~> 3.2.2)
   friendly_id (~> 5.0.1)
+  google-analytics-rails (~> 0.0.4)
   haml (~> 4.0.4)
   jbuilder (~> 1.2)
   jquery-rails

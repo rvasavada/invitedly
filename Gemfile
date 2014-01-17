@@ -56,6 +56,7 @@ gem 'thin', '~> 1.6.1'
 gem 'pg', '~> 0.17.1'
 gem 'cocoon', '~> 1.2.5'
 #gem 'bootstrap-wysihtml5-rails', '~> 0.3.1.23'
+gem 'google-analytics-rails', '~> 0.0.4'
 
 group :production do
   gem 'rails_12factor', '~> 0.0.2'
