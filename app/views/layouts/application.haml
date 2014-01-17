@@ -11,23 +11,17 @@
       .container#main
 
         - if notice.present?
-          .row
-            .col-xs-12
-              .alert.alert-success.alert-dismissable
-                %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
-                = notice.html_safe
+          .alert.alert-success
+            = notice
         - if alert.present?
-          .row
-            .col-xs-12
-              .alert.alert-danger.alert-dismissable
-                %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
-                = alert.html_safe
+          .alert.alert-danger
+            = alert
 
         .fully-container
           .row
             .col-xs-12
               = yield
         #footer
-          #legal Copyright &copy; 2014.  All Rights Reserved.
+          #legal Copyright Invitedly &copy; 2014.  All Rights Reserved.
 
       = javascript_include_tag "application"      
