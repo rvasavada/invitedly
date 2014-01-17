@@ -1,6 +1,6 @@
 class ContactsController < ApplicationController
   before_action :set_contact, only: [:edit, :update, :destroy]
-  before_filter :authenticate_user!, only: [:index, :edit, :new]
+  before_filter :authenticate_user!
 
   def index
     @occasion = Occasion.friendly.find(params[:occasion_id])

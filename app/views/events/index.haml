@@ -49,14 +49,13 @@
       %tr
         %td
         
-          %h4=event.name
+          %h3=event.name
           %p
-            .text-muted
-              =event.description
-              %span=link_to "edit", edit_occasion_event_path(@occasion,event)
-          %p
-            %strong= event.location
+            %strong= "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
+            %br
+            = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
             -if event.address_1.present?
+              | 
               ="#{event.address_1} #{event.address_2}"
             -if ((event.city.present? and event.state.present?) and (event.country == 'United States'))
               ="#{event.city}, #{event.state} #{event.zip}" 
@@ -64,12 +63,10 @@
               ="#{event.city}, #{event.region} #{event.postal_code}"
             -if event.country != 'United States'
               = event.country
-            %br
-            = event.start_date.strftime("%A, %B %e, %Y")
-            at
-            = event.start_time
-
-        
+          %p
+            .text-muted
+              =event.description
+              %span=link_to "edit", edit_occasion_event_path(@occasion,event)
 
 
 -else
