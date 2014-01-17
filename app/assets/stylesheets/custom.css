@@ -3,7 +3,7 @@
 .form-section{padding-bottom:30px;}
 .panel-page-title{font-size:32px;}
 
-#logo { display:block; float:left; height:48px; width:175px; margin-right:76px;color:border-color:#3b5998;}
+#logo { display:block; float:left; height:48px; width:175px; margin-right:76px;color:#3b5998;}
 .content-full { }
 .signout-link {cursor:pointer; display:block; float:left; line-height:27px; padding-right:5px; }
 .signout-link:hover { text-decoration:underline; }
