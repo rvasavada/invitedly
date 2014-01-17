@@ -107,9 +107,9 @@
         
       - if user_signed_in?
         .pull-right
-          = f.submit "Save & Add more", :class => "btn btn-primary"
-          = f.submit "Save & Finish", :class => "btn btn-success"
-        = link_to 'Cancel', occasion_contacts_path(@occasion), :class=> "btn btn-default"
+          = f.submit "Save & Add more", :class => "btn btn-success btn-lg"
+          = f.submit "Save & Finish", :class => "btn btn-success btn-lg"
+        = link_to 'Cancel', occasion_contacts_path(@occasion), :class=> "btn btn-default-lg"
       - else
         = f.submit "Submit info", :class => "btn btn-success form-btn btn-lg"
     .col-xs-6
