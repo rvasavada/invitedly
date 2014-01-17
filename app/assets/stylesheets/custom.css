@@ -1,4 +1,4 @@
-.container {width: 970px !important;}
+.container #main{width: 970px !important;}
 .full-container {background-color:#fff; box-shadow: 0 3px 4px rgba(0,0,0,.1);-moz-box-shadow: 0 3px 4px rgba(0,0,0,.1);-webkit-box-shadow: 0 3px 4px rgba(0,0,0,.1); padding:10px 40px 30px 40px; }
 .form-section{padding-bottom:30px;}
 .panel-page-title{font-size:32px;}
@@ -8,12 +8,11 @@
 .signout-link {cursor:pointer; display:block; float:left; line-height:27px; padding-right:5px; }
 .signout-link:hover { text-decoration:underline; }
 
-#wedding {background: url(HR-01_0286.jpg) no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;}
-
 #footer { width:940px; color:#aaa; font-size:11px; margin-top:20px; text-align:right;}
 
+#weddingd {background: url(lightpaperfibers.png) no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;}
+#wedding {background: url(natural_paper.png) repeat;}
 #wedding .jumbotron { background-color:initial;}
-#wedding .jumbotron h1 {color:#fff;text-shadow: 0 3px 4px rgba(0,0,0,.6);-moz-text-shadow: 0 3px 4px rgba(0,0,0,.6);-webkit-text-shadow: 0 3px 4px rgba(0,0,0,.6);}
-#wedding .jumbotron #description {color:#fff;text-shadow: 0 3px 4px rgba(0,0,0,.6);-moz-text-shadow: 0 3px 4px rgba(0,0,0,.6);-webkit-text-shadow: 0 3px 4px rgba(0,0,0,.6);}
-#wedding #panel {background:rgba(255,255,255,0.4); box-shadow: 0 3px 4px rgba(0,0,0,.1);-moz-box-shadow: 0 3px 4px rgba(0,0,0,.1);-webkit-box-shadow: 0 3px 4px rgba(0,0,0,.1); padding:10px 40px 30px 40px; }
+h1,h2,h3,h4 {color:#3b5998;text-shadow: 0 1px 1px rgba(0,0,0,.3);-moz-text-shadow: 0 1px 1px rgba(0,0,0,.3);-webkit-text-shadow: 0 1px 1px rgba(0,0,0,.3);}
+#wedding #panel {background:rgba(255,255,255,.7); box-shadow: 0 3px 4px rgba(0,0,0,.7);-moz-box-shadow: 0 3px 4px rgba(0,0,0,.7);-webkit-box-shadow: 0 3px 4px rgba(0,0,0,.7); padding:10px 40px 30px 40px; }
 #wedding .text-muted {color:grey;}

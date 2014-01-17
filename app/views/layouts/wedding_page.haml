@@ -1,7 +1,7 @@
 !!!
 %html{lang: "en"}    
   %head
-    %title=@occasion.name
+    %title="#{@occasion.name} | Invitedly"
     = stylesheet_link_tag "application", media: "all"
     
     = csrf_meta_tags
@@ -10,18 +10,21 @@
       .container
         .row
           .col-xs-12
-            %h1#logo
-          
-        .fully-container
-          .row
-            .col-xs-12
-              - if notice.present?
-                .row
-                  .col-xs-12
-                    .alert.alert-success.alert-dismissable
-                      %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
-                      = notice.html_safe
-                    
-              = yield
+            %ul.list-inline.pull-right
+              - if user_signed_in? 
+                %li= link_to "Edit Wedding Details", edit_occasion_path(current_user.occasion), class: "signout-link"
+                %li= link_to "Back to Guests", occasion_path(current_user.occasion), class: "signout-link"
+            
+                %li= link_to "Settings", edit_user_registration_path, class: "signout-link"
+                %li= link_to "Sign out", destroy_user_session_path, method: :delete, class: "signout-link"
+
+        .row
+          .col-xs-12
+            - if notice.present?
+              .alert.alert-danger
+                = notice.html_safe
+        .row
+          .col-xs-12
+            = yield
 
       = javascript_include_tag "application"

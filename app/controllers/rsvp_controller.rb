@@ -51,7 +51,7 @@ class RsvpController < ApplicationController
         end
       end
     else
-      redirect_to @occasion, :notice => "Please enter a email address.!"
+      redirect_to @occasion, :notice => "Please enter a email address!"
     end
   end
   

@@ -4,8 +4,8 @@
   %table.table
     %thead
       %tr
-        %th{:style => "width:40%"} Event name
-        %th{:style => "width:60%"} Response & Special notes
+        %th Event name
+        %th Response & Special notes
     %tbody
     
       = f.fields_for :rsvps do |rsvp|
@@ -34,13 +34,13 @@
             .form-group
           
               .btn-group{"data-toggle"=> "buttons"}
-                %label.btn.btn-success.btn-sm.response_btn
+                %label.btn.btn-default.response_btn
                   = rsvp.radio_button :response, "Attending"
                   Attending
-                %label.btn.btn-warning.btn-sm.response_btn
+                %label.btn.btn-default.response_btn
                   = rsvp.radio_button :response, "Might Attend"
                   Might Attend
-                %label.btn.btn-danger.btn-sm.response_btn
+                %label.btn.btn-default.response_btn
                   = rsvp.radio_button :response, "Not Attending"
                   Not Attending
                             

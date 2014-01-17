@@ -1,11 +1,11 @@
 .jumbotron
   %h1=@occasion.name
   %p#description=@occasion.description
-  %p
+
+  = form_tag occasion_rsvp_verify_email_address_path(@occasion) do
     .row
-      .col-xs-6
-        = form_tag occasion_rsvp_verify_email_address_path(@occasion) do
-          .input-group
-            = text_field_tag :email,nil, :placeholder => "Enter email address", class: "form-control input-lg"
-            %span.input-group-btn
-              =submit_tag "RSVP now", class: "btn btn-primary btn-lg btn-danger", role: "button"
+      .col-md-6
+        .input-group
+          = text_field_tag :email,nil, :placeholder => "Email Address", class: "form-control input-lg"
+          %span.input-group-btn
+            =submit_tag "RSVP", class: "btn btn-danger btn-lg", role: "button"

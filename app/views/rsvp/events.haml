@@ -1,17 +1,16 @@
-#panel
-  %ul.list-inline
-    %li.text-muted Contact info
-    %li
-      %strong RSVP
-    %li.text-muted Confirmation
-  
-  %h1 RSVP
-  = form_for [@occasion,@contact], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
+%ul.list-inline
+  %li.text-muted Contact info
+  %li
+    %strong RSVP
+  %li.text-muted Confirmation
+
+%h1 RSVP
+= form_for [@occasion,@contact], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
 
 
-    = f.fields_for :invitation do |invitation|
-      = render 'invitation_fields', :f => invitation
-    = link_to 'Previous', previous_wizard_path, :class=> "btn btn-default"            
-    = f.submit "Save & Finish", :class => "btn btn-success"
+  = f.fields_for :invitation do |invitation|
+    = render 'invitation_fields', :f => invitation
+  = link_to 'Previous', previous_wizard_path, :class=> "btn btn-default"            
+  = f.submit "Save & Finish", :class => "btn btn-success"
 
 
