@@ -13,7 +13,7 @@
 
     .form-group{class: @occasion.errors.include?(:slug) ? 'has-error' : ''}
       .input-group
-        %span.input-group-addon http://invitely.com/
+        %span.input-group-addon http://www.invitely.com/
         = f.text_field :slug, :placeholder => "uniqueweddinghandle", :maxlength => 20, class: "form-control"      
       %small For your unique wedding rsvp page!
       %span.help-block
