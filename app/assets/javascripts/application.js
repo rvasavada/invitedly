@@ -63,7 +63,6 @@ $("document").ready(function(){
 		$('#household_name').hide();
 	}
   
-  
 	$("#contact_invitations_send_email").change(function() {
 		if(this.checked) {
 			$('#invitation_send_date').fadeIn('slow');
@@ -77,5 +76,11 @@ $("document").ready(function(){
 	} else {
 		$('#invitation_send_date').hide();
 	}
+  
+  window.setTimeout(function() {
+      $(".alert").fadeTo(500, 0).slideUp(500, function(){
+          $(this).remove(); 
+      });
+  }, 4000);
     
 });
