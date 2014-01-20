@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 20140120205909) do
   create_table "invitations", force: true do |t|
     t.integer  "occasion_id"
     t.integer  "invitable_id"
-    t.integer  "invitable_type"
+    t.string   "invitable_type"
     t.string   "status"
     t.string   "slug"
     t.boolean  "send_email"

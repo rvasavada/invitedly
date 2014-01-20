@@ -3,22 +3,16 @@
     .row
       .col-xs-2
         .form-group
-          = f.label :title, class: "control-label" do
-            Title
           = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control input-sm"})
       .col-xs-4
         .form-group
-          = f.label :first_name, class: "control-label" do
-            First Name
-          = f.text_field :first_name, :autofocus => true, :maxlength => 50, class: "form-control input-sm"
+          = f.text_field :first_name, :autofocus => true, :maxlength => 50, class: "form-control input-sm", :placeholder => "First name"
       .col-xs-4
         .form-group
-          = f.label :last_name, class: "control-label" do
-            Last Name
-          = f.text_field :last_name, :autofocus => true, :maxlength => 50, class: "form-control input-sm"
+          = f.text_field :last_name, :autofocus => true, :maxlength => 50, class: "form-control input-sm", :placeholder => "Last name"
       .col-xs-2
-        = label_tag ""
-        = link_to_remove_association "Remove", f, :class => "btn btn-danger btn-sm"
+        .form-group
+          = link_to_remove_association "Remove", f, :class => "btn btn-danger btn-sm"
 
     -#.form-group
       = f.label :email, class: "control-label" do

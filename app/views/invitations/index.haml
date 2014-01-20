@@ -39,13 +39,18 @@
 %h1 
   
   %button.pull-right.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"}
-    New Guest
-  Guests
+    New Invitation
+  Invitations
   
       
-- if @guests.present?
+- if @invitations.present?
   .list-group      
-    - @guests.each do |guest|
+    - @invitations.each do |invitation|
+      - if invitation.invitable_type == "Guest"
+        - guest = Guest.find(invitation.invitable_id)
+      - else
+        - household = Household.find(invitation.invitable_id)
+        
       .list-group-item
         .btn-group.pull-right
           = link_to "Edit", edit_occasion_guest_path(@occasion,guest), class: "btn btn-default"
@@ -97,7 +102,7 @@
         %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
         %h4.modal-title Invite guests
       .modal-body
-        %p You can choose to add one guest or a household (more than 1 guest).
+        %p You can choose to invite a single guest or a household (more than 1 guest).
         .row
           .col-xs-6
             = link_to "Single guest", new_occasion_guest_path(@occasion), :class => "btn btn-block btn-success"

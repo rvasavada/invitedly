@@ -4,7 +4,6 @@ class GuestsController < ApplicationController
 
   def index
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    
     @guests = current_user.guests
   end
 
@@ -18,30 +17,26 @@ class GuestsController < ApplicationController
 
     @household = Household.all   
     @response = ResponseType.all
-    @title = Title.all.order("name ASC")
-    @country = Country.all.order("name ASC")
-    @state = State.all.order("name ASC")
+    @title = Title.all
+    @country = Country.all
+    @state = State.all
   end
 
   def edit
     @occasion = Occasion.friendly.find(params[:occasion_id])
     
     @response = ResponseType.all
-    @title = Title.all.order("name ASC")
-    @country = Country.all.order("name ASC")
-    @state = State.all.order("name ASC")
+    @title = Title.all
+    @country = Country.all
+    @state = State.all
   end
 
   def create
     @guest = current_user.guests.new(guest_params)
-    @guest.total_guest_count = @guest.guests.count + 1
     @occasion = Occasion.friendly.find(params[:occasion_id])
 
     @invitation = @guest.invitation
     @invitation.occasion_id = @occasion.id
-    @invitation.rsvps.each do |rsvp|
-      rsvp.num_guests = @guest.total_guest_count
-    end
     
     if @guest.save
       unless params[:commit] == "Save & Add more" 
@@ -51,15 +46,14 @@ class GuestsController < ApplicationController
       end
     else
       @response = ResponseType.all
-      @title = Title.all.order("name ASC")
-      @country = Country.all.order("name ASC")
-      @state = State.all.order("name ASC")
+      @title = Title.all
+      @country = Country.all
+      @state = State.all
       render action: 'new' 
     end
   end
 
   def update
-    @guest.total_guest_count = @guest.guests.count + 1
     @occasion = Occasion.friendly.find(params[:occasion_id])
       
     if @guest.update(guest_params)
@@ -70,9 +64,9 @@ class GuestsController < ApplicationController
       end
     else      
       @response = ResponseType.all
-      @title = Title.all.order("name ASC")
-      @country = Country.all.order("name ASC")
-      @state = State.all.order("name ASC")
+      @title = Title.all
+      @country = Country.all
+      @state = State.all
       render action: 'edit' 
     end
   end

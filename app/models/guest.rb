@@ -10,12 +10,8 @@ class Guest < ActiveRecord::Base
   #validates_uniqueness_of :email, :scope => :user  
 
   
-  def guest_name
-    if is_family
-      household_name
-    else
-      title + " " + first_name + " " + last_name
-    end
+  def full_name
+    title + " " + first_name + " " + last_name
   end
   
   def needs_family_name?
