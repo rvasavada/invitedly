@@ -3,6 +3,19 @@ class HouseholdsController < ApplicationController
   before_filter :authenticate_user!
   
   def new
+    
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    @household = current_user.households.new
+    @invitation = @household.build_invitation
+    @occasion.events.each do |event|
+      @invitation.rsvps.build(:event_id => event.id)
+    end
+
+    #@response = ResponseType.all
+    @title = Title.all.order("name ASC")
+    #@country = Country.all.order("name ASC")
+    #@state = State.all.order("name ASC")
+    
   end
 
   def edit

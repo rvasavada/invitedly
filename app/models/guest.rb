@@ -1,11 +1,9 @@
 class Guest < ActiveRecord::Base
   belongs_to :user
   
-  has_one :invitation, :dependent => :destroy
+  has_one :invitation, as: :invitable, :dependent => :destroy
   accepts_nested_attributes_for :invitation, :reject_if => :all_blank, :allow_destroy => true
   has_many :rsvps, through: :invitation
-  has_many :guests, :dependent => :destroy
-  accepts_nested_attributes_for :guests, :reject_if => :all_blank, :allow_destroy => true
   
   #validates_presence_of :first_name, :last_name, :email
   #validates_presence_of :household_name, :if => :needs_family_name?

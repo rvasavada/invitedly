@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_one :occasion, :dependent => :destroy
   has_many :events, :through => :occasion
   has_many :guests
+  has_many :households
   
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     signed_in_resource.facebook_uid = auth.uid

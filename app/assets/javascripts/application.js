@@ -49,19 +49,6 @@ $("document").ready(function(){
 		$(".domestic").hide();
 	}
   
-	$("#guest_is_family").change(function() {
-		if(this.checked) {
-			$('#household_name').fadeIn('slow');
-		} else {
-			$('#household_name').fadeOut('slow');
-		}
-	});
-	
-	if($('#guest_is_family').is(':checked')) {
-		$('#household_name').show();
-	} else {
-		$('#household_name').hide();
-	}
   
 	$("#guest_invitations_send_email").change(function() {
 		if(this.checked) {

@@ -1,7 +1,6 @@
 require 'test_helper'
 
-class Household
-  Test < ActiveSupport::TestCase
+class HouseholdTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

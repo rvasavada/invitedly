@@ -37,7 +37,9 @@
         %li= link_to "Sign up", new_user_registration_path
 
 %h1 
-  .pull-right= link_to 'New Guest', new_occasion_guest_path(@occasion), class: "btn btn-success"
+  
+  %button.pull-right.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"}
+    New Guest
   Guests
   
       
@@ -92,4 +94,19 @@
 -else
   .well.text-center
     %h3 You have no guests.
-    = link_to "Add guests now!", new_occasion_guest_path(@occasion)
+    %button.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"}
+      Add guests now!
+
+.modal.fade#myModal{:tabindex=> "-1", :role=>"dialog", "aria-labelledby"=>"myModalLabel", "aria-hidden"=> "true"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
+        %h4.modal-title Add guests
+      .modal-body
+        %p You can choose to add one guest or a household (more than 1 guest).
+        .row
+          .col-xs-6
+            = link_to "Single guest", new_occasion_guest_path(@occasion), :class => "btn btn-block btn-success"
+          .col-xs-6
+            = link_to "Household", new_occasion_household_path(@occasion), :class => "btn btn-block btn-success"

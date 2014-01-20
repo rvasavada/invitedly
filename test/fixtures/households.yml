@@ -2,10 +2,8 @@
 
 one:
   name: MyString
-  user_id: 1
-  guest_id: 1
+  guest_count: 1
 
 two:
   name: MyString
-  user_id: 1
-  guest_id: 1
+  guest_count: 1
