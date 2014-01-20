@@ -42,14 +42,10 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :first_name
       t.string :last_name
       t.string :title
-      t.string :spouse_title
-      t.string :spouse_first_name
-      t.string :spouse_last_name
       t.string :cell_phone
       t.string :home_phone
-      t.integer :max_guests
-      t.boolean :share_info
       t.string :facebook_uid
+      t.string :facebook_token
       
       t.timestamps
     end

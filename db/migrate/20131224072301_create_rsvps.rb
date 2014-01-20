@@ -1,18 +1,15 @@
 class CreateRsvps < ActiveRecord::Migration
   def change
-    create_table :invitations do |t|
-      t.integer :occasion_id
-      t.integer :contact_id
-      t.boolean :status
-      t.string :code
-      t.boolean :send_email
-      t.string :send_date
-      t.string :send_reminder
-      t.boolean :include_gift_option
-      t.timestamps
+    create_table :rsvps do |t|
+      t.integer  :event_id
+      t.integer  :num_guests
+      t.string   :message
+      t.string   :response,      default: "Not Responded"
+      t.datetime :created_at
+      t.datetime :updated_at
+      t.integer  :invitation_id
+      t.boolean  :visibility,    default: false
     end
-    
-    add_column :rsvps, :invitation_id, :integer
     
   end
 end

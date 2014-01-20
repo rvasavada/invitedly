@@ -22,7 +22,7 @@ Invitedly::Application.routes.draw do
     match 'rsvp/verify_email_address' => 'rsvp#verify_email_address', :via => :post
     
     resources :guests
-    resources :families
+    resources :households
     
     resources :invitations, :except => [:index, :new, :edit, :show] do
       resources :rsvp
