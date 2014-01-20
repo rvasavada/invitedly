@@ -8,7 +8,7 @@
       .form-group
         = f.label :first_name, class: "control-label"
         = f.text_field :first_name, :maxlength => 50, class: "form-control input-sm"
-        %span.help-block= @contact.errors.get(:first_name).join('; ')            
+        %span.help-block= @guest.errors.get(:first_name).join('; ')            
     .col-xs-5
       .form-group
         = f.label :last_name, class: "control-label"

@@ -11,35 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140116180807) do
+ActiveRecord::Schema.define(version: 20140120194334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "contacts", force: true do |t|
-    t.integer  "user_id"
-    t.string   "email"
-    t.string   "address_1"
-    t.string   "address_2"
-    t.string   "city"
-    t.string   "state"
-    t.string   "zip"
-    t.string   "country"
-    t.string   "region"
-    t.string   "postal_code"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "title"
-    t.string   "cell_phone"
-    t.string   "home_phone"
-    t.string   "notes"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "facebook_uid"
-    t.string   "household_name"
-    t.boolean  "is_family"
-    t.integer  "total_guest_count"
-  end
 
   create_table "countries", force: true do |t|
     t.string   "name"
@@ -83,17 +58,39 @@ ActiveRecord::Schema.define(version: 20140116180807) do
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "guests", force: true do |t|
-    t.string   "title"
+    t.integer  "user_id"
+    t.string   "email"
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "country"
+    t.string   "region"
+    t.string   "postal_code"
     t.string   "first_name"
     t.string   "last_name"
-    t.integer  "contact_id"
+    t.string   "title"
+    t.string   "cell_phone"
+    t.string   "home_phone"
+    t.string   "notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "facebook_uid"
+    t.integer  "household_id"
+  end
+
+  create_table "households", force: true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "guest_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "invitations", force: true do |t|
     t.integer  "occasion_id"
-    t.integer  "contact_id"
+    t.integer  "guest_id"
     t.string   "status"
     t.string   "slug"
     t.boolean  "send_email"
@@ -171,8 +168,6 @@ ActiveRecord::Schema.define(version: 20140116180807) do
     t.string   "title"
     t.string   "cell_phone"
     t.string   "home_phone"
-    t.integer  "max_guests"
-    t.boolean  "share_info"
     t.string   "facebook_uid"
     t.datetime "created_at"
     t.datetime "updated_at"

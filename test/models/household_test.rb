@@ -1,6 +1,7 @@
 require 'test_helper'
 
-class ContactTest < ActiveSupport::TestCase
+class Household
+  Test < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -1,4 +1,4 @@
-class CreateContacts < ActiveRecord::Migration
+class CreateGuests < ActiveRecord::Migration
   def change
     create_table :contacts do |t|
       t.integer :user_id

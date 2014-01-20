@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
   
   belongs_to :occasion
   has_many :rsvps, dependent: :destroy
-  has_many :contacts, through: :rsvps
+  has_many :guests, through: :rsvps
   default_scope { order('start_date ASC, start_time ASC') } 
   validates_presence_of :name,:location,:start_time,:start_date,:description
 

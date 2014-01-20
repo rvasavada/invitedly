@@ -8,7 +8,7 @@ class OccasionsController < ApplicationController
 
   def show
     unless user_signed_in? and @occasion.user_id == current_user.id and params[:preview] != "true"
-      @contact = User.find(@occasion.user_id).contacts.new
+      @guest = User.find(@occasion.user_id).guests.new
 
       @response = ResponseType.all
       @title = Title.all.order("name ASC")
@@ -40,7 +40,7 @@ class OccasionsController < ApplicationController
 
   def update
     if @occasion.update(occasion_params)
-      redirect_to occasion_contacts_path(@occasion), notice: 'Occasion was successfully updated.'
+      redirect_to occasion_guests_path(@occasion), notice: 'Occasion was successfully updated.'
     else
       render action: 'edit'
     end

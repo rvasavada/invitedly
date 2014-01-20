@@ -1,11 +1,11 @@
 %ul.list-inline
-  %li.text-muted Contact info
+  %li.text-muted Guest info
   %li
     %strong Events
   %li.text-muted Confirmation
 
 %h1 Events
-= form_for [@occasion,@contact], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
+= form_for [@occasion,@guest], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
 
 
   = f.fields_for :invitation do |invitation|

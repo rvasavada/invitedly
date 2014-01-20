@@ -1,45 +1,45 @@
 %ul.list-inline
   %li
-    %strong Contact Information
+    %strong Guest Information
   %li.text-muted Events
   %li.text-muted Confirmation
 
 .row
   .col-sm-7.col-md-6
-    %h1 Contact Information
+    %h1 Guest Information
     
-    = form_for [@occasion,@contact], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
+    = form_for [@occasion,@guest], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
       %h3 Guest Information
 
       %fieldset
-        - if @contact.is_family
-          .form-group#household_name{class: @contact.errors.include?(:household_name) ? 'has-error' : ''}
+        - if @guest.is_family
+          .form-group#household_name{class: @guest.errors.include?(:household_name) ? 'has-error' : ''}
             = f.label :household_name, class: "control-label" do
               Family, Group, or Household Name
               %span{style: "color:red"}*
             = f.text_field :household_name, :autofocus => true, :maxlength => 50, class: "form-control"
-            %span.help-block= @contact.errors.get(:household_name).join('; ')
+            %span.help-block= @guest.errors.get(:household_name).join('; ')
         .row
           .col-md-2
-            .form-group{class: @contact.errors.include?(:title) ? 'has-error' : ''}
+            .form-group{class: @guest.errors.include?(:title) ? 'has-error' : ''}
               = f.label :title, class: "control-label" do
                 Title
               = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control"})
-              %span.help-block= @contact.errors.get(:title).join('; ')
+              %span.help-block= @guest.errors.get(:title).join('; ')
           .col-md-4
-            .form-group{class: @contact.errors.include?(:first_name) ? 'has-error' : ''}
+            .form-group{class: @guest.errors.include?(:first_name) ? 'has-error' : ''}
               = f.label :first_name, class: "control-label" do
                 First Name
                 %span{style: "color:red"}*
               = f.text_field :first_name, :autofocus => true, :maxlength => 50, class: "form-control"
-              %span.help-block= @contact.errors.get(:first_name).join('; ')            
+              %span.help-block= @guest.errors.get(:first_name).join('; ')            
           .col-md-6
-            .form-group{class: @contact.errors.include?(:last_name) ? 'has-error' : ''}
+            .form-group{class: @guest.errors.include?(:last_name) ? 'has-error' : ''}
               = f.label :last_name, class: "control-label" do
                 Last Name
                 %span{style: "color:red"}*
               = f.text_field :last_name, :autofocus => true, :maxlength => 50, class: "form-control"
-              %span.help-block= @contact.errors.get(:last_name).join('; ')
+              %span.help-block= @guest.errors.get(:last_name).join('; ')
         #guests
           = f.fields_for :guests do |guest|
             = render 'guest_fields', :f => guest
@@ -47,12 +47,12 @@
 
         %br
 
-        .form-group{class: @contact.errors.include?(:email) ? 'has-error' : ''}
+        .form-group{class: @guest.errors.include?(:email) ? 'has-error' : ''}
           = f.label :email, class: "control-label" do
             Preferred Email
             %span{style: "color:red"}*
           = f.text_field :email, :maxlength => 50, class: "form-control"
-          %span.help-block= @contact.errors.get(:email).join('; ')
+          %span.help-block= @guest.errors.get(:email).join('; ')
 
         .row
           .col-md-6

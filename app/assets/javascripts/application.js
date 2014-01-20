@@ -49,7 +49,7 @@ $("document").ready(function(){
 		$(".domestic").hide();
 	}
   
-	$("#contact_is_family").change(function() {
+	$("#guest_is_family").change(function() {
 		if(this.checked) {
 			$('#household_name').fadeIn('slow');
 		} else {
@@ -57,13 +57,13 @@ $("document").ready(function(){
 		}
 	});
 	
-	if($('#contact_is_family').is(':checked')) {
+	if($('#guest_is_family').is(':checked')) {
 		$('#household_name').show();
 	} else {
 		$('#household_name').hide();
 	}
   
-	$("#contact_invitations_send_email").change(function() {
+	$("#guest_invitations_send_email").change(function() {
 		if(this.checked) {
 			$('#invitation_send_date').fadeIn('slow');
 		} else {
@@ -71,7 +71,7 @@ $("document").ready(function(){
 		}
 	});
 	
-	if($('#contact_invitations_send_email').is(':checked')) {
+	if($('#guest_invitations_send_email').is(':checked')) {
 		$('#invitation_send_date').show();
 	} else {
 		$('#invitation_send_date').hide();

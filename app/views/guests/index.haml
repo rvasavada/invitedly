@@ -13,7 +13,7 @@
       - if user_signed_in? 
         - if current_user.occasion
           %li= link_to "Events", occasion_events_path(current_user.occasion)
-          %li.active= link_to "Guests", occasion_contacts_path(current_user.occasion)
+          %li.active= link_to "Guests", occasion_guests_path(current_user.occasion)
   
 
     %ul.nav.navbar-nav.navbar-right
@@ -37,59 +37,59 @@
         %li= link_to "Sign up", new_user_registration_path
 
 %h1 
-  .pull-right= link_to 'New Guest', new_occasion_contact_path(@occasion), class: "btn btn-success"
+  .pull-right= link_to 'New Guest', new_occasion_guest_path(@occasion), class: "btn btn-success"
   Guests
   
       
-- if @contacts.present?
+- if @guests.present?
   .list-group      
-    - @contacts.each do |contact|
+    - @guests.each do |guest|
       .list-group-item
         %ul.pull-right.list-inline
-          %li= link_to "Edit", edit_occasion_contact_path(@occasion,contact)
-          %li= link_to "Delete", [@occasion, contact], method: :delete, data: {confirm: 'Are you sure you want to delete this contact?'}
+          %li= link_to "Edit", edit_occasion_guest_path(@occasion,guest)
+          %li= link_to "Delete", [@occasion, guest], method: :delete, data: {confirm: 'Are you sure you want to delete this guest?'}
         %h4.list-group-item-heading
           
-          =contact.contact_name
-          %small=contact.guest_names
+          =guest.guest_name
+          %small=guest.guest_names
 
         %p.list-group-item-text
 
 
-          -if contact.address_1.present?
-            ="#{contact.address_1} #{contact.address_2}"
-          -if ((contact.city.present? and contact.state.present?) and (contact.country == 'United States'))
+          -if guest.address_1.present?
+            ="#{guest.address_1} #{guest.address_2}"
+          -if ((guest.city.present? and guest.state.present?) and (guest.country == 'United States'))
             %br
-            ="#{contact.city}, #{contact.state} #{contact.zip}" 
-          -if ((contact.city.present? and contact.region.present?) and (contact.country != 'United States'))
+            ="#{guest.city}, #{guest.state} #{guest.zip}" 
+          -if ((guest.city.present? and guest.region.present?) and (guest.country != 'United States'))
             %br
-            ="#{contact.city}, #{contact.region} #{contact.postal_code}"
-          -if contact.country != 'United States'
+            ="#{guest.city}, #{guest.region} #{guest.postal_code}"
+          -if guest.country != 'United States'
             %br
-            = contact.country
-          -if contact.email.present? or contact.home_phone.present? or contact.cell_phone.present?
+            = guest.country
+          -if guest.email.present? or guest.home_phone.present? or guest.cell_phone.present?
             %br
-          -if contact.email.present?
+          -if guest.email.present?
             %abbr{title:'Email'}E:
-            = link_to contact.email, "mailto:#{contact.email}"
-          -if contact.home_phone.present?
+            = link_to guest.email, "mailto:#{guest.email}"
+          -if guest.home_phone.present?
             %abbr{title:'Home'}H:
-            = contact.home_phone
-          -if contact.cell_phone.present?
+            = guest.home_phone
+          -if guest.cell_phone.present?
             %abbr{title:'Mobile'}M:
-            = contact.cell_phone
-          - if contact.notes.present?
+            = guest.cell_phone
+          - if guest.notes.present?
             %br
             %br
-            %span.text-muted="#{contact.notes}"
+            %span.text-muted="#{guest.notes}"
             
           %ul.list-inline
-            - if contact.invitation.present?
-              - contact.rsvps.where(:visibility => true).each do |rsvp|
+            - if guest.invitation.present?
+              - guest.rsvps.where(:visibility => true).each do |rsvp|
                 %li
                   %span.label{:class => rsvp.response == "Not Responded" ? "label-default" : rsvp.response == "Attending" ? "label-success" : rsvp.response == "Might Attend" ? "label-warning" : rsvp.response == "Not Attending" ? "label-danger" : ""}=Event.find(rsvp.event_id).name
 
 -else
   .well.text-center
     %h3 You have no guests.
-    = link_to "Add guests now!", new_occasion_contact_path(@occasion)
+    = link_to "Add guests now!", new_occasion_guest_path(@occasion)

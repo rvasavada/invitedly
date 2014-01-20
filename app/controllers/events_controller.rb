@@ -80,8 +80,8 @@ class EventsController < ApplicationController
   def manage_guestlist
     @occasion = Occasion.friendly.find(params[:occasion_id])
     @event = Event.friendly.find(params[:event_id])
-    @contacts = current_user.contacts
-    @uninvited = @event.contacts 
+    @guests = current_user.guests
+    @uninvited = @event.guests 
     respond_to do |format|
       format.html
       format.js { render :layout => false }
@@ -92,7 +92,7 @@ class EventsController < ApplicationController
     @occasion = Occasion.friendly.find(params[:occasion_id])
     @event = Event.friendly.find(params[:event_id])
     params[:guest_ids].each do |guest|
-      @event.invitations.where(contact_id: guest).destroy_all
+      @event.invitations.where(guest_id: guest).destroy_all
     end
     redirect_to occasion_event_path(@occasion,@event), notice: 'Invitations were successfully deleted.'
   end
@@ -104,7 +104,7 @@ class EventsController < ApplicationController
       invitations = []
       params[:guest_ids].each do |guest|
 
-        invitations << Invitation.new(event_id: @event.id, contact_id: guest, num_guests: Contact.find(guest).max_guests, response: "Not Responded")
+        invitations << Invitation.new(event_id: @event.id, guest_id: guest, num_guests: Guest.find(guest).max_guests, response: "Not Responded")
       end
       Invitation.import invitations
       redirect_to occasion_event_path(@occasion,@event), notice: 'Invitations were successfully created.'

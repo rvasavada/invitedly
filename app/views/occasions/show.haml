@@ -7,9 +7,9 @@
       Events
       %span.badge=@occasion.events.count
   %li
-    =link_to occasion_contacts_path(@occasion) do
+    =link_to occasion_guests_path(@occasion) do
       Guests
-      %span.badge=current_user.contacts.count
+      %span.badge=current_user.guests.count
 
 
 %h1 Recent Activity

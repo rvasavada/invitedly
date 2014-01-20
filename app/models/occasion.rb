@@ -4,7 +4,7 @@ class Occasion < ActiveRecord::Base
   
   has_many :events, dependent: :destroy
   has_many :invitations, dependent: :destroy
-  has_many :contacts, :through => :invitations
+  has_many :guests, :through => :invitations
   has_many :rsvps
   belongs_to :user
 

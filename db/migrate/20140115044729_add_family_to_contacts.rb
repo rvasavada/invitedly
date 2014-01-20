@@ -1,4 +1,4 @@
-class AddFamilyToContacts < ActiveRecord::Migration
+class AddFamilyToGuests < ActiveRecord::Migration
   def self.up
     add_column :contacts, :is_family, :boolean
     remove_column :contacts, :spouse_last_name

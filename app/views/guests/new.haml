@@ -13,7 +13,7 @@
       - if user_signed_in? 
         - if current_user.occasion
           %li= link_to "Events", occasion_events_path(current_user.occasion)
-          %li.active= link_to "Guests", occasion_contacts_path(current_user.occasion)
+          %li.active= link_to "Guests", occasion_guests_path(current_user.occasion)
   
 
     %ul.nav.navbar-nav.navbar-right

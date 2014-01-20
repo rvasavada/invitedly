@@ -1,4 +1,4 @@
-class RemoveColumnMaxGuestsFromContacts < ActiveRecord::Migration
+class RemoveColumnMaxGuestsFromGuests < ActiveRecord::Migration
   def self.up
    remove_column :contacts, :max_guests
   end
