@@ -2,11 +2,14 @@
   .row
     .col-xs-7
 
-      %h3 Guest Information
-      .form-group
+      %h3 Guest Information      
+      .form-group{class: @household.errors.include?(:name) ? 'has-error' : ''}
         = f.label :name, class: "control-label" do
           Household Name
+          %span{style:"color:red;"}*
         = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control input-lg", style: "font-weight:bold;"
+        %span.help-block= @household.errors.get(:name).join('; ')
+        
       #guests
         = f.fields_for :guests do |guest|
           = render 'guest_fields', :f => guest
