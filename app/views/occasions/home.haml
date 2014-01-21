@@ -37,11 +37,18 @@
 .jumbotron
   %h1=@occasion.name
   %p#description=@occasion.description
-
+  %br
   = form_tag occasion_rsvp_verify_email_address_path(@occasion, :preview => "true") do
     .row
       .col-md-6
-        .input-group
+        %p.lead Enter your first or last name to begin!
+        .form-group
+          = text_field_tag :first_name,nil, :placeholder => "First Name", class: "form-control input-lg"
+        .form-group
+          = text_field_tag :last_name,nil, :placeholder => "Last Name", class: "form-control input-lg"
+      
+        =submit_tag "Search", class: "btn btn-success btn-lg", role: "button"
+        -#.input-group
           = text_field_tag :email,nil, :placeholder => "Email Address", class: "form-control input-lg"
           %span.input-group-btn
-            =submit_tag "RSVP", class: "btn btn-danger btn-lg", role: "button"
+            =submit_tag "RSVP", class: "btn btn-success btn-lg", role: "button"

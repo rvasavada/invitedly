@@ -1,15 +1,15 @@
 .nested-fields
-  %fieldset
+  %fieldset.well
     .row
-      .col-xs-2
+      .col-xs-3
         .form-group
-          = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control input-sm"})
+          = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control"})
+      .col-xs-3
+        .form-group
+          = f.text_field :first_name, :autofocus => true, :maxlength => 50, class: "form-control", :placeholder => "First name"
       .col-xs-4
         .form-group
-          = f.text_field :first_name, :autofocus => true, :maxlength => 50, class: "form-control input-sm", :placeholder => "First name"
-      .col-xs-4
-        .form-group
-          = f.text_field :last_name, :autofocus => true, :maxlength => 50, class: "form-control input-sm", :placeholder => "Last name"
+          = f.text_field :last_name, :autofocus => true, :maxlength => 50, class: "form-control", :placeholder => "Last name"
       .col-xs-2
         .form-group
           = link_to_remove_association "Remove", f, :class => "btn btn-danger btn-sm"
@@ -73,5 +73,3 @@
       -#.form-group
         = f.label :notes, "Notes", class: "control-label"
         = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "These notes are private and visible only to you.", class: "form-control input-sm"}
-        
-        

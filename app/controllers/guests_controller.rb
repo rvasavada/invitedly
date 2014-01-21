@@ -39,11 +39,7 @@ class GuestsController < ApplicationController
     @invitation.occasion_id = @occasion.id
     
     if @guest.save
-      unless params[:commit] == "Save & Add more" 
-        redirect_to occasion_guests_path(@occasion), notice: 'Guest was successfully created.'
-      else
-        redirect_to new_occasion_guest_path(@occasion), notice: 'Guest was successfully created.' 
-      end
+      redirect_to occasion_guests_path(@occasion), notice: 'Guest was successfully created.'
     else
       @response = ResponseType.all
       @title = Title.all
@@ -57,11 +53,7 @@ class GuestsController < ApplicationController
     @occasion = Occasion.friendly.find(params[:occasion_id])
       
     if @guest.update(guest_params)
-      unless params[:commit] == "Save & Add more" 
-        redirect_to occasion_guests_path(@occasion), notice: 'Guest was successfully updated.'
-      else
-        redirect_to new_occasion_guest_path(@occasion), notice: 'Guest was successfully updated.' 
-      end
+      redirect_to occasion_guests_path(@occasion), notice: 'Guest was successfully created.'
     else      
       @response = ResponseType.all
       @title = Title.all

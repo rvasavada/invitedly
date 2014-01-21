@@ -5,7 +5,7 @@
       = f.label :name, class: "control-label" do
         Event Title
         %span{style: "color:red"}*
-      = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control input-lg"
+      = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control input-lg", style: "font-weight:bold;"
       %span.help-block= @event.errors.get(:name).join('; ')
     .row
       .col-xs-5

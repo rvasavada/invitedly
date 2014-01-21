@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 20140120205909) do
   create_table "households", force: true do |t|
     t.string   "name"
     t.integer  "user_id"
-    t.integer  "guest_count"
+    t.string   "notes"
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"

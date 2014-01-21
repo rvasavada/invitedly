@@ -3,7 +3,7 @@ class CreateHouseholds < ActiveRecord::Migration
     create_table :households do |t|
       t.string :name
       t.integer :user_id
-      t.integer :guest_count
+      t.string :notes
       t.string :email
       t.timestamps
     end

@@ -4,7 +4,7 @@
   %p Give us the title and brief description about the wedding.  This will publicly be displayed on your RSVP page.
   %fieldset    
     .form-group{class: @occasion.errors.include?(:name) ? 'has-error' : ''}
-      = f.text_field :name, :autofocus => true, class: "form-control input-lg", :placeholder => "Title"
+      = f.text_field :name, :autofocus => true, class: "form-control input-lg", :placeholder => "Title", style: "font-weight:bold;"
       %span.help-block= @occasion.errors.get(:name).join('; ')
 
     .form-group{class: @occasion.errors.include?(:description) ? 'has-error' : ''}

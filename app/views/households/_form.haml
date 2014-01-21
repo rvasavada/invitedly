@@ -6,18 +6,22 @@
       .form-group
         = f.label :name, class: "control-label" do
           Household Name
-        = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control input-sm"
-      .well 
-        #guests
-          = f.fields_for :guests do |guest|
-            = render 'guest_fields', :f => guest
+        = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control input-lg", style: "font-weight:bold;"
+      #guests
+        = f.fields_for :guests do |guest|
+          = render 'guest_fields', :f => guest
+        .form-group
           = link_to_add_association 'Add Guest', f, :guests, :class => "btn btn-success"
         
       .form-group
         = f.label :email, class: "control-label" do
           Email
         = f.text_field :email, :maxlength => 50, class: "form-control input-sm"
-        
+      
+      .form-group
+        = f.label :notes, "Notes", class: "control-label"
+        = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "These notes are private and visible only to you.", class: "form-control input-sm"}
+      
       - if user_signed_in?
         .pull-right
           = f.submit "Save & Add more", :class => "btn btn-success btn-lg"

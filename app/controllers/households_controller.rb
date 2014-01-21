@@ -3,7 +3,6 @@ class HouseholdsController < ApplicationController
   before_filter :authenticate_user!
   
   def new
-    
     @occasion = Occasion.friendly.find(params[:occasion_id])
     @household = current_user.households.new
     @invitation = @household.build_invitation
@@ -11,9 +10,7 @@ class HouseholdsController < ApplicationController
       @invitation.rsvps.build(:event_id => event.id)
     end
 
-    #@response = ResponseType.all
     @title = Title.all.load
-    
   end
 
   def edit
@@ -22,13 +19,12 @@ class HouseholdsController < ApplicationController
   def create
     @household = current_user.households.new(household_params)
     @occasion = Occasion.friendly.find(params[:occasion_id])
-
+    
+    #@invitation = @guest.invitation
+    #@invitation.occasion_id = @occasion.id
+    
     if @household.save
-      unless params[:commit] == "Save & Add more" 
-        redirect_to occasion_guests_path(@occasion), notice: 'Household was successfully created.'
-      else
-        redirect_to new_occasion_guest_path(@occasion), notice: 'Household was successfully created.' 
-      end
+      redirect_to occasion_guests_path(@occasion), notice: 'Household was successfully created.'
     else
       @response = ResponseType.all
       @title = Title.all
@@ -39,15 +35,10 @@ class HouseholdsController < ApplicationController
   end
 
   def update
-    @guest.total_guest_count = @guest.guests.count + 1
     @occasion = Occasion.friendly.find(params[:occasion_id])
       
     if @guest.update(guest_params)
-      unless params[:commit] == "Save & Add more" 
-        redirect_to occasion_guests_path(@occasion), notice: 'Guest was successfully updated.'
-      else
-        redirect_to new_occasion_guest_path(@occasion), notice: 'Guest was successfully updated.' 
-      end
+      redirect_to occasion_guests_path(@occasion), notice: 'Household was successfully updated.'
     else      
       @response = ResponseType.all
       @title = Title.all.order("name ASC")
@@ -65,8 +56,8 @@ class HouseholdsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def guest_params
-      params.require(:household).permit(:name, :total_guests)
+    def household_params
+      params.require(:household).permit(:name, :total_guests, guests_attributes: [:email, :notes, :user_id, :guest_id, :address_1, :address_2, :city, :state, :zip, :country, :region, :postal_code, :household_name, :cell_phone, :home_phone, :title, :first_name, :last_name, :is_family, invitation_attributes: [:id, :occasion_id,:guest_id,:status,:code,:send_email,:send_date,:send_reminder,:include_gift_option, rsvps_attributes: [:id, :visibility, :message, :num_guests, :event_id, :response]]])
     end
   
 end
