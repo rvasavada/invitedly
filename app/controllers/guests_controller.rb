@@ -13,7 +13,7 @@ class GuestsController < ApplicationController
     @response = ResponseType.all
     @title = Title.all
         
-    @occasion.events.each do |event|
+    (@occasion.events - @guest.events).each do |event|
       @guest.rsvps.build(:event_id => event.id)
     end
   end
@@ -32,7 +32,7 @@ class GuestsController < ApplicationController
     @invitation.occasion_id = @occasion.id
     
     if @guest.save
-      redirect_to occasion_guests_path(@occasion), notice: 'Guest was successfully created.'
+      redirect_to occasion_invitations_path(@occasion), notice: 'Guest was successfully created.'
     else
       @response = ResponseType.all
       @title = Title.all
@@ -46,7 +46,7 @@ class GuestsController < ApplicationController
     @occasion = Occasion.friendly.find(params[:occasion_id])
       
     if @guest.update(guest_params)
-      redirect_to occasion_guests_path(@occasion), notice: 'Guest was successfully created.'
+      redirect_to occasion_invitations_path(@occasion), notice: 'Guest was successfully updated.'
     else      
       @response = ResponseType.all
       @title = Title.all
@@ -60,7 +60,7 @@ class GuestsController < ApplicationController
     @occasion = Occasion.friendly.find(params[:occasion_id])
     
     @guest.destroy
-    redirect_to occasion_guests_path(@occasion), notice: 'Guest was successfully deleted.' 
+    redirect_to occasion_invitations_path(@occasion), notice: 'Guest was successfully deleted.' 
   end
 
   def get_facebook_guests
