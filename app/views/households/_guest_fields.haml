@@ -22,7 +22,7 @@
       
     .form-group
       = f.fields_for :rsvps do |rsvp|
-        = render 'rsvp_fields', :f => rsvp
+        = render 'households/rsvp_fields', :f => rsvp
           
     -#.form-group
       = f.label :email, class: "control-label" do

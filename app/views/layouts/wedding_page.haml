@@ -11,9 +11,12 @@
       .container
         .row
           .col-xs-12
-            - if notice.present?
+            - if alert.present?
               .alert.alert-danger
-                = notice.html_safe
+                = alert
+            - if notice.present?
+              .alert.alert-success
+                = notice
         .row
           .col-xs-12
             = yield

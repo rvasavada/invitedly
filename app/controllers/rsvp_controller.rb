@@ -16,8 +16,6 @@ class RsvpController < ApplicationController
     case step
     when :guest_info
       @title = Title.all
-      @country = Country.all
-      @state = State.all
     when :events
       @response = ResponseType.all
     when :confirmation
@@ -32,55 +30,55 @@ class RsvpController < ApplicationController
     when :guest_info
       if @invitation.invitable_type == "Household"
         @household = Household.find(@invitation.invitable_id)
-        @household.update(guest_params)
+        @household.update(household_params)
       else
         @guest = Guest.find(@invitation.invitable_id)
         @guest.update(guest_params)
       end
+      
+      @title = Title.all
+      
     when :events
       if @invitation.invitable_type == "Household"
         @household = Household.find(@invitation.invitable_id)
-        @household.update(guest_params)
+        @household.update(household_params)
       else
         @guest = Guest.find(@invitation.invitable_id)
         @guest.update(guest_params)
       end
     when :confirmation
     end
-    render_wizard @guest
+    
+    if @invitation.invitable_type == "Household"
+      render_wizard @household
+    else
+      render_wizard @guest
+    end
+    
   end
   
   def verify_first_last_name
     
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    unless params[:first_name].blank? && params[:last_name].blank?
-      full_name = "#{params[:first_name]} #{params[:last_name]}"
-      @guests = []
-      @guests = @occasion.guests
-      #.find(['first_name LIKE ? OR last_name LIKE ?', "%#{params[:first_name]}}%","%#{params[:last_name]}}%" ])
+    
+    unless params[:first_name].blank? && params[:last_name].blank? && (params[:first_name].count+params[:last_name].count) < 3
+      @guests = User.find(@occasion.user_id).guests.where("(first_name != '' AND last_name != '') AND (lower(first_name) = ? OR lower(last_name) = ?)",  params[:first_name], params[:last_name])
+
       
-      if @guest.blank?
+      if @guests.blank?
         if params[:preview] == "true"
-          redirect_to occasion_path(@occasion, :preview=> true), :notice => "Sorry, you entered an unrecognized email address!"
+          redirect_to occasion_path(@occasion, :preview=> true, :first_name => params[:first_name], :last_name => params[:last_name]), :alert => "Please enter a valid first or last name with at least 4 characters!"
         else
-          redirect_to @occasion, :notice => "Sorry, you entered an unrecognized email address!"
+          redirect_to @occasion, :notice => "Please enter a valid first or last name with at least 4 characters!"
         end
       else
-        if @guest.invitation.blank?
-          if params[:preview] == "true"
-            redirect_to occasion_path(@occasion, :preview=> "true"), :notice => "Sorry, you entered an unrecognized email address!"
-          else
-            redirect_to @occasion, :notice => "Sorry, you entered an unrecognized email address!"
-          end
-        else 
-          redirect_to occasion_invitation_rsvp_path(@occasion, @guest.invitation, :guest_info)
-        end
+        redirect_to occasion_path(@occasion, :preview=> true, :first_name => params[:first_name], :last_name => params[:last_name]), :notice => "Now, select a guest to RSVP!"
       end
     else
       if params[:preview] == "true"
-        redirect_to occasion_path(@occasion, :preview=> true), :notice => "Please enter a email address!"
+        redirect_to occasion_path(@occasion, :preview=> true), :alert => "Please enter a first or last name with at least 4 characters!"
       else
-        redirect_to @occasion, :notice => "Please enter a email address!"
+        redirect_to @occasion, :alert => "Please enter a first or last name with at least 4 characters!"
       end
     end
   end
@@ -124,4 +122,8 @@ class RsvpController < ApplicationController
       params.require(:guest).permit(:email, :notes, :user_id, :guest_id, :address_1, :address_2, :city, :state, :zip, :country, :region, :postal_code, :household_name, :cell_phone, :home_phone, :title, :first_name, :last_name, :is_family, rsvps_attributes: [:id, :visibility, :message, :num_guests, :event_id, :response])
     end
   
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def household_params
+      params.require(:household).permit(:email, :notes, :user_id, :guest_id, guests_attributes: [:id, :title, :first_name, :last_name, rsvps_attributes: [:id, :visibility, :message, :num_guests, :event_id, :response]])
+    end
 end

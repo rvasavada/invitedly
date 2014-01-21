@@ -5,7 +5,7 @@ protected
     if current_user.occasion.blank?
       new_occasion_path
     else
-      occasion_guests_path(current_user.occasion)
+      occasion_invitations_path(current_user.occasion)
     end
   end
 end
