@@ -16,24 +16,3 @@
       .form-group#invitation_send_date
         = f.label :send_date, "Invitation Send Date"
         = f.text_field :send_date, :value => f.object.blank? ?  Date.today.strftime("%b %e, %Y") : f.object.send_date, :class => "datepicker form-control input-sm"
-    
-%fieldset
-  %h3 Event Invitations
-  %p Select the events that this guest is invited and their responses, if any.
-
-  = f.fields_for :rsvps do |rsvp|
-    = rsvp.hidden_field(:event_id)
-    .checkbox
-      = rsvp.check_box :visibility
-      = rsvp.label :visibility, Event.find(rsvp.object.event_id).name, class: "control-label"
-      
-    .btn-group{"data-toggle"=> "buttons"}
-      %label.btn.btn-default.response_btn
-        = rsvp.radio_button :response, "Attending"
-        Attending
-      %label.btn.btn-default.response_btn
-        = rsvp.radio_button :response, "Might Attend"
-        Might Attend
-      %label.btn.btn-default.response_btn
-        = rsvp.radio_button :response, "Not Attending"
-        Not Attending

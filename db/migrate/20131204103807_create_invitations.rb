@@ -4,7 +4,7 @@ class CreateInvitations < ActiveRecord::Migration
     create_table :invitations do |t|
       t.integer  :occasion_id
       t.integer  :invitable_id
-      t.string  :invitable_type
+      t.string   :invitable_type
       t.string   :status
       t.string   :slug
       t.boolean  :send_email

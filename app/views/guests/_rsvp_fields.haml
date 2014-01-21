@@ -1,0 +1,4 @@
+= f.hidden_field(:event_id)
+.checkbox
+  = f.check_box :visibility
+  = f.label :visibility, Event.find(f.object.event_id).name, class: "control-label"

@@ -3,6 +3,6 @@ class Household < ActiveRecord::Base
   accepts_nested_attributes_for :guests, :allow_destroy => true
   
   has_one :invitation, as: :invitable, :dependent => :destroy
-  
   belongs_to :user
+    
 end

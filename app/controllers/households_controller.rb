@@ -4,24 +4,25 @@ class HouseholdsController < ApplicationController
   
   def new
     @occasion = Occasion.friendly.find(params[:occasion_id])
+    @response = ResponseType.all
+    @title = Title.all
     @household = current_user.households.new
-    @invitation = @household.build_invitation
-    @occasion.events.each do |event|
-      @invitation.rsvps.build(:event_id => event.id)
-    end
-
-    @title = Title.all.load
+    
+    @guests = @household.guests.build
   end
 
   def edit
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    @response = ResponseType.all
+    @title = Title.all
   end
   
   def create
     @household = current_user.households.new(household_params)
     @occasion = Occasion.friendly.find(params[:occasion_id])
     
-    #@invitation = @guest.invitation
-    #@invitation.occasion_id = @occasion.id
+    @invitation = @household.build_invitation
+    @invitation.occasion_id = @occasion.id
     
     if @household.save
       redirect_to occasion_guests_path(@occasion), notice: 'Household was successfully created.'
@@ -37,13 +38,12 @@ class HouseholdsController < ApplicationController
   def update
     @occasion = Occasion.friendly.find(params[:occasion_id])
       
-    if @guest.update(guest_params)
+    if @household.update(household_params)
       redirect_to occasion_guests_path(@occasion), notice: 'Household was successfully updated.'
     else      
       @response = ResponseType.all
-      @title = Title.all.order("name ASC")
-      @country = Country.all.order("name ASC")
-      @state = State.all.order("name ASC")
+      @title = Title.all
+
       render action: 'edit' 
     end
   end
@@ -57,7 +57,7 @@ class HouseholdsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def household_params
-      params.require(:household).permit(:name, :total_guests, guests_attributes: [:email, :notes, :user_id, :guest_id, :address_1, :address_2, :city, :state, :zip, :country, :region, :postal_code, :household_name, :cell_phone, :home_phone, :title, :first_name, :last_name, :is_family, invitation_attributes: [:id, :occasion_id,:guest_id,:status,:code,:send_email,:send_date,:send_reminder,:include_gift_option, rsvps_attributes: [:id, :visibility, :message, :num_guests, :event_id, :response]]])
+      params.require(:household).permit(:name, :email, :notes, invitation_attributes: [:id, :occasion_id,:guest_id,:status,:code,:send_email,:send_date,:send_reminder,:include_gift_option], guests_attributes: [:id, :email, :notes, :user_id, :guest_id, :address_1, :address_2, :city, :state, :zip, :country, :region, :postal_code, :household_name, :cell_phone, :home_phone, :title, :first_name, :last_name, rsvps_attributes: [:id, :visibility, :message, :num_guests, :event_id, :response]])
     end
   
 end

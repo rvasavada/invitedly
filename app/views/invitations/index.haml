@@ -48,46 +48,57 @@
     - @invitations.each do |invitation|
       - if invitation.invitable_type == "Guest"
         - guest = Guest.find(invitation.invitable_id)
+        
+        .list-group-item
+          .btn-group.pull-right
+            = link_to "Edit", edit_occasion_guest_path(@occasion,guest), class: "btn btn-default"
+            = link_to "Delete", [@occasion, guest], method: :delete, data: {confirm: 'Are you sure you want to delete this guest?'}, class: "btn btn-danger"
+          %h4.list-group-item-heading=guest.full_name
+
+          %p.list-group-item-text
+            -#-if guest.address_1.present?
+              ="#{guest.address_1} #{guest.address_2}"
+            -#-if ((guest.city.present? and guest.state.present?) and (guest.country == 'United States'))
+              %br
+              ="#{guest.city}, #{guest.state} #{guest.zip}" 
+            -#-if ((guest.city.present? and guest.region.present?) and (guest.country != 'United States'))
+              %br
+              ="#{guest.city}, #{guest.region} #{guest.postal_code}"
+            -#-if guest.country != 'United States'
+              %br
+              = guest.country
+            -#-if guest.email.present? or guest.home_phone.present? or guest.cell_phone.present?
+              %br
+            -#-if guest.email.present?
+              %abbr{title:'Email'}E:
+              = link_to guest.email, "mailto:#{guest.email}"
+            -#-if guest.home_phone.present?
+              %abbr{title:'Home'}H:
+              = guest.home_phone
+            -#-if guest.cell_phone.present?
+              %abbr{title:'Mobile'}M:
+              = guest.cell_phone
+            - if guest.notes.present?
+              %span.text-muted="#{guest.notes}"
+            
+            %ul.list-inline
+              - if guest.invitation.present?
+                - guest.rsvps.where(:visibility => true).each do |rsvp|
+                  %li
+                    %span.label{:class => rsvp.response == "Not Responded" ? "label-default" : rsvp.response == "Attending" ? "label-success" : rsvp.response == "Might Attend" ? "label-warning" : rsvp.response == "Not Attending" ? "label-danger" : ""}=Event.find(rsvp.event_id).name
+                    
       - else
         - household = Household.find(invitation.invitable_id)
         
-      .list-group-item
-        .btn-group.pull-right
-          = link_to "Edit", edit_occasion_guest_path(@occasion,guest), class: "btn btn-default"
-          = link_to "Delete", [@occasion, guest], method: :delete, data: {confirm: 'Are you sure you want to delete this guest?'}, class: "btn btn-danger"
-        %h4.list-group-item-heading=guest.full_name
+        .list-group-item
+          .btn-group.pull-right
+            = link_to "Edit", edit_occasion_household_path(@occasion,household), class: "btn btn-default"
+            = link_to "Delete", [@occasion, household], method: :delete, data: {confirm: 'Are you sure you want to delete this household?'}, class: "btn btn-danger"
+          %h4.list-group-item-heading=household.name
 
-        %p.list-group-item-text
-          -#-if guest.address_1.present?
-            ="#{guest.address_1} #{guest.address_2}"
-          -#-if ((guest.city.present? and guest.state.present?) and (guest.country == 'United States'))
-            %br
-            ="#{guest.city}, #{guest.state} #{guest.zip}" 
-          -#-if ((guest.city.present? and guest.region.present?) and (guest.country != 'United States'))
-            %br
-            ="#{guest.city}, #{guest.region} #{guest.postal_code}"
-          -#-if guest.country != 'United States'
-            %br
-            = guest.country
-          -#-if guest.email.present? or guest.home_phone.present? or guest.cell_phone.present?
-            %br
-          -#-if guest.email.present?
-            %abbr{title:'Email'}E:
-            = link_to guest.email, "mailto:#{guest.email}"
-          -#-if guest.home_phone.present?
-            %abbr{title:'Home'}H:
-            = guest.home_phone
-          -#-if guest.cell_phone.present?
-            %abbr{title:'Mobile'}M:
-            = guest.cell_phone
-          - if guest.notes.present?
-            %span.text-muted="#{guest.notes}"
-            
-          %ul.list-inline
-            - if guest.invitation.present?
-              - guest.rsvps.where(:visibility => true).each do |rsvp|
-                %li
-                  %span.label{:class => rsvp.response == "Not Responded" ? "label-default" : rsvp.response == "Attending" ? "label-success" : rsvp.response == "Might Attend" ? "label-warning" : rsvp.response == "Not Attending" ? "label-danger" : ""}=Event.find(rsvp.event_id).name
+          %p.list-group-item-text
+            - if household.notes.present?
+              %span.text-muted="#{household.notes}"
 
 -else
   .well.text-center

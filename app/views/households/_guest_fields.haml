@@ -1,5 +1,8 @@
-.nested-fields
-  %fieldset.well
+.nested-fields.well
+  %fieldset
+    -(@occasion.events - f.object.events).each do |event|
+      -f.object.rsvps.build(:event_id => event.id)
+  
     .row
       .col-xs-3
         .form-group
@@ -14,6 +17,13 @@
         .form-group
           = link_to_remove_association "Remove", f, :class => "btn btn-danger btn-sm"
 
+  %fieldset
+    %p Select the events that this guest is invited to and their responses, if any.
+      
+    .form-group
+      = f.fields_for :rsvps do |rsvp|
+        = render 'rsvp_fields', :f => rsvp
+          
     -#.form-group
       = f.label :email, class: "control-label" do
         Email

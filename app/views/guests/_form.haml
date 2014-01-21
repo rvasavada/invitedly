@@ -33,17 +33,20 @@
         
 
   
-      .form-group
-        = f.label :notes, "Private Notes", class: "control-label"
-        = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "These notes are private and visible only to you.", class: "form-control input-sm"}
-        
-        
+        .form-group
+          = f.label :notes, "Private Notes", class: "control-label"
+          = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "These notes are private and visible only to you.", class: "form-control input-sm"}
+
+      %fieldset
+        %h3 Invitations
+        %p Select the events that this guest is invited to and their responses, if any.
+        .form-group
+          = f.fields_for :rsvps do |rsvp|
+            = render 'rsvp_fields', :f => rsvp
+                
       .pull-right
         = f.submit "Save Guest", :class => "btn btn-success btn-lg"
       = link_to 'Cancel', occasion_guests_path(@occasion), :class=> "btn btn-default btn-lg"
-    -#.col-xs-6
     
-      = f.fields_for :invitation do |invitation|
-        = render 'invitation_fields', :f => invitation
 
 

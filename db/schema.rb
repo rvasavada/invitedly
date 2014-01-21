@@ -123,13 +123,12 @@ ActiveRecord::Schema.define(version: 20140120205909) do
 
   create_table "rsvps", force: true do |t|
     t.integer  "event_id"
-    t.integer  "num_guests"
     t.string   "message"
-    t.string   "response",      default: "Not Responded"
+    t.string   "response",   default: "Not Responded"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "invitation_id"
-    t.boolean  "visibility",    default: false
+    t.integer  "guest_id"
+    t.boolean  "visibility", default: false
   end
 
   create_table "states", force: true do |t|
