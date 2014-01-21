@@ -93,6 +93,6 @@ class GuestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def guest_params
-      params.require(:guest).permit(:email, :notes, :user_id, :guest_id, :address_1, :address_2, :city, :state, :zip, :country, :region, :postal_code, :household_name, :cell_phone, :home_phone, :title, :first_name, :last_name, :is_family, guests_attributes: [:id, :title, :first_name, :last_name, :_destroy], rsvps_attributes: [:id, :guest_id, :visibility, :message, :event_id, :response], invitation_attributes: [:id, :occasion_id,:guest_id,:status,:code,:send_email,:send_date,:send_reminder,:include_gift_option])
+      params.require(:guest).permit(:email, :notes, :user_id, :address_1, :address_2, :city, :state, :zip, :country, :region, :postal_code, :cell_phone, :home_phone, :title, :first_name, :last_name, rsvps_attributes: [:id, :visibility, :message, :event_id, :response], invitation_attributes: [:id, :occasion_id,:status,:code,:send_email,:send_date,:send_reminder,:include_gift_option])
     end
 end
