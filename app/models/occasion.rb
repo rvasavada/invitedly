@@ -4,8 +4,7 @@ class Occasion < ActiveRecord::Base
   
   has_many :events, dependent: :destroy
   has_many :invitations, dependent: :destroy
-  has_many :guests, :through => :invitations
-  has_many :rsvps
+  has_many :rsvps, through: :events
   belongs_to :user
 
   validates :slug, :format => { :with => /\A[a-z0-9_-]{3,}\Z/, :message => "at least 3 characters; only letters, digits, underscores, and hyphens allowed" }

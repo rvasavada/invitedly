@@ -8,12 +8,9 @@ class OccasionsController < ApplicationController
 
   def show
     unless user_signed_in? and @occasion.user_id == current_user.id and params[:preview] != "true"
-      @guest = User.find(@occasion.user_id).guests.new
-
-      @response = ResponseType.all
-      @title = Title.all.order("name ASC")
-      @country = Country.all.order("name ASC")
-      @state = State.all.order("name ASC")
+      #@guests = Guest.find(['first_name LIKE ? OR last_name LIKE ?', "%#{params[:first_name]}%","%#{params[:last_name]}%" ])
+      @guests = User.find(@occasion.user_id).guests
+      
       render "home",  :layout => 'wedding_page'
     end
   end

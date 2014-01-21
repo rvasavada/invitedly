@@ -20,6 +20,7 @@ Invitedly::Application.routes.draw do
   
   resources :occasions, :except => [:index], :path => '' do
     match 'rsvp/verify_email_address' => 'rsvp#verify_email_address', :via => :post
+    match 'rsvp/verify_first_last_name' => 'rsvp#verify_first_last_name', :via => :post
     
     resources :guests
     resources :households

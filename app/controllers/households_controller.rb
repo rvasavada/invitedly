@@ -21,6 +21,10 @@ class HouseholdsController < ApplicationController
     @household = current_user.households.new(household_params)
     @occasion = Occasion.friendly.find(params[:occasion_id])
     
+    @household.guests.each do |guest|
+      guest.user_id = current_user.id
+    end
+    
     @invitation = @household.build_invitation
     @invitation.occasion_id = @occasion.id
     
@@ -37,7 +41,11 @@ class HouseholdsController < ApplicationController
 
   def update
     @occasion = Occasion.friendly.find(params[:occasion_id])
-      
+    
+    @household.guests.each do |guest|
+      guest.user_id = current_user.id
+    end
+    
     if @household.update(household_params)
       redirect_to occasion_invitations_path(@occasion), notice: 'Household was successfully updated.'
     else      

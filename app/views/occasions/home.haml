@@ -38,17 +38,34 @@
   %h1=@occasion.name
   %p#description=@occasion.description
   %br
-  = form_tag occasion_rsvp_verify_email_address_path(@occasion, :preview => "true") do
+  = form_tag occasion_path(@occasion, :preview => "true"), :method => :get do
     .row
       .col-md-6
         %p.lead Enter your first or last name to begin!
         .form-group
-          = text_field_tag :first_name,nil, :placeholder => "First Name", class: "form-control input-lg"
+          = text_field_tag :first_name,params[:first_name], :placeholder => "First Name", class: "form-control input-lg"
         .form-group
-          = text_field_tag :last_name,nil, :placeholder => "Last Name", class: "form-control input-lg"
+          = text_field_tag :last_name,params[:last_name], :placeholder => "Last Name", class: "form-control input-lg"
       
         =submit_tag "Search", class: "btn btn-success btn-lg", role: "button"
         -#.input-group
           = text_field_tag :email,nil, :placeholder => "Email Address", class: "form-control input-lg"
           %span.input-group-btn
             =submit_tag "RSVP", class: "btn btn-success btn-lg", role: "button"
+      .col-md-6
+  
+        Guests matching 
+        %strong="#{params[:first_name]} #{params[:last_name]}"
+        %table.table
+          %thead
+            %tr
+              %th Guest name
+              %th RSVP
+          %tbody
+            -@guests.each do |guest|
+              %tr
+                %td=guest.full_name
+                - if guest.household.blank?
+                  %td=link_to "RSVP", occasion_invitation_rsvp_path(@occasion, guest.invitation, :guest_info), class: "btn btn-success"
+                - else 
+                  %td=link_to "RSVP", occasion_invitation_rsvp_path(@occasion, guest.household.invitation, :guest_info), class: "btn btn-success"
