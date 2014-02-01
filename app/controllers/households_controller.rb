@@ -56,6 +56,13 @@ class HouseholdsController < ApplicationController
     end
   end
   
+  def destroy
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    
+    @household.destroy
+    redirect_to occasion_invitations_path(@occasion), notice: 'Household was successfully deleted.'
+  end
+  
   
   private
     # Use callbacks to share common setup or constraints between actions.

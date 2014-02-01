@@ -85,6 +85,12 @@ class GuestsController < ApplicationController
      redirect_to address_book_path
   end
 
+  def import
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    Guest.import(params[:file],@occasion,current_user)
+    redirect_to occasion_invitations_path(@occasion), notice: "Guests imported."
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_guest

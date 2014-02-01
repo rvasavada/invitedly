@@ -1,5 +1,5 @@
 class Household < ActiveRecord::Base
-  has_many :guests
+  has_many :guests, :dependent => :destroy
   accepts_nested_attributes_for :guests, :allow_destroy => true
   
   has_one :invitation, as: :invitable, :dependent => :destroy
