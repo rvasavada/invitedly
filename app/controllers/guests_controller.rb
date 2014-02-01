@@ -22,6 +22,10 @@ class GuestsController < ApplicationController
     @occasion = Occasion.friendly.find(params[:occasion_id])
     @response = ResponseType.all
     @title = Title.all
+    
+    (@occasion.events - @guest.events).each do |event|
+      @guest.rsvps.build(:event_id => event.id)
+    end
   end
 
   def create

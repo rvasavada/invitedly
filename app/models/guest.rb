@@ -15,7 +15,7 @@ class Guest < ActiveRecord::Base
 
   
   def full_name
-    title + " " + first_name + " " + last_name
+    "#{title} #{first_name} #{last_name}"
   end
   
   def needs_family_name?
@@ -24,7 +24,7 @@ class Guest < ActiveRecord::Base
   
   def guest_names
     guest_array = []
-    guest_array.push(title + " " + first_name + " " + last_name)
+    guest_array.push("#{title} #{first_name} #{last_name}")
     self.guests.each do |guest|
       guest_array.push(guest.full_name)
     end
@@ -38,13 +38,14 @@ class Guest < ActiveRecord::Base
                                                      :user_id => user.id, 
                                                      :email => row[1], 
                                                      :notes => row[2])
-        Guest.create!(:user_id => user.id,
+        guest = Guest.create!(:user_id => user.id,
                       :household_id => household.id,
                       :title => row[3],
                       :first_name => row[4],
                       :last_name => row[5],
                       :email => row[6],
                       :notes => row[7])
+
         Invitation.find_or_create_by_invitable_type_and_invitable_id("Household",household.id,:occasion_id => occasion.id)
       else
         guest = Guest.create!(:user_id => user.id,

@@ -130,12 +130,12 @@
             = link_to "Single guest", new_occasion_guest_path(@occasion), :class => "btn btn-block btn-success"
           .col-xs-6
             = link_to "Household", new_occasion_household_path(@occasion), :class => "btn btn-block btn-success"
-        %br
+        %hr
         
         =form_tag import_occasion_guests_path(@occasion), multipart: true do
           .row
             .col-xs-6
-              You can import guests by downloading this template.
+              You can also import your guests.
               %br
               = file_field_tag :file
             .col-xs-6
