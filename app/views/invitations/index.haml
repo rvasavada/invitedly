@@ -126,16 +126,45 @@
         %p You can choose to invite a single guest or a household (more than 1 guest).
         .row
           .col-xs-6
-            = link_to "Single guest", new_occasion_guest_path(@occasion), :class => "btn btn-block btn-success"
+            = link_to "Single guest", new_occasion_guest_path(@occasion), :class => "btn btn-block btn-sm btn-default"
           .col-xs-6
-            = link_to "Household", new_occasion_household_path(@occasion), :class => "btn btn-block btn-success"
+            = link_to "Household", new_occasion_household_path(@occasion), :class => "btn btn-block btn-sm btn-default"
         %hr
+        %h4 Or...Import a CSV file of your guests.
         =form_tag import_occasion_guests_path(@occasion), multipart: true do
           .row
             .col-xs-12
+              %p.text-muted
+                You can also import a CSV file of your guests by following this
+                =link_to "example template.", "https://docs.google.com/a/vasavada.us/spreadsheet/ccc?key=0Ar12fAF1l7BJdGZfRUdZMy1NaDhGNER6SU9TX1h2UlE#gid=0"
+              %ul
+                %li
+                  %strong Household Name
+                  If this is a household, enter in a household name else leave blank.  All guests under a household will be grouped together. (optional)
+                %li
+                  %strong Household Email
+                  If this is a household, enter in a household email else leave blank. (optional)
+                %li
+                  %strong Household Notes
+                  If this is a household, enter any notes about the guest.  These notes are for your eyes only. (optional)
+                %li
+                  %strong Title
+                  This can be either Dr., Mr., Mrs., and Ms. If you don't know the guests name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
+                %li
+                  %strong First Name
+                  This is the guests first name. If you don't know the guests name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
+                %li
+                  %strong Last Name
+                  This is the guests last name. If you don't know the guests name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
+                %li
+                  %strong Email
+                  If this is a single guest, add an email address.  Note that if this guest is under a household, email should be added to Household Email.
+                %li
+                  %strong Notes
+                  If this is a single guest, eter any notes about the guest.  Note that if this guest is under a household, notes should be added to Household Notes.
+                %li
+                  %strong Events
+                  For every event that has been created, add an additional column with the Event name in the header and "Not Responded" to the events that the guest is invited to.  Leave the others blank.
               .form-group
-                = file_field_tag :file
-                %p.help-block
-                  You can also import a CSV file of your guests by following this
-                  =link_to "template.", "https://docs.google.com/a/vasavada.us/spreadsheet/ccc?key=0Ar12fAF1l7BJdGZfRUdZMy1NaDhGNER6SU9TX1h2UlE#gid=0"
-              = submit_tag "Import guests", :class => "btn btn-success btn-sm"
+                = submit_tag "Import guests", :class => "btn btn-success btn-sm pull-right"
+                = file_field_tag :file              
