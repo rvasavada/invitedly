@@ -41,32 +41,33 @@
 
 
 - if @events.present?
-
-  %table.table
-    %tbody
-    - @events.each do |event|
-      %tr
-        %td
-        
-          %h3=event.name
-          %p
-            %strong= "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
-            %br
+  - @events.each do |event|
+    .row
+      .col-xs-12
+        %h4=event.name
+        %p
+          = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
+          %br
+          - unless event.address_1.blank?
             = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
-            -if event.address_1.present?
-              | 
-              ="#{event.address_1} #{event.address_2}"
-            -if ((event.city.present? and event.state.present?) and (event.country == 'United States'))
-              ="#{event.city}, #{event.state} #{event.zip}" 
-            -if ((event.city.present? and event.region.present?) and (event.country != 'United States'))
-              ="#{event.city}, #{event.region} #{event.postal_code}"
-            -if event.country != 'United States'
-              = event.country
-          %p
-            .text-muted
-              =event.description
-              %span=link_to "edit", edit_occasion_event_path(@occasion,event)
-
+          - else
+            = event.location
+          -if event.address_1.present?
+            | 
+            ="#{event.address_1} #{event.address_2}"
+          -if ((event.city.present? and event.state.present?) and (event.country == 'United States'))
+            ="#{event.city}, #{event.state} #{event.zip}" 
+          -if ((event.city.present? and event.region.present?) and (event.country != 'United States'))
+            ="#{event.city}, #{event.region} #{event.postal_code}"
+          -if event.country != 'United States'
+            = event.country
+        %p
+          .text-muted
+            =event.description
+        =link_to "Edit", edit_occasion_event_path(@occasion,event)
+        |
+        = link_to "Trash", [@occasion,@event], method: :delete
+        %hr
 
 -else
   .well.text-center
