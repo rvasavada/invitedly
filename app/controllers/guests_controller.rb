@@ -91,8 +91,12 @@ class GuestsController < ApplicationController
 
   def import
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    Guest.import(params[:file],@occasion,current_user)
-    redirect_to occasion_invitations_path(@occasion), notice: "Guests imported."
+    if params[:file].present?
+      Guest.import(params[:file],@occasion,current_user)
+      redirect_to occasion_invitations_path(@occasion), notice: "Guests imported."
+    else
+      redirect_to occasion_invitations_path(@occasion), alert: "Please import a CSV file!"
+    end
   end
 
   private
