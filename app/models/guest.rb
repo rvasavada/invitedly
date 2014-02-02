@@ -45,7 +45,7 @@ class Guest < ActiveRecord::Base
         end
         $row_count += 1
       else  
-        if row[0].present?        
+        if row[0].present?
           household = Household.find_or_create_by_name_and_user_id(row[0],user.id, 
                                                        :email => row[1], 
                                                        :notes => row[2])
@@ -57,15 +57,6 @@ class Guest < ActiveRecord::Base
                         :email => row[6],
                         :notes => row[7])
         
-          $i = 8 #where events start
-          while $i < row.length do
-            if row[$i].present?
-              Rsvp.create!(:event_id => Event.find_by_name(events[$i]).id, 
-                           :guest_id => guest.id,
-                           :visibility => true)
-            end
-            $i += 1
-          end
           #household.create_invitation!(:occasion_id => occasion.id)
           Invitation.find_or_create_by_invitable_type_and_invitable_id("Household",household.id,:occasion_id => occasion.id)
         else
@@ -77,15 +68,18 @@ class Guest < ActiveRecord::Base
                             :notes => row[7])
           guest.create_invitation!(:occasion_id => occasion.id)
           
-          $i = 8 #where events start
-          while $i < row.length do
-            if row[$i].present?
-              Rsvp.create!(:event_id => Event.find_by_name(events[$i]).id, 
-                           :guest_id => guest.id,
-                           :visibility => true)
+
+        end
+        
+        $i = 8 #where events start
+        while $i < row.length do
+          if row[$i].present?
+            event = Event.find_by_name_and_occasion_id(events[$i],occasion.id)
+            if event.present?
+              Rsvp.create!(:event_id => event.id,:guest_id => guest.id,:visibility => true)
             end
-            $i += 1
           end
+          $i += 1
         end
       end
     end
