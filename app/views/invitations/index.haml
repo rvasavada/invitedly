@@ -132,9 +132,10 @@
         %hr
         =form_tag import_occasion_guests_path(@occasion), multipart: true do
           .row
-            .col-xs-6
-              You can also import your guests.
-              %br
-              = file_field_tag :file
-            .col-xs-6
-              = submit_tag "Import guests", :class => "btn btn-primary"
+            .col-xs-12
+              .form-group
+                = file_field_tag :file
+                %p.help-block
+                  You can also import a CSV file of your guests by following this
+                  =link_to "template.", "https://docs.google.com/a/vasavada.us/spreadsheet/ccc?key=0Ar12fAF1l7BJdGZfRUdZMy1NaDhGNER6SU9TX1h2UlE#gid=0"
+              = submit_tag "Import guests", :class => "btn btn-success btn-sm"
