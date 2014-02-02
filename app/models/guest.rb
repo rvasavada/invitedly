@@ -46,8 +46,7 @@ class Guest < ActiveRecord::Base
         $row_count += 1
       else  
         if row[0].present?        
-          household = Household.find_or_create_by_name(:name => row[0],
-                                                       :user_id => user.id, 
+          household = Household.find_or_create_by_name_and_user_id(row[0],user.id, 
                                                        :email => row[1], 
                                                        :notes => row[2])
           guest = Guest.create!(:user_id => user.id,
