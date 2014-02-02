@@ -1,6 +1,4 @@
-class Guest < ActiveRecord::Base
-  require 'CSV'
-  
+class Guest < ActiveRecord::Base  
   belongs_to :user
   belongs_to :household
   has_one :invitation, as: :invitable, :dependent => :destroy
