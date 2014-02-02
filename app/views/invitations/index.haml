@@ -50,9 +50,9 @@
         - guest = Guest.find(invitation.invitable_id)
         
         .list-group-item
-          .btn-group.pull-right
-            = link_to "Edit", edit_occasion_guest_path(@occasion,guest), class: "btn btn-default"
-            = link_to "Delete", [@occasion, guest], method: :delete, data: {confirm: 'Are you sure you want to delete this guest?'}, class: "btn btn-danger"
+          .pull-right
+            = link_to "Edit", edit_occasion_guest_path(@occasion,guest), class: "btn btn-default btn-sm"
+            = link_to "Uninvite", [@occasion, guest], method: :delete, data: {confirm: 'Are you sure you want to uninvite this guest?'}, class: "btn btn-default btn-sm"
           %h4.list-group-item-heading
             %ul.list-inline
               %li=guest.full_name
@@ -92,22 +92,21 @@
         - household = Household.find(invitation.invitable_id)
         
         .list-group-item
-          .btn-group.pull-right
-            = link_to "Edit", edit_occasion_household_path(@occasion,household), class: "btn btn-default"
-            = link_to "Delete", [@occasion, household], method: :delete, data: {confirm: 'Are you sure you want to delete this household?'}, class: "btn btn-danger"
+          .pull-right
+            = link_to "Edit", edit_occasion_household_path(@occasion,household), class: "btn btn-default btn-sm"
+            = link_to "Uninvite", [@occasion, household], method: :delete, data: {confirm: 'Are you sure you want to uninvite this household?'}, class: "btn btn-default btn-sm"
           %h4.list-group-item-heading=household.name
 
           %p.list-group-item-text
             -household.guests.each do |guest|
-              %ul.list-inline
+              %ul
                 %li
                   -if guest.full_name.blank?
-                    {No guest name}
+                    %span.text-muted {No guest name}
                   -else 
-                    =guest.full_name
-                - guest.rsvps.where(:visibility => true).each do |rsvp|
-                  %li
-                    %span.label{:class => rsvp.response == "Not Responded" ? "label-default" : rsvp.response == "Attending" ? "label-success" : rsvp.response == "Might Attend" ? "label-warning" : rsvp.response == "Not Attending" ? "label-danger" : ""}=Event.find(rsvp.event_id).name
+                    = guest.full_name
+                  - guest.rsvps.where(:visibility => true).each do |rsvp|
+                    = link_to Event.find(rsvp.event_id).name, "#", class: rsvp.response == "Not Responded" ? "btn btn-default btn-xs" : rsvp.response == "Attending" ? "btn btn-success btn-xs" : rsvp.response == "Might Attend" ? "btn btn-warning btn-xs" : rsvp.response == "Not Attending" ? "btn btn-danger btn-xs" : ""
           - if household.notes.present?
             %span.text-muted="#{household.notes}"
 
@@ -131,12 +130,11 @@
           .col-xs-6
             = link_to "Household", new_occasion_household_path(@occasion), :class => "btn btn-block btn-success"
         %hr
-        
         =form_tag import_occasion_guests_path(@occasion), multipart: true do
           .row
             .col-xs-6
               You can also import your guests.
               %br
-              = file_field_tag :file
+              = file_field_tag :file, :class => "btn btn-default"
             .col-xs-6
               = submit_tag "Import guests", :class => "btn btn-block btn-success"

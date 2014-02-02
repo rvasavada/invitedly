@@ -58,28 +58,16 @@ class RsvpController < ApplicationController
   end
   
   def verify_first_last_name
-    
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    
-    unless params[:first_name].blank? && params[:last_name].blank? && (params[:first_name].count+params[:last_name].count) < 3
-      @guests = User.find(@occasion.user_id).guests.where("(first_name != '' AND last_name != '') AND (lower(first_name) = ? OR lower(last_name) = ?)",  params[:first_name], params[:last_name])
-
-      
+    if (params[:first_name].present? || params[:last_name].present?)
+      @guests = User.find(@occasion.user_id).guests.where("LOWER(first_name) LIKE ? AND LOWER(last_name) LIKE ?",  "%#{params[:first_name].downcase}%", "%#{params[:last_name].downcase}%")
       if @guests.blank?
-        if params[:preview] == "true"
-          redirect_to occasion_path(@occasion, :preview=> true, :first_name => params[:first_name], :last_name => params[:last_name]), :alert => "Please enter a valid first or last name with at least 4 characters!"
-        else
-          redirect_to @occasion, :notice => "Please enter a valid first or last name with at least 4 characters!"
-        end
+        redirect_to occasion_path(@occasion, preview: params[:preview], first_name: params[:first_name], last_name: params[:last_name]), alert: "No guests found."
       else
-        redirect_to occasion_path(@occasion, :preview=> true, :first_name => params[:first_name], :last_name => params[:last_name]), :notice => "Now, select a guest to RSVP!"
+        redirect_to occasion_path(@occasion, preview: params[:preview], first_name: params[:first_name], last_name: params[:last_name]), notice: "Now, select a guest to RSVP!"
       end
     else
-      if params[:preview] == "true"
-        redirect_to occasion_path(@occasion, :preview=> true), :alert => "Please enter a first or last name with at least 4 characters!"
-      else
-        redirect_to @occasion, :alert => "Please enter a first or last name with at least 4 characters!"
-      end
+      redirect_to occasion_path(@occasion, preview: params[:preview], first_name: params[:first_name], last_name: params[:last_name]), alert: "Please enter a first or last name!"
     end
   end
   

@@ -8,8 +8,9 @@ class OccasionsController < ApplicationController
 
   def show
     unless user_signed_in? and @occasion.user_id == current_user.id and params[:preview] != "true"
-      @guests = User.find(@occasion.user_id).guests.where("(first_name != '' AND last_name != '') AND (lower(first_name) = ? OR lower(last_name) = ?)",  params[:first_name], params[:last_name])
-      
+      if (params[:first_name].present? || params[:last_name].present?)
+        @guests = User.find(@occasion.user_id).guests.where("LOWER(first_name) LIKE ? AND LOWER(last_name) LIKE ?",  "%#{params[:first_name].downcase}%", "%#{params[:last_name].downcase}%")
+      end
       render "home",  :layout => 'wedding_page'
     end
   end
