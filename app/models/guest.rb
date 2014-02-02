@@ -16,19 +16,6 @@ class Guest < ActiveRecord::Base
     "#{title} #{first_name} #{last_name}"
   end
   
-  def needs_family_name?
-    is_family
-  end
-  
-  def guest_names
-    guest_array = []
-    guest_array.push("#{title} #{first_name} #{last_name}")
-    self.guests.each do |guest|
-      guest_array.push(guest.full_name)
-    end
-    guest_array.join(', ')
-  end
-  
   def self.import(file,occasion,user)
     $row_count = 0
     events = {}

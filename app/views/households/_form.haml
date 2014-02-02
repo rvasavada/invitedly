@@ -7,7 +7,7 @@
         = f.label :name, class: "control-label" do
           Household Name
           %span{style:"color:red;"}*
-        = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control input-lg", style: "font-weight:bold;"
+        = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control", style: "font-weight:bold;"
         %span.help-block= @household.errors.get(:name).join('; ')
         
       #guests

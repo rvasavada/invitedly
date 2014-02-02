@@ -10,19 +10,19 @@
             .form-group{class: @guest.errors.include?(:title) ? 'has-error' : ''}
               = f.label :title, class: "control-label" do
                 Title
-              = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control input-lg", style: "font-weight:bold;"})
+              = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control", style: "font-weight:bold;"})
               %span.help-block= @guest.errors.get(:title).join('; ')
           .col-xs-4
             .form-group{class: @guest.errors.include?(:first_name) ? 'has-error' : ''}
               = f.label :first_name, class: "control-label" do
                 First Name
-              = f.text_field :first_name, :autofocus => true, :maxlength => 50, class: "form-control input-lg", style: "font-weight:bold;"
+              = f.text_field :first_name, :autofocus => true, :maxlength => 50, class: "form-control", style: "font-weight:bold;"
               %span.help-block= @guest.errors.get(:first_name).join('; ')            
           .col-xs-5
             .form-group{class: @guest.errors.include?(:last_name) ? 'has-error' : ''}
               = f.label :last_name, class: "control-label" do
                 Last Name
-              = f.text_field :last_name, :autofocus => true, :maxlength => 50, class: "form-control input-lg", style: "font-weight:bold;"
+              = f.text_field :last_name, :autofocus => true, :maxlength => 50, class: "form-control", style: "font-weight:bold;"
               %span.help-block= @guest.errors.get(:last_name).join('; ')
 
         .form-group{class: @guest.errors.include?(:email) ? 'has-error' : ''}
@@ -39,7 +39,7 @@
 
       %fieldset
         %h3 Invitations
-        %p Select the events that this guest is invited to and their responses, if any.
+        %p Select the events below that this guest is invited to.
         .form-group
           = f.fields_for :rsvps do |rsvp|
             = render 'rsvp_fields', :f => rsvp
