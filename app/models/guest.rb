@@ -32,29 +32,62 @@ class Guest < ActiveRecord::Base
   end
   
   def self.import(file,occasion,user)
-    CSV.foreach(file.path, headers: true) do |row|
-      if row[0].present?        
-        household = Household.find_or_create_by_name(:name => row[0],
-                                                     :user_id => user.id, 
-                                                     :email => row[1], 
-                                                     :notes => row[2])
-        guest = Guest.create!(:user_id => user.id,
-                      :household_id => household.id,
-                      :title => row[3],
-                      :first_name => row[4],
-                      :last_name => row[5],
-                      :email => row[6],
-                      :notes => row[7])
+    $row_count = 0
+    events = {}
+    
+    CSV.foreach(file.path) do |row|
+      if $row_count == 0
+        $i = 8 #where events start
 
-        Invitation.find_or_create_by_invitable_type_and_invitable_id("Household",household.id,:occasion_id => occasion.id)
-      else
-        guest = Guest.create!(:user_id => user.id,
-                          :title => row[3],
-                          :first_name => row[4],
-                          :last_name => row[5],
-                          :email => row[6],
-                          :notes => row[7])
-        guest.create_invitation!(:occasion_id => occasion.id)
+        while $i < row.length do
+          events[$i] = row[$i]
+          $i += 1
+        end
+        $row_count += 1
+      else  
+        if row[0].present?        
+          household = Household.find_or_create_by_name(:name => row[0],
+                                                       :user_id => user.id, 
+                                                       :email => row[1], 
+                                                       :notes => row[2])
+          guest = Guest.create!(:user_id => user.id,
+                        :household_id => household.id,
+                        :title => row[3],
+                        :first_name => row[4],
+                        :last_name => row[5],
+                        :email => row[6],
+                        :notes => row[7])
+        
+          $i = 8 #where events start
+          while $i < row.length do
+            if row[$i].present?
+              Rsvp.create!(:event_id => Event.find_by_name(events[$i]).id, 
+                           :guest_id => guest.id,
+                           :visibility => true)
+            end
+            $i += 1
+          end
+          #household.create_invitation!(:occasion_id => occasion.id)
+          Invitation.find_or_create_by_invitable_type_and_invitable_id("Household",household.id,:occasion_id => occasion.id)
+        else
+          guest = Guest.create!(:user_id => user.id,
+                            :title => row[3],
+                            :first_name => row[4],
+                            :last_name => row[5],
+                            :email => row[6],
+                            :notes => row[7])
+          guest.create_invitation!(:occasion_id => occasion.id)
+          
+          $i = 8 #where events start
+          while $i < row.length do
+            if row[$i].present?
+              Rsvp.create!(:event_id => Event.find_by_name(events[$i]).id, 
+                           :guest_id => guest.id,
+                           :visibility => true)
+            end
+            $i += 1
+          end
+        end
       end
     end
   end
