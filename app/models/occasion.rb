@@ -3,6 +3,8 @@ class Occasion < ActiveRecord::Base
   friendly_id :name, use: :slugged
   
   has_many :events, dependent: :destroy
+  accepts_nested_attributes_for :events, :reject_if => :all_blank, :allow_destroy => true
+  
   has_many :invitations, dependent: :destroy
   has_many :rsvps, through: :events
   belongs_to :user

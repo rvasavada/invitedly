@@ -3,7 +3,7 @@ class Guest < ActiveRecord::Base
   belongs_to :household
   has_one :invitation, as: :invitable, :dependent => :destroy
   accepts_nested_attributes_for :invitation, :reject_if => :all_blank, :allow_destroy => true
-  has_many :rsvps
+  has_many :rsvps, :dependent => :destroy
   accepts_nested_attributes_for :rsvps, :reject_if => :all_blank, :allow_destroy => true
   
   has_many :events, :through => :rsvps  

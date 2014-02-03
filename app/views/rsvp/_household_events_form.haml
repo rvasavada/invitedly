@@ -2,54 +2,46 @@
 
   =f.fields_for :guests do |guest|
     .panel.panel-default
-      .panel-body
-        %fieldset
-          %h3=Guest.find(guest.object.id).full_name
-          %p Select the events that you will be able to attend.
-          %table.table
-            %thead
-              %tr
-                %th Event name
-                %th Response & Special notes
-            %tbody
-          
-              = guest.fields_for :rsvps do |rsvp|
-                %tr{style: rsvp.object.visibility ? "" : "display:none;"}
-                  %td
-                    = rsvp.hidden_field(:event_id)
-                    - event = Event.find(rsvp.object.event_id)
-                    %h4=event.name
-                    %p
-                      =event.description
-                    %p
-                      %strong= event.location
-                      -if event.address_1.present?
-                        ="#{event.address_1} #{event.address_2}"
-                      -if ((event.city.present? and event.state.present?) and (event.country == 'United States'))
-                        ="#{event.city}, #{event.state} #{event.zip}" 
-                      -if ((event.city.present? and event.region.present?) and (event.country != 'United States'))
-                        ="#{event.city}, #{event.region} #{event.postal_code}"
-                      -if event.country != 'United States'
-                        = event.country
-                      %br
-                      = event.start_date.strftime("%A, %B %e, %Y")
-                      at
-                      = event.start_time
-                  %td
-                    .form-group
-          
-                      .btn-group{"data-toggle"=> "buttons"}
-                        %label.btn.btn-default.response_btn
-                          = rsvp.radio_button :response, "Attending"
-                          Attending
-                        %label.btn.btn-default.response_btn
-                          = rsvp.radio_button :response, "Might Attend"
-                          Might Attend
-                        %label.btn.btn-default.response_btn
-                          = rsvp.radio_button :response, "Not Attending"
-                          Not Attending
-                            
-                    .form-group
-                      = rsvp.text_area :message, :rows => 2, class: "form-control input-sm", :placeholder => "Add any allergies, music preference, etc."
+      .panel-heading
+        %h3.panel-title=Guest.find(guest.object.id).full_name
+      %table.table
+        %thead
+          %tr
+            %th Event name
+            %th Response & Special notes
+        %tbody
+      
+          = guest.fields_for :rsvps do |rsvp|
+            %tr{style: rsvp.object.visibility ? "" : "display:none;"}
+              %td
+                = rsvp.hidden_field(:event_id)
+                - event = Event.find(rsvp.object.event_id)
+                %strong=event.name
+                %p=event.description
+                %small.text-muted
+                  = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
+                  %br
+                  - unless event.address_1.blank?
+                    = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
+                    = "| #{event.address}"
+                  - else
+                    = event.location
+              %td
+                .form-group
+                  .radio
+                    %label
+                      = rsvp.radio_button :response, "Attending"
+                      Attending
+                  .radio
+                    %label
+                      = rsvp.radio_button :response, "Might Attend"
+                      Might Attend
+                  .radio
+                    %label
+                      = rsvp.radio_button :response, "Not Attending"
+                      Not Attending
+                        
+                .form-group
+                  = rsvp.text_area :message, :rows => 2, class: "form-control input-sm", :placeholder => "Add any allergies, music preference, etc."
   = link_to 'Previous', previous_wizard_path, :class=> "btn btn-default btn-lg"
   = f.submit "Save & Finish", :class => "btn btn-success btn-lg"
