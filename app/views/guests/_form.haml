@@ -1,48 +1,31 @@
 = form_for [@occasion,@guest], :html => {:role =>"form"} do |f|
   .row
     .col-xs-6
-
-      %h3 Guest Information
-      
-      %fieldset
-        .row
-          .col-xs-3
-            .form-group{class: @guest.errors.include?(:title) ? 'has-error' : ''}
-              = f.label :title, class: "control-label" do
-                Title
-              = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control", style: "font-weight:bold;"})
-              %span.help-block= @guest.errors.get(:title).join('; ')
-          .col-xs-4
-            .form-group{class: @guest.errors.include?(:first_name) ? 'has-error' : ''}
-              = f.label :first_name, class: "control-label" do
-                First Name
-              = f.text_field :first_name, :autofocus => true, :maxlength => 50, class: "form-control", style: "font-weight:bold;"
-              %span.help-block= @guest.errors.get(:first_name).join('; ')            
-          .col-xs-5
-            .form-group{class: @guest.errors.include?(:last_name) ? 'has-error' : ''}
-              = f.label :last_name, class: "control-label" do
-                Last Name
-              = f.text_field :last_name, :autofocus => true, :maxlength => 50, class: "form-control", style: "font-weight:bold;"
-              %span.help-block= @guest.errors.get(:last_name).join('; ')
-
-        .form-group{class: @guest.errors.include?(:email) ? 'has-error' : ''}
-          = f.label :email, class: "control-label" do
-            Email
-          = f.text_field :email, :maxlength => 50, class: "form-control input-sm"
-          %span.help-block= @guest.errors.get(:email).join('; ')
-        
-
-  
-        .form-group
-          = f.label :notes, "Private Notes", class: "control-label"
-          = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "These notes are private and visible only to you.", class: "form-control input-sm"}
-
-      %fieldset
-        %h3 Invitations
-        %p Select the events below that this guest is invited to.
-        .form-group
-          = f.fields_for :rsvps do |rsvp|
-            = render 'rsvp_fields', :f => rsvp
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title Guest Information
+        .panel-body
+          %fieldset
+            .row
+              .col-xs-3
+                .form-group
+                  = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control"})
+              .col-xs-4
+                .form-group
+                  = f.text_field :first_name, placeholder: "First Name", :autofocus => true, :maxlength => 50, class: "form-control"            
+              .col-xs-5
+                .form-group
+                  = f.text_field :last_name, placeholder: "Last Name", :maxlength => 50, class: "form-control"
+            .form-group
+              = f.text_field :email, placeholder: "Email", :maxlength => 50, class: "form-control"
+            .form-group
+              = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "Notes", class: "form-control"}
+              %span.help-block These notes are private and visible only to you.
+            %hr
+            %p Select the events that this guest is invited to below.
+            .form-group
+              = f.fields_for :rsvps do |rsvp|
+                = render 'rsvp_fields', :f => rsvp
                 
       .pull-right
         = f.submit "Save Guest", :class => "btn btn-success btn-lg"

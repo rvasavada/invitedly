@@ -7,8 +7,15 @@
         = f.label :name, class: "control-label" do
           Household Name
           %span{style:"color:red;"}*
-        = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control", style: "font-weight:bold;"
-        %span.help-block= @household.errors.get(:name).join('; ')
+        = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control input-lg"
+        %span.help-block
+          This name won't be shared with the guests.
+          = @household.errors.get(:name).join('; ')
+      .form-group
+        = f.text_field :email, placeholder: "Email (optional)", :maxlength => 50, class: "form-control"
+      
+      .form-group
+        = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "These notes are private and visible only to you. (optional)", class: "form-control"}
         
       #guests
         = f.fields_for :guests do |guest|
@@ -16,14 +23,7 @@
         .form-group
           = link_to_add_association 'Add Guest', f, :guests, :class => "btn btn-success"
         
-      .form-group
-        = f.label :email, class: "control-label" do
-          Email
-        = f.text_field :email, :maxlength => 50, class: "form-control input-sm"
-      
-      .form-group
-        = f.label :notes, "Notes", class: "control-label"
-        = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "These notes are private and visible only to you.", class: "form-control input-sm"}
+
       
       - if user_signed_in?
         .pull-right
