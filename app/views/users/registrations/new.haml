@@ -1,34 +1,35 @@
-.row
-  .col-xs-offset-3.col-xs-6
-    %h1.text-center
-      Invitedly
-      %br
-      %small Let us manage your guestlist.
-    = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
-      .well
-        %legend Create a new account
-        %formset
-          .form-group{class: resource.errors.include?(:email) ? 'has-error' : ''}
-            = f.label :email, class: "control-label" do
-              Email
-              %span{style: "color:red"}*
-            = f.text_field :email, :autofocus => true, class: "form-control"
-            %span.help-block= resource.errors.get(:email).join('; ')
+.container
+  .row
+    .col-xs-offset-3.col-xs-6
+      %h1.text-center
+        Invitedly
+        %br
+        %small Let us manage your guestlist.
+      = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+        .well
+          %legend Create a new account
+          %formset
+            .form-group{class: resource.errors.include?(:email) ? 'has-error' : ''}
+              = f.label :email, class: "control-label" do
+                Email
+                %span{style: "color:red"}*
+              = f.text_field :email, :autofocus => true, class: "form-control"
+              %span.help-block= resource.errors.get(:email).join('; ')
 
-          .form-group{class: resource.errors.include?(:password) ? 'has-error' : ''}
-            = f.label :password, class: "control-label" do
-              Password
-              %span{style: "color:red"}*
-            = f.password_field :password, class: "form-control"
-            %span.help-block= resource.errors.get(:password).join('; ')
+            .form-group{class: resource.errors.include?(:password) ? 'has-error' : ''}
+              = f.label :password, class: "control-label" do
+                Password
+                %span{style: "color:red"}*
+              = f.password_field :password, class: "form-control"
+              %span.help-block= resource.errors.get(:password).join('; ')
 
-          .form-group{class: resource.errors.include?(:password_confirmation) ? 'has-error' : ''}
-            = f.label :password_confirmation, class: "control-label" do
-              Password Confirmation
-              %span{style: "color:red"}*
-            = f.password_field :password_confirmation, class: "form-control"
-            %span.help-block= resource.errors.get(:password_confirmation).join('; ')
+            .form-group{class: resource.errors.include?(:password_confirmation) ? 'has-error' : ''}
+              = f.label :password_confirmation, class: "control-label" do
+                Password Confirmation
+                %span{style: "color:red"}*
+              = f.password_field :password_confirmation, class: "form-control"
+              %span.help-block= resource.errors.get(:password_confirmation).join('; ')
               
 
-          = f.submit "Sign up", :class=> "btn btn-success btn-block"
-      = link_to "Already have an account? <strong>Sign in</strong>.".html_safe, new_session_path(resource_name), :class=> "btn btn-default btn-block"
+            = f.submit "Sign up", :class=> "btn btn-success btn-block"
+        = link_to "Already have an account? <strong>Sign in</strong>.".html_safe, new_session_path(resource_name), :class=> "btn btn-default btn-block"

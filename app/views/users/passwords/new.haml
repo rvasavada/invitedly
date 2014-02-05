@@ -1,22 +1,23 @@
-.row
-  .col-xs-offset-3.col-xs-6
-    %h1.text-center
-      Invitedly
-      %br
-      %small Let us manage your guestlist.
-    = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
-      .well
-        %legend Reset your password
-        %formset
-          .form-group{class: resource.errors.include?(:email) ? 'has-error' : ''}
-            = f.label :email, class: "control-label" do
-              Email
-              %span{style: "color:red"}*
-            = f.text_field :email, :autofocus => true, class: "form-control"
-            %span.help-block= resource.errors.get(:email).join('; ')
+.container
+  .row
+    .col-xs-offset-3.col-xs-6
+      %h1.text-center
+        Invitedly
+        %br
+        %small Let us manage your guestlist.
+      = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+        .well
+          %legend Reset your password
+          %formset
+            .form-group{class: resource.errors.include?(:email) ? 'has-error' : ''}
+              = f.label :email, class: "control-label" do
+                Email
+                %span{style: "color:red"}*
+              = f.text_field :email, :autofocus => true, class: "form-control"
+              %span.help-block= resource.errors.get(:email).join('; ')
             
-          = f.submit "Send reset password email", :class=> "btn btn-success btn-block form-btn"
+            = f.submit "Send reset password email", :class=> "btn btn-success btn-block form-btn"
     
-    %p.text-center
-      Remember your password?
-      = link_to "Sign in.", new_session_path(resource_name)
+      %p.text-center
+        Remember your password?
+        = link_to "Sign in.", new_session_path(resource_name)

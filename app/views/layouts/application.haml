@@ -7,23 +7,19 @@
     
     = csrf_meta_tags
     =favicon_link_tag "/assets/favicon.ico"
-    %body{style:"padding-top: 20px;"}
-      .container#main
+    %body
+      - if notice.present?
+        .alert.alert-success
+          = notice
+      - if alert.present?
+        .alert.alert-danger
+          = alert
+      #main{style:"margin-top:20px;"}
+      = yield
 
-        - if notice.present?
-          .alert.alert-success
-            = notice
-        - if alert.present?
-          .alert.alert-danger
-            = alert
-
-        .fully-container
-          .row
-            .col-xs-12
-              = yield
-        %footer.text-center{style: "margin-top:30px;margin-bottom:30px;"}
-          %small{style:"color:#2c3e50;"}
-            %strong Invitedly 
-            &copy; 2014.  All Rights Reserved.
+      %footer.text-center{style: "margin-top:30px;margin-bottom:30px;"}
+        %small{style:"color:#2c3e50;"}
+          %strong Invitedly 
+          &copy; 2014
 
       = javascript_include_tag "application"      

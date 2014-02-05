@@ -1,120 +1,121 @@
-%nav.navbar.navbar-default{role: "navigation"}
-  / Brand and toggle get grouped for better mobile display
-  .navbar-header
-    %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", type: "button"}
-      %span.sr-only Toggle navigation
-      %span.icon-bar
-      %span.icon-bar
-      %span.icon-bar
-    %a.navbar-brand{href: "#"} Invitedly
-  / Collect the nav links, forms, and other content for toggling
-  #bs-example-navbar-collapse-1.collapse.navbar-collapse
-    %ul.nav.navbar-nav
-      - if user_signed_in? 
-        - if current_user.occasion
-          %li= link_to "Events", occasion_events_path(current_user.occasion)
-          %li.active= link_to "Invitations", occasion_invitations_path(current_user.occasion)  
+.container
+  %nav.navbar.navbar-default{role: "navigation"}
+    / Brand and toggle get grouped for better mobile display
+    .navbar-header
+      %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", type: "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{href: "#"} Invitedly
+    / Collect the nav links, forms, and other content for toggling
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        - if user_signed_in? 
+          - if current_user.occasion
+            %li= link_to "Events", occasion_events_path(current_user.occasion)
+            %li.active= link_to "Invitations", occasion_invitations_path(current_user.occasion)  
   
 
-    %ul.nav.navbar-nav.navbar-right
-      - if user_signed_in? 
-        - if current_user.occasion
-          %li.dropdown
-            %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
-              =current_user.occasion.name
+      %ul.nav.navbar-nav.navbar-right
+        - if user_signed_in? 
+          - if current_user.occasion
+            %li.dropdown
+              %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+                =current_user.occasion.name
   
-              %b.caret
-            %ul.dropdown-menu
-              %li= link_to "Edit Wedding Details", edit_occasion_path(current_user.occasion)
-              %li= link_to "Preview Wedding Page", occasion_path(current_user.occasion, :preview => "true")
-        - else
-          %li= link_to "New Wedding", new_occasion_path
-      - if user_signed_in? 
-        %li= link_to "Settings", edit_user_registration_path
-        %li= link_to "Sign out", destroy_user_session_path, method: :delete
-      -else
-        %li= link_to "Sign in", new_user_session_path
-        %li= link_to "Sign up", new_user_registration_path
+                %b.caret
+              %ul.dropdown-menu
+                %li= link_to "Edit Wedding Details", edit_occasion_path(current_user.occasion)
+                %li= link_to "Preview Wedding Page", occasion_path(current_user.occasion, :preview => "true")
+          - else
+            %li= link_to "New Wedding", new_occasion_path
+        - if user_signed_in? 
+          %li= link_to "Settings", edit_user_registration_path
+          %li= link_to "Sign out", destroy_user_session_path, method: :delete
+        -else
+          %li= link_to "Sign in", new_user_session_path
+          %li= link_to "Sign up", new_user_registration_path
 
-%h1 
+  %h1 
   
-  %button.pull-right.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"}
-    New Invitation
-  Invitations
+    %button.pull-right.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"}
+      New Invitation
+    Invitations
   
       
-- if @invitations.present?
-  .list-group      
-    - @invitations.each do |invitation|
-      - if invitation.invitable_type == "Guest"
-        - guest = Guest.find(invitation.invitable_id)
+  - if @invitations.present?
+    .list-group      
+      - @invitations.each do |invitation|
+        - if invitation.invitable_type == "Guest"
+          - guest = Guest.find(invitation.invitable_id)
         
-        .list-group-item
-          %h4
-            .pull-right
-              = link_to "Edit", edit_occasion_guest_path(@occasion,guest), class: "btn btn-default btn-sm"
-              = link_to "Uninvite", [@occasion, guest], method: :delete, data: {confirm: 'Are you sure you want to uninvite this guest?'}, class: "btn btn-default btn-sm"
-            %ul.list-inline
-              %li
-                =guest.full_name
-                - if guest.invitation.present?
-                  - guest.rsvps.where(:visibility => true).each do |rsvp|
-                    = link_to Event.find(rsvp.event_id).name, "#", class: rsvp.response == "Not Responded" ? "btn btn-default btn-xs" : rsvp.response == "Attending" ? "btn btn-success btn-xs" : rsvp.response == "Might Attend" ? "btn btn-warning btn-xs" : rsvp.response == "Not Attending" ? "btn btn-danger btn-xs" : ""
+          .list-group-item
+            %h4
+              .pull-right
+                = link_to "Edit", edit_occasion_guest_path(@occasion,guest), class: "btn btn-default btn-sm"
+                = link_to "Uninvite", [@occasion, guest], method: :delete, data: {confirm: 'Are you sure you want to uninvite this guest?'}, class: "btn btn-default btn-sm"
+              %ul.list-inline
+                %li
+                  =guest.full_name
+                  - if guest.invitation.present?
+                    - guest.rsvps.where(:visibility => true).each do |rsvp|
+                      = link_to Event.find(rsvp.event_id).name, "#", class: rsvp.response == "Not Responded" ? "btn btn-default btn-xs" : rsvp.response == "Attending" ? "btn btn-success btn-xs" : rsvp.response == "Might Attend" ? "btn btn-warning btn-xs" : rsvp.response == "Not Attending" ? "btn btn-danger btn-xs" : ""
 
-          %p.list-group-item-text
-            -#-if guest.address_1.present?
-              ="#{guest.address_1} #{guest.address_2}"
-            -#-if ((guest.city.present? and guest.state.present?) and (guest.country == 'United States'))
-              %br
-              ="#{guest.city}, #{guest.state} #{guest.zip}" 
-            -#-if ((guest.city.present? and guest.region.present?) and (guest.country != 'United States'))
-              %br
-              ="#{guest.city}, #{guest.region} #{guest.postal_code}"
-            -#-if guest.country != 'United States'
-              %br
-              = guest.country
-            -#-if guest.email.present? or guest.home_phone.present? or guest.cell_phone.present?
-              %br
-            -#-if guest.email.present?
-              %abbr{title:'Email'}E:
-              = link_to guest.email, "mailto:#{guest.email}"
-            -#-if guest.home_phone.present?
-              %abbr{title:'Home'}H:
-              = guest.home_phone
-            -#-if guest.cell_phone.present?
-              %abbr{title:'Mobile'}M:
-              = guest.cell_phone
-            - if guest.notes.present?
-              %span.text-muted="#{guest.notes}"
+            %p.list-group-item-text
+              -#-if guest.address_1.present?
+                ="#{guest.address_1} #{guest.address_2}"
+              -#-if ((guest.city.present? and guest.state.present?) and (guest.country == 'United States'))
+                %br
+                ="#{guest.city}, #{guest.state} #{guest.zip}" 
+              -#-if ((guest.city.present? and guest.region.present?) and (guest.country != 'United States'))
+                %br
+                ="#{guest.city}, #{guest.region} #{guest.postal_code}"
+              -#-if guest.country != 'United States'
+                %br
+                = guest.country
+              -#-if guest.email.present? or guest.home_phone.present? or guest.cell_phone.present?
+                %br
+              -#-if guest.email.present?
+                %abbr{title:'Email'}E:
+                = link_to guest.email, "mailto:#{guest.email}"
+              -#-if guest.home_phone.present?
+                %abbr{title:'Home'}H:
+                = guest.home_phone
+              -#-if guest.cell_phone.present?
+                %abbr{title:'Mobile'}M:
+                = guest.cell_phone
+              - if guest.notes.present?
+                %span.text-muted="#{guest.notes}"
                     
-      - else
-        - household = Household.find(invitation.invitable_id)
+        - else
+          - household = Household.find(invitation.invitable_id)
         
-        .list-group-item
-          %h4
-            .pull-right
-              = link_to "Edit", edit_occasion_household_path(@occasion,household), class: "btn btn-default btn-sm"
-              = link_to "Uninvite", [@occasion, household], method: :delete, data: {confirm: 'Are you sure you want to uninvite this household?'}, class: "btn btn-default btn-sm"
-            =household.name
+          .list-group-item
+            %h4
+              .pull-right
+                = link_to "Edit", edit_occasion_household_path(@occasion,household), class: "btn btn-default btn-sm"
+                = link_to "Uninvite", [@occasion, household], method: :delete, data: {confirm: 'Are you sure you want to uninvite this household?'}, class: "btn btn-default btn-sm"
+              =household.name
 
-          %ul
-            -household.guests.each do |guest|
-              %li
-                %p
-                  -if guest.full_name.blank?
-                    %span.text-muted {No guest name}
-                  -else 
-                    = guest.full_name
-                  - guest.rsvps.where(:visibility => true).each do |rsvp|
-                    = link_to Event.find(rsvp.event_id).name, "#", class: rsvp.response == "Not Responded" ? "btn btn-default btn-xs" : rsvp.response == "Attending" ? "btn btn-success btn-xs" : rsvp.response == "Might Attend" ? "btn btn-warning btn-xs" : rsvp.response == "Not Attending" ? "btn btn-danger btn-xs" : ""
-          - if household.notes.present?
-            %span.text-muted="#{household.notes}"
+            %ul
+              -household.guests.each do |guest|
+                %li
+                  %p
+                    -if guest.full_name.blank?
+                      %span.text-muted {No guest name}
+                    -else 
+                      = guest.full_name
+                    - guest.rsvps.where(:visibility => true).each do |rsvp|
+                      = link_to Event.find(rsvp.event_id).name, "#", class: rsvp.response == "Not Responded" ? "btn btn-default btn-xs" : rsvp.response == "Attending" ? "btn btn-success btn-xs" : rsvp.response == "Might Attend" ? "btn btn-warning btn-xs" : rsvp.response == "Not Attending" ? "btn btn-danger btn-xs" : ""
+            - if household.notes.present?
+              %span.text-muted="#{household.notes}"
 
--else
-  .well.text-center
-    %h3 You have no guests.
-    %button.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"}
-      Add guests now!
+  -else
+    .well.text-center
+      %h3 You have no guests.
+      %button.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"}
+        Add guests now!
 
 .modal.fade#myModal{:tabindex=> "-1", :role=>"dialog", "aria-labelledby"=>"myModalLabel", "aria-hidden"=> "true"}
   .modal-dialog

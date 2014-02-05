@@ -1,75 +1,76 @@
-%nav.navbar.navbar-default{role: "navigation"}
-  / Brand and toggle get grouped for better mobile display
-  .navbar-header
-    %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", type: "button"}
-      %span.sr-only Toggle navigation
-      %span.icon-bar
-      %span.icon-bar
-      %span.icon-bar
-    %a.navbar-brand{href: "#"} Invitedly
-  / Collect the nav links, forms, and other content for toggling
-  #bs-example-navbar-collapse-1.collapse.navbar-collapse
-    %ul.nav.navbar-nav
-      - if user_signed_in? 
-        - if current_user.occasion
-          %li= link_to "Events", occasion_events_path(current_user.occasion)
-          %li= link_to "Invitations", occasion_invitations_path(current_user.occasion)
+.container
+  %nav.navbar.navbar-default{role: "navigation"}
+    / Brand and toggle get grouped for better mobile display
+    .navbar-header
+      %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", type: "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{href: "#"} Invitedly
+    / Collect the nav links, forms, and other content for toggling
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        - if user_signed_in? 
+          - if current_user.occasion
+            %li= link_to "Events", occasion_events_path(current_user.occasion)
+            %li= link_to "Invitations", occasion_invitations_path(current_user.occasion)
   
 
-    %ul.nav.navbar-nav.navbar-right
-      - if user_signed_in? 
-        - if current_user.occasion
-          %li.dropdown
-            %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
-              =current_user.occasion.name
+      %ul.nav.navbar-nav.navbar-right
+        - if user_signed_in? 
+          - if current_user.occasion
+            %li.dropdown
+              %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+                =current_user.occasion.name
   
-              %b.caret
-            %ul.dropdown-menu
-              %li= link_to "Edit Wedding Details", edit_occasion_path(current_user.occasion)
-              %li= link_to "Preview Wedding Page", occasion_path(current_user.occasion, :preview => "true")
-        - else
-          %li= link_to "New Wedding", new_occasion_path
-      - if user_signed_in? 
-        %li.active= link_to "Settings", edit_user_registration_path
-        %li= link_to "Sign out", destroy_user_session_path, method: :delete
-      -else
-        %li= link_to "Sign in", new_user_session_path
-        %li= link_to "Sign up", new_user_registration_path   
+                %b.caret
+              %ul.dropdown-menu
+                %li= link_to "Edit Wedding Details", edit_occasion_path(current_user.occasion)
+                %li= link_to "Preview Wedding Page", occasion_path(current_user.occasion, :preview => "true")
+          - else
+            %li= link_to "New Wedding", new_occasion_path
+        - if user_signed_in? 
+          %li.active= link_to "Settings", edit_user_registration_path
+          %li= link_to "Sign out", destroy_user_session_path, method: :delete
+        -else
+          %li= link_to "Sign in", new_user_session_path
+          %li= link_to "Sign up", new_user_registration_path   
 
-%h1 Account Information
+  %h1 Account Information
 
-= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
-  .well
-    %legend Contact Information
-    %fieldset
-      .form-group{class: resource.errors.include?(:email) ? 'has-error' : ''}
-        = f.label :email, class: "control-label" do
-          Email
-          %span{style: "color:red"}*
-        = f.text_field :email, class: "form-control"
-        %span.help-block= resource.errors.get(:email).join('; ')
-  .well
-    %legend Change Password
-    %fieldset
-      .form-group{class: resource.errors.include?(:password) ? 'has-error' : ''}
-        = f.label :password, class: "control-label" do
-          Password
-          %span{style: "color:red"}*
-        = f.password_field :password, class: "form-control"
-        %span.help-block= resource.errors.get(:password).join('; ')
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+    .well
+      %legend Contact Information
+      %fieldset
+        .form-group{class: resource.errors.include?(:email) ? 'has-error' : ''}
+          = f.label :email, class: "control-label" do
+            Email
+            %span{style: "color:red"}*
+          = f.text_field :email, class: "form-control"
+          %span.help-block= resource.errors.get(:email).join('; ')
+    .well
+      %legend Change Password
+      %fieldset
+        .form-group{class: resource.errors.include?(:password) ? 'has-error' : ''}
+          = f.label :password, class: "control-label" do
+            Password
+            %span{style: "color:red"}*
+          = f.password_field :password, class: "form-control"
+          %span.help-block= resource.errors.get(:password).join('; ')
 
-      .form-group{class: resource.errors.include?(:password_confirmation) ? 'has-error' : ''}
-        = f.label :password_confirmation, class: "control-label" do
-          Password Confirmation
-          %span{style: "color:red"}*
-        = f.password_field :password_confirmation, class: "form-control"
-        %span.help-block= resource.errors.get(:password_confirmation).join('; ')
+        .form-group{class: resource.errors.include?(:password_confirmation) ? 'has-error' : ''}
+          = f.label :password_confirmation, class: "control-label" do
+            Password Confirmation
+            %span{style: "color:red"}*
+          = f.password_field :password_confirmation, class: "form-control"
+          %span.help-block= resource.errors.get(:password_confirmation).join('; ')
 
-      .form-group{class: resource.errors.include?(:current_password) ? 'has-error' : ''}
-        = f.label :current_password, class: "control-label" do
-          Current Password
-          %span{style: "color:red"}*
-        = f.password_field :current_password, class: "form-control"
-        %span.help-block= resource.errors.get(:current_password).join('; ')
+        .form-group{class: resource.errors.include?(:current_password) ? 'has-error' : ''}
+          = f.label :current_password, class: "control-label" do
+            Current Password
+            %span{style: "color:red"}*
+          = f.password_field :current_password, class: "form-control"
+          %span.help-block= resource.errors.get(:current_password).join('; ')
 
-  = f.submit "Update settings", :class => "btn btn-success btn-lg pull-right"
+    = f.submit "Update settings", :class => "btn btn-success btn-lg pull-right"

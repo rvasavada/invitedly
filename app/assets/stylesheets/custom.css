@@ -1,12 +1,3 @@
-.full-container {background-color:#fff; box-shadow: 0 3px 4px rgba(0,0,0,.1);-moz-box-shadow: 0 3px 4px rgba(0,0,0,.1);-webkit-box-shadow: 0 3px 4px rgba(0,0,0,.1); padding:10px 40px 30px 40px; }
-.form-section{padding-bottom:30px;}
-.panel-page-title{font-size:32px;}
-
-#logo { display:block; float:left; height:48px; width:175px; margin-right:76px;color:#3b5998;}
-.content-full { }
-.signout-link {cursor:pointer; display:block; float:left; line-height:27px; padding-right:5px; }
-.signout-link:hover { text-decoration:underline; }
-
 body {background: url(blu_stripes.png) repeat;}
 .jumbotron {
   border-top:1px solid rgba(0,0,0,.3);
@@ -22,4 +13,12 @@ body {background: url(blu_stripes.png) repeat;}
 
 small {
   color: #A0A0A0;
+}
+
+.alert {
+  border-radius:0px;
+}
+
+#main {
+  margin-top:20px;
 }
