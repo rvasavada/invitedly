@@ -1,28 +1,26 @@
 = form_for [@occasion,@household], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
+  .well
+    %legend
+      Contact Information
+      %small (We want to make sure we have the right names and contact information for you)
 
-  %h3 Guest Information
-
-  = f.fields_for :guests do |guest|
-    .row
-      .col-xs-3
-        .form-group
-          = guest.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control"})
-      .col-xs-4
-        .form-group
-          = guest.text_field :first_name, :autofocus => true, :maxlength => 50, class: "form-control", :placeholder => "First name"
-      .col-xs-5
-        .form-group
-          = guest.text_field :last_name, :autofocus => true, :maxlength => 50, class: "form-control", :placeholder => "Last name"
+    = f.fields_for :guests do |guest|
+      .row
+        .col-xs-3
+          .form-group
+            = guest.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control"})
+        .col-xs-4
+          .form-group
+            = guest.text_field :first_name, :autofocus => true, :maxlength => 50, class: "form-control", :placeholder => "First name"
+        .col-xs-5
+          .form-group
+            = guest.text_field :last_name, :autofocus => true, :maxlength => 50, class: "form-control", :placeholder => "Last name"
     
-  .form-group{class: @household.errors.include?(:email) ? 'has-error' : ''}
-    = f.label :email, class: "control-label" do
-      Email
-    = f.text_field :email, :maxlength => 50, class: "form-control input-sm"
-    %span.help-block= @household.errors.get(:email).join('; ')
+    .form-group{class: @household.errors.include?(:email) ? 'has-error' : ''}
+      = f.label :email, class: "control-label" do
+        Email
+      = f.text_field :email, :maxlength => 50, class: "form-control input-sm"
+      %span.help-block= @household.errors.get(:email).join('; ')
   
-  .form-group
-    = f.label :notes, "Notes", class: "control-label"
-    = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "These notes are private and visible only to you.", class: "form-control input-sm"}
-  
-
-  = f.submit "Next", :class => "btn btn-success btn-lg"
+  .form-group.pull-right
+    = f.submit "Next", :class => "btn btn-success btn-lg"

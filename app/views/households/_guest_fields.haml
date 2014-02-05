@@ -11,13 +11,13 @@
           -f.object.rsvps.build(:event_id => event.id)
   
         .row
-          .col-xs-3
+          .col-sm-3
             .form-group
               = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control"})
-          .col-xs-4
+          .col-sm-4
             .form-group
               = f.text_field :first_name, :maxlength => 50, class: "form-control", :placeholder => "First name"
-          .col-xs-5
+          .col-sm-5
             .form-group
               = f.text_field :last_name, :maxlength => 50, class: "form-control", :placeholder => "Last name"
       %hr
@@ -34,11 +34,11 @@
           = f.text_field :email, :maxlength => 50, class: "form-control input-sm"
 
         -#.row
-          .col-xs-6
+          .col-sm-6
             .form-group
               = f.label :home_phone, "Home Phone", class: "control-label"
               = f.telephone_field :home_phone, class: "form-control input-sm"
-          .col-xs-6
+          .col-sm-6
             .form-group
               = f.label :cell_phone, "Cell Phone", class: "control-label"
               = f.telephone_field :cell_phone, class: "form-control input-sm"
@@ -47,32 +47,32 @@
         -#%h3 Address
         -#%fieldset
           .row
-            .col-xs-7
+            .col-sm-7
               .form-group
                 = f.label :address_1, "Address 1"
                 = f.text_field :address_1, :maxlength => 100, class: "form-control input-sm"
-            .col-xs-5
+            .col-sm-5
               .form-group
                 = f.label :address_2, "Address 2"
                 = f.text_field :address_2, :maxlength => 100, class: "form-control input-sm"
           .row
-            .col-xs-5
+            .col-sm-5
               .form-group      
                 = f.label :city, "City"
                 = f.text_field :city, :maxlength => 100, class: "form-control input-sm"
-            .col-xs-4.domestic
+            .col-sm-4.domestic
               .form-group
                 = f.label :state, "State"
                 = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control input-sm"} 
-            .domestic.col-xs-3
+            .domestic.col-sm-3
               .form-group
                 = f.label :zip, "Zip"
                 = f.text_field :zip, :maxlength => 5, class: "form-control input-sm"
-            .international.col-xs-4
+            .international.col-sm-4
               .form-group
                 = f.label :region, "Region"
                 = f.text_field :region, :maxlength => 100, class: "form-control input-sm"
-            .international.col-xs-3
+            .international.col-sm-3
               .form-group
                 = f.label :postal_code, "Postal Code"
                 = f.text_field :postal_code, :maxlength => 20, class: "form-control input-sm"

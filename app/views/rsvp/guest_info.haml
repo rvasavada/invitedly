@@ -1,15 +1,14 @@
-%ul.list-inline
-  %li
-    %strong Guest Information
-  %li.text-muted Events
-  %li.text-muted Confirmation
+.container
+  .well.well-sm
+    %ul.list-inline
+      %li
+        %strong Guest Information
+      %li.text-muted Events
+      %li.text-muted Confirmation
 
-.row
-  .col-sm-7.col-md-6
-    %h1 Guest Information
-    
-    -if @invitation.invitable_type == "Household"
-      = render 'household_guest_form'
-    -else
-      = render 'guest_guest_form'
-    
+  %h1 Guest Information
+
+  -if @invitation.invitable_type == "Household"
+    = render 'household_guest_form'
+  -else
+    = render 'guest_guest_form'
