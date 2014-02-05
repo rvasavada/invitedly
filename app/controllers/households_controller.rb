@@ -1,6 +1,7 @@
 class HouseholdsController < ApplicationController
   before_action :set_household, only: [:edit, :update, :destroy]
   before_filter :authenticate_user!
+  before_filter :verify_occasion_ownership
   
   def new
     @occasion = Occasion.friendly.find(params[:occasion_id])

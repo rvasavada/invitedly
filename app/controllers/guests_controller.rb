@@ -1,7 +1,7 @@
 class GuestsController < ApplicationController
   before_action :set_guest, only: [:edit, :update, :destroy]
   before_filter :authenticate_user!
-
+  before_filter :verify_occasion_ownership
   def index
     @occasion = Occasion.friendly.find(params[:occasion_id])
     @guests = current_user.guests
