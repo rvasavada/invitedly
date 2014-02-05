@@ -4,7 +4,7 @@
     %title Invitedly
     = stylesheet_link_tag "application", media: "all"
     = analytics_init if Rails.env.production?
-    
+    %meta{content: "width=device-width, initial-scale=1, maximum-scale=1", name: "viewport"}
     = csrf_meta_tags
     =favicon_link_tag "/assets/favicon.ico"
     %body
@@ -16,10 +16,9 @@
           = alert
       #main{style:"margin-top:20px;"}
       = yield
-      %hr{style:"background-color:black;"}
-        %footer.text-center{style: "margin-top:30px;margin-bottom:30px;"}
-          %small{style:"color:#2c3e50;"}
-            %strong Invitedly 
-            &copy; 2014
+      %footer.text-center{style: "margin-top:30px;margin-bottom:30px;"}
+        %small{style:"color:#2c3e50;"}
+          %strong Invitedly 
+          &copy; 2014
 
       = javascript_include_tag "application"      
