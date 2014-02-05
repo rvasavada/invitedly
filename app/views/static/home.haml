@@ -9,14 +9,6 @@
     =favicon_link_tag "/assets/favicon.ico"
     %body#wedding{style:"padding-top: 20px;"}
       .container      
-        .row
-          .col-xs-12
-            - if alert.present?
-              .alert.alert-danger
-                = alert.html_safe
-            - if notice.present?
-              .alert.alert-success
-                = notice.html_safe
         - if user_signed_in? 
         
           %nav.navbar.navbar-default{role: "navigation"}
@@ -58,11 +50,12 @@
                   %li= link_to "Sign up", new_user_registration_path   
 
         
-        .row
-          .col-xs-12
-            .pull-right
-              .form-group
-                = link_to "Sign in", new_user_session_path, class: "btn btn-default"
+        - unless user_signed_in?
+          .row
+            .col-xs-12
+              .pull-right
+                .form-group
+                  = link_to "Sign in", new_user_session_path, class: "btn btn-default"
 
       .jumbotron.text-center
         .container
