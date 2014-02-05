@@ -1,6 +1,5 @@
 class RsvpController < ApplicationController
   include Wicked::Wizard
-  layout "wedding_page"
   steps :guest_info, :events, :confirmation
 
   def show
