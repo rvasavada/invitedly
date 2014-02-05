@@ -21,7 +21,9 @@
           .row
             .col-xs-12
               = yield
-        #footer
-          #legal Invitedly &copy; 2014.  All Rights Reserved.
+        %footer.text-center{style: "margin-top:30px;margin-bottom:30px;"}
+          %small.text-muted
+            %strong Invitedly 
+            &copy; 2014.  All Rights Reserved.
 
       = javascript_include_tag "application"      
