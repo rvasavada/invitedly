@@ -2,6 +2,7 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   
   before_filter :authenticate_user!
+  before_filter :verify_event_ownership
   
   def index
     @occasion = Occasion.friendly.find(params[:occasion_id])
@@ -115,6 +116,12 @@ class EventsController < ApplicationController
   end
 
   private
+    def verify_event_ownership
+      @occasion = Occasion.friendly.find(params[:occasion_id])
+      unless current_user.id == @occasion.user_id
+        redirect_to root_url, alert: "Sorry, you're not allowed to see that page!"
+      end
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_event
       @event = Event.friendly.find(params[:id])
