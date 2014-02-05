@@ -58,16 +58,34 @@
                   %li= link_to "Sign up", new_user_registration_path   
 
         
+        .row
+          .col-xs-12
+            .pull-right
+              .form-group
+                = link_to "Sign in", new_user_session_path, class: "btn btn-default"
 
-        .jumbotron.text-center
-          %h1 Welcome to Invitedly!
-          %p  Looking for an RSVP service for multi-event weddings? Look no further.
-          .row
-            .col-md-6.col-md-offset-3
+      .jumbotron.text-center
+        .container
+          %h1 Invitedly
+          %p
+            Let us manage your guestlist.
+          = link_to "Sign up now", new_user_registration_path, class: "btn btn-lg btn-primary"
+          %br
+          %small Free for a limited time.
+      .container
+        .row
+          .col-sm-4
+            %h2 Custom RSVP page
+            %p You will have your own unique wedding page where guests can RSVP using email or the first and last name.
+          .col-sm-4
+            %h2 Unlimited events and guests
+            %p No size restrictions!  Invite however many people you want to however many events you want.  And you only need to create a single invitation.
+          .col-sm-4
+            %h2 One invitation per person or family
+            %p Allow guests to RSVP on behalf of their family.
+        %footer.text-center{style: "margin-top:30px;margin-bottom:30px;"}
+          %small.text-muted
+            %strong Invitedly 
+            &copy; 2014.  All Rights Reserved.
             
-              = link_to "Sign up now", new_user_registration_path, class: "btn btn-block btn-lg btn-success"
-              = link_to new_user_session_path, class: "btn btn-default btn-block" do
-                Have an account? 
-                %strong Sign in.
-
-      = javascript_include_tag "application"
+    = javascript_include_tag "application"
