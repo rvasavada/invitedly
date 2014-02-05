@@ -1,29 +1,31 @@
 .row
   .col-xs-offset-3.col-xs-6
-    %h1 Sign into your account
+    %h1.text-center
+      Invitedly
+      %br
+      %small Let us manage your guestlist.
+     
     = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-      .panel.panel-default 
-        .panel-body
+      .well
+        %legend Sign into your account
+        %formset
           .form-group
             = f.label :email, "Email", class: "control-label"
             = f.text_field :email, :autofocus => true, class: "form-control"
-          
           .form-group
             = f.label :password, "Password", class: "control-label"
-            = f.password_field :password, class: "form-control"
-  
+            = f.password_field :password, class: "form-control" 
           .form-group
+            .pull-right= link_to "Forgot password?", new_password_path(resource_name)
             .checkbox
               = f.check_box :remember_me, :checked => true
               = f.label :remember_me, "Remember me"
-              
+            
+                
           
-          = f.submit "Sign in", :class=> "btn btn-success btn-lg btn-block"
-      .row
-        .col-xs-8
-          = link_to new_registration_path(resource_name), :class=> "btn btn-default btn-block" do
-            Don't have an account?
-            %strong Sign up
-        .col-xs-4
-          = link_to new_password_path(resource_name), :class=> "btn btn-link" do
-            Forgot password?
+          = f.submit "Sign in", :class=> "btn btn-success btn-block"
+
+    = link_to new_registration_path(resource_name), :class=> "btn btn-default btn-block" do
+      Don't have an account?
+      %strong Sign up
+        

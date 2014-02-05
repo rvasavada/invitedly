@@ -1,9 +1,13 @@
 .row
   .col-xs-offset-3.col-xs-6
-    %h1 Create a new account
+    %h1.text-center
+      Invitedly
+      %br
+      %small Let us manage your guestlist.
     = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
-      .panel.panel-default
-        .panel-body
+      .well
+        %legend Create a new account
+        %formset
           .form-group{class: resource.errors.include?(:email) ? 'has-error' : ''}
             = f.label :email, class: "control-label" do
               Email
@@ -26,5 +30,5 @@
             %span.help-block= resource.errors.get(:password_confirmation).join('; ')
               
 
-          = f.submit "Sign up", :class=> "btn btn-success btn-block btn-lg"
+          = f.submit "Sign up", :class=> "btn btn-success btn-block"
       = link_to "Already have an account? <strong>Sign in</strong>.".html_safe, new_session_path(resource_name), :class=> "btn btn-default btn-block"
