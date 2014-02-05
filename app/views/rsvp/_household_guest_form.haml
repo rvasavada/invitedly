@@ -19,7 +19,7 @@
     .form-group{class: @household.errors.include?(:email) ? 'has-error' : ''}
       = f.label :email, class: "control-label" do
         Email
-      = f.text_field :email, :maxlength => 50, class: "form-control input-sm"
+      = f.text_field :email, :maxlength => 50, class: "form-control"
       %span.help-block= @household.errors.get(:email).join('; ')
   
   .form-group.pull-right
