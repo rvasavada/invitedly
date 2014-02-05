@@ -1,71 +1,73 @@
-- if user_signed_in? 
-  %nav.navbar.navbar-default{role: "navigation"}
-    / Brand and toggle get grouped for better mobile display
-    .navbar-header
-      %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", type: "button"}
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      %a.navbar-brand{href: "#"} Invitedly
-    / Collect the nav links, forms, and other content for toggling
-    #bs-example-navbar-collapse-1.collapse.navbar-collapse
-      %ul.nav.navbar-nav
-        - if user_signed_in? 
-          - if current_user.occasion
-            %li= link_to "Events", occasion_events_path(current_user.occasion)
-            %li= link_to "Invitations", occasion_invitations_path(current_user.occasion)
+.container
+  - if user_signed_in? 
+    %nav.navbar.navbar-default{role: "navigation"}
+      / Brand and toggle get grouped for better mobile display
+      .navbar-header
+        %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", type: "button"}
+          %span.sr-only Toggle navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        %a.navbar-brand{href: "#"} Invitedly
+      / Collect the nav links, forms, and other content for toggling
+      #bs-example-navbar-collapse-1.collapse.navbar-collapse
+        %ul.nav.navbar-nav
+          - if user_signed_in? 
+            - if current_user.occasion
+              %li= link_to "Events", occasion_events_path(current_user.occasion)
+              %li= link_to "Invitations", occasion_invitations_path(current_user.occasion)
   
 
-      %ul.nav.navbar-nav.navbar-right
-        - if user_signed_in? 
-          - if current_user.occasion
-            %li.active.dropdown
-              %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
-                =current_user.occasion.name
+        %ul.nav.navbar-nav.navbar-right
+          - if user_signed_in? 
+            - if current_user.occasion
+              %li.active.dropdown
+                %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+                  =current_user.occasion.name
   
-                %b.caret
-              %ul.dropdown-menu
-                %li= link_to "Edit Wedding Details", edit_occasion_path(current_user.occasion)
-                %li= link_to "Preview Wedding Page", occasion_path(current_user.occasion, :preview => "true")
-          - else
-            = link_to "New Wedding", new_occasion_path
-        - if user_signed_in? 
-          %li= link_to "Settings", edit_user_registration_path
-          %li= link_to "Sign out", destroy_user_session_path, method: :delete 
+                  %b.caret
+                %ul.dropdown-menu
+                  %li= link_to "Edit Wedding Details", edit_occasion_path(current_user.occasion)
+                  %li= link_to "Preview Wedding Page", occasion_path(current_user.occasion, :preview => "true")
+            - else
+              = link_to "New Wedding", new_occasion_path
+          - if user_signed_in? 
+            %li= link_to "Settings", edit_user_registration_path
+            %li= link_to "Sign out", destroy_user_session_path, method: :delete 
 
 .jumbotron
-  %h1=@occasion.name
-  %p#description=@occasion.description
-  %br
-  = form_tag occasion_rsvp_verify_first_last_name_path(@occasion, :preview => "true") do
-    .row
-      .col-md-6
-        %p.lead Enter your first or last name to begin!
-        .form-group
-          = text_field_tag :first_name,params[:first_name], :placeholder => "First Name", class: "form-control input-lg"
-        .form-group
-          = text_field_tag :last_name,params[:last_name], :placeholder => "Last Name", class: "form-control input-lg"
-      
-        =submit_tag "Search", class: "btn btn-success btn-lg", role: "button"
-        -#.input-group
-          = text_field_tag :email,nil, :placeholder => "Email Address", class: "form-control input-lg"
-          %span.input-group-btn
-            =submit_tag "RSVP", class: "btn btn-success btn-lg", role: "button"
-      -unless @guests.blank?
+  .container
+    %h1=@occasion.name
+    %p#description=@occasion.description
+    %br
+    = form_tag occasion_rsvp_verify_first_last_name_path(@occasion, :preview => "true") do
+      .row
         .col-md-6
-          Guests matching 
-          %strong="#{params[:first_name]} #{params[:last_name]}"
-          %table.table
-            %thead
-              %tr
-                %th Guest name
-                %th RSVP
-            %tbody
-              -@guests.each do |guest|
+          %p.lead Enter your first or last name to begin!
+          .form-group
+            = text_field_tag :first_name,params[:first_name], :placeholder => "First Name", class: "form-control input-lg"
+          .form-group
+            = text_field_tag :last_name,params[:last_name], :placeholder => "Last Name", class: "form-control input-lg"
+      
+          =submit_tag "Search", class: "btn btn-success btn-lg", role: "button"
+          -#.input-group
+            = text_field_tag :email,nil, :placeholder => "Email Address", class: "form-control input-lg"
+            %span.input-group-btn
+              =submit_tag "RSVP", class: "btn btn-success btn-lg", role: "button"
+        -unless @guests.blank?
+          .col-md-6
+            Guests matching 
+            %strong="#{params[:first_name]} #{params[:last_name]}"
+            %table.table
+              %thead
                 %tr
-                  %td=guest.full_name
-                  - if guest.household.blank?
-                    %td=link_to "RSVP", occasion_invitation_rsvp_path(@occasion, guest.invitation, :guest_info), class: "btn btn-success"
-                  - else 
-                    %td=link_to "RSVP", occasion_invitation_rsvp_path(@occasion, guest.household.invitation, :guest_info), class: "btn btn-success"
+                  %th Guest name
+                  %th RSVP
+              %tbody
+                -@guests.each do |guest|
+                  %tr
+                    %td=guest.full_name
+                    - if guest.household.blank?
+                      %td=link_to "RSVP", occasion_invitation_rsvp_path(@occasion, guest.invitation, :guest_info), class: "btn btn-success"
+                    - else 
+                      %td=link_to "RSVP", occasion_invitation_rsvp_path(@occasion, guest.household.invitation, :guest_info), class: "btn btn-success"

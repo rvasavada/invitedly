@@ -8,10 +8,19 @@
 .signout-link {cursor:pointer; display:block; float:left; line-height:27px; padding-right:5px; }
 .signout-link:hover { text-decoration:underline; }
 
-body {background: url(lightpaperfibers.png) repeat;}
+body {background: url(blu_stripes.png) repeat;}
 .jumbotron {
   border-top:1px solid rgba(0,0,0,.3);
-  box-shadow: 0 -3px 4px rgba(0,0,0,.1);-moz-box-shadow: 0 3px 4px rgba(0,0,0,.1);-webkit-box-shadow: 0 3px 4px rgba(0,0,0,.1);
+  box-shadow: 0 3px 4px rgba(0,0,0,.1);-moz-box-shadow: 0 3px 4px rgba(0,0,0,.1);-webkit-box-shadow: 0 3px 4px rgba(0,0,0,.1);
+  border-radius:0px;
   border-bottom:1px solid rgba(0,0,0,.3);
-  background: url(blu_stripes.png) repeat;
+  background-color: #fff;
+}
+
+.well {
+  background-color:#fff;
+}
+
+small {
+  color: #A0A0A0;
 }
