@@ -8,13 +8,13 @@
       .row
         .col-xs-3
           .form-group
-            = guest.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control"})
+            = guest.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control", style: "font-weight:bold;"})
         .col-xs-4
           .form-group
-            = guest.text_field :first_name, :autofocus => true, :maxlength => 50, class: "form-control", :placeholder => "First name"
+            = guest.text_field :first_name, :maxlength => 50, class: "form-control", :placeholder => "First name", style: "font-weight:bold;"
         .col-xs-5
           .form-group
-            = guest.text_field :last_name, :autofocus => true, :maxlength => 50, class: "form-control", :placeholder => "Last name"
+            = guest.text_field :last_name, :maxlength => 50, class: "form-control", :placeholder => "Last name", style: "font-weight:bold;"
     
     .form-group{class: @household.errors.include?(:email) ? 'has-error' : ''}
       = f.label :email, class: "control-label" do

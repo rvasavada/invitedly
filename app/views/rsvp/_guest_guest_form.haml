@@ -20,7 +20,7 @@
           .form-group{class: @guest.errors.include?(:last_name) ? 'has-error' : ''}
             = f.label :last_name, class: "control-label" do
               Last Name
-            = f.text_field :last_name, :autofocus => true, :maxlength => 50, class: "form-control", style: "font-weight:bold;"
+            = f.text_field :last_name, :maxlength => 50, class: "form-control", style: "font-weight:bold;"
             %span.help-block= @guest.errors.get(:last_name).join('; ')
 
     .form-group{class: @guest.errors.include?(:email) ? 'has-error' : ''}
