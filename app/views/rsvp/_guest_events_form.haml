@@ -1,8 +1,9 @@
 = form_for [@occasion,@guest], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
   .well
     %legend
-      Event Invitations
-      %small (Select the events that you will be able to attend.)
+      =@guest.full_name
+      %small
+        (Select the events that you will be able to attend.)
       
 
     %fieldset
