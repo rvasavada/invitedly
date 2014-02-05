@@ -38,14 +38,4 @@
 
 
 %h1 Edit Event
-
-.row
-  .col-xs-6
-    = render 'form'
-
-%hr
-%fieldset
-  %h4 Delete Event
-  %p 
-    Don't need this event?  Go ahead and
-    = link_to "delete it.", [@occasion,@event], method: :delete
+= render 'form'

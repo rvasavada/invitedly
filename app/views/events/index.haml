@@ -47,7 +47,7 @@
         %h4
           .pull-right
             = link_to "Edit", edit_occasion_event_path(@occasion,event), class: "btn btn-default btn-sm"
-            = link_to "Trash", [@occasion,@event], method: :delete, data: {confirm: "Are you sure you want to delete this event?"}, class: "btn btn-default btn-sm"
+            = link_to "Trash", occasion_event_path(@occasion,event), method: :delete, data: {confirm: "Are you sure you want to delete this event?"}, class: "btn btn-default btn-sm"
           =event.name
         %p=event.description
         %small.text-muted
