@@ -1,84 +1,29 @@
-!!!
-%html{lang: "en"}
-  %head
-    %title= "Invitedly"
-    = stylesheet_link_tag "application", media: "all"
-    = analytics_init if Rails.env.production?
-    
-    = csrf_meta_tags
-    =favicon_link_tag "/assets/favicon.ico"
-    %body#wedding{style:"padding-top: 20px;"}
-      .container      
-        - if user_signed_in? 
+.container  
+  - unless user_signed_in?
+    .row
+      .col-xs-12
+        .pull-right
+          .form-group
+            = link_to "Sign in", new_user_session_path, class: "btn btn-default"
+
+.jumbotron.text-center
+  .container
+    %h1 Invitedly
+    %p
+      Let us manage your guestlist.
+    = link_to "Sign up now", new_user_registration_path, class: "btn btn-lg btn-primary"
+    %br
+    %small Free for a limited time.
+.container
+  .row
+    .col-sm-4
+      %h2 Custom RSVP page
+      %p You will have your own unique wedding page where guests can RSVP using email or the first and last name.
+    .col-sm-4
+      %h2 Unlimited events and guests
+      %p No size restrictions!  Invite however many people you want to however many events you want.  And you only need to create a single invitation.
+    .col-sm-4
+      %h2 One invitation per person or family
+      %p Allow guests to RSVP on behalf of their family.
         
-          %nav.navbar.navbar-default{role: "navigation"}
-            / Brand and toggle get grouped for better mobile display
-            .navbar-header
-              %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", type: "button"}
-                %span.sr-only Toggle navigation
-                %span.icon-bar
-                %span.icon-bar
-                %span.icon-bar
-              %a.navbar-brand{href: "#"} Invitedly
-            / Collect the nav links, forms, and other content for toggling
-            #bs-example-navbar-collapse-1.collapse.navbar-collapse
-              %ul.nav.navbar-nav
-                - if user_signed_in? 
-                  - if current_user.occasion
-                    %li.active= link_to "Events", occasion_events_path(current_user.occasion)
-                    %li= link_to "Invitations", occasion_invitations_path(current_user.occasion)
-  
-
-              %ul.nav.navbar-nav.navbar-right
-                - if user_signed_in? 
-                  - if current_user.occasion
-                    %li.dropdown
-                      %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
-                        =current_user.occasion.name
-  
-                        %b.caret
-                      %ul.dropdown-menu
-                        %li= link_to "Edit Wedding Details", edit_occasion_path(current_user.occasion)
-                        %li= link_to "Preview Wedding Page", occasion_path(current_user.occasion, :preview => "true")
-                  - else
-                    %li= link_to "New Wedding", new_occasion_path
-                - if user_signed_in? 
-                  %li= link_to "Settings", edit_user_registration_path
-                  %li= link_to "Sign out", destroy_user_session_path, method: :delete
-                -else
-                  %li= link_to "Sign in", new_user_session_path
-                  %li= link_to "Sign up", new_user_registration_path   
-
-        
-        - unless user_signed_in?
-          .row
-            .col-xs-12
-              .pull-right
-                .form-group
-                  = link_to "Sign in", new_user_session_path, class: "btn btn-default"
-
-      .jumbotron.text-center
-        .container
-          %h1 Invitedly
-          %p
-            Let us manage your guestlist.
-          = link_to "Sign up now", new_user_registration_path, class: "btn btn-lg btn-primary"
-          %br
-          %small Free for a limited time.
-      .container
-        .row
-          .col-sm-4
-            %h2 Custom RSVP page
-            %p You will have your own unique wedding page where guests can RSVP using email or the first and last name.
-          .col-sm-4
-            %h2 Unlimited events and guests
-            %p No size restrictions!  Invite however many people you want to however many events you want.  And you only need to create a single invitation.
-          .col-sm-4
-            %h2 One invitation per person or family
-            %p Allow guests to RSVP on behalf of their family.
-        %footer.text-center{style: "margin-top:30px;margin-bottom:30px;"}
-          %small.text-muted
-            %strong Invitedly 
-            &copy; 2014.  All Rights Reserved.
-            
-    = javascript_include_tag "application"
+= javascript_include_tag "application"
