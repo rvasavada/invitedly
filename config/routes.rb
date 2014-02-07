@@ -1,17 +1,11 @@
 Invitedly::Application.routes.draw do
 
-  get "families/new"
-  get "families/edit"
   #get 'about' => 'static#about'
   #get 'terms' => 'static#terms'
   #get 'privacy' => 'static#privacy'
   #get 'address_book' => 'guests#index'  
 
-  /
-  resources :guests, :except => [:index,:show] do
-   get :get_facebook_guests, :on => :collection
-  end
-  /
+
   
   devise_for :users, :controllers => { :registrations => "users/registrations",
     :omniauth_callbacks => "users/omniauth_callbacks",
@@ -30,13 +24,12 @@ Invitedly::Application.routes.draw do
     resources :invitations, :except => [:new, :edit, :show] do
       resources :rsvp
     end
+    
     resources :events, :except => [:show]
   end
 
      
   root 'static#home'
-
-
   
   
   # The priority is based upon order of creation: first created -> highest priority.

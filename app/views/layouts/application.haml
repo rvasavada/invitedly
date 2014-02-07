@@ -25,7 +25,10 @@
                 %span.icon-bar
                 %span.icon-bar
                 %span.icon-bar
-              %a.navbar-brand{href: "#"} Invitedly
+              - if user_signed_in?
+                = link_to "Invitedly", occasion_invitations_path(current_user.occasion), class: "navbar-brand"
+              - else
+                = link_to "Invitedly", root_url, class: "navbar-brand"
             / Collect the nav links, forms, and other content for toggling
             #bs-example-navbar-collapse-1.collapse.navbar-collapse
               %ul.nav.navbar-nav
