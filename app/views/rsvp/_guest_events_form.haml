@@ -1,26 +1,24 @@
 = form_for [@occasion,@guest], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
-  .well
-    %legend
-      =@guest.full_name
-      %small
-        (Select the events that you will be able to attend.)
-      
+  .panel.panel-default
+    .panel-body
+      %h3
+        =@guest.full_name
+        %small
+          (Select the events that you will be able to attend.)
+    %table.table
+      %thead
+        %tr
+          %th{style:"width:70%"} Events
+          %th{style:"width:30%"} Response
+      %tbody
 
-    %fieldset
-      %table.table
-        %thead
-          %tr
-            %th{style:"width:70%"} Event name
-            %th{style:"width:30%"} Response & Special notes
-        %tbody
-  
-          = f.fields_for :rsvps do |rsvp|
-            %tr{style: rsvp.object.visibility ? "" : "display:none;"}
-              %td
-                = rsvp.hidden_field(:event_id)
-                - event = Event.find(rsvp.object.event_id)
-                %strong=event.name
-                %p=event.description
+        = f.fields_for :rsvps do |rsvp|
+          %tr{style: rsvp.object.visibility ? "" : "display:none;"}
+            %td
+              = rsvp.hidden_field(:event_id)
+              - event = Event.find(rsvp.object.event_id)
+              %strong=event.name
+              %p
                 %small.text-muted
                   = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
                   %br
@@ -29,23 +27,17 @@
                     = "| #{event.address}"
                   - else
                     = event.location
-              %td
-                .form-group
-                  .radio
-                    %label
-                      = rsvp.radio_button :response, "Attending"
-                      Attending
-                  .radio
-                    %label
-                      = rsvp.radio_button :response, "Might Attend"
-                      Might Attend
-                  .radio
-                    %label
-                      = rsvp.radio_button :response, "Not Attending"
-                      Not Attending
+              %p=event.description
+
+            %td
+              .form-group                
+                %label.radio-inline
+                  = rsvp.radio_button :response, "Attending"
+                  Attending           
+                %label.radio-inline
+                  = rsvp.radio_button :response, "Not Attending"
+                  Not Attending
                     
-                .form-group
-                  = rsvp.text_area :message, :rows => 2, class: "form-control input-sm", :placeholder => "Add any allergies, music preference, etc."
   .form-group.pull-right
     = f.submit "Save & Finish", :class => "btn btn-success btn-lg"
   .form-group

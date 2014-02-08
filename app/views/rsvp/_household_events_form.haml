@@ -1,48 +1,36 @@
-= form_for [@occasion,@household], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
-
-  =f.fields_for :guests do |guest|
-    .well
-      %legend=Guest.find(guest.object.id).full_name
-      %fieldset
-        %table.table
-          %thead
-            %tr
-              %th{style:"width:70%"} Event name
-              %th{style:"width:30%"} Response & Special notes
-          %tbody
-      
-            = guest.fields_for :rsvps do |rsvp|
-              %tr{style: rsvp.object.visibility ? "" : "display:none;"}
-                %td
-                  = rsvp.hidden_field(:event_id)
-                  - event = Event.find(rsvp.object.event_id)
-                  %strong=event.name
-                  %p=event.description
-                  %small.text-muted
-                    = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
-                    %br
-                    - unless event.address_1.blank?
-                      = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
-                      = "| #{event.address}"
-                    - else
-                      = event.location
-                %td
-                  .form-group
-                    .radio
-                      %label
-                        = rsvp.radio_button :response, "Attending"
-                        Attending
-                    .radio
-                      %label
-                        = rsvp.radio_button :response, "Might Attend"
-                        Might Attend
-                    .radio
-                      %label
-                        = rsvp.radio_button :response, "Not Attending"
-                        Not Attending
+= form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
+  .panel.panel-default
+    .panel-body
+      %h3 Now, select the events that you will be able to attend.
+    %ul.list-group.text-center
+      - @invitation.events.uniq.each do |event|
+        %li.list-group-item
+          %h4
+            =event.name
+            %small
+              %br
+                = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
+                %br
+                - unless event.address_1.blank?
+                  = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
+                  = "| #{event.address}"
+                - else
+                  = event.location
+          %p=event.description
+          
+          = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id) do |rsvp|
+            .row{style: rsvp.object.visibility ? "" : "display:none;"}
+              .col-sm-6
+                %strong= rsvp.object.guest.full_name
+              .col-sm-6
+                .form-group
+                  %label.radio-inline
+                    = rsvp.radio_button :response, "Attending"
+                    Attending
+                  %label.radio-inline
+                    = rsvp.radio_button :response, "Not Attending"
+                    Not Attending
                         
-                  .form-group
-                    = rsvp.text_area :message, :rows => 2, class: "form-control input-sm", :placeholder => "Add any allergies, music preference, etc."
   .form-group.pull-right
     = f.submit "Save & Finish", :class => "btn btn-success btn-lg"
   .form-group

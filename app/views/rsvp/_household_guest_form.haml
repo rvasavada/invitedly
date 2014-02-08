@@ -1,9 +1,7 @@
 = form_for [@occasion,@household], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
   .well
-    %legend
-      Contact Information
-      %small (We want to make sure we have the right names and contact information for you)
-
+    %h3 First, let's make sure we have the right name and contact information for you.
+    
     = f.fields_for :guests do |guest|
       .row
         .col-sm-3
