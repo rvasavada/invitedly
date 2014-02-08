@@ -9,10 +9,10 @@
             = guest.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control"})
         .col-sm-4
           .form-group
-            = guest.text_field :first_name, :maxlength => 50, class: "form-control", :placeholder => "First name", style: "font-weight:bold;"
+            = guest.text_field :first_name, :maxlength => 50, class: "form-control", :placeholder => "First name"
         .col-sm-5
           .form-group
-            = guest.text_field :last_name, :maxlength => 50, class: "form-control", :placeholder => "Last name", style: "font-weight:bold;"
+            = guest.text_field :last_name, :maxlength => 50, class: "form-control", :placeholder => "Last name"
     
     .form-group{class: @household.errors.include?(:email) ? 'has-error' : ''}
       = f.label :email, class: "control-label" do

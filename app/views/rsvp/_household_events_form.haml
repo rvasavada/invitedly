@@ -6,7 +6,7 @@
       - @invitation.events.uniq.each do |event|
         %li.list-group-item
           %h4
-            =event.name
+            %strong=event.name
             %small
               %br
                 = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
@@ -18,18 +18,25 @@
                   = event.location
           %p=event.description
           
-          = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id) do |rsvp|
-            .row{style: rsvp.object.visibility ? "" : "display:none;"}
-              .col-sm-6
-                %strong= rsvp.object.guest.full_name
-              .col-sm-6
-                .form-group
-                  %label.radio-inline
-                    = rsvp.radio_button :response, "Attending"
-                    Attending
-                  %label.radio-inline
-                    = rsvp.radio_button :response, "Not Attending"
-                    Not Attending
+          .row
+            .col-sm-6.col-sm-offset-3
+              %table.table
+                %thead
+                  %tr
+                    %th{style:"width:50%"} Guest name
+                    %th{style:"width:50%"} Response
+                %tbody
+                  = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id) do |rsvp|
+                    %tr{style: rsvp.object.visibility ? "" : "display:none;"}
+                      %td.text-left
+                        = rsvp.object.guest.full_name
+                      %td
+                        %label.radio-inline
+                          = rsvp.radio_button :response, "Attending"
+                          Attending           
+                        %label.radio-inline
+                          = rsvp.radio_button :response, "Not Attending"
+                          Not Attending
                         
   .form-group.pull-right
     = f.submit "Save & Finish", :class => "btn btn-success btn-lg"
