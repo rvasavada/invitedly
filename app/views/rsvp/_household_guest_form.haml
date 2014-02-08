@@ -2,7 +2,7 @@
   .well
     %h2 First, let's make sure we have the right names and contact information for you.
     
-    = f.fields_for :household, @invitation.invitable do |household|
+    = f.fields_for :invitable, @invitation.invitable do |household|
       .form-group
         = household.label :guests
         = household.fields_for :guests do |guest|

@@ -3,6 +3,8 @@ class Invitation < ActiveRecord::Base
   friendly_id :occasion_id, use: :slugged
   
   belongs_to :invitable, polymorphic: true
+  accepts_nested_attributes_for :invitable, :allow_destroy => true
+  
   belongs_to :occasion
   
   validates_presence_of :occasion_id

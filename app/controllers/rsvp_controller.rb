@@ -1,22 +1,17 @@
 class RsvpController < ApplicationController
   include Wicked::Wizard
-  steps :guest_info, :events, :confirmation
+  steps :guest_info, :events, :guestbook, :confirmation
 
   def show
     @occasion = Occasion.friendly.find(params[:occasion_id])
     @invitation = Invitation.friendly.find(params[:invitation_id])
-    
-    if @invitation.invitable_type == "Household"
-      @household = Household.find(@invitation.invitable_id)
-    else
-      @guest = Guest.find(@invitation.invitable_id)
-    end
     
     case step
     when :guest_info
       @title = Title.all
     when :events
       @response = ResponseType.all
+    when :guestbook
     when :confirmation
     end
     render_wizard
@@ -32,6 +27,8 @@ class RsvpController < ApplicationController
     when :events
       @invitation.update(invitation_params)
       @response = ResponseType.all
+    when :guestbook
+      @invitation.update(invitation_params)
     when :confirmation
     end
     
@@ -77,6 +74,9 @@ class RsvpController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through
     def invitation_params
-      params.require(:invitation).permit(rsvps_attributes: [:id, :response])
+      params.require(:invitation).permit(:message, 
+        rsvps_attributes: [:id, :response], 
+        invitable_attributes: [:id, :title, :first_name, :last_name, :email, 
+          guests_attributes: [:id, :title, :first_name, :last_name]])
     end
 end

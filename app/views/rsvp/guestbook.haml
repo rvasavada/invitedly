@@ -1,0 +1,21 @@
+.container
+  .well.well-sm
+    %ul.list-inline
+      %li= link_to "Guest Information", occasion_invitation_rsvp_path(@occasion, @invitation,:guest_info), style: "color: #b4bcc2;"
+      %li= link_to "Events", occasion_invitation_rsvp_path(@occasion, @invitation,:events), style: "color: #b4bcc2;"
+      %li= link_to "Guestbook", occasion_invitation_rsvp_path(@occasion, @invitation,:guestbook), style: "font-weight: bold;"
+      %li= link_to "Confirmation", occasion_invitation_rsvp_path(@occasion, @invitation,:confirmation), style: "color: #b4bcc2;"
+
+  %h1 Guestbook
+
+  = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
+    .well
+      %h2 Sign our guestbook or leave us a message, if you want.
+    
+      = f.label :message, class: "control-label"
+      = f.text_area :message, :rows => 7, class: "form-control"
+
+    .form-group.pull-right
+      = f.submit "Save & Finish", :class => "btn btn-success btn-lg"
+    .form-group
+      = link_to 'Previous', previous_wizard_path, :class=> "btn btn-default btn-lg"

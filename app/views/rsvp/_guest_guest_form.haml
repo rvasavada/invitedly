@@ -1,9 +1,9 @@
 = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
   .well
-    %h2 First, let's make sure we have the right name and contact information for you.
+    %h2 First, check your name and contact information.
     
-    = f.label :guest, "Guest name", class: "control-label"
-    = f.fields_for :guest, @invitation.invitable do |guest|
+    = f.label :invitable, "Guest name", class: "control-label"
+    = f.fields_for :invitable, @invitation.invitable do |guest|
       .row
         .form-group.col-sm-3.col-lg-1
           = guest.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control"})
