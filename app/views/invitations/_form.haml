@@ -14,7 +14,7 @@
           
             .form-group
               = household.label :guests, "Guest names"
-              %span.help-block= "You can add unlimited guests.  If you don't know a guests name or want to allow a guest to bring a +1, just leave first and last name blank."
+              %span.help-block= "You can add unlimited guests.  Leave blank rows for every guest that you don't know the name of or for +1s."
               #guests
                 = household.fields_for :guests, @household.guests do |guest|
                   = render 'guest_fields', :f => guest

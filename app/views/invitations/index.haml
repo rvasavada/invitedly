@@ -30,7 +30,7 @@
             %span.text-muted="#{invitation.household.notes}"
 
   -else
-    .well.text-center
+    .well.text-center{style: "background-color:#fff;"}
       %h3 You have not invited any guests.
       %button.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"} Invite guests now!
 
@@ -51,34 +51,25 @@
               %p.text-muted
                 You can also import a CSV file of your guests by following this
                 =link_to "example template.", "https://docs.google.com/a/vasavada.us/spreadsheet/ccc?key=0Ar12fAF1l7BJdGZfRUdZMy1NaDhGNER6SU9TX1h2UlE#gid=0"
-              %ul
-                %li
-                  %strong Household Name
-                  If this is a household, enter in a household name else leave blank.  All guests under a household will be grouped together. (optional)
-                %li
-                  %strong Household Email
-                  If this is a household, enter in a household email else leave blank. (optional)
-                %li
-                  %strong Household Notes
-                  If this is a household, enter any notes about the guest.  These notes are for your eyes only. (optional)
-                %li
-                  %strong Title
-                  This can be either Dr., Mr., Mrs., and Ms. If you don't know the guests name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
-                %li
-                  %strong First Name
-                  This is the guests first name. If you don't know the guests name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
-                %li
-                  %strong Last Name
-                  This is the guests last name. If you don't know the guests name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
-                %li
-                  %strong Email
-                  If this is a single guest, add an email address.  Note that if this guest is under a household, email should be added to Household Email.
-                %li
-                  %strong Notes
-                  If this is a single guest, eter any notes about the guest.  Note that if this guest is under a household, notes should be added to Household Notes.
-                %li
-                  %strong Events
-                  For every event that has been created, add an additional column with the Event name in the header and "Not Responded" to the events that the guest is invited to.  Leave the others blank.
+              %dl
+                %dt Family Name (optional)
+                %dd If this is a family, add a family name else leave blank.  All guests under the same family name will be grouped together.
+                %dt Email (optional)
+                %dd Add email else leave blank.
+                
+                %dt Notes (optional)
+                %dd Add any notes.  These notes will be kept private.
+                %dt Title
+                %dd This can be either Dr., Mr., Mrs., and Ms. If you don't know the guests name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
+                %dt First Name
+                %dd This is the guests first name. If you don't know the guests name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
+                %dt Last Name
+                %dd This is the guests last name. If you don't know the guests name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
+                %dt Events
+                %dd
+                  For every event that has been created, add an additional column with the
+                  %strong exact
+                  event name in the header and "Y" to the events to which the guest is invited, else leave the fields blank.
               .well.form-group
                 = submit_tag "Import guests", :class => "btn btn-success btn-sm pull-right"
                 = file_field_tag :file              
