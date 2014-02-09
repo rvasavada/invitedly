@@ -78,5 +78,5 @@
                     - if rsvp.guest.first_name != "" && rsvp.guest.last_name != ""
                       %tr
                         %td= rsvp.guest.full_name
-                        %td= rsvp.response
+                        %td{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}=rsvp.response
   %button.hidden-print{id:"print", onclick:"javascript:print()", value:"Print", class: "btn btn-primary btn-lg btn-block"} Print this page
