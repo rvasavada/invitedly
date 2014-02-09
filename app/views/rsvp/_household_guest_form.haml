@@ -6,18 +6,18 @@
       %li.list-group-item
         = f.fields_for :household, @invitation.household do |household|
           .form-group
-            = household.label :guests
+            = household.label :guests, "Guest names"
             = household.fields_for :guests do |guest|
               .row
-                .form-group.col-sm-3.col-lg-1
+                .form-group.col-sm-3.col-lg-2
                   = guest.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control"})
-                .form-group.col-sm-4.col-lg-2
+                .form-group.col-sm-4.col-lg-3
                   = guest.text_field :first_name, :maxlength => 50, class: "form-control", :placeholder => "First name"
-                .form-group.col-sm-5.col-lg-3
+                .form-group.col-sm-5.col-lg-4
                   = guest.text_field :last_name, :maxlength => 50, class: "form-control", :placeholder => "Last name"
-            %span.help-block If title, first, and last names are left blank, then we assume you are not inviting another guest.
+            %span.help-block Please fill out the names of all guests that are attending.
           .row
-            .col-lg-6
+            .col-lg-9
               .form-group
                 = household.label :email, class: "control-label"
                 = household.text_field :email, :maxlength => 50, class: "form-control"

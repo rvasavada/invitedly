@@ -1,26 +1,27 @@
 = form_for @occasion, :html => { :role => "form"} do |f|
-  .well
-    %legend
-      Wedding Details
-      %small (Give us the title and a brief description about the wedding.)
-    %fieldset
-      .form-group{class: @occasion.errors.include?(:name) ? 'has-error' : ''}
-        = f.text_field :name, :autofocus => true, class: "form-control input-lg", :placeholder => "Title (e.g. John and Mary's Wedding!)", style: "font-weight:bold;"
-        %small This will publicly be displayed on your RSVP site.
-        %span.help-block= @occasion.errors.get(:name).join('; ')
+  .panel.panel-default
+    .panel-body
+      %legend
+        Wedding Details
+        %small (Give us the title and a brief description about the wedding.)
+      %fieldset
+        .form-group{class: @occasion.errors.include?(:name) ? 'has-error' : ''}
+          = f.text_field :name, :autofocus => true, class: "form-control input-lg", :placeholder => "Title (e.g. John and Mary's Wedding!)", style: "font-weight:bold;"
+          %small This will publicly be displayed on your RSVP site.
+          %span.help-block= @occasion.errors.get(:name).join('; ')
 
-      .form-group{class: @occasion.errors.include?(:description) ? 'has-error' : ''}
-        = f.text_area :description, :rows => 5, :class => "form-control", :placeholder => "Description"
-        %small This will publicly be displayed on your RSVP site.
-        %span.help-block= @occasion.errors.get(:description).join('; ')
+        .form-group{class: @occasion.errors.include?(:description) ? 'has-error' : ''}
+          = f.text_area :description, :rows => 5, :class => "form-control", :placeholder => "Description"
+          %small This will publicly be displayed on your RSVP site.
+          %span.help-block= @occasion.errors.get(:description).join('; ')
 
-      .form-group{class: @occasion.errors.include?(:slug) ? 'has-error' : ''}
-        .input-group
-          %span.input-group-addon http://www.invitely.com/
-          = f.text_field :slug, :placeholder => "(e.g. johnandmary)", :maxlength => 20, class: "form-control"      
-        %small For your unique wedding rsvp page!
-        %span.help-block
-          = @occasion.errors.get(:slug).join('; ')
+        .form-group{class: @occasion.errors.include?(:slug) ? 'has-error' : ''}
+          .input-group
+            %span.input-group-addon http://www.invitely.com/
+            = f.text_field :slug, :placeholder => "(e.g. johnandmary)", :maxlength => 20, class: "form-control"      
+          %small For your unique wedding rsvp page!
+          %span.help-block
+            = @occasion.errors.get(:slug).join('; ')
 
 
   = f.submit "Save Wedding Details", :class => "btn btn-success btn-lg pull-right"

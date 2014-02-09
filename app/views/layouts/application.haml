@@ -48,7 +48,7 @@
                         %b.caret
                       %ul.dropdown-menu
                         %li= link_to "Edit Wedding Details", edit_occasion_path(current_user.occasion)
-                        %li= link_to "Preview Wedding Page", occasion_path(current_user.occasion, :preview => "true")
+                        %li= link_to "Preview Wedding Page", occasion_path(current_user.occasion)
                   - else
                     %li{class: "#{'active' if current_page?(new_occasion_path)}"}= link_to "New Wedding", new_occasion_path
                 - if user_signed_in? 

@@ -2,37 +2,39 @@
   %h1 Account Information
 
   = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
-    .well
-      %legend Contact Information
-      %fieldset
-        .form-group{class: resource.errors.include?(:email) ? 'has-error' : ''}
-          = f.label :email, class: "control-label" do
-            Email
-            %span{style: "color:red"}*
-          = f.text_field :email, class: "form-control"
-          %span.help-block= resource.errors.get(:email).join('; ')
-    .well
-      %legend Change Password
-      %fieldset
-        .form-group{class: resource.errors.include?(:password) ? 'has-error' : ''}
-          = f.label :password, class: "control-label" do
-            Password
-            %span{style: "color:red"}*
-          = f.password_field :password, class: "form-control"
-          %span.help-block= resource.errors.get(:password).join('; ')
+    .panel.panel-default
+      .panel-body
+        %legend Contact Information
+        %fieldset
+          .form-group{class: resource.errors.include?(:email) ? 'has-error' : ''}
+            = f.label :email, class: "control-label" do
+              Email
+              %span{style: "color:red"}*
+            = f.text_field :email, class: "form-control"
+            %span.help-block= resource.errors.get(:email).join('; ')
+    .panel.panel-default
+      .panel-body
+        %legend Change Password
+        %fieldset
+          .form-group{class: resource.errors.include?(:password) ? 'has-error' : ''}
+            = f.label :password, class: "control-label" do
+              Password
+              %span{style: "color:red"}*
+            = f.password_field :password, class: "form-control"
+            %span.help-block= resource.errors.get(:password).join('; ')
 
-        .form-group{class: resource.errors.include?(:password_confirmation) ? 'has-error' : ''}
-          = f.label :password_confirmation, class: "control-label" do
-            Password Confirmation
-            %span{style: "color:red"}*
-          = f.password_field :password_confirmation, class: "form-control"
-          %span.help-block= resource.errors.get(:password_confirmation).join('; ')
+          .form-group{class: resource.errors.include?(:password_confirmation) ? 'has-error' : ''}
+            = f.label :password_confirmation, class: "control-label" do
+              Password Confirmation
+              %span{style: "color:red"}*
+            = f.password_field :password_confirmation, class: "form-control"
+            %span.help-block= resource.errors.get(:password_confirmation).join('; ')
 
-        .form-group{class: resource.errors.include?(:current_password) ? 'has-error' : ''}
-          = f.label :current_password, class: "control-label" do
-            Current Password
-            %span{style: "color:red"}*
-          = f.password_field :current_password, class: "form-control"
-          %span.help-block= resource.errors.get(:current_password).join('; ')
+          .form-group{class: resource.errors.include?(:current_password) ? 'has-error' : ''}
+            = f.label :current_password, class: "control-label" do
+              Current Password
+              %span{style: "color:red"}*
+            = f.password_field :current_password, class: "form-control"
+            %span.help-block= resource.errors.get(:current_password).join('; ')
 
     = f.submit "Update settings", :class => "btn btn-success btn-lg pull-right"

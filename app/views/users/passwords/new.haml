@@ -6,17 +6,18 @@
         %br
         %small Let us manage your guestlist.
       = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
-        .well
-          %legend Reset your password
-          %formset
-            .form-group{class: resource.errors.include?(:email) ? 'has-error' : ''}
-              = f.label :email, class: "control-label" do
-                Email
-                %span{style: "color:red"}*
-              = f.text_field :email, :autofocus => true, class: "form-control"
-              %span.help-block= resource.errors.get(:email).join('; ')
+        .panel.panel-default
+          .panel-body
+            %legend Reset your password
+            %formset
+              .form-group{class: resource.errors.include?(:email) ? 'has-error' : ''}
+                = f.label :email, class: "control-label" do
+                  Email
+                  %span{style: "color:red"}*
+                = f.text_field :email, :autofocus => true, class: "form-control"
+                %span.help-block= resource.errors.get(:email).join('; ')
             
-            = f.submit "Send reset password email", :class=> "btn btn-success btn-block form-btn"
+              = f.submit "Send reset password email", :class=> "btn btn-success btn-block form-btn"
     
       %p.text-center
         Remember your password?

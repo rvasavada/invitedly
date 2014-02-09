@@ -1,5 +1,6 @@
 .container
-  .well.well-sm.hidden-print
+  .well.well-sm.hidden-print{style: "background-color:#fff;"}
+
     %ul.list-inline
       %li= link_to "Guest Information", occasion_invitation_rsvp_path(@occasion, @invitation,:guest_info), style: "color: #b4bcc2;"
       %li= link_to "Events", occasion_invitation_rsvp_path(@occasion, @invitation,:events), style: "color: #b4bcc2;"
@@ -19,7 +20,7 @@
             - @invitation.household.guests.where("first_name != ? AND last_name != ?", "", "").each do |guest|
               = guest.full_name
               %br
-          %p=link_to @invitation.household.email, "mailto:#{@invitation.household.email}"
+          %p= link_to @invitation.household.email, "mailto:#{@invitation.household.email}" if @invitation.household.email.present? 
         .col-sm-6
           - if @invitation.message.present?
             %p.lead

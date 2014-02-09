@@ -74,9 +74,9 @@ class RsvpController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through
     def invitation_params
-      params.require(:invitation).permit(:message, 
+      params.require(:invitation).permit(:message,
         rsvps_attributes: [:id, :response], 
-        invitable_attributes: [:id, :title, :first_name, :last_name, :email, 
+        household_attributes: [:id, :title, :first_name, :last_name, :email, 
           guests_attributes: [:id, :title, :first_name, :last_name]])
     end
 end
