@@ -2,31 +2,25 @@
   .panel.panel-default
     .panel-body
       %h2 Next, select the events that you will be able to attend.
-    %table.table
-      %thead
-        %tr
-          %th{style:"width:70%"} Events
-          %th{style:"width:30%"} Response
-      %tbody
-
-        = f.fields_for :rsvps do |rsvp|
-          %tr{style: rsvp.object.visibility ? "" : "display:none;"}
-            %td
-              = rsvp.hidden_field(:event_id)
+    %ul.list-group
+      %li.list-group-item
+        = f.fields_for :rsvps, @invitation.rsvps.where(visibility: true) do |rsvp|
+          .row{style: rsvp.options[:child_index] != 0 ? "margin-top:30px;" : ""}
+            .col-sm-6
               - event = Event.find(rsvp.object.event_id)
-              %strong=event.name
-              %p
-                %small.text-muted
-                  = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
-                  %br
-                  - unless event.address_1.blank?
-                    = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
-                    = "| #{event.address}"
-                  - else
-                    = event.location
+            
+              %h3{style:"margin-top:0px;margin-bottom:0px;"}=event.name
+              %p.text-muted{style:"margin-top:0px;"}
+                = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
+                %br
+                - unless event.address_1.blank?
+                  = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
+                  = "| #{event.address}"
+                - else
+                  = event.location
               %p=event.description
 
-            %td
+            .col-sm-6
               .form-group                
                 %label.radio-inline
                   = rsvp.radio_button :response, "Attending"

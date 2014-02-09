@@ -7,8 +7,7 @@
         - @invitation.events.uniq.each_with_index do |event,index|
           .row{style: index != 0 ? "margin-top:30px;" : ""}
             .col-sm-6
-              %h3{style:"margin-top:0px;margin-bottom:0px;"}
-                =event.name
+              %h3{style:"margin-top:0px;margin-bottom:0px;"}=event.name
               %p.text-muted{style:"margin-top:0px;"}
                 = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
                 %br

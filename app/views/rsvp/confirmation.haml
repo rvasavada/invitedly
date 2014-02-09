@@ -56,17 +56,15 @@
         - @invitation.events.uniq.each do |event|
           .row{style:"margin-top:30px;"}
             .col-sm-6
-              %h3{style:"margin-top:0px;"}
-                %strong=event.name
-                %small
-                  %br
-                    = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
-                    %br
-                    - unless event.address_1.blank?
-                      = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
-                      = "| #{event.address}"
-                    - else
-                      = event.location
+              %h3{style:"margin-top:0px;margin-bottom:0px;"}=event.name
+              %p.text-muted{style:"margin-top:0px;"}
+                = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
+                %br
+                - unless event.address_1.blank?
+                  = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
+                  = "| #{event.address}"
+                - else
+                  = event.location
               %p=event.description
 
   
