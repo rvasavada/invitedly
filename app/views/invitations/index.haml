@@ -8,6 +8,7 @@
   - if @invitations.present?
     .list-group      
       - @invitations.each do |invitation|
+      
         - if invitation.invitable_type == "Guest"
           - guest = Guest.find(invitation.invitable_id)
         
@@ -68,15 +69,14 @@
                     -else 
                       = guest.full_name
                     - guest.rsvps.where(:visibility => true).each do |rsvp|
-                      = link_to Event.find(rsvp.event_id).name, "#", class: rsvp.response == "Not Responded" ? "btn btn-default btn-xs" : rsvp.response == "Attending" ? "btn btn-success btn-xs" : rsvp.response == "Might Attend" ? "btn btn-warning btn-xs" : rsvp.response == "Not Attending" ? "btn btn-danger btn-xs" : ""
+                      = link_to Event.find(rsvp.event_id).name, "#", class: rsvp.response == "Not Responded" ? "btn btn-default btn-xs" : rsvp.response == "Attending" ? "btn btn-success btn-xs" : rsvp.response == "Not Attending" ? "btn btn-danger btn-xs" : ""
             - if household.notes.present?
               %span.text-muted="#{household.notes}"
 
   -else
     .well.text-center
-      %h3 You have no guests.
-      %button.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"}
-        Add guests now!
+      %h3 You have not invited any guests.
+      %button.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"} Invite guests now!
 
 .modal.fade#myModal{:tabindex=> "-1", :role=>"dialog", "aria-labelledby"=>"myModalLabel", "aria-hidden"=> "true"}
   .modal-dialog
@@ -85,12 +85,8 @@
         %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
         %h4.modal-title Invite guests
       .modal-body
-        %p You can choose to invite a single guest or a household (more than 1 guest).
-        .row
-          .col-xs-6
-            = link_to "Single guest", new_occasion_invitation_path(@occasion, :type => "guests"), :class => "btn btn-block btn-sm btn-default"
-          .col-xs-6
-            = link_to "Household", new_occasion_invitation_path(@occasion, :type => "household"), :class => "btn btn-block btn-sm btn-default"
+        %h4 Invite guests individually
+        = link_to "Invite guests", new_occasion_invitation_path(@occasion, :type => "household"), :class => "btn btn-block btn-sm btn-default"
         %hr
         %h4 Or...Import a CSV file of your guests.
         =form_tag import_occasion_guests_path(@occasion), multipart: true do
@@ -127,6 +123,6 @@
                 %li
                   %strong Events
                   For every event that has been created, add an additional column with the Event name in the header and "Not Responded" to the events that the guest is invited to.  Leave the others blank.
-              .form-group
+              .well.form-group
                 = submit_tag "Import guests", :class => "btn btn-success btn-sm pull-right"
                 = file_field_tag :file              

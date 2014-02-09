@@ -1,30 +1,37 @@
 = form_for [@occasion,@invitation], :html => {:role =>"form"} do |f|
   .panel.panel-default
     .panel-body
-      %h2 First, check your names and contact information.
+      %h2 Guest information
     %ul.list-group
       %li.list-group-item
-
         = f.fields_for :invitable, @invitable do |household|
-          .form-group{class: @invitable.errors.include?(:name) ? 'has-error' : ''}
-            = household.text_field :name, placeholder: "Household Name (required)", :autofocus => true, :maxlength => 50, class: "form-control input-lg"
-            %small This name is private and won't be shared with the guests.
-            %span.help-block= "Household name #{@invitable.errors.get(:name).join('; ')}"
-              
-          .form-group
-            = household.label :guests
-            #guests
-              = household.fields_for :guests, @invitable.guests do |guest|
-                = render 'guest_fields', :f => guest
-              .form-group
-                = link_to_add_association 'Add Guest', household, :guests, :class => "btn btn-primary"
-
           .row
             .col-lg-6
+              .form-group{class: @invitable.errors.include?(:name) ? 'has-error' : ''}
+                %span.help-block
+                  %strong= @invitable.errors.get(:name).present? ? "Group name #{@invitable.errors.get(:name).join('; ')}" : ""
+                = household.text_field :name, placeholder: "Group Name", :autofocus => true, :maxlength => 50, class: "form-control input-lg"
+                %span.help-block
+                  This name is private and won't be shared with the guests.
+            
+              .form-group
+                = household.label :guests, "Guest names"
+                %span.help-block= "You can add unlimited guests.  If you don't know a guests name or want to allow a guest to bring a +1, just leave first and last name blank."
+                #guests
+                  = household.fields_for :guests, @invitable.guests do |guest|
+                    = render 'guest_fields', :f => guest
+                  .form-group
+                    = link_to_add_association 'Add Guest', household, :guests, :class => "btn btn-primary"
+            
               .form-group
                 = household.label :email, class: "control-label"
                 = household.text_field :email, :maxlength => 50, class: "form-control"
-                %span.help-block You can optionally add an email address, if we need to contact you later.
+                %span.help-block You can optionally add an email address.
+          
+              .form-group
+                = household.label :notes, class: "control-label"
+                = household.text_area :notes, {:rows => 5, :maxlength => 500, class: "form-control"}
+                %span.help-block These notes are private and won't be shared with the guests.
 
   .form-group.pull-right
     = f.submit "Save", :class => "btn btn-success btn-lg"

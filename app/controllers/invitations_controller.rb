@@ -17,10 +17,16 @@ class InvitationsController < ApplicationController
     
     if params[:type] == "household"
       @invitable = current_user.households.new
-      @household.guests.build
+      @invitable.guests.build
     else
       @invitable = current_user.guests.new
     end
+    
+    @occasion.events.each do |event|
+      @invitation.rsvps.build(:event_id => event.id)      
+    end
+    
+    @rsvps = @invitation.rsvps
   end
   
   def edit
@@ -29,15 +35,30 @@ class InvitationsController < ApplicationController
     @response = ResponseType.all
     @title = Title.all
     @invitable = @invitation.invitable
+    
+    (@occasion.events-@invitation.events).each do |event|
+      @invitation.rsvps.build(:event_id => event.id)      
+    end
+    
+    @rsvps = @invitation.rsvps
   end
   
   def create
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    
+    @invitation = @occasion.invitations.new(invitation_params)
+
+    if @invitation.save
+      redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully created.'
+    else
+      @response = ResponseType.all
+      @title = Title.all
+      render action: 'new'
+    end
   end
   
   def update
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    
-    
     
     if @invitation.update(invitation_params)
       redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully updated.'
@@ -45,6 +66,12 @@ class InvitationsController < ApplicationController
       @response = ResponseType.all
       @title = Title.all
       @invitable = @invitation.invitable
+      
+      (@occasion.events-@invitation.events).each do |event|
+        @invitation.rsvps.build(:event_id => event.id)      
+      end
+    
+      @rsvps = @invitation.rsvps
       
       render action: 'edit' 
     end
@@ -61,10 +88,11 @@ class InvitationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def invitation_params
-      params.require(:invitation).permit(:message, 
-        rsvps_attributes: [:id, :response], 
-        invitable_attributes: [:id, :name, :title, :first_name, :last_name, :email, 
-          guests_attributes: [:id, :title, :first_name, :last_name]])
+      params.require(:invitation).permit(:message,
+        invitable_attributes: [:id, :name, :title, :first_name, :last_name, :email, :notes,
+          rsvps_attributes: [:id, :event_id, :visibility, :response],
+          guests_attributes: [:id, :title, :first_name, :last_name, :_destroy,
+          rsvps_attributes: [:id, :event_id, :visibility, :response]]])
     end
   
 end

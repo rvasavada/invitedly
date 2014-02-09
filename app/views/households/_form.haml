@@ -1,25 +1,37 @@
 = form_for [@occasion,@household], :html => {:role =>"form"} do |f|
-  .well
-    %legend Household Information (Some brief description about the household)
-    %fieldset
-      .form-group{class: @household.errors.include?(:name) ? 'has-error' : ''}
-        = f.text_field :name, placeholder: "Household Name (required)", :autofocus => true, :maxlength => 50, class: "form-control input-lg"
-        %small This name is private and won't be shared with the guests.
-        %span.help-block
-          = @household.errors.get(:name).join('; ')
-      .form-group
-        = f.text_field :email, placeholder: "Email", :maxlength => 50, class: "form-control"
-  
-      .form-group
-        = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "Notes", class: "form-control"}
-        %small These notes are private and won't be shared with the guests.
+  .panel.panel-default
+    .panel-body
+      %h2 Guest information
+    %ul.list-group
+      %li.list-group-item
+        .row
+          .col-lg-6
+            .form-group{class: @household.errors.include?(:name) ? 'has-error' : ''}
+              %span.help-block
+                %strong= @household.errors.get(:name).present? ? "Household name #{@household.errors.get(:name).join('; ')}" : ""
+              = f.text_field :name, placeholder: "Household Name", :autofocus => true, :maxlength => 50, class: "form-control input-lg"
+              %span.help-block
+                This name is private and won't be shared with the guests.
+          
+            .form-group
+              = f.label :guests
+              %span.help-block= "You can add unlimited guests.  If you don't know a guests name or want to allow a guest to bring a +1, just leave first and last name blank."
+              #guests
+                = f.fields_for :guests, @household.guests do |guest|
+                  = render 'guest_fields', :f => guest
+                .form-group
+                  = link_to_add_association 'Add Guest', f, :guests, :class => "btn btn-primary"
+          
+            .form-group
+              = f.label :email, class: "control-label"
+              = f.text_field :email, :maxlength => 50, class: "form-control"
+              %span.help-block You can optionally add an email address.
         
-      #guests
-        = f.fields_for :guests do |guest|
-          = render 'guest_fields', :f => guest
-        .form-group
-          = link_to_add_association 'Add Guest', f, :guests, :class => "btn btn-primary"
-        
+            .form-group
+              = f.label :notes, class: "control-label"
+              = f.text_area :notes, {:rows => 5, :maxlength => 500, class: "form-control"}
+              %span.help-block These notes are private and won't be shared with the guests.
+
   .pull-right
     = f.submit "Save & Add more", :class => "btn btn-success btn-lg"
     = f.submit "Save & Finish", :class => "btn btn-success btn-lg"
