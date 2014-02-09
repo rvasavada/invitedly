@@ -10,7 +10,6 @@ class RsvpController < ApplicationController
     when :guest_info
       @title = Title.all
     when :events
-      @response = ResponseType.all
     when :guestbook
     when :confirmation
     end
@@ -25,8 +24,8 @@ class RsvpController < ApplicationController
       @invitation.update(invitation_params)
       @title = Title.all
     when :events
+      @invitation.status = "Responded"
       @invitation.update(invitation_params)
-      @response = ResponseType.all
     when :guestbook
       @invitation.update(invitation_params)
     when :confirmation
@@ -74,7 +73,7 @@ class RsvpController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through
     def invitation_params
-      params.require(:invitation).permit(:message,
+      params.require(:invitation).permit(:message, :status,
         rsvps_attributes: [:id, :response], 
         household_attributes: [:id, :title, :first_name, :last_name, :email, 
           guests_attributes: [:id, :title, :first_name, :last_name]])
