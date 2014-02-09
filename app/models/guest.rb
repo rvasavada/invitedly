@@ -44,8 +44,7 @@ class Guest < ActiveRecord::Base
                         :email => row[6],
                         :notes => row[7])
         
-          #household.create_invitation!(:occasion_id => occasion.id)
-          Invitation.find_or_create_by_invitable_type_and_invitable_id("Household",household.id,:occasion_id => occasion.id)
+          invitation = Invitation.find_or_create_by_invitable_type_and_invitable_id("Household",household.id,:occasion_id => occasion.id)
         else
           guest = Guest.create!(:user_id => user.id,
                             :title => row[3],
@@ -53,7 +52,7 @@ class Guest < ActiveRecord::Base
                             :last_name => row[5],
                             :email => row[6],
                             :notes => row[7])
-          guest.create_invitation!(:occasion_id => occasion.id)
+          invitation = guest.create_invitation!(occasion_id: occasion.id)
           
 
         end
@@ -63,7 +62,7 @@ class Guest < ActiveRecord::Base
           if row[$i].present?
             event = Event.find_by_name_and_occasion_id(events[$i],occasion.id)
             if event.present?
-              Rsvp.create!(:event_id => event.id,:guest_id => guest.id,:visibility => true)
+              Rsvp.create!(event_id: event.id, guest_id: guest.id, visibility: true, invitation_id: invitation.id)
             end
           end
           $i += 1
