@@ -4,8 +4,8 @@ class Invitation < ActiveRecord::Base
   friendly_id :occasion_id, use: :slugged
   before_create :create_unique_slug
   
-  belongs_to :invitable, polymorphic: true
-  accepts_nested_attributes_for :invitable, :allow_destroy => true
+  belongs_to :household
+  accepts_nested_attributes_for :household, :allow_destroy => true
   has_many :rsvps
   accepts_nested_attributes_for :rsvps, :allow_destroy => true
     

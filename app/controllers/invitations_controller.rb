@@ -15,12 +15,8 @@ class InvitationsController < ApplicationController
     @title = Title.all
     @invitation = @occasion.invitations.build
     
-    if params[:type] == "household"
-      @invitable = current_user.households.new
-      @invitable.guests.build
-    else
-      @invitable = current_user.guests.new
-    end
+    @household = current_user.households.new
+    @household.guests.build
     
     @occasion.events.each do |event|
       @invitation.rsvps.build(:event_id => event.id)      
@@ -34,7 +30,7 @@ class InvitationsController < ApplicationController
     
     @response = ResponseType.all
     @title = Title.all
-    @invitable = @invitation.invitable
+    @household = @invitation.household
     
     (@occasion.events-@invitation.events).each do |event|
       @invitation.rsvps.build(:event_id => event.id)      

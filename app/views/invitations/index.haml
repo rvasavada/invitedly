@@ -7,71 +7,26 @@
       
   - if @invitations.present?
     .list-group      
-      - @invitations.each do |invitation|
-      
-        - if invitation.invitable_type == "Guest"
-          - guest = Guest.find(invitation.invitable_id)
-        
-          .list-group-item
-            %h4
-              .pull-right
-                = link_to "Edit", edit_occasion_invitation_path(@occasion,invitation), class: "btn btn-default btn-sm"
-                = link_to "Uninvite", [@occasion, invitation], method: :delete, data: {confirm: 'Are you sure you want to uninvite this guest?'}, class: "btn btn-default btn-sm"
-              %ul.list-inline
-                %li
-                  =guest.full_name
-                  - if guest.invitation.present?
-                    - guest.rsvps.where(:visibility => true).each do |rsvp|
-                      = link_to Event.find(rsvp.event_id).name, "#", class: rsvp.response == "Not Responded" ? "btn btn-default btn-xs" : rsvp.response == "Attending" ? "btn btn-success btn-xs" : rsvp.response == "Might Attend" ? "btn btn-warning btn-xs" : rsvp.response == "Not Attending" ? "btn btn-danger btn-xs" : ""
+      - @invitations.each do |invitation|      
+        .list-group-item
+          %h4
+            .pull-right
+              = link_to "Edit", edit_occasion_invitation_path(@occasion,invitation), class: "btn btn-default btn-sm"
+              = link_to "Uninvite", [@occasion, invitation], method: :delete, data: {confirm: 'Are you sure you want to uninvite this household?'}, class: "btn btn-default btn-sm"
+            =invitation.household.name
 
-            %p.list-group-item-text
-              -#-if guest.address_1.present?
-                ="#{guest.address_1} #{guest.address_2}"
-              -#-if ((guest.city.present? and guest.state.present?) and (guest.country == 'United States'))
-                %br
-                ="#{guest.city}, #{guest.state} #{guest.zip}" 
-              -#-if ((guest.city.present? and guest.region.present?) and (guest.country != 'United States'))
-                %br
-                ="#{guest.city}, #{guest.region} #{guest.postal_code}"
-              -#-if guest.country != 'United States'
-                %br
-                = guest.country
-              -#-if guest.email.present? or guest.home_phone.present? or guest.cell_phone.present?
-                %br
-              -#-if guest.email.present?
-                %abbr{title:'Email'}E:
-                = link_to guest.email, "mailto:#{guest.email}"
-              -#-if guest.home_phone.present?
-                %abbr{title:'Home'}H:
-                = guest.home_phone
-              -#-if guest.cell_phone.present?
-                %abbr{title:'Mobile'}M:
-                = guest.cell_phone
-              - if guest.notes.present?
-                %span.text-muted="#{guest.notes}"
-                    
-        - else
-          - household = Household.find(invitation.invitable_id)
-        
-          .list-group-item
-            %h4
-              .pull-right
-                = link_to "Edit", edit_occasion_invitation_path(@occasion,invitation), class: "btn btn-default btn-sm"
-                = link_to "Uninvite", [@occasion, invitation], method: :delete, data: {confirm: 'Are you sure you want to uninvite this household?'}, class: "btn btn-default btn-sm"
-              =household.name
-
-            %ul
-              -household.guests.each do |guest|
-                %li
-                  %p
-                    -if guest.full_name.blank?
-                      %span.text-muted {No guest name}
-                    -else 
-                      = guest.full_name
-                    - guest.rsvps.where(:visibility => true).each do |rsvp|
-                      = link_to Event.find(rsvp.event_id).name, "#", class: rsvp.response == "Not Responded" ? "btn btn-default btn-xs" : rsvp.response == "Attending" ? "btn btn-success btn-xs" : rsvp.response == "Not Attending" ? "btn btn-danger btn-xs" : ""
-            - if household.notes.present?
-              %span.text-muted="#{household.notes}"
+          %ul
+            -invitation.household.guests.each do |guest|
+              %li
+                %p
+                  -if guest.full_name.blank?
+                    %span.text-muted {No guest name}
+                  -else 
+                    = guest.full_name
+                  - guest.rsvps.where(:visibility => true).each do |rsvp|
+                    = link_to Event.find(rsvp.event_id).name, "#", class: rsvp.response == "Not Responded" ? "btn btn-default btn-xs" : rsvp.response == "Attending" ? "btn btn-success btn-xs" : rsvp.response == "Not Attending" ? "btn btn-danger btn-xs" : ""
+          - if invitation.household.notes.present?
+            %span.text-muted="#{invitation.household.notes}"
 
   -else
     .well.text-center
@@ -86,7 +41,7 @@
         %h4.modal-title Invite guests
       .modal-body
         %h4 Invite guests individually
-        = link_to "Invite guests", new_occasion_invitation_path(@occasion, :type => "household"), :class => "btn btn-block btn-sm btn-default"
+        = link_to "Invite guests", new_occasion_invitation_path(@occasion), :class => "btn btn-block btn-sm btn-default"
         %hr
         %h4 Or...Import a CSV file of your guests.
         =form_tag import_occasion_guests_path(@occasion), multipart: true do

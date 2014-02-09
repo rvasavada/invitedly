@@ -3,16 +3,11 @@ class Guest < ActiveRecord::Base
   
   belongs_to :user
   belongs_to :household
-  has_one :invitation, as: :invitable, :dependent => :destroy
-  accepts_nested_attributes_for :invitation, :reject_if => :all_blank, :allow_destroy => true
+
   has_many :rsvps, :dependent => :destroy
   accepts_nested_attributes_for :rsvps, :reject_if => :all_blank, :allow_destroy => true
   
   has_many :events, :through => :rsvps  
-  #validates_presence_of :first_name, :last_name, :email
-  #validates_presence_of :household_name, :if => :needs_family_name?
-  #validates_uniqueness_of :email, :scope => :user  
-
   
   def full_name
     "#{title} #{first_name} #{last_name}"
@@ -33,29 +28,14 @@ class Guest < ActiveRecord::Base
         $row_count += 1
       else  
         if row[0].present?
-          household = Household.find_or_create_by_name_and_user_id(row[0],user.id, 
-                                                       :email => row[1], 
-                                                       :notes => row[2])
-          guest = Guest.create!(:user_id => user.id,
-                        :household_id => household.id,
-                        :title => row[3],
-                        :first_name => row[4],
-                        :last_name => row[5],
-                        :email => row[6],
-                        :notes => row[7])
-        
-          invitation = Invitation.find_or_create_by_invitable_type_and_invitable_id("Household",household.id,:occasion_id => occasion.id)
+          household = Household.find_or_create_by_name_and_user_id(row[0],user.id, :email => row[1], :notes => row[2])
         else
-          guest = Guest.create!(:user_id => user.id,
-                            :title => row[3],
-                            :first_name => row[4],
-                            :last_name => row[5],
-                            :email => row[6],
-                            :notes => row[7])
-          invitation = guest.create_invitation!(occasion_id: occasion.id)
-          
-
+          household = Household.create!(name: "#{row[3]} #{row[4]} #{row[5]}",user_id: user.id, :email => row[1], :notes => row[2])
         end
+        
+        guest = Guest.create!(:user_id => user.id, :household_id => household.id, :title => row[3], :first_name => row[4], :last_name => row[5], :email => row[6], :notes => row[7])
+        
+        invitation = Invitation.find_or_create_by_household_id_and_occasion_id(:household_id => household.id, :occasion_id => occasion.id)
         
         $i = 8 #where events start
         while $i < row.length do

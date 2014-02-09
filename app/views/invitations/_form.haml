@@ -4,12 +4,12 @@
       %h2 Guest information
     %ul.list-group
       %li.list-group-item
-        = f.fields_for :invitable, @invitable do |household|
+        = f.fields_for :household, @household do |household|
           .row
             .col-lg-6
-              .form-group{class: @invitable.errors.include?(:name) ? 'has-error' : ''}
+              .form-group{class: @household.errors.include?(:name) ? 'has-error' : ''}
                 %span.help-block
-                  %strong= @invitable.errors.get(:name).present? ? "Group name #{@invitable.errors.get(:name).join('; ')}" : ""
+                  %strong= @household.errors.get(:name).present? ? "Group name #{@household.errors.get(:name).join('; ')}" : ""
                 = household.text_field :name, placeholder: "Group Name", :autofocus => true, :maxlength => 50, class: "form-control input-lg"
                 %span.help-block
                   This name is private and won't be shared with the guests.
@@ -18,7 +18,7 @@
                 = household.label :guests, "Guest names"
                 %span.help-block= "You can add unlimited guests.  If you don't know a guests name or want to allow a guest to bring a +1, just leave first and last name blank."
                 #guests
-                  = household.fields_for :guests, @invitable.guests do |guest|
+                  = household.fields_for :guests, @household.guests do |guest|
                     = render 'guest_fields', :f => guest
                   .form-group
                     = link_to_add_association 'Add Guest', household, :guests, :class => "btn btn-primary"
