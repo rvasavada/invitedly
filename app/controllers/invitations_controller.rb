@@ -31,12 +31,14 @@ class InvitationsController < ApplicationController
     @response = ResponseType.all
     @title = Title.all
     @household = @invitation.household
+    @guests = @household.guests
     
-    (@occasion.events-@invitation.events).each do |event|
-      @invitation.rsvps.build(:event_id => event.id)      
+    @guests.each do |guest|
+      (@occasion.events - guest.events).each do |event|
+        guest.rsvps.build(:event_id => event.id)
+      end
     end
     
-    @rsvps = @invitation.rsvps
   end
   
   def create
@@ -55,13 +57,16 @@ class InvitationsController < ApplicationController
   
   def update
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    
+    @invitation.household.rsvps.each do |rsvp|
+      rsvp.invitation_id = @invitation.id
+    end
+
     if @invitation.update(invitation_params)
       redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully updated.'
     else      
       @response = ResponseType.all
       @title = Title.all
-      @invitable = @invitation.invitable
+      @household = @invitation.household
       
       (@occasion.events-@invitation.events).each do |event|
         @invitation.rsvps.build(:event_id => event.id)      
@@ -85,10 +90,9 @@ class InvitationsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def invitation_params
       params.require(:invitation).permit(:message,
-        invitable_attributes: [:id, :name, :title, :first_name, :last_name, :email, :notes,
-          rsvps_attributes: [:id, :event_id, :visibility, :response],
+        household_attributes: [:id, :name, :email, :notes,
           guests_attributes: [:id, :title, :first_name, :last_name, :_destroy,
-          rsvps_attributes: [:id, :event_id, :visibility, :response]]])
+          rsvps_attributes: [:id, :event_id, :visibility, :response, :invitation_id]]])
     end
   
 end

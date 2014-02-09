@@ -12,71 +12,44 @@
     Thanks for your RSVP.  You're all set!
     
   .panel.panel-default
-    - if @invitation.invitable_type == "Guest"    
-      .panel-body
-        .row
+    .panel-body
+      .row
+        .col-sm-6
+          %h2{style:"margin-top:0px;font-weight:bold;"}
+            - @invitation.household.guests.where("first_name != ? AND last_name != ?", "", "").each do |guest|
+              = guest.full_name
+              %br
+          %p=link_to @invitation.household.email, "mailto:#{@invitation.household.email}"
+        .col-sm-6
+          - if @invitation.message.present?
+            %p.lead
+              %em= "\"#{@invitation.message}\""
+               
+      - @invitation.events.uniq.each do |event|
+        .row{style:"margin-top:30px;"}
           .col-sm-6
-            %h2{style:"margin-top:0px;font-weight:bold;"}=@invitation.invitable.full_name
-            %p=link_to @invitation.invitable.email, "mailto:#{@invitation.invitable.email}"
-          .col-sm-6
-            - if @invitation.message.present?
-              %p.lead
-                %em= "\"#{@invitation.message}\""
+            %h3{style:"margin-top:0px;margin-bottom:0px;"}=event.name
+            %p.text-muted{style:"margin-top:0px;"}
+              = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
+              %br
+              - unless event.address_1.blank?
+                = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
+                = "| #{event.address}"
+              - else
+                = event.location
+            %p=event.description
 
-        - @invitation.rsvps.each do |rsvp|
-          .row{style:"margin-top:30px;"}
-            .col-sm-12
-              %h3{style:"margin-top:0px;margin-bottom:0px;"}
-                =rsvp.event.name
-                %small{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}="(#{rsvp.response})"
-              %p.text-muted{style:"margin-top:0px;"}
-                = "#{rsvp.event.start_date.strftime('%A, %B %e, %Y')} at #{rsvp.event.start_time}"
-                %br
-                - unless rsvp.event.address_1.blank?
-                  = link_to rsvp.event.location, "https://www.google.com/maps/preview#!q=#{rsvp.event.address}"
-                  = "| #{rsvp.event.address}"
-                - else
-                  = rsvp.event.location
-              %p=rsvp.event.description
-    - else
-      .panel-body
-        .row
-          .col-sm-6
-            %h2{style:"margin-top:0px;font-weight:bold;"}
-              - @invitation.invitable.guests.where("first_name != ? AND last_name != ?", "", "").each do |guest|
-                = guest.full_name
-                %br
-            %p=link_to @invitation.invitable.email, "mailto:#{@invitation.invitable.email}"
-          .col-sm-6
-            - if @invitation.message.present?
-              %p.lead
-                %em= "\"#{@invitation.message}\""
-                 
-        - @invitation.events.uniq.each do |event|
-          .row{style:"margin-top:30px;"}
-            .col-sm-6
-              %h3{style:"margin-top:0px;margin-bottom:0px;"}=event.name
-              %p.text-muted{style:"margin-top:0px;"}
-                = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
-                %br
-                - unless event.address_1.blank?
-                  = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
-                  = "| #{event.address}"
-                - else
-                  = event.location
-              %p=event.description
 
-  
-            .col-sm-6
-              %table.table
-                %thead
-                  %tr
-                    %th{style:"width:50%"} Guest name
-                    %th{style:"width:50%"} Response
-                %tbody
-                  - @invitation.rsvps.where(:event_id => event.id, visibility: true).each do |rsvp|
-                    - if rsvp.guest.first_name != "" && rsvp.guest.last_name != ""
-                      %tr
-                        %td= rsvp.guest.full_name
-                        %td{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}=rsvp.response
+          .col-sm-6
+            %table.table
+              %thead
+                %tr
+                  %th{style:"width:50%"} Guest name
+                  %th{style:"width:50%"} Response
+              %tbody
+                - @invitation.rsvps.where(:event_id => event.id, visibility: true).each do |rsvp|
+                  - if rsvp.guest.first_name != "" && rsvp.guest.last_name != ""
+                    %tr
+                      %td= rsvp.guest.full_name
+                      %td{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}=rsvp.response
   %button.hidden-print{id:"print", onclick:"javascript:print()", value:"Print", class: "btn btn-primary btn-lg btn-block"} Print this page

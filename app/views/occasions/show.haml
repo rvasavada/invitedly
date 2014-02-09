@@ -31,7 +31,4 @@
             -@guests.each do |guest|
               %tr
                 %td=guest.full_name
-                - if guest.household.blank?
-                  %td=link_to "RSVP", occasion_invitation_rsvp_path(@occasion, guest.invitation, :guest_info), class: "btn btn-success"
-                - else 
-                  %td=link_to "RSVP", occasion_invitation_rsvp_path(@occasion, guest.household.invitation, :guest_info), class: "btn btn-success"
+                %td=link_to "RSVP", occasion_invitation_rsvp_path(@occasion, guest.household.invitations.where(:occasion_id => @occasion.id).first, :guest_info), class: "btn btn-success"

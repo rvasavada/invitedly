@@ -8,7 +8,4 @@
 
   %h1 Guest Information
 
-  -if @invitation.invitable_type == "Household"
-    = render 'household_guest_form'
-  -else
-    = render 'guest_guest_form'
+  = render 'household_guest_form'

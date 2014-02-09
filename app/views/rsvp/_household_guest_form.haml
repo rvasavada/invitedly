@@ -4,7 +4,7 @@
       %h2 First, check your names and contact information.
     %ul.list-group
       %li.list-group-item
-        = f.fields_for :invitable, @invitation.invitable do |household|
+        = f.fields_for :household, @invitation.household do |household|
           .form-group
             = household.label :guests
             = household.fields_for :guests do |guest|
