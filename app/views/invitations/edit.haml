@@ -1,0 +1,7 @@
+.container
+  %h1 Edit Invitation
+  
+  -if @invitation.invitable_type == "Household"
+    = render 'household_form'
+  -else
+    = render 'guest_form'

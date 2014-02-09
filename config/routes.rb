@@ -21,7 +21,7 @@ Invitedly::Application.routes.draw do
     end
     resources :households
     
-    resources :invitations, :except => [:new, :edit, :show] do
+    resources :invitations, :except => [:show] do
       resources :rsvp
     end
     

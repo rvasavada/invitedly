@@ -1,0 +1,7 @@
+.container
+  %h1 New Invitation
+
+  -if params[:type] == "household"
+    = render 'household_form'
+  -else
+    = render 'guest_form'

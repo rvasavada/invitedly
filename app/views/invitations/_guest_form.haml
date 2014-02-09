@@ -1,0 +1,24 @@
+= form_for [@occasion,@invitation], :html => {:role =>"form"} do |f|
+  .panel.panel-default
+    .panel-body
+      %h2 First, check your name and contact information.
+    %ul.list-group
+      %li.list-group-item
+        = f.label :invitable, "Guest name", class: "control-label"
+        = f.fields_for :invitable, @invitable do |guest|
+          .row
+            .form-group.col-sm-3.col-lg-1
+              = guest.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control"})
+            .form-group.col-sm-4.col-lg-2
+              = guest.text_field :first_name, :maxlength => 50, class: "form-control", :placeholder => "First name"
+            .form-group.col-sm-5.col-lg-3
+              = guest.text_field :last_name, :maxlength => 50, class: "form-control", :placeholder => "Last name"
+          .row
+            .col-lg-6
+              .form-group
+                = guest.label :email, class: "control-label"
+                = guest.text_field :email, :maxlength => 50, class: "form-control"
+                %span.help-block You can optionally add an email address, if we need to contact you later.
+
+  .form-group.pull-right
+    = f.submit "Next", :class => "btn btn-success btn-lg"

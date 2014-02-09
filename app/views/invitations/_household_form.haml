@@ -1,0 +1,30 @@
+= form_for [@occasion,@invitation], :html => {:role =>"form"} do |f|
+  .panel.panel-default
+    .panel-body
+      %h2 First, check your names and contact information.
+    %ul.list-group
+      %li.list-group-item
+
+        = f.fields_for :invitable, @invitable do |household|
+          .form-group{class: @invitable.errors.include?(:name) ? 'has-error' : ''}
+            = household.text_field :name, placeholder: "Household Name (required)", :autofocus => true, :maxlength => 50, class: "form-control input-lg"
+            %small This name is private and won't be shared with the guests.
+            %span.help-block= "Household name #{@invitable.errors.get(:name).join('; ')}"
+              
+          .form-group
+            = household.label :guests
+            #guests
+              = household.fields_for :guests, @invitable.guests do |guest|
+                = render 'guest_fields', :f => guest
+              .form-group
+                = link_to_add_association 'Add Guest', household, :guests, :class => "btn btn-primary"
+
+          .row
+            .col-lg-6
+              .form-group
+                = household.label :email, class: "control-label"
+                = household.text_field :email, :maxlength => 50, class: "form-control"
+                %span.help-block You can optionally add an email address, if we need to contact you later.
+
+  .form-group.pull-right
+    = f.submit "Save", :class => "btn btn-success btn-lg"

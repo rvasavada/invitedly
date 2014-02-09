@@ -1,0 +1,89 @@
+.nested-fields
+  .panel.panel-default
+    .panel-heading
+      %h3.panel-title 
+        .pull-right= link_to_remove_association "Remove", f, :class => "btn btn-danger btn-xs"
+        Guest Details
+    .panel-body
+    
+      %fieldset
+        -(@occasion.events - f.object.events).each do |event|
+          -f.object.rsvps.build(:event_id => event.id)
+  
+        .row
+          .col-sm-3
+            .form-group
+              = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control"})
+          .col-sm-4
+            .form-group
+              = f.text_field :first_name, :maxlength => 50, class: "form-control", :placeholder => "First name"
+          .col-sm-5
+            .form-group
+              = f.text_field :last_name, :maxlength => 50, class: "form-control", :placeholder => "Last name"
+      %hr
+      %fieldset
+        %p Select the events below that this guest is invited to.
+      
+        .form-group
+          = f.fields_for :rsvps do |rsvp|
+            = render 'households/rsvp_fields', :f => rsvp
+          
+        -#.form-group
+          = f.label :email, class: "control-label" do
+            Email
+          = f.text_field :email, :maxlength => 50, class: "form-control input-sm"
+
+        -#.row
+          .col-sm-6
+            .form-group
+              = f.label :home_phone, "Home Phone", class: "control-label"
+              = f.telephone_field :home_phone, class: "form-control input-sm"
+          .col-sm-6
+            .form-group
+              = f.label :cell_phone, "Cell Phone", class: "control-label"
+              = f.telephone_field :cell_phone, class: "form-control input-sm"
+                
+
+        -#%h3 Address
+        -#%fieldset
+          .row
+            .col-sm-7
+              .form-group
+                = f.label :address_1, "Address 1"
+                = f.text_field :address_1, :maxlength => 100, class: "form-control input-sm"
+            .col-sm-5
+              .form-group
+                = f.label :address_2, "Address 2"
+                = f.text_field :address_2, :maxlength => 100, class: "form-control input-sm"
+          .row
+            .col-sm-5
+              .form-group      
+                = f.label :city, "City"
+                = f.text_field :city, :maxlength => 100, class: "form-control input-sm"
+            .col-sm-4.domestic
+              .form-group
+                = f.label :state, "State"
+                = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control input-sm"} 
+            .domestic.col-sm-3
+              .form-group
+                = f.label :zip, "Zip"
+                = f.text_field :zip, :maxlength => 5, class: "form-control input-sm"
+            .international.col-sm-4
+              .form-group
+                = f.label :region, "Region"
+                = f.text_field :region, :maxlength => 100, class: "form-control input-sm"
+            .international.col-sm-3
+              .form-group
+                = f.label :postal_code, "Postal Code"
+                = f.text_field :postal_code, :maxlength => 20, class: "form-control input-sm"
+          .form-group
+            = f.label :country, "Country"
+            = f.collection_select(:country,	@country, :name, :name, {:selected => @guest.country.blank? ? "United States" : @guest.country}, {class: "form-control input-sm",:id => "countrySelect"})
+
+
+        - if user_signed_in?
+          -#%h3 Private Notes
+    
+          -#.form-group
+            = f.label :notes, "Notes", class: "control-label"
+            = f.text_area :notes, {:rows => 5, :maxlength => 500, placeholder: "These notes are private and visible only to you.", class: "form-control input-sm"}
