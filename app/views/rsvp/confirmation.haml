@@ -15,20 +15,20 @@
   .panel.panel-default
     .panel-body
       .row
-        .col-sm-6
+        .col-lg-6
           %h2{style:"margin-top:0px;font-weight:bold;"}
             - @invitation.household.guests.where("first_name != ? AND last_name != ?", "", "").each do |guest|
               = guest.full_name
               %br
           %p= link_to @invitation.household.email, "mailto:#{@invitation.household.email}" if @invitation.household.email.present? 
-        .col-sm-6
+        .col-lg-6
           - if @invitation.message.present?
             %p.lead
               %em= "\"#{@invitation.message}\""
                
       - @invitation.events.uniq.each do |event|
         .row{style:"margin-top:30px;"}
-          .col-sm-6
+          .col-lg-6
             %h3{style:"margin-top:0px;margin-bottom:0px;"}=event.name
             %p.text-muted{style:"margin-top:0px;"}
               = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
@@ -41,7 +41,7 @@
             %p=event.description
 
 
-          .col-sm-6
+          .col-lg-6
             %table.table
               %thead
                 %tr
