@@ -1,14 +1,15 @@
 = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
   .panel.panel-default
     .panel-body
-      %h3 Now, select the events that you will be able to attend.
-    %ul.list-group.text-center
-      - @invitation.events.uniq.each do |event|
-        %li.list-group-item
-          %h4
-            %strong=event.name
-            %small
-              %br
+      %h2 Now, select the events that you will be able to attend.
+    %ul.list-group
+      %li.list-group-item      
+        - @invitation.events.uniq.each do |event|
+          .row{style:"margin-top:30px;"}
+            .col-sm-6
+              %h3{style:"margin-top:0px;margin-bottom:0px;"}
+                =event.name
+              %p.text-muted{style:"margin-top:0px;"}
                 = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
                 %br
                 - unless event.address_1.blank?
@@ -16,10 +17,9 @@
                   = "| #{event.address}"
                 - else
                   = event.location
-          %p=event.description
-          
-          .row
-            .col-sm-6.col-sm-offset-3
+              %p=event.description
+                
+            .col-sm-6
               %table.table
                 %thead
                   %tr

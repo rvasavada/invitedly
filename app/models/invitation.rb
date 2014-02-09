@@ -15,7 +15,6 @@ class Invitation < ActiveRecord::Base
   has_many :events, :through => :rsvps
   has_many :rsvps
   accepts_nested_attributes_for :rsvps, :allow_destroy => true
-  
 
   private
     def create_unique_slug

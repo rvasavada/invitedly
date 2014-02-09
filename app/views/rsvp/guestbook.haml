@@ -9,11 +9,13 @@
   %h1 Guestbook
 
   = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
-    .well
-      %h2 Sign our guestbook or leave us a message, if you want.
-    
-      = f.label :message, class: "control-label"
-      = f.text_area :message, :rows => 7, class: "form-control"
+    .panel.panel-default
+      .panel-body
+        %h2 Sign our guestbook or leave us a message, if you want.
+      %ul.list-group
+        %li.list-group-item    
+          = f.label :message, class: "control-label"
+          = f.text_area :message, :rows => 7, class: "form-control"
 
     .form-group.pull-right
       = f.submit "Save & Finish", :class => "btn btn-success btn-lg"

@@ -1,5 +1,5 @@
 .container
-  .well.well-sm
+  .well.well-sm.hidden-print
     %ul.list-inline
       %li= link_to "Guest Information", occasion_invitation_rsvp_path(@occasion, @invitation,:guest_info), style: "color: #b4bcc2;"
       %li= link_to "Events", occasion_invitation_rsvp_path(@occasion, @invitation,:events), style: "color: #b4bcc2;"
@@ -8,8 +8,79 @@
 
   %h1 Confirmation
   
-  .well
-    %legend Contact Information
-    %legend Events
-    %legend Guestbook
-    = @invitation.message
+  .alert.alert-success.hidden-print
+    Thanks for your RSVP.  You're all set!
+    
+  .panel.panel-default
+    - if @invitation.invitable_type == "Guest"    
+      .panel-body
+        .row
+          .col-sm-6
+            %h2{style:"margin-top:0px;font-weight:bold;"}=@invitation.invitable.full_name
+            %p=link_to @invitation.invitable.email, "mailto:#{@invitation.invitable.email}"
+          .col-sm-6
+            - if @invitation.message.present?
+              %p.lead
+                %em= "\"#{@invitation.message}\""
+
+        - @invitation.rsvps.each do |rsvp|
+          .row{style:"margin-top:30px;"}
+            .col-sm-12
+              %h3{style:"margin-top:0px;margin-bottom:0px;"}
+                =rsvp.event.name
+                %small
+                  ="(#{rsvp.response})"
+              %p.text-muted{style:"margin-top:0px;"}
+                = "#{rsvp.event.start_date.strftime('%A, %B %e, %Y')} at #{rsvp.event.start_time}"
+                %br
+                - unless rsvp.event.address_1.blank?
+                  = link_to rsvp.event.location, "https://www.google.com/maps/preview#!q=#{rsvp.event.address}"
+                  = "| #{rsvp.event.address}"
+                - else
+                  = rsvp.event.location
+              %p=rsvp.event.description
+    - else
+      .panel-body
+        .row
+          .col-sm-6
+            %h2{style:"margin-top:0px;font-weight:bold;"}
+              - @invitation.invitable.guests.each do |guest|
+                = guest.full_name
+                %br
+            %p=link_to @invitation.invitable.email, "mailto:#{@invitation.invitable.email}"
+          .col-sm-6
+            - if @invitation.message.present?
+              %p.lead
+                %em= "\"#{@invitation.message}\""
+                 
+        - @invitation.events.uniq.each do |event|
+          .row{style:"margin-top:30px;"}
+            .col-sm-6
+              %h3{style:"margin-top:0px;"}
+                %strong=event.name
+                %small
+                  %br
+                    = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
+                    %br
+                    - unless event.address_1.blank?
+                      = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
+                      = "| #{event.address}"
+                    - else
+                      = event.location
+              %p=event.description
+
+  
+            .col-sm-6
+              %table.table
+                %thead
+                  %tr
+                    %th{style:"width:50%"} Guest name
+                    %th{style:"width:50%"} Response
+                %tbody
+                  - @invitation.rsvps.where(:event_id => event.id).each do |rsvp|
+                    %tr{style: rsvp.visibility ? "" : "display:none;"}
+                      %td.text-left
+                        = rsvp.guest.full_name
+                      %td
+                        = rsvp.response
+  %button.hidden-print{id:"print", onclick:"javascript:print()", value:"Print", class: "btn btn-primary btn-lg btn-block"} Print this page
