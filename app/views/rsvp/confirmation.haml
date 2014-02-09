@@ -44,7 +44,7 @@
         .row
           .col-sm-6
             %h2{style:"margin-top:0px;font-weight:bold;"}
-              - @invitation.invitable.guests.each do |guest|
+              - @invitation.invitable.guests.where("first_name != ? AND last_name != ?", "", "").each do |guest|
                 = guest.full_name
                 %br
             %p=link_to @invitation.invitable.email, "mailto:#{@invitation.invitable.email}"
@@ -77,10 +77,9 @@
                     %th{style:"width:50%"} Guest name
                     %th{style:"width:50%"} Response
                 %tbody
-                  - @invitation.rsvps.where(:event_id => event.id).each do |rsvp|
-                    %tr{style: rsvp.visibility ? "" : "display:none;"}
-                      %td.text-left
-                        = rsvp.guest.full_name
-                      %td
-                        = rsvp.response
+                  - @invitation.rsvps.where(:event_id => event.id, visibility: true).each do |rsvp|
+                    - if rsvp.guest.first_name != "" && rsvp.guest.last_name != ""
+                      %tr
+                        %td= rsvp.guest.full_name
+                        %td= rsvp.response
   %button.hidden-print{id:"print", onclick:"javascript:print()", value:"Print", class: "btn btn-primary btn-lg btn-block"} Print this page
