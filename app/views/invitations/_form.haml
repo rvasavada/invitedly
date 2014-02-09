@@ -14,7 +14,7 @@
           
             .form-group
               = household.label :guests, "Guest names"
-              %span.help-block= "If you don't know the guests name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank."
+              %span.help-block= "If you don't know a guest's name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank."
               #guests
                 = household.fields_for :guests, @household.guests do |guest|
                   = render 'guest_fields', :f => guest
