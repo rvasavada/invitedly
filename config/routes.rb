@@ -19,8 +19,7 @@ Invitedly::Application.routes.draw do
     resources :guests do
       post 'import', on: :collection
     end
-    resources :households
-    
+        
     resources :invitations, :except => [:show] do
       resources :rsvp
     end
