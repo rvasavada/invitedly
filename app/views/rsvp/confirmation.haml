@@ -28,8 +28,7 @@
             .col-sm-12
               %h3{style:"margin-top:0px;margin-bottom:0px;"}
                 =rsvp.event.name
-                %small
-                  ="(#{rsvp.response})"
+                %small{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}="(#{rsvp.response})"
               %p.text-muted{style:"margin-top:0px;"}
                 = "#{rsvp.event.start_date.strftime('%A, %B %e, %Y')} at #{rsvp.event.start_time}"
                 %br
