@@ -37,7 +37,7 @@
   -else
     .well.text-center{style: "background-color:#fff;"}
       %h3 You have not invited any guests.
-      %button.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"} Invite guests now!
+      = link_to "Invite guests now!", "#", "data-target" => "#myModal", "data-toggle" => "modal"
 
 .modal.fade#myModal{:tabindex=> "-1", :role=>"dialog", "aria-labelledby"=>"myModalLabel", "aria-hidden"=> "true"}
   .modal-dialog
