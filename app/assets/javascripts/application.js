@@ -69,5 +69,47 @@ $("document").ready(function(){
           $(this).remove(); 
       });
   }, 4000);
-    
+  
+  $("table thead th:last").data("sorter", false).data("filter", false);
+  
+  // call the tablesorter plugin and apply the uitheme widget
+  $("table").tablesorter({
+    // this will apply the bootstrap theme if "uitheme" widget is included
+    // the widgetOptions.uitheme is no longer required to be set
+    theme : "bootstrap",
+
+    headers: { numcols :{sorter:false} },
+
+    // widget code contained in the jquery.tablesorter.widgets.js file
+    // use the zebra stripe widget if you plan on hiding any rows (filter widget)
+    widgets : [ "uitheme", "filter", "zebra" ],
+
+    widgetOptions : {
+      zebra : ["even", "odd"],
+      filter_reset : ".reset",
+      filter_functions : {
+              // Add select menu to this column
+              // set the column value to true, and/or add "filter-select" class name to header
+              0 : true,
+              2 : true,
+              3 : true,
+              4 : true,
+              5 : true,
+              6 : true,
+              7 : true,
+              8 : true,
+              9 : true,
+              10 : true,
+              11 : true,
+              12 : true,
+              13 : true,
+              14 : true,
+              15 : true,
+            }
+
+    }
+  });
+  
+  $(".tablesorter-filter").addClass("form-control");
+  
 });
