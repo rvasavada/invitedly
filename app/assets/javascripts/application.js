@@ -70,10 +70,10 @@ $("document").ready(function(){
       });
   }, 4000);
   
-  $("table thead th:last").data("sorter", false).data("filter", false);
+  $("table#invitation thead th:last").data("sorter", false).data("filter", false);
   
   // call the tablesorter plugin and apply the uitheme widget
-  $("table").tablesorter({
+  $("table#invitation").tablesorter({
     // this will apply the bootstrap theme if "uitheme" widget is included
     // the widgetOptions.uitheme is no longer required to be set
     theme : "bootstrap",

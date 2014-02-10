@@ -84,6 +84,10 @@ class InvitationsController < ApplicationController
   end
   
   def destroy
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    
+    @invitation.destroy
+    redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully deleted.'
   end
   
   private
