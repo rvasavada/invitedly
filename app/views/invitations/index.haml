@@ -21,8 +21,8 @@
           - @invitations.each do |invitation|
             - invitation.household.guests.each do |guest|
               %tr
-                %td{class: invitation.status == "Responded" ? "success" : ""}
-                  =guest.full_name
+                %td
+                  %span{class: invitation.status == "Responded" ? "text-success" : ""}=guest.full_name
                   %span.label.label-default= invitation.household.name
                 - @occasion.events.each do |event|
                   - rsvp = guest.rsvps.where(:event_id => event.id).first
