@@ -17,9 +17,7 @@
       .row
         .col-lg-6
           %h2{style:"margin-top:0px;font-weight:bold;"}
-            - @invitation.household.guests.where("first_name != ? AND last_name != ?", "", "").each do |guest|
-              = guest.full_name
-              %br
+            = @invitation.household.guests.where("first_name != ? AND last_name != ?", "", "").map(&:full_name).join(', <br>').html_safe
           %p= link_to @invitation.household.email, "mailto:#{@invitation.household.email}" if @invitation.household.email.present? 
         .col-lg-6
           - if @invitation.message.present?
