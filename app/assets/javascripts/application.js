@@ -106,10 +106,10 @@ $("document").ready(function(){
               14 : true,
               15 : true,
             }
-
     }
   });
   
-  $(".tablesorter-filter").addClass("form-control");
+  $(".tablesorter-filter").addClass("form-control input-sm");
+  $(".tablesorter-filter.disabled").hide();
   
 });
