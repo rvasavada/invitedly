@@ -10,29 +10,31 @@
       .panel-body
         %strong Download:
         = link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
-      %table.table
-        %thead
-          %t
-            %th Guest name
-            - @occasion.events.each do |event|
-              %th=event.name
-            %th Actions
-        %tbody
-          - @invitations.each do |invitation|
-            - invitation.household.guests.each do |guest|
-              %tr
-                %td
-                  %span{class: invitation.status == "Responded" ? "text-success" : ""}=guest.full_name
-                  %span.label.label-default= invitation.household.name
-                - @occasion.events.each do |event|
-                  - rsvp = guest.rsvps.where(:event_id => event.id).first
+      .table-responsive
+        %table.table.table-striped.table-hover.table-condensed
+          %thead
+            %t
+              %th Guest name
+              - @occasion.events.each do |event|
+                %th=event.name
+              %th Actions
+          %tbody
+            - @invitations.each do |invitation|
+              - invitation.household.guests.each do |guest|
+                %tr
                   %td
-                    - if rsvp.present?
-                      %p{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}=rsvp.response
+                    %strong{class: invitation.status == "Responded" ? "text-success" : ""}=guest.full_name
+                    %span.label.label-default= invitation.household.name
+                  - @occasion.events.each do |event|
+                    - rsvp = guest.rsvps.where(:event_id => event.id).first
+                    %td
+                      - if rsvp.present?
+                        %p{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}=rsvp.response
                       
-                %td
-                  = link_to "Edit", edit_occasion_invitation_path(@occasion,invitation), class: "btn btn-primary btn-sm"
-                  = link_to "Uninvite", [@occasion, invitation], method: :delete, data: {confirm: 'Are you sure you want to uninvite this household?'}, class: "btn btn-primary btn-sm"
+                  %td
+                    .btn-group
+                      = link_to "Edit", edit_occasion_invitation_path(@occasion,invitation), class: "btn btn-primary btn-sm"
+                      = link_to "Uninvite", [@occasion, invitation], method: :delete, data: {confirm: 'Are you sure you want to uninvite the family?'}, class: "btn btn-default btn-sm"
               
   -else
     .well.text-center{style: "background-color:#fff;"}
