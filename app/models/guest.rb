@@ -18,7 +18,7 @@ class Guest < ActiveRecord::Base
     
     CSV.foreach(file.path) do |row|
       if $row_count == 0
-        $i = 8 #where events start
+        $i = 6 #where events start
 
         while $i < row.length do
           events[$i] = row[$i]
@@ -32,11 +32,11 @@ class Guest < ActiveRecord::Base
           household = Household.create!(name: "#{row[3]} #{row[4]} #{row[5]}",user_id: user.id, :email => row[1], :notes => row[2])
         end
         
-        guest = Guest.create!(:user_id => user.id, :household_id => household.id, :title => row[3], :first_name => row[4], :last_name => row[5], :email => row[6], :notes => row[7])
+        guest = Guest.create!(:user_id => user.id, :household_id => household.id, :title => row[3], :first_name => row[4], :last_name => row[5])
         
         invitation = Invitation.find_or_create_by_household_id_and_occasion_id(:household_id => household.id, :occasion_id => occasion.id)
         
-        $i = 8 #where events start
+        $i = 6 #where events start
         while $i < row.length do
           if row[$i].present?
             event = Event.find_by_name_and_occasion_id(events[$i],occasion.id)
