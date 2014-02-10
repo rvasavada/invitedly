@@ -6,28 +6,33 @@
   
       
   - if @invitations.present?
-    .list-group      
-      - @invitations.each do |invitation|      
-        .list-group-item
-          %h4
-            .pull-right
-              = link_to "Edit", edit_occasion_invitation_path(@occasion,invitation), class: "btn btn-primary btn-sm"
-              = link_to "Uninvite", [@occasion, invitation], method: :delete, data: {confirm: 'Are you sure you want to uninvite this household?'}, class: "btn btn-primary btn-sm"
-            =invitation.household.name
-            %span{class: invitation.status == "Responded" ? " label label-success" : ""}= invitation.status
+    .panel.panel-default
+      .panel-body
+        %strong Download:
+        = link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
+      .list-group      
+        - @invitations.each do |invitation|      
+          .list-group-item
+            %h4
+              .pull-right
+                = link_to "Edit", edit_occasion_invitation_path(@occasion,invitation), class: "btn btn-primary btn-sm"
+                = link_to "Uninvite", [@occasion, invitation], method: :delete, data: {confirm: 'Are you sure you want to uninvite this household?'}, class: "btn btn-primary btn-sm"
+              =invitation.household.name
+              %small="(#{pluralize(invitation.household.guests.count,'guest')})"
+              %span{class: invitation.status == "Responded" ? " label label-success" : ""}= invitation.status
 
-          %ul
-            -invitation.household.guests.each do |guest|
-              %li
-                %p
-                  -if guest.full_name.blank?
-                    %span.text-muted {No guest name}
-                  -else 
-                    = guest.full_name
-                  - guest.rsvps.where(:visibility => true).each do |rsvp|
-                    = link_to Event.find(rsvp.event_id).name, "#", class: rsvp.response == "Not Responded" ? "btn btn-default btn-xs" : rsvp.response == "Attending" ? "btn btn-success btn-xs" : rsvp.response == "Not Attending" ? "btn btn-danger btn-xs" : ""
-          - if invitation.household.notes.present?
-            %span.text-muted="#{invitation.household.notes}"
+            %ul
+              -invitation.household.guests.each do |guest|
+                %li
+                  %p
+                    -if guest.full_name.blank?
+                      %span.text-muted {No guest name}
+                    -else 
+                      = guest.full_name
+                    - guest.rsvps.where(:visibility => true).each do |rsvp|
+                      = link_to Event.find(rsvp.event_id).name, "#", class: rsvp.response == "Not Responded" ? "btn btn-default btn-xs" : rsvp.response == "Attending" ? "btn btn-success btn-xs" : rsvp.response == "Not Attending" ? "btn btn-danger btn-xs" : ""
+            - if invitation.household.notes.present?
+              %span.text-muted="#{invitation.household.notes}"
 
   -else
     .well.text-center{style: "background-color:#fff;"}

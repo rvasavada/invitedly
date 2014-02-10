@@ -1,5 +1,4 @@
 class Guest < ActiveRecord::Base
-  require 'csv'
   
   belongs_to :user
   belongs_to :household

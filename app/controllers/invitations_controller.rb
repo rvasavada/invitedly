@@ -6,6 +6,11 @@ class InvitationsController < ApplicationController
   def index
     @occasion = Occasion.friendly.find(params[:occasion_id]) 
     @invitations = @occasion.invitations
+    
+    respond_to do |format|
+      format.html
+      format.csv { send_data @invitations.to_csv(@occasion) }
+    end
   end
   
   def new
