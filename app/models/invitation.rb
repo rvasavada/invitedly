@@ -30,7 +30,7 @@ class Invitation < ActiveRecord::Base
       csv << cols
 
       occasion.invitations.each do |invitation|
-        invitation.household.guests.each do |guest|
+        invitation.guests.each do |guest|
           entry = []
           entry.push(invitation.household.name)
           entry.push(invitation.household.email)
