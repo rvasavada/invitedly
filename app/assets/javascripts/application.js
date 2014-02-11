@@ -14,8 +14,9 @@
 //= require jquery_ujs
 //= require jquery-ui-1.10.3.custom.min
 //= require jquery.timepicker.min
+//= require jquery.tablesorter.min
+//= require jquery.tablesorter.widgets.min
 //= require cocoon
-//= require bootstrap.min.js
 //= require_tree .
 
 $("document").ready(function(){
@@ -69,27 +70,27 @@ $("document").ready(function(){
           $(this).remove(); 
       });
   }, 4000);
+    
+  $.extend($.tablesorter.themes.bootstrap, {
+      table      : 'table table-bordered',
+      caption    : 'caption',
+      header     : 'bootstrap-header',
+      sortNone   : 'bootstrap-icon-unsorted',
+      sortAsc    : 'icon-chevron-up glyphicon glyphicon-chevron-up',
+      sortDesc   : 'icon-chevron-down glyphicon glyphicon-chevron-down',
+    });
   
   $("table#invitation thead th:last").data("sorter", false).data("filter", false);
   
-  // call the tablesorter plugin and apply the uitheme widget
   $("table#invitation").tablesorter({
-    // this will apply the bootstrap theme if "uitheme" widget is included
-    // the widgetOptions.uitheme is no longer required to be set
     theme : "bootstrap",
-
-    headers: { numcols :{sorter:false} },
-
-    // widget code contained in the jquery.tablesorter.widgets.js file
-    // use the zebra stripe widget if you plan on hiding any rows (filter widget)
+    headerTemplate : '{content} {icon}',
     widgets : [ "uitheme", "filter", "zebra" ],
 
-    widgetOptions : {
+    widgetOptions : {      
       zebra : ["even", "odd"],
       filter_reset : ".reset",
       filter_functions : {
-              // Add select menu to this column
-              // set the column value to true, and/or add "filter-select" class name to header
               0 : true,
               2 : true,
               3 : true,

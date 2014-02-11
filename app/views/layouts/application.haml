@@ -3,6 +3,7 @@
   %head
     %title Invitedly
     = stylesheet_link_tag "application", media: "all"
+    = stylesheet_link_tag "//netdna.bootstrapcdn.com/bootswatch/3.1.0/flatly/bootstrap.min.css"
     = analytics_init if Rails.env.production?
     %meta{content: "width=device-width, initial-scale=1, maximum-scale=1", name: "viewport"}
     = csrf_meta_tags
@@ -60,4 +61,5 @@
           %strong Invitedly 
           &copy; 2014
 
-      = javascript_include_tag "application"      
+      = javascript_include_tag "application"
+      = javascript_include_tag "//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" 
