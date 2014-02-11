@@ -89,6 +89,7 @@ $("document").ready(function(){
     });
   
   $("table#invitation thead th:last").data("sorter", false).data("filter", false);
+  $("table#invitation thead th:first").data("sorter", false).data("filter", false);
   
   $("table#invitation").tablesorter({
     theme : "bootstrap",
@@ -99,8 +100,8 @@ $("document").ready(function(){
       zebra : ["even", "odd"],
       filter_reset : ".reset",
       filter_functions : {
-              0 : true,
-              2 : true,
+              1 : true,
+              3 : true,
               3 : true,
               4 : true,
               5 : true,

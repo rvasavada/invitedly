@@ -107,7 +107,7 @@ class InvitationsController < ApplicationController
     def invitation_params
       params.require(:invitation).permit(:message,
         household_attributes: [:id, :name, :email, :notes,
-          guests_attributes: [:id, :title, :first_name, :last_name, :_destroy,
+          guests_attributes: [:id, :title, :first_name, :last_name, :tag_list, :_destroy,
           rsvps_attributes: [:id, :event_id, :visibility, :response, :invitation_id]]])
     end
   

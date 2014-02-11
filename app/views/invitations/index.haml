@@ -14,6 +14,7 @@
         %table.table.table-striped.table-hover.table-condensed#invitation
           %thead
             %tr
+              %th Tags
               %th Family name
               %th Guest name
               - @occasion.events.each do |event|
@@ -23,6 +24,9 @@
             - @invitations.each do |invitation|
               - invitation.household.guests.each do |guest|
                 %tr
+                  %td
+                    - guest.tag_list.each do |t| 
+                      %span.label.label-info=t
                   %td= invitation.household.name
                   %td
                     %strong{class: invitation.status == "Responded" ? "text-success" : ""}=guest.full_name
