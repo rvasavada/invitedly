@@ -36,9 +36,9 @@ class EventsController < ApplicationController
   end
 
   def create
-    @occasion = Occasion.friendly.find(params[:occasion_id])    
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    params[:event][:start_time] = DateTime.parse(params[:event][:start_time])   
     @event = @occasion.events.new(event_params)
-
     if @event.save
       unless params[:commit] == "Save & Add more" 
         redirect_to occasion_events_path(@occasion), notice: 'Event was successfully created.'
@@ -54,7 +54,7 @@ class EventsController < ApplicationController
 
   def update
     @occasion = Occasion.friendly.find(params[:occasion_id])    
-    
+    params[:event][:start_time] = DateTime.parse(params[:event][:start_time])
     if @event.update(event_params)
       unless params[:commit] == "Save & Add more" 
         redirect_to occasion_events_path(@occasion), notice: 'Event was successfully updated.'

@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui-1.10.3.custom.min
-//= require jquery.timepicker.min
+//= require jquery.datetimepicker
 //= require jquery.tablesorter.min
 //= require jquery.tablesorter.widgets.min
 //= require cocoon
@@ -23,13 +23,21 @@ $("document").ready(function(){
     
 	//calendar feature on new events
 	$(document).ready(function(){	
-		$('.datepicker').datepicker({
-			dateFormat: "M d, yy"
+		$('.datepicker').datetimepicker({
+    	timepicker:false,
+			format: "M d, Y"
 			});
 	});
   
-	$('#spinner').timepicker({ 'scrollDefaultNow': true });
-
+  $('#spinner').datetimepicker({
+    datepicker:false,
+    step:30,
+    format:'g:i A',
+    formatTime:'g:i A',
+    timepicker: true,
+    lang: 'en'
+  });
+  
 	$('.event-info').popover({placement:'top'});
 	
 	$("#countrySelect").change(function() {

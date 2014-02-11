@@ -11,7 +11,7 @@
  *= require_self
  *= require theme.bootstrap
  *= require jquery-ui-1.10.3.custom.min
- *= require jquery.timepicker.css
+ *= require jquery.datetimepicker.css
  *= require custom
  *= require_tree .
  */

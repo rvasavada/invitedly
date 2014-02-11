@@ -30,7 +30,7 @@
             .col-lg-6
               %h3{style:"margin-top:0px;margin-bottom:0px;"}=event.name
               %p.text-muted{style:"margin-top:0px;"}
-                = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time}"
+                = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time.strftime('%l:%M%P')}"
                 %br
                 - unless event.address_1.blank?
                   = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
