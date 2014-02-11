@@ -30,7 +30,7 @@
                     %br
                     %small="Last updated #{time_ago_in_words(invitation.updated_at)} ago"
                   - @occasion.events.each do |event|
-                    - rsvp = guest.rsvps.where(:event_id => event.id).first
+                    - rsvp = guest.rsvps.where(:event_id => event.id, :visibility => true).first
                     %td
                       - if rsvp.present?
                         %p{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}=rsvp.response

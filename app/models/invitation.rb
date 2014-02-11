@@ -13,7 +13,9 @@ class Invitation < ActiveRecord::Base
   has_many :events, :through => :rsvps
 
   validates_presence_of :occasion_id
-
+  
+  default_scope {order('updated_at DESC')}
+  
   def self.to_csv(occasion, options = {})
     CSV.generate(options) do |csv|
       cols = ["Family Name", "Email", "Notes", "Title", "First Name", "Last Name", "Full Name","Invitation Status"]
