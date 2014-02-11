@@ -4,9 +4,9 @@ class Guest < ActiveRecord::Base
   belongs_to :household
 
   has_many :rsvps, :dependent => :destroy
-  accepts_nested_attributes_for :rsvps, :reject_if => :all_blank, :allow_destroy => true
+  accepts_nested_attributes_for :rsvps, :allow_destroy => true
   
-  has_many :events, :through => :rsvps  
+  has_many :events, :through => :rsvps
   
   def full_name
     "#{title} #{first_name} #{last_name}"
@@ -32,7 +32,7 @@ class Guest < ActiveRecord::Base
           household = Household.create!(name: "#{row[3]} #{row[4]} #{row[5]}",user_id: user.id, :email => row[1], :notes => row[2])
         end
         
-        guest = Guest.create!(:user_id => user.id, :household_id => household.id, :title => row[3], :first_name => row[4], :last_name => row[5])
+        guest = Guest.find_or_create_by_household_id_and_title_and_first_name_and_last_name(:household_id => household.id, :title => row[3], :first_name => row[4], :last_name => row[5], :user_id => user.id)
         
         invitation = Invitation.find_or_create_by_household_id_and_occasion_id(:household_id => household.id, :occasion_id => occasion.id)
         
@@ -41,7 +41,7 @@ class Guest < ActiveRecord::Base
           if row[$i].present?
             event = Event.find_by_name_and_occasion_id(events[$i],occasion.id)
             if event.present?
-              Rsvp.create!(event_id: event.id, guest_id: guest.id, visibility: true, invitation_id: invitation.id)
+              Rsvp.find_or_create_by_event_id_and_guest_id!(event_id: event.id, guest_id: guest.id, visibility: true, invitation_id: invitation.id)
             end
           end
           $i += 1

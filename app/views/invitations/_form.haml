@@ -1,14 +1,13 @@
 = form_for [@occasion,@invitation], :html => {:role =>"form"} do |f|
-  =@invitation.errors.inspect
   .panel.panel-default
     .panel-body
       %legend Guest information
       = f.fields_for :household, @household do |household|
         .row
           .col-lg-9
-            .form-group{class: @invitation.errors.include?(:name) ? 'has-error' : ''}
+            .form-group{class: household.object.errors.include?(:name) ? 'has-error' : ''}
               %span.help-block
-                %strong= @invitation.errors.get(:name).present? ? "Group name #{@invitation.errors.get(:name).join('; ')}" : ""
+                %strong= household.object.errors.get(:name).present? ? "Group name #{household.object.errors.get(:name).join('; ')}" : ""
               = household.text_field :name, placeholder: "Group Name", :autofocus => true, :maxlength => 50, class: "form-control input-lg"
               %span.help-block
                 This name is private and won't be shared with the guests.
@@ -17,7 +16,7 @@
               = household.label :guests, "Guest names"
               %span.help-block= "If you don't know a guest's name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank."
               #guests
-                = household.fields_for :guests, @guests do |guest|
+                = household.fields_for :guests do |guest|
                   = render 'guest_fields', :f => guest
                 .form-group
                   = link_to_add_association 'Add Guest', household, :guests, :class => "btn btn-primary"

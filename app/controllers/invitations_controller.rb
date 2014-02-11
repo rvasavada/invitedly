@@ -1,5 +1,5 @@
 class InvitationsController < ApplicationController
-  before_action :set_invitation, only: [:show, :edit, :update, :destroy]
+  before_action :set_invitation, only: [:edit, :update, :destroy]
   before_filter :authenticate_user!
   before_filter :verify_occasion_ownership, only: [:index]
   
@@ -15,18 +15,15 @@ class InvitationsController < ApplicationController
   
   def new
     @occasion = Occasion.friendly.find(params[:occasion_id]) 
-    
     @title = Title.all
+    
     @invitation = @occasion.invitations.build
-    
     @household = current_user.households.new
-    @household.guests.build
-    
+    @guest = @household.guests.build
+    @rsvps = []
     @occasion.events.each do |event|
-      @invitation.rsvps.build(:event_id => event.id)      
+      @rsvps.push(Rsvp.new(:event_id => event.id))
     end
-    
-    @rsvps = @invitation.rsvps
   end
   
   def edit
@@ -42,17 +39,27 @@ class InvitationsController < ApplicationController
       end
     end
     
+    @rsvps = []
+    @occasion.events.each do |event|
+      @rsvps.push(Rsvp.new(:event_id => event.id))
+    end
+    
   end
   
   def create
     @occasion = Occasion.friendly.find(params[:occasion_id])
     
     @invitation = @occasion.invitations.new(invitation_params)
-
+    current_user.household.new()
+    @invitation.household.user_id = current_user.id
+    
+    @invitation.guests.each do |guest|
+      guest.user_id = current_user.id
+    end
+    
     if @invitation.save
       redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully created.'
     else
-      @response = ResponseType.all
       @title = Title.all
       render action: 'new'
     end
@@ -60,8 +67,10 @@ class InvitationsController < ApplicationController
   
   def update
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    @invitation.household.rsvps.each do |rsvp|
-      rsvp.invitation_id = @invitation.id
+    @invitation.household.user_id = current_user.id
+    
+    @invitation.guests.each do |guest|
+      guest.user_id = current_user.id
     end
 
     if @invitation.update(invitation_params)
