@@ -24,7 +24,7 @@
               = f.label :start_time, class: "control-label" do
                 Event Time
                 %span{style: "color:red"}*
-              = f.text_field :start_time, :id => "spinner", :class => "form-control"
+              = f.text_field :start_time, :value => f.object.start_time.present? ? f.object.start_time.strftime('%l:%M %p') : '',:id => "spinner", :class => "form-control"
               %span.help-block= @event.errors.get(:start_time).join('; ')
         .form-group{class: @event.errors.include?(:description) ? 'has-error' : ''}
           = f.label :description, class: "control-label" do
