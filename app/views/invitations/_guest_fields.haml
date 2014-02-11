@@ -14,7 +14,7 @@
               = f.text_field :last_name, :maxlength => 50, class: "form-control", :placeholder => "Last name"
           
         = f.label :rsvps, "Invited to the following events:"
-        = f.fields_for :rsvps, @rsvps do |rsvp|
+        = f.fields_for :rsvps do |rsvp|
           = rsvp.hidden_field(:event_id)
           .checkbox
             = rsvp.check_box :visibility

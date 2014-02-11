@@ -16,7 +16,6 @@ class InvitationsController < ApplicationController
   def new
     @occasion = Occasion.friendly.find(params[:occasion_id]) 
     
-    @response = ResponseType.all
     @title = Title.all
     @invitation = @occasion.invitations.build
     
@@ -33,7 +32,6 @@ class InvitationsController < ApplicationController
   def edit
     @occasion = Occasion.friendly.find(params[:occasion_id]) 
     
-    @response = ResponseType.all
     @title = Title.all
     @household = @invitation.household
     @guests = @household.guests
