@@ -14,8 +14,6 @@
         %table.table.table-striped.table-hover.table-condensed#invitation
           %thead
             %tr
-              %th Tags
-              %th Family name
               %th Guest name
               - @occasion.events.each do |event|
                 %th=event.name
@@ -25,14 +23,14 @@
               - invitation.household.guests.each do |guest|
                 %tr
                   %td
-                    - guest.tag_list.each do |t| 
-                      %span.label.label-info=t
-                  %td= invitation.household.name
-                  %td
                     %strong{class: invitation.status == "Responded" ? "text-success" : ""}=guest.full_name
                     %span.label.label-default
                     %br
                     %small="Last updated #{time_ago_in_words(invitation.updated_at)} ago"
+                    %br
+                    %span.label.label-info= invitation.household.name
+                    - guest.tag_list.each do |t| 
+                      %span.label.label-info=t
                   - @occasion.events.each do |event|
                     - rsvp = guest.rsvps.where(:event_id => event.id, :visibility => true).first
                     %td
