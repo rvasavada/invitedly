@@ -32,7 +32,7 @@
                     - guest.tag_list.each do |t| 
                       %span.label.label-info=t
                   - @occasion.events.each do |event|
-                    - rsvp = guest.rsvps.where(:event_id => event.id, :visibility => true).first
+                    - rsvp = guest.rsvps.where(:event_id => event.id).first
                     %td
                       - if rsvp.present?
                         %p{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}=rsvp.response

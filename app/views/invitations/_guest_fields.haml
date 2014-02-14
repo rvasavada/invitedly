@@ -1,30 +1,16 @@
 .nested-fields
-  .well
-    .row
-      .col-sm-9
-        .row
-          .col-sm-3
-            .form-group
-              = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control"})
-          .col-sm-4
-            .form-group
-              = f.text_field :first_name, class: "form-control", :placeholder => "First name"
-          .col-sm-5
-            .form-group
-              = f.text_field :last_name, class: "form-control", :placeholder => "Last name"
-          
-        = f.label :rsvps, "Invited to the following events:"
-        
-        = f.fields_for :rsvps do |rsvp|
-          = rsvp.hidden_field(:event_id)
-          .checkbox
-            = rsvp.check_box :visibility
-            = rsvp.label :visibility, Event.find(rsvp.object.event_id).name, class: "control-label"
-      .col-sm-3
-        .form-group
-          = link_to_remove_association "Remove guest", f, :class => "btn btn-danger btn-block"
-    .form-group
-      = f.label :tag_list, "Tags (separated by commas)"
-      = f.text_field :tag_list, class: "form-control", :placeholder => "Bride, Groom, Tier 1, etc."
-      
-      
+  .row
+    .col-sm-9
+      .row
+        .col-sm-3
+          .form-group
+            = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control"})
+        .col-sm-4
+          .form-group
+            = f.text_field :first_name, class: "form-control", :placeholder => "First name"
+        .col-sm-5
+          .form-group
+            = f.text_field :last_name, class: "form-control", :placeholder => "Last name"
+    .col-sm-3
+      .form-group
+        = link_to_remove_association "Remove guest", f, :class => "btn btn-danger btn-block"

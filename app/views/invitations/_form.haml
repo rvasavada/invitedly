@@ -2,13 +2,17 @@
   .panel.panel-default
     .panel-body
       %legend Guest information
+      .form-group
+        = label_tag :tag_list, "Tags (separated by commas)"
+        = text_field_tag :tag_list, @tags, class: "form-control", :placeholder => "Bride, Groom, Tier 1, etc."
+        
       = f.fields_for :household, @household do |household|
         .row
           .col-lg-9
             .form-group{class: household.object.errors.include?(:name) ? 'has-error' : ''}
               %span.help-block
-                %strong= household.object.errors.get(:name).present? ? "Group name #{household.object.errors.get(:name).join('; ')}" : ""
-              = household.text_field :name, placeholder: "Group Name", :autofocus => true, :maxlength => 50, class: "form-control input-lg"
+                %strong= household.object.errors.get(:name).present? ? "Invitation name #{household.object.errors.get(:name).join('; ')}" : ""
+              = household.text_field :name, placeholder: "Invitation Name", :autofocus => true, :maxlength => 50, class: "form-control input-lg"
               %span.help-block
                 This name is private and won't be shared with the guests.
           
@@ -21,15 +25,24 @@
                 .form-group
                   = link_to_add_association 'Add Guest', household, :guests, :class => "btn btn-primary"
           
-            .form-group
+            #guest_email.form-group
               = household.label :email, class: "control-label"
               = household.text_field :email, :maxlength => 50, class: "form-control"
               %span.help-block You can optionally add an email address.
         
-            .form-group
+            #guest_notes.form-group
               = household.label :notes, class: "control-label"
               = household.text_area :notes, {:rows => 5, :maxlength => 500, class: "form-control"}
               %span.help-block These notes are private and won't be shared with the guests.
-
+  .panel.panel-default
+    .panel-body
+      %legend Events
+      %strong Guests are invited to the following events:
+      
+      - for event in @events
+        .checkbox
+          = check_box_tag 'events[]', event.id, @invitation.events.where(:id => event.id).present? || @event_invites.index(event.id.to_s), :id => "events_#{event.id}"
+          = label_tag "events_#{event.id}", event.name, class: "control-label"
+          
   .form-group.pull-right
     = f.submit "Save", :class => "btn btn-success btn-lg"
