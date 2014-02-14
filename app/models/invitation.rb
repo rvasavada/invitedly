@@ -7,10 +7,11 @@ class Invitation < ActiveRecord::Base
   belongs_to :household
   accepts_nested_attributes_for :household, :allow_destroy => true
   
-  has_many :rsvps, :through => :guests
-  has_many :events, :through => :rsvps
+  has_many :rsvps, :dependent => :destroy
+  accepts_nested_attributes_for :rsvps, :allow_destroy => true
     
   belongs_to :occasion
+  has_many :events, :through => :rsvps
   has_many :guests, :through => :household
   validates_presence_of :occasion_id
   

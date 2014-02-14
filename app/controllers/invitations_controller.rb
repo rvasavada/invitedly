@@ -16,76 +16,76 @@ class InvitationsController < ApplicationController
   def new
     @occasion = Occasion.friendly.find(params[:occasion_id]) 
     @title = Title.all
-
+    
     @invitation = @occasion.invitations.build
     @household = current_user.households.new
     @guest = @household.guests.build
-    
-    @events = @occasion.events
-    @event_invites = params[:events].blank? ? '' : params[:events]
+    @rsvps = []
+    @occasion.events.each do |event|
+      @rsvps.push(Rsvp.new(:event_id => event.id))
+    end
   end
   
   def edit
-    @occasion = Occasion.friendly.find(params[:occasion_id])
-    @title = Title.all
+    @occasion = Occasion.friendly.find(params[:occasion_id]) 
     
-    #tag list
-    @tags = params[:tag_list].blank? ? [] : params[:tag_list]
-    @invitation.guests.each do |guest|
-      @tags.push(guest.tag_list.join(', '))
+    @title = Title.all
+    @household = @invitation.household
+    @guests = @household.guests
+    
+    @guests.each do |guest|
+      (@occasion.events - guest.events).each do |event|
+        guest.rsvps.build(:event_id => event.id)
+      end
     end
     
-    @events = @occasion.events
-    @event_invites = params[:events].blank? ? '' : params[:events]
+    @rsvps = []
+    @occasion.events.each do |event|
+      @rsvps.push(Rsvp.new(:event_id => event.id))
+    end
+    
   end
   
   def create
     @occasion = Occasion.friendly.find(params[:occasion_id])
+    
     @invitation = @occasion.invitations.new(invitation_params)
-    @tags = params[:tag_list]
+    current_user.household.new()
     @invitation.household.user_id = current_user.id
-    @event_invites = params[:events].blank? ? [] : params[:events]
-        
-    @invitation.household.guests.each do |guest|
-      @event_invites.each do |event|
-        guest.rsvps.new(:event_id => event.to_i)
-        guest.user_id = current_user.id
-        guest.tag_list = @tags
-      end
+    
+    @invitation.guests.each do |guest|
+      guest.user_id = current_user.id
     end
-        
+    
     if @invitation.save
       redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully created.'
     else
       @title = Title.all
-      @events = @occasion.events
-      render action: 'new'      
+      render action: 'new'
     end
   end
   
   def update
-    
     @occasion = Occasion.friendly.find(params[:occasion_id])
-    @event_invites = @occasion.events.find(params[:events])
-    @event_uninvites = @occasion.events - @event_invites
-    @tags = params[:tag_list]
+    @invitation.household.user_id = current_user.id
     
-    @invitation.household.guests.each do |guest|
-      @event_invites.each do |event|
-        guest.rsvps.find_or_create_by_event_id(event.id)
-        guest.user_id = current_user.id
-        guest.tag_list.add(@tags, parse: true)
-      end
-      @event_uninvites.each do |event|
-        guest.rsvps.find_by_event_id(event.id).destroy
-      end 
+    @invitation.guests.each do |guest|
+      guest.user_id = current_user.id
     end
 
     if @invitation.update(invitation_params)
       redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully updated.'
-    else
+    else      
+      @response = ResponseType.all
       @title = Title.all
-      @events = @occasion.events
+      @household = @invitation.household
+      
+      (@occasion.events-@invitation.events).each do |event|
+        @invitation.rsvps.build(:event_id => event.id)      
+      end
+    
+      @rsvps = @invitation.rsvps
+      
       render action: 'edit' 
     end
   end
@@ -107,7 +107,8 @@ class InvitationsController < ApplicationController
     def invitation_params
       params.require(:invitation).permit(:message,
         household_attributes: [:id, :name, :email, :notes,
-          guests_attributes: [:id, :title, :first_name, :last_name, :_destroy]])
+          guests_attributes: [:id, :title, :first_name, :last_name, :tag_list, :_destroy,
+          rsvps_attributes: [:id, :event_id, :visibility, :response, :invitation_id]]])
     end
   
 end
