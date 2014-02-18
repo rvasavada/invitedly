@@ -6,9 +6,9 @@ class ApplicationController < ActionController::Base
   protected
   
   def verify_occasion_ownership
-    #@occasion = Occasion.friendly.find(params[:occasion_id])
-    #unless current_user.id == @occasion.user_id
-    #  redirect_to root_url, alert: "Sorry, you're not allowed to see that page!"
-    #end
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    unless current_user.id == @occasion.user_id || current_user == User.find(1)
+      redirect_to root_url, alert: "Sorry, you're not allowed to see that page!"
+    end
   end
 end
