@@ -73,7 +73,8 @@ class InvitationsController < ApplicationController
         guest.user_id = current_user.id
       end
       @event_uninvites.each do |event|
-        guest.rsvps.find_by_event_id(event.id).destroy
+        rsvp = guest.rsvps.find_by_event_id(event.id)
+        rsvp.destroy if rsvp
       end
     end
 

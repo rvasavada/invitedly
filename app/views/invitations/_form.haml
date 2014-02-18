@@ -41,7 +41,7 @@
       %strong Guests are invited to the following events:
       - for event in @events
         .checkbox
-          = check_box_tag 'events[]', event.id, @invitation.events.find_by_id(event.id).present? || @event_invites.index(event.id.to_s), :id => "events_#{event.id}"
+          = check_box_tag 'events[]', event.id, @invitation.events.find_by_id_and_visibility(event.id,true).present? || @event_invites.index(event.id.to_s), :id => "events_#{event.id}"
           = label_tag "events_#{event.id}", event.name, class: "control-label"
 
   .form-group.pull-right
