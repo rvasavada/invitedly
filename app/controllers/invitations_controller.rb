@@ -42,7 +42,7 @@ class InvitationsController < ApplicationController
     
     @invitation.household.guests.each do |guest|
       @event_invites.each do |event|
-        guest.rsvps.new(:event_id => event.to_i, :visibility => true)
+        guest.rsvps.new(:event_id => event.to_i)
         guest.user_id = current_user.id
       end
       @event_uninvites.each do |event|
@@ -69,7 +69,7 @@ class InvitationsController < ApplicationController
     
     @invitation.household.guests.each do |guest|
       @event_invites.each do |event|
-        guest.rsvps.find_or_create_by_event_id(event.id, :visibility => true)
+        guest.rsvps.find_or_create_by_event_id(event.id)
         guest.user_id = current_user.id
       end
       @event_uninvites.each do |event|

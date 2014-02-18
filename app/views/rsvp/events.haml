@@ -15,7 +15,7 @@
       %ul.list-group
         %li.list-group-item      
           - @occasion.events.each_with_index do |event,index|
-            - if @invitation.rsvps.where(:event_id => event.id, visibility: true).present?
+            - if @invitation.rsvps.where(:event_id => event.id).present?
               .row{style: index != 0 ? "margin-top:30px;" : ""}
                 .col-lg-6
                   %h3{style:"margin-top:0px;margin-bottom:0px;"}=event.name
@@ -36,7 +36,7 @@
                         %th{style:"width:50%"} Guest name
                         %th{style:"width:50%"} Response
                     %tbody
-                      = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id, visibility: true) do |rsvp|
+                      = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id) do |rsvp|
                         - if rsvp.object.guest.first_name != "" && rsvp.object.guest.last_name != ""
                           %tr
                             %td= rsvp.object.guest.full_name
