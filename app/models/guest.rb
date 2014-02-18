@@ -28,12 +28,13 @@ class Guest < ActiveRecord::Base
       else  
         if row[1].present?
           household = Household.find_or_create_by_name_and_user_id(row[1],user.id, :email => row[2], :notes => row[3])
+          household.tag_list.add(row[0], parse: true)
         else
           household = Household.find_or_create_by_name_and_user_id(name: "#{row[4]} #{row[5]} #{row[6]}",user_id: user.id, :email => row[2], :notes => row[3])
+          household.tag_list.add(row[0], parse: true)
         end
         
         guest = Guest.find_or_create_by_household_id_and_title_and_first_name_and_last_name(household.id, row[4], row[5], row[6], :user_id => user.id)
-        guest.tag_list.add(row[0], parse: true)
         guest.save
         
         invitation = Invitation.find_or_create_by_household_id_and_occasion_id(household.id, occasion.id)

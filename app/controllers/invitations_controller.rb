@@ -19,48 +19,44 @@ class InvitationsController < ApplicationController
     
     @invitation = @occasion.invitations.build
     @household = current_user.households.new
-    @guest = @household.guests.build
-    @rsvps = []
-    @occasion.events.each do |event|
-      @rsvps.push(Rsvp.new(:event_id => event.id))
-    end
+    @household.guests.build
+    @events = @occasion.events
+    @event_invites = ''
   end
   
   def edit
-    @occasion = Occasion.friendly.find(params[:occasion_id]) 
-    
+    @occasion = Occasion.friendly.find(params[:occasion_id])
     @title = Title.all
-    @household = @invitation.household
-    @guests = @household.guests
-    
-    @guests.each do |guest|
-      (@occasion.events - guest.events).each do |event|
-        guest.rsvps.build(:event_id => event.id)
-      end
-    end
-    
-    @rsvps = []
-    @occasion.events.each do |event|
-      @rsvps.push(Rsvp.new(:event_id => event.id))
-    end
-    
+
+    @events = @occasion.events
+    @event_invites = params[:events].blank? ? '' : params[:events]
   end
-  
+   
   def create
     @occasion = Occasion.friendly.find(params[:occasion_id])
     
     @invitation = @occasion.invitations.new(invitation_params)
-    current_user.household.new()
     @invitation.household.user_id = current_user.id
+    @event_invites = params[:events].blank? ? [] : params[:events]
+    @event_uninvites = @occasion.events - @event_invites
     
-    @invitation.guests.each do |guest|
-      guest.user_id = current_user.id
+    @invitation.household.guests.each do |guest|
+      @event_invites.each do |event|
+        guest.rsvps.new(:event_id => event.to_i)
+        guest.user_id = current_user.id
+      end
+      @event_uninvites.each do |event|
+        rsvp = guest.rsvps.find_by_event_id(event.id)
+        rsvp.destroy if rsvp
+      end
     end
     
     if @invitation.save
       redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully created.'
     else
       @title = Title.all
+      @events = @occasion.events
+      
       render action: 'new'
     end
   end
@@ -68,23 +64,24 @@ class InvitationsController < ApplicationController
   def update
     @occasion = Occasion.friendly.find(params[:occasion_id])
     @invitation.household.user_id = current_user.id
+    @event_invites = @occasion.events.find(params[:events])
+    @event_uninvites = @occasion.events - @event_invites
     
-    @invitation.guests.each do |guest|
-      guest.user_id = current_user.id
+    @invitation.household.guests.each do |guest|
+      @event_invites.each do |event|
+        guest.rsvps.find_or_create_by_event_id(event.id)
+        guest.user_id = current_user.id
+      end
+      @event_uninvites.each do |event|
+        guest.rsvps.find_by_event_id(event.id).destroy
+      end
     end
 
     if @invitation.update(invitation_params)
       redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully updated.'
     else      
-      @response = ResponseType.all
       @title = Title.all
-      @household = @invitation.household
-      
-      (@occasion.events-@invitation.events).each do |event|
-        @invitation.rsvps.build(:event_id => event.id)      
-      end
-    
-      @rsvps = @invitation.rsvps
+      @events = @occasion.events
       
       render action: 'edit' 
     end
@@ -106,9 +103,8 @@ class InvitationsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def invitation_params
       params.require(:invitation).permit(:message,
-        household_attributes: [:id, :name, :email, :notes,
-          guests_attributes: [:id, :title, :first_name, :last_name, :tag_list, :_destroy,
-          rsvps_attributes: [:id, :event_id, :visibility, :response, :invitation_id]]])
+        household_attributes: [:id, :name, :email, :notes, :tag_list,
+          guests_attributes: [:id, :title, :first_name, :last_name, :_destroy]])
     end
   
 end

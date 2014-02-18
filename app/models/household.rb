@@ -1,4 +1,6 @@
 class Household < ActiveRecord::Base
+  acts_as_taggable
+  
   has_many :guests, :dependent => :destroy
   accepts_nested_attributes_for :guests, :allow_destroy => true
   
