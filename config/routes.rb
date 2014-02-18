@@ -19,6 +19,8 @@ Invitedly::Application.routes.draw do
     resources :guests do
       post 'import', on: :collection
     end
+    
+    get 'guestbook' => 'occasions#guestbook'  
         
     resources :invitations, :except => [:show] do
       resources :rsvp

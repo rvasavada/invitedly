@@ -49,6 +49,11 @@ class OccasionsController < ApplicationController
     end
   end
   
+  def guestbook
+    @occasion = Occasion.friendly.find(params[:occasion_id])
+    @invitations = @occasion.invitations.where("message IS NOT NULL OR message != ''")
+  end
+  
   protected
   
     def verify_ownership
