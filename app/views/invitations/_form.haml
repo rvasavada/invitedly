@@ -1,48 +1,44 @@
 = form_for [@occasion,@invitation], :html => {:role =>"form"} do |f|
-  .panel.panel-default
-    .panel-body
-      %legend Guest information
-      = f.fields_for :household, @household do |household|
+
+  = f.fields_for :household, @household do |household|
+    .panel.panel-default
+      .panel-body
+        %legend Guest information
         .row
           .col-lg-9
             .form-group{class: household.object.errors.include?(:name) ? 'has-error' : ''}
               %span.help-block
                 %strong= household.object.errors.get(:name).present? ? "Group name #{household.object.errors.get(:name).join('; ')}" : ""
               = household.text_field :name, placeholder: "Group Name", :autofocus => true, :maxlength => 50, class: "form-control input-lg"
-              %span.help-block
-                This name is private and won't be shared with the guests.
-          
-            .form-group
-              = household.label :guests, "Guest names"
-              %span.help-block= "If you don't know a guest's name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank."
-              #guests
-                = household.fields_for :guests do |guest|
-                  = render 'guest_fields', :f => guest
-                .form-group
-                  = link_to_add_association 'Add Guest', household, :guests, :class => "btn btn-primary"
-          
+              %span.help-block This name is private and won't be shared with the guests.
+      
             .form-group
               = household.label :email, class: "control-label"
               = household.text_field :email, :maxlength => 50, class: "form-control"
               %span.help-block You can optionally add an email address.
-        
+    
             .form-group
               = household.label :notes, class: "control-label"
               = household.text_area :notes, {:rows => 5, :maxlength => 500, class: "form-control"}
               %span.help-block These notes are private and won't be shared with the guests.
-              
+          
             .form-group
               = household.label :tag_list, "Tags (separated by commas)"
               = household.text_field :tag_list, class: "form-control", :placeholder => "Bride, Groom, Tier 1, etc."
+              -#%span.help-block= "If you don't know a guest's name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank."
 
-  .panel.panel-default
-    .panel-body
-      %legend Events
-      %strong Guests are invited to the following events:
-      - for event in @events
-        .checkbox
-          = check_box_tag 'events[]', event.id, @invitation.events.find_by_id(event.id).present? || @event_invites.index(event.id.to_s), :id => "events_#{event.id}"
-          = label_tag "events_#{event.id}", event.name, class: "control-label"
+    .panel.panel-default
+      .panel-body
+        #guests
+          = household.fields_for :guests do |guest|
+            = render 'guest_fields', :f => guest
+          = link_to_add_association 'Add Guest', household, :guests, :class => "btn btn-primary"
+    %legend Events
+    %strong Guests are invited to the following events:
+    -#- for event in @events
+      .checkbox
+        = check_box_tag 'events[]', event.id, @invitation.events.find_by_id(event.id).present? || @event_invites.index(event.id.to_s), :id => "events_#{event.id}"
+        = label_tag "events_#{event.id}", event.name, class: "control-label"
 
   .form-group.pull-right
     = f.submit "Save", :class => "btn btn-success btn-lg"

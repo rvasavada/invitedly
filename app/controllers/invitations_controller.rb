@@ -1,7 +1,7 @@
 class InvitationsController < ApplicationController
   before_action :set_invitation, only: [:edit, :update, :destroy]
   before_filter :authenticate_user!
-  before_filter :verify_occasion_ownership, only: [:index]
+  before_filter :verify_occasion_ownership, only: [:index,:new,:edit]
   
   def index
     @occasion = Occasion.friendly.find(params[:occasion_id]) 

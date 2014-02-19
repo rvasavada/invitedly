@@ -1,8 +1,8 @@
 class OccasionsController < ApplicationController
   before_action :set_occasion, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, only: [:edit, :new]
-  before_filter :verify_ownership, only: [:edit, :new]
-
+  before_filter :verify_occasion_ownership, only: [:edit]
+  
   def index
     @occasions = current_user.occasions
   end
@@ -15,7 +15,7 @@ class OccasionsController < ApplicationController
 
   def new
     if current_user.occasion.present?
-      redirect_to current_user.occasion, notice: 'Sorry, you can\'t have more than one wedding...yet!'
+      redirect_to current_user.occasion, alert: 'Sorry, you can\'t have more than one occasion...yet!'
     end
     @occasion = Occasion.new
   end
@@ -53,15 +53,6 @@ class OccasionsController < ApplicationController
     @occasion = Occasion.friendly.find(params[:occasion_id])
     @invitations = @occasion.invitations.where("message IS NOT NULL OR message != ''")
   end
-  
-  protected
-  
-    def verify_ownership
-      @occasion = Occasion.friendly.find(params[:id])
-      unless current_user.id == @occasion.user_id
-        redirect_to root_url, alert: "Sorry, you're not allowed to see that page!"
-      end
-    end
 
   private
     # Use callbacks to share common setup or constraints between actions.

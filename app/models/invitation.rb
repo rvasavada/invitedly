@@ -4,7 +4,7 @@ class Invitation < ActiveRecord::Base
   friendly_id :occasion_id, use: :slugged
   before_create :create_unique_slug
   
-  belongs_to :household
+  belongs_to :household, -> { includes(:guests) }
   accepts_nested_attributes_for :household, :allow_destroy => true
   
   has_many :rsvps, :dependent => :destroy

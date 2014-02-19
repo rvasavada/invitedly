@@ -12,27 +12,19 @@ class EventsController < ApplicationController
   end
 
   def show
-    @occasion = Occasion.friendly.find(params[:occasion_id])
-    @event = Event.friendly.find(params[:id])
-    
-    @invites = @event.rsvps
-    @attending = @invites.where(:response => "Attending")
-    @might_attend = @invites.where(:response => "Might Attend")
-    @not_attend = @invites.where(:response => "Not Attending")
-    @not_responded = @invites.where(:response => "Not Responded")
   end
 
   def new
-    @country = Country.all.order("name ASC")
-    @state = State.all.order("name ASC")
     @occasion = Occasion.friendly.find(params[:occasion_id])
     @event = @occasion.events.new
+    @country = Country.all
+    @state = State.all
   end
 
   def edit
-    @country = Country.all.order("name ASC")
-    @state = State.all.order("name ASC")
     @occasion = Occasion.friendly.find(params[:occasion_id])
+    @country = Country.all
+    @state = State.all
   end
 
   def create
@@ -40,14 +32,14 @@ class EventsController < ApplicationController
     params[:event][:start_time] = DateTime.parse(params[:event][:start_time])   
     @event = @occasion.events.new(event_params)
     if @event.save
-      unless params[:commit] == "Save & Add more" 
+      unless params[:commit] == "Save & Add more"
         redirect_to occasion_events_path(@occasion), notice: 'Event was successfully created.'
       else
-        redirect_to new_occasion_event_path(@occasion), notice: 'Event was successfully created.' 
+        redirect_to new_occasion_event_path(@occasion), notice: 'Event was successfully created.'
       end
     else
-      @country = Country.all.order("name ASC")
-      @state = State.all.order("name ASC")
+      @country = Country.all
+      @state = State.all
       render action: 'new' 
     end
   end
@@ -62,20 +54,16 @@ class EventsController < ApplicationController
         redirect_to new_occasion_event_path(@occasion), notice: 'Event was successfully updated.'
       end
     else
-      @country = Country.all.order("name ASC")
-      @state = State.all.order("name ASC")
+      @country = Country.all
+      @state = State.all
       render action: 'edit' 
     end
   end
 
   def destroy
-    @occasion = Occasion.friendly.find(params[:occasion_id])    
-    
+    @occasion = Occasion.friendly.find(params[:occasion_id])
     @event.destroy
-    respond_to do |format|
-      format.html { redirect_to occasion_events_path(@occasion)}
-      format.json { render :json => {id: @event.id, response: "Event was deleted."} }
-    end
+    redirect_to occasion_events_path(@occasion)
   end
 
   def manage_guestlist

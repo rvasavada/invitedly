@@ -28,30 +28,33 @@
                 %span.icon-bar
                 %span.icon-bar
               - if user_signed_in?
-                = link_to "Invitedly", occasion_invitations_path(current_user.occasion), class: "navbar-brand"
+                - if @occasion.present?
+                  = link_to "Invitedly", occasion_invitations_path(@occasion), class: "navbar-brand"
+                - else
+                  = link_to "Invitedly", root_url, class: "navbar-brand"
               - else
                 = link_to "Invitedly", root_url, class: "navbar-brand"
             / Collect the nav links, forms, and other content for toggling
             #bs-example-navbar-collapse-1.collapse.navbar-collapse
               %ul.nav.navbar-nav
                 - if user_signed_in? 
-                  - if current_user.occasion
-                    %li{class: "#{'active' if current_page?(occasion_events_path(current_user.occasion))}"}= link_to "Events", occasion_events_path(current_user.occasion)
-                    %li{class: "#{'active' if current_page?(occasion_invitations_path(current_user.occasion))}"}= link_to "Invitations", occasion_invitations_path(current_user.occasion)
-                    %li{class: "#{'active' if current_page?(occasion_guestbook_path(current_user.occasion))}"}= link_to "Guestbook", occasion_guestbook_path(current_user.occasion)
+                  - if @occasion.present?
+                    %li{class: "#{'active' if current_page?(occasion_events_path(@occasion))}"}= link_to "Events", occasion_events_path(@occasion)
+                    %li{class: "#{'active' if current_page?(occasion_invitations_path(@occasion))}"}= link_to "Invitations", occasion_invitations_path(@occasion)
+                    %li{class: "#{'active' if current_page?(occasion_guestbook_path(@occasion))}"}= link_to "Guestbook", occasion_guestbook_path(@occasion)
   
 
               %ul.nav.navbar-nav.navbar-right
                 - if user_signed_in? 
-                  - if current_user.occasion
-                    %li.dropdown{class: "#{'active' if current_page?(current_user.occasion)}"}
+                  - if @occasion.present?
+                    %li.dropdown{class: "#{'active' if current_page?(@occasion)}"}
                       %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
-                        =current_user.occasion.name
+                        =@occasion.name
   
                         %b.caret
                       %ul.dropdown-menu
-                        %li= link_to "Edit Occasion Details", edit_occasion_path(current_user.occasion)
-                        %li= link_to "Preview Occasion Page", occasion_path(current_user.occasion)
+                        %li= link_to "Edit Occasion Details", edit_occasion_path(@occasion)
+                        %li= link_to "Preview Occasion Page", occasion_path(@occasion)
                   - else
                     %li{class: "#{'active' if current_page?(new_occasion_path)}"}= link_to "New Occasion", new_occasion_path
                 - if user_signed_in? 
