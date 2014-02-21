@@ -1,7 +1,7 @@
 class GuestsController < ApplicationController
+  before_action :set_occasion
 
   def import
-    @occasion = Occasion.friendly.find(params[:occasion_id])
     if params[:file].present?
       Guest.import(params[:file],@occasion,current_user)
       redirect_to occasion_invitations_path(@occasion), notice: "Guests imported."

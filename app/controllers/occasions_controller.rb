@@ -1,7 +1,7 @@
 class OccasionsController < ApplicationController
   before_action :set_occasion, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, only: [:edit, :new]
-  before_filter :verify_occasion_ownership, only: [:edit]
+  before_filter :verify_owner, only: [:edit]
   
   def index
     @occasions = current_user.occasions
@@ -14,18 +14,15 @@ class OccasionsController < ApplicationController
   end
 
   def new
-    if current_user.occasion.present?
-      redirect_to current_user.occasion, alert: 'Sorry, you can\'t have more than one occasion...yet!'
-    end
-    @occasion = Occasion.new
+    @occasion = current_user.occasions.build
   end
 
   def edit
   end
 
   def create
-    @occasion = Occasion.new(occasion_params)
-    @occasion.user_id = current_user.id
+    @occasion = current_user.occasions.build(occasion_params)
+    
     if @occasion.save
       redirect_to new_occasion_event_path(@occasion), notice: 'Great!  Your occasion was saved.  Now, let\'s add some events...'
     else
@@ -50,18 +47,28 @@ class OccasionsController < ApplicationController
   end
   
   def guestbook
-    @occasion = Occasion.friendly.find(params[:occasion_id])
+    @occasion = Occasion.find_by_slug(params[:occasion_id])
     @invitations = @occasion.invitations.where("message IS NOT NULL OR message != ''")
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_occasion
-      @occasion = Occasion.friendly.find(params[:id])
+      @occasion = Occasion.find_by_slug(params[:id])
+      Rails.logger.debug(@occasion.inspect)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def occasion_params
       params.require(:occasion).permit(:name, :description, :slug)
+    end
+    
+    def verify_owner
+      if params[:id].present?
+        @occasion = Occasion.find_by_slug(params[:id])
+        unless current_user == @occasion.user || current_user == User.find(1)
+          redirect_to root_url, alert: "Sorry, you're not allowed to see that page!"
+        end
+      end
     end
 end

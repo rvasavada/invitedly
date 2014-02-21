@@ -1,11 +1,11 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_occasion, only: [:show, :edit, :update, :destroy]
   
   before_filter :authenticate_user!
   before_filter :verify_occasion_ownership
   
   def index
-    @occasion = Occasion.friendly.find(params[:occasion_id])
     @response = ResponseType.all
     
     @events = @occasion.events
@@ -15,20 +15,17 @@ class EventsController < ApplicationController
   end
 
   def new
-    @occasion = Occasion.friendly.find(params[:occasion_id])
     @event = @occasion.events.new
     @country = Country.all
     @state = State.all
   end
 
   def edit
-    @occasion = Occasion.friendly.find(params[:occasion_id])
     @country = Country.all
     @state = State.all
   end
 
   def create
-    @occasion = Occasion.friendly.find(params[:occasion_id])
     params[:event][:start_time] = DateTime.parse(params[:event][:start_time])   
     @event = @occasion.events.new(event_params)
     if @event.save
@@ -61,13 +58,11 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @occasion = Occasion.friendly.find(params[:occasion_id])
     @event.destroy
     redirect_to occasion_events_path(@occasion)
   end
 
   def manage_guestlist
-    @occasion = Occasion.friendly.find(params[:occasion_id])
     @event = Event.friendly.find(params[:event_id])
     @guests = current_user.guests
     @uninvited = @event.guests 
@@ -78,7 +73,6 @@ class EventsController < ApplicationController
   end
   
   def destroy_invites
-    @occasion = Occasion.friendly.find(params[:occasion_id])
     @event = Event.friendly.find(params[:event_id])
     params[:guest_ids].each do |guest|
       @event.invitations.where(guest_id: guest).destroy_all
@@ -87,7 +81,6 @@ class EventsController < ApplicationController
   end
     
   def update_invites
-    @occasion = Occasion.friendly.find(params[:occasion_id])
     if params[:event_id].present?
       @event = Event.friendly.find(params[:event_id])
       invitations = []

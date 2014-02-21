@@ -1,9 +1,10 @@
 class RsvpController < ApplicationController
+  before_action :set_occasion
+  
   include Wicked::Wizard
   steps :guest_info, :events, :guestbook, :confirmation
 
   def show
-    @occasion = Occasion.friendly.find(params[:occasion_id])
     @invitation = Invitation.friendly.find(params[:invitation_id])
     
     case step
@@ -18,7 +19,7 @@ class RsvpController < ApplicationController
   
   def update
     @invitation = Invitation.friendly.find(params[:invitation_id])
-    @occasion = Occasion.friendly.find(params[:occasion_id])
+
     case step
     when :guest_info
       @invitation.update(invitation_params)
@@ -36,7 +37,6 @@ class RsvpController < ApplicationController
   end
   
   def verify_first_last_name
-    @occasion = Occasion.friendly.find(params[:occasion_id])
     if (params[:first_name].present? || params[:last_name].present?)
       @guests = User.find(@occasion.user_id).guests.where("LOWER(first_name) LIKE ? AND LOWER(last_name) LIKE ?",  "%#{params[:first_name].downcase}%", "%#{params[:last_name].downcase}%")
       if @guests.blank?
@@ -52,7 +52,7 @@ class RsvpController < ApplicationController
   
   def verify_email_address
     
-    @occasion = Occasion.friendly.find(params[:occasion_id])
+
     unless params[:email].blank?
       @guest = Guest.find_by_email(params[:email])
       if @guest.blank?

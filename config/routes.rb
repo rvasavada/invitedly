@@ -12,7 +12,7 @@ Invitedly::Application.routes.draw do
     :sessions => "users/sessions"
      }
   
-  resources :occasions, :except => [:index], :path => '' do
+  resources :occasions, :path => '' do
     match 'rsvp/verify_email_address' => 'rsvp#verify_email_address', :via => :post
     match 'rsvp/verify_first_last_name' => 'rsvp#verify_first_last_name', :via => :post
     
@@ -22,7 +22,8 @@ Invitedly::Application.routes.draw do
     
     get 'guestbook' => 'occasions#guestbook'  
         
-    resources :invitations, :except => [:show] do
+    resources :invitations do
+      resources :manage, controller: 'invitations/manage'
       resources :rsvp
     end
     

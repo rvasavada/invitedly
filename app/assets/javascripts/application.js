@@ -120,5 +120,6 @@ $("document").ready(function(){
   
   $(".tablesorter-filter").addClass("form-control input-sm");
   $(".tablesorter-filter.disabled").hide();
+  $("[data-toggle=tooltip]").tooltip();
   
 });

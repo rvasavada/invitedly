@@ -2,7 +2,7 @@
   %h1 Guestbook
   
   %ul.list-group
-    - unless @invitations.present?
+    - if @invitations.present?
       - @invitations.each do |invite|
         %li.list-group-item
           %strong= link_to invite.household.name, edit_occasion_invitation_path(@occasion, invite)
@@ -10,7 +10,6 @@
           =invite.message
           %br
           %small="#{time_ago_in_words(invite.updated_at)} ago"
-
     - else
       %li.list-group-item.text-center
         %strong No one has left you a message yet!

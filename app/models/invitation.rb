@@ -1,17 +1,12 @@
 class Invitation < ActiveRecord::Base
   extend FriendlyId
   
-  friendly_id :occasion_id, use: :slugged
-  before_create :create_unique_slug
+  friendly_id :random_hex_id, use: :scoped, :scope => :occasion
   
+  belongs_to :occasion
   belongs_to :household, -> { includes(:guests) }
   accepts_nested_attributes_for :household, :allow_destroy => true
   
-  has_many :rsvps, :dependent => :destroy
-  accepts_nested_attributes_for :rsvps, :allow_destroy => true
-    
-  belongs_to :occasion
-  has_many :events, :through => :guests
   has_many :guests, :through => :household
   validates_presence_of :occasion_id
   
@@ -54,10 +49,14 @@ class Invitation < ActiveRecord::Base
   end
 
 
-  protected
+  private
 
-  def create_unique_slug
-    self.slug = SecureRandom.hex
+  def random_hex_id
+    SecureRandom.hex(8)
+  end
+  
+  def active?
+    status == 'active'
   end
 
 end

@@ -5,10 +5,11 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   devise :omniauthable, :omniauth_providers => [:facebook]
   
-  has_one :occasion, :dependent => :destroy
-  has_many :events, :through => :occasion
-  has_many :guests
-  has_many :households
+  has_many :occasions, :dependent => :destroy
+  has_many :households, :dependent => :destroy
+  
+  has_many :events, :through => :occasions
+  has_many :guests, :through => :households
   
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     signed_in_resource.facebook_uid = auth.uid
@@ -16,4 +17,5 @@ class User < ActiveRecord::Base
     
     signed_in_resource.save
   end
+  
 end

@@ -1,10 +1,11 @@
 class InvitationsController < ApplicationController
   before_action :set_invitation, only: [:edit, :update, :destroy]
+  before_action :set_occasion
+  
   before_filter :authenticate_user!
   before_filter :verify_occasion_ownership, only: [:index,:new,:edit]
   
   def index
-    @occasion = Occasion.friendly.find(params[:occasion_id]) 
     @invitations = @occasion.invitations
     
     respond_to do |format|
@@ -14,45 +15,31 @@ class InvitationsController < ApplicationController
   end
   
   def new
-    @occasion = Occasion.friendly.find(params[:occasion_id]) 
     @title = Title.all
     
     @invitation = @occasion.invitations.build
     @household = current_user.households.new
     @household.guests.build
-    @events = @occasion.events
-    @event_invites = ''
   end
   
-  def edit
-    @occasion = Occasion.friendly.find(params[:occasion_id])
-    @title = Title.all
-
-    @events = @occasion.events
-    @event_invites = params[:events].blank? ? '' : params[:events]
+  def show
+    @invitation = Invitation.friendly.find(params[:invitation_id])
+    
+    case step
+    when :guest_info
+      @title = Title.all
+    when :events
+    when :rsvp
+    end
+    render_wizard
   end
    
   def create
-    @occasion = Occasion.friendly.find(params[:occasion_id])
-    
     @invitation = @occasion.invitations.new(invitation_params)
     @invitation.household.user_id = current_user.id
-    @event_invites = params[:events].blank? ? [] : params[:events]
-    @event_uninvites = @occasion.events - @event_invites
-    
-    @invitation.household.guests.each do |guest|
-      @event_invites.each do |event|
-        guest.rsvps.new(:event_id => event.to_i)
-        guest.user_id = current_user.id
-      end
-      @event_uninvites.each do |event|
-        rsvp = guest.rsvps.find_by_event_id(event.id)
-        rsvp.destroy if rsvp
-      end
-    end
     
     if @invitation.save
-      redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully created.'
+      redirect_to occasion_invitation_manage_path(@occasion, @invitation, :guest_info), notice: 'Invitation was successfully created.'
     else
       @title = Title.all
       @events = @occasion.events
@@ -62,7 +49,6 @@ class InvitationsController < ApplicationController
   end
   
   def update
-    @occasion = Occasion.friendly.find(params[:occasion_id])
     @invitation.household.user_id = current_user.id
     @event_invites = @occasion.events.find(params[:events])
     @event_uninvites = @occasion.events - @event_invites
@@ -89,7 +75,6 @@ class InvitationsController < ApplicationController
   end
   
   def destroy
-    @occasion = Occasion.friendly.find(params[:occasion_id])
     
     @invitation.destroy
     redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully deleted.'
