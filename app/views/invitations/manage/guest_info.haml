@@ -1,13 +1,13 @@
 .container
-  .well.well-sm{style: "background-color:#fff;"}
-    %ul.list-inline
-      %li= link_to "Guest Information", occasion_invitation_manage_path(@occasion, @invitation,:guest_info), style: "font-weight: bold;"
-      %li="|"
-      %li= link_to "Events", occasion_invitation_manage_path(@occasion, @invitation,:events), style: "color: #b4bcc2;"
-      %li="|"
-      %li= link_to "RSVP", occasion_invitation_manage_path(@occasion, @invitation,:rsvp), style: "color: #b4bcc2;"
-
   %h1 Guest Information
-
   = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
-    = render "invitations/form"
+    .panel.panel-warning
+      .panel-heading
+        = link_to "Guest Information", occasion_invitation_manage_path(@occasion, @invitation,:guest_info), class:"text-primary", style: "font-weight: bold;"
+        >
+        = link_to "Events", occasion_invitation_manage_path(@occasion, @invitation,:events), class: "text-primary"
+        >
+        = link_to "RSVP", occasion_invitation_manage_path(@occasion, @invitation,:rsvp), class: "text-primary"
+        
+      
+    = render "invitations/form", :f => f
