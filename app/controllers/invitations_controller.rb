@@ -39,7 +39,7 @@ class InvitationsController < ApplicationController
     @invitation.household.user_id = current_user.id
     
     if @invitation.save
-      redirect_to occasion_invitation_manage_path(@occasion, @invitation, :guest_info), notice: 'Invitation was successfully created.'
+      redirect_to occasion_invitation_manage_path(@occasion, @invitation, :events), notice: 'Invitation was successfully created.'
     else
       @title = Title.all
       @events = @occasion.events

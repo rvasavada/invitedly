@@ -15,7 +15,7 @@ class Invitations::ManageController < ApplicationController
       
       for guest in @household.guests
         for event in @occasion.events
-          guest.rsvps.find_or_initialize_by_event_id(event.id)
+          guest.rsvps.find_or_initialize_by(event_id: event.id, invitation_id: @invitation.id)
         end
       end
         
@@ -62,15 +62,15 @@ class Invitations::ManageController < ApplicationController
   end
 
   private
-  def finish_wizard_path
-    occasion_invitations_path(@occasion), notice: 'Invitation was successfully updated.'
-  end
   
+  def finish_wizard_path
+    occasion_invitations_path(@occasion)
+  end  
   # Never trust parameters from the scary internet, only allow the white list through.
   def invitation_params
-    params.require(:invitation).permit(:message,
+    params.require(:invitation).permit(rsvps_attributes: [:id, :response],
       household_attributes: [:id, :name, :email, :notes, :tag_list,
         guests_attributes: [:id, :title, :first_name, :last_name, :_destroy,
-          rsvps_attributes: [:id, :visibility, :response, :event_id]]])
+          rsvps_attributes: [:id, :visibility, :invitation_id, :event_id]]])
   end
 end

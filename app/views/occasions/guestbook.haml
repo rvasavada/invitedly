@@ -3,13 +3,13 @@
   
   %ul.list-group
     - if @invitations.present?
-      - @invitations.each do |invite|
+      - @invitations.each do |invitation|
         %li.list-group-item
-          %strong= link_to invite.household.name, edit_occasion_invitation_path(@occasion, invite)
+          %strong= link_to invitation.household.name, occasion_invitation_manage_path(@occasion, invitation, :guest_info)
           %span.text-muted says:
-          =invite.message
+          =invitation.message
           %br
-          %small="#{time_ago_in_words(invite.updated_at)} ago"
+          %small="#{time_ago_in_words(invitation.updated_at)} ago"
     - else
       %li.list-group-item.text-center
         %strong No one has left you a message yet!

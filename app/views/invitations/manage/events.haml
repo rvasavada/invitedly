@@ -16,17 +16,15 @@
           = f.fields_for :household do |household|
             = household.fields_for :guests do |guest|
               %h3=guest.object.full_name
-            
-            
+              
               = guest.fields_for :rsvps do |rsvp|
                 .checkbox
                   %label
                     = rsvp.check_box :visibility
                     = rsvp.hidden_field :event_id
+                    = rsvp.hidden_field :invitation_id
                     = Event.find(rsvp.object.event_id).name
 
-                                
-                      
     .form-group.pull-right
       = f.submit "Next", :class => "btn btn-success btn-lg"
     .form-group
