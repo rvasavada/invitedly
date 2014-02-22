@@ -99,7 +99,6 @@ $("document").ready(function(){
       zebra : ["even", "odd"],
       filter_reset : ".reset",
       filter_functions : {
-              1 : true,
               2 : true,
               3 : true,
               4 : true,
