@@ -83,6 +83,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.8.2)
     multipart-post (1.2.0)
+    newrelic_rpm (3.7.2.195)
     oauth2 (0.8.1)
       faraday (~> 0.8)
       httpauth (~> 0.1)
@@ -172,7 +173,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-import (~> 0.4.1)
-  acts-as-taggable-on
+  acts-as-taggable-on (~> 3.0.1)
   cocoon (~> 1.2.5)
   coffee-rails (~> 4.0.0)
   devise (~> 3.2.2)
@@ -182,6 +183,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   koala (~> 1.6.0)
+  newrelic_rpm (~> 3.7.2.195)
   omniauth (~> 1.1.4)
   omniauth-facebook (~> 1.5.1)
   omniauth-google-oauth2 (~> 0.2.1)
