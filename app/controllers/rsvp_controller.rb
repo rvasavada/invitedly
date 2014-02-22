@@ -11,8 +11,28 @@ class RsvpController < ApplicationController
     when :guest_info
       @title = Title.all
     when :events
+      event_arr = []
+      @invitation.household.guests.each do |guest|
+        unless guest.full_name == ""
+          for rsvp in guest.rsvps.where(:visibility => true)
+            event_arr.push(rsvp.event)
+          end
+        end
+      end
+      
+      @events = event_arr.uniq
     when :guestbook
     when :confirmation
+      event_arr = []
+      @invitation.household.guests.each do |guest|
+        unless guest.full_name == ""
+          for rsvp in guest.rsvps.where(:visibility => true)
+            event_arr.push(rsvp.event)
+          end
+        end
+      end
+      
+      @events = event_arr.uniq
     end
     render_wizard
   end
@@ -73,9 +93,8 @@ class RsvpController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through
     def invitation_params
-      params.require(:invitation).permit(:message, :status,
-        rsvps_attributes: [:id, :response], 
+      params.require(:invitation).permit(:message, :status, 
         household_attributes: [:id, :title, :first_name, :last_name, :email, 
-          guests_attributes: [:id, :title, :first_name, :last_name]])
+          guests_attributes: [:id, :title, :first_name, :last_name,rsvps_attributes: [:id, :response]]])
     end
 end

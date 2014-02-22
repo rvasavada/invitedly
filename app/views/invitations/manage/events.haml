@@ -1,29 +1,29 @@
 .container
   %h1 Events
+  .panel.panel-warning
+    .panel-heading
+      = link_to "Guest Information", occasion_invitation_manage_path(@occasion, @invitation,:guest_info), class:"text-primary"
+      >
+      = link_to "Events", occasion_invitation_manage_path(@occasion, @invitation,:events), class: "text-primary", style: "font-weight: bold;"
+      >
+      = link_to "RSVP", occasion_invitation_manage_path(@occasion, @invitation,:rsvp), class: "text-primary"
   = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
-    .panel.panel-warning
-      .panel-heading
-        = link_to "Guest Information", occasion_invitation_manage_path(@occasion, @invitation,:guest_info), class:"text-primary"
-        >
-        = link_to "Events", occasion_invitation_manage_path(@occasion, @invitation,:events), class: "text-primary", style: "font-weight: bold;"
-        >
-        = link_to "RSVP", occasion_invitation_manage_path(@occasion, @invitation,:rsvp), class: "text-primary"
-
-      .panel-body       
-        %h2 Select the events to which each guest is invited.
-      
+    .panel.panel-default
+      .panel-body
+        %h2 Select the events to which each guest is invited.  
       %ul.list-group
         %li.list-group-item
           = f.fields_for :household do |household|
             = household.fields_for :guests do |guest|
               %h3=guest.object.full_name
-              
-              - for event in @events
-                = f.fields_for :rsvps do |rsvp|
-                  .checkbox
-                    %label
-                      = rsvp.check_box :visibility
-                      = event.name
+            
+            
+              = guest.fields_for :rsvps do |rsvp|
+                .checkbox
+                  %label
+                    = rsvp.check_box :visibility
+                    = rsvp.hidden_field :event_id
+                    = Event.find(rsvp.object.event_id).name
 
                                 
                       

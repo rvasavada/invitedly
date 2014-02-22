@@ -42,7 +42,6 @@ class EventsController < ApplicationController
   end
 
   def update
-    @occasion = Occasion.friendly.find(params[:occasion_id])    
     params[:event][:start_time] = DateTime.parse(params[:event][:start_time])
     if @event.update(event_params)
       unless params[:commit] == "Save & Add more" 

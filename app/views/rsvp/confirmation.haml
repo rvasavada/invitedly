@@ -24,32 +24,31 @@
             %p.lead
               %em= "\"#{@invitation.message}\""
                
-      - @occasion.events.uniq.each do |event|
-        - if @invitation.rsvps.where(:event_id => event.id).present?
-          .row{style:"margin-top:30px;"}
-            .col-lg-6
-              %h3{style:"margin-top:0px;margin-bottom:0px;"}=event.name
-              %p.text-muted{style:"margin-top:0px;"}
-                = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time.strftime('%l:%M%P')}"
-                %br
-                - unless event.address_1.blank?
-                  = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
-                  = "| #{event.address}"
-                - else
-                  = event.location
-              %p=event.description
+      - @events.each do |event|
+        .row{style:"margin-top:30px;"}
+          .col-lg-6
+            %h3{style:"margin-top:0px;margin-bottom:0px;"}=event.name
+            %p.text-muted{style:"margin-top:0px;"}
+              = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time.strftime('%l:%M%P')}"
+              %br
+              - unless event.address_1.blank?
+                = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
+                = "| #{event.address}"
+              - else
+                = event.location
+            %p=event.description
 
 
-            .col-lg-6
-              %table.table
-                %thead
-                  %tr
-                    %th{style:"width:50%"} Guest name
-                    %th{style:"width:50%"} Response
-                %tbody
-                  - @invitation.rsvps.where(:event_id => event.id).each do |rsvp|
-                    - if rsvp.guest.first_name != "" && rsvp.guest.last_name != ""
-                      %tr
-                        %td= rsvp.guest.full_name
-                        %td{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}=rsvp.response
+          .col-lg-6
+            %table.table
+              %thead
+                %tr
+                  %th{style:"width:50%"} Guest name
+                  %th{style:"width:50%"} Response
+              %tbody
+                - @invitation.household.rsvps.where(:event_id => event.id, :visibility => true).each do |rsvp|
+                  - if rsvp.guest.first_name != "" && rsvp.guest.last_name != ""
+                    %tr
+                      %td= rsvp.guest.full_name
+                      %td{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}=rsvp.response
   %button.hidden-print{id:"print", onclick:"javascript:print()", value:"Print", class: "btn btn-primary btn-lg btn-block"} Print this page

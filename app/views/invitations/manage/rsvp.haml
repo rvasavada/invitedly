@@ -1,13 +1,14 @@
 .container
-  .well.well-sm{style: "background-color:#fff;"}
-    %ul.list-inline
-      %li= link_to "Guest Information", occasion_invitation_manage_path(@occasion, @invitation,:guest_info), style: "font-weight: bold;"
-      %li="|"
-      %li= link_to "Events", occasion_invitation_manage_path(@occasion, @invitation,:events), style: "color: #b4bcc2;"
-      %li="|"
-      %li= link_to "RSVP", occasion_invitation_manage_path(@occasion, @invitation,:rsvp), style: "color: #b4bcc2;"
+  %h1 RSVP
+  = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
+    .panel.panel-warning
+      .panel-heading
+        = link_to "Guest Information", occasion_invitation_manage_path(@occasion, @invitation,:guest_info), class:"text-primary"
+        >
+        = link_to "Events", occasion_invitation_manage_path(@occasion, @invitation,:events), class: "text-primary"
+        >
+        = link_to "RSVP", occasion_invitation_manage_path(@occasion, @invitation,:rsvp), class: "text-primary", style: "font-weight: bold;"
 
-  %h1 Events
 
   = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
     .panel.panel-default
@@ -15,39 +16,38 @@
         %h2 Confirm your RSVP.
       %ul.list-group
         %li.list-group-item      
-          - @occasion.events.each_with_index do |event,index|
-            - if @invitation.household.rsvps.where(:event_id => event.id).present?
-              .row{style: index != 0 ? "margin-top:30px;" : ""}
-                .col-lg-6
-                  %h3{style:"margin-top:0px;margin-bottom:0px;"}=event.name
-                  %p.text-muted{style:"margin-top:0px;"}
-                    = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time.strftime('%l:%M%P')}"
-                    %br
-                    - unless event.address_1.blank?
-                      = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
-                      = "| #{event.address}"
-                    - else
-                      = event.location
-                  %p=event.description
-                
-                .col-lg-6
-                  %table.table
-                    %thead
-                      %tr
-                        %th{style:"width:50%"} Guest name
-                        %th{style:"width:50%"} Response
+          - @events.each_with_index do |event,index|
+            .row{style: index != 0 ? "margin-top:30px;" : ""}
+              .col-lg-6
+                %h3{style:"margin-top:0px;margin-bottom:0px;"}=event.name
+                %p.text-muted{style:"margin-top:0px;"}
+                  = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time.strftime('%l:%M%P')}"
+                  %br
+                  - unless event.address_1.blank?
+                    = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
+                    = "| #{event.address}"
+                  - else
+                    = event.location
+                %p=event.description
+              .col-lg-6
+                %table.table
+                  %thead
+                    %tr
+                      %th{style:"width:50%"} Guest name
+                      %th{style:"width:50%"} Response
                     %tbody
-                      = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id) do |rsvp|
-                        - if rsvp.object.guest.first_name != "" && rsvp.object.guest.last_name != ""
-                          %tr
-                            %td= rsvp.object.guest.full_name
-                            %td
-                              %label.radio-inline
-                                = rsvp.radio_button :response, "Attending"
-                                Attending
-                              %label.radio-inline
-                                = rsvp.radio_button :response, "Not Attending"
-                                Not Attending
+                      = f.fields_for :household do |household|
+                        = household.fields_for :guests do |guest|
+                          = guest.fields_for :rsvps, guest.object.rsvps.where(:event_id => event.id, :visibility => true) do |rsvp|
+                            %tr
+                              %td= rsvp.object.guest.full_name
+                              %td
+                                %label.radio-inline
+                                  = rsvp.radio_button :response, "Attending"
+                                  Attending
+                                %label.radio-inline
+                                  = rsvp.radio_button :response, "Not Attending"
+                                  Not Attending
                         
     .form-group.pull-right
       = f.submit "Next", :class => "btn btn-success btn-lg"
