@@ -18,3 +18,7 @@ small {
 #main {
   margin-top:20px;
 }
+
+.stickyHeader {
+  background:white;
+}

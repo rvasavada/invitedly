@@ -80,9 +80,6 @@ $("document").ready(function(){
   }, 4000);
     
   $.extend($.tablesorter.themes.bootstrap, {
-      table      : 'table table-bordered',
-      caption    : 'caption',
-      header     : 'bootstrap-header',
       sortNone   : 'bootstrap-icon-unsorted',
       sortAsc    : 'icon-chevron-up glyphicon glyphicon-chevron-up',
       sortDesc   : 'icon-chevron-down glyphicon glyphicon-chevron-down',
@@ -93,12 +90,28 @@ $("document").ready(function(){
   $("table#invitation").tablesorter({
     theme : "bootstrap",
     headerTemplate : '{content} {icon}',
-    widgets : [ "uitheme", "filter", "zebra" ],
+    widgets : [ "uitheme", "filter", "zebra", 'stickyHeaders'],
 
-    widgetOptions : {      
+    widgetOptions : {
+      // extra class name added to the sticky header row
+            stickyHeaders : 'stickyHeader',
+            // number or jquery selector targeting the position:fixed element
+            stickyHeaders_offset : 0,
+            // added to table ID, if it exists
+            stickyHeaders_cloneId : '-sticky',
+            // trigger "resize" event on headers
+            stickyHeaders_addResizeEvent : true,
+            // if false and a caption exist, it won't be included in the sticky header
+            stickyHeaders_includeCaption : true,
+            // The zIndex of the stickyHeaders, allows the user to adjust this to their needs
+            stickyHeaders_zIndex : 2,
+            // jQuery selector or object to attach sticky header to
+            stickyHeaders_attachTo : null,
+      
       zebra : ["even", "odd"],
       filter_reset : ".reset",
       filter_functions : {
+              1 : true,
               2 : true,
               3 : true,
               4 : true,
