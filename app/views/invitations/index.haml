@@ -26,8 +26,6 @@
                 %tr
                   %td
                     = invitation.household.name
-                    - guest.tag_list.each do |t| 
-                      %span.label.label-info=t
                     - invitation.household.tag_list.each do |t| 
                       %span.label.label-info=t
                     %br
