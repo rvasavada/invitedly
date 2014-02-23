@@ -46,9 +46,12 @@
                   %th{style:"width:50%"} Guest name
                   %th{style:"width:50%"} Response
               %tbody
-                - @invitation.household.rsvps.where(:event_id => event.id, :visibility => true).each do |rsvp|
-                  - if rsvp.guest.first_name != "" && rsvp.guest.last_name != ""
-                    %tr
-                      %td= rsvp.guest.full_name
-                      %td{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}=rsvp.response
+                - @invitation.household.rsvps.where(:event_id => event.id, :visibility => true).each do |rsvp|                  
+                  %tr
+                    %td
+                      - if rsvp.guest.first_name != "" && rsvp.guest.last_name != ""
+                        = rsvp.guest.full_name
+                      - else 
+                        %em.text-muted Additional guest not needed
+                    %td{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}=rsvp.response
   %button.hidden-print{id:"print", onclick:"javascript:print()", value:"Print", class: "btn btn-primary btn-lg btn-block"} Print this page
