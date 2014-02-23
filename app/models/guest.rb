@@ -7,6 +7,8 @@ class Guest < ActiveRecord::Base
   
   has_many :events, :through => :rsvps
   
+  default_scope {order('created_at ASC')}
+  
   def full_name
     "#{title} #{first_name} #{last_name}"
   end
