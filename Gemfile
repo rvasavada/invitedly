@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
+ruby '2.1.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.1'
+gem 'rails' #, '4.0.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -41,24 +42,26 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'devise', '~> 3.2.2'
-gem 'haml', '~> 4.0.4'
-gem 'friendly_id', '~> 5.0.1'
-gem 'omniauth', '~> 1.1.4'
-gem 'omniauth-facebook', '~> 1.5.1'
-gem 'omniauth-google-oauth2', '~> 0.2.1'
-gem 'koala', '~> 1.6.0'
-gem 'will_paginate', '~> 3.0.5'
-gem 'wicked', '~> 1.0.2'
-gem 'activerecord-import', '~> 0.4.1'
-gem 'thin', '~> 1.6.1'
+gem 'devise' #, '~> 3.2.2'
+gem 'haml' #, '~> 4.0.4'
+gem 'friendly_id' #, '~> 5.0.1'
+gem 'omniauth' #, '~> 1.1.4'
+gem 'omniauth-facebook' #, '~> 1.5.1'
+gem 'omniauth-google-oauth2' #, '~> 0.2.1'
+gem 'koala' #, '~> 1.6.0'
+gem 'will_paginate' #, '~> 3.0.5'
+gem 'wicked' #, '~> 1.0.2'
+gem 'activerecord-import' #, '~> 0.4.1'
+gem 'thin' #, '~> 1.6.1'
 #gem 'foundation-rails', '~> 5.0.2.0'
-gem 'pg', '~> 0.17.1'
-gem 'cocoon', '~> 1.2.5'
+gem 'pg' #, '~> 0.17.1'
+gem 'cocoon' #, '~> 1.2.5'
 #gem 'bootstrap-wysihtml5-rails', '~> 0.3.1.23'
-gem 'google-analytics-rails', '~> 0.0.4'
-gem 'acts-as-taggable-on', '~> 3.0.1'
-gem 'newrelic_rpm', '~> 3.7.2.195'
+gem 'google-analytics-rails' #, '~> 0.0.4'
+gem 'acts-as-taggable-on' #, '~> 3.0.1'
+gem 'newrelic_rpm' #, '~> 3.7.2.195'
+
+
 
 group :production do
   gem 'rails_12factor', '~> 0.0.2'
