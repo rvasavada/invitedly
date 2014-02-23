@@ -56,7 +56,7 @@
                         %li= link_to "Edit Occasion Details", edit_occasion_path(@occasion)
                         %li= link_to "Preview Occasion Page", occasion_path(@occasion)
                   - else
-                    %li{class: "#{'active' if current_page?(new_occasion_path)}"}= link_to "New Occasion", new_occasion_path
+                    %li{class: "#{'active' if current_page?(occasions_path)}"}= link_to "Occasions", occasions_path
                 - if user_signed_in? 
                   %li{class: "#{'active' if current_page?(edit_user_registration_path)}"}= link_to "Settings", edit_user_registration_path
                   %li= link_to "Sign out", destroy_user_session_path, method: :delete

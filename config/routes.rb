@@ -6,11 +6,12 @@ Invitedly::Application.routes.draw do
   #get 'address_book' => 'guests#index'  
 
   root 'static#home'
-  
+
   devise_for :users, :controllers => { :registrations => "users/registrations",
     :omniauth_callbacks => "users/omniauth_callbacks",
     :sessions => "users/sessions"
      }
+  get 'occasions' => 'occasions#index'  
   
   resources :occasions, :path => '' do
     match 'rsvp/verify_email_address' => 'rsvp#verify_email_address', :via => :post
@@ -19,7 +20,6 @@ Invitedly::Application.routes.draw do
     resources :guests do
       post 'import', on: :collection
     end
-    
     get 'guestbook' => 'occasions#guestbook'  
         
     resources :invitations do
