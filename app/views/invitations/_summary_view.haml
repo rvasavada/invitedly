@@ -32,7 +32,7 @@
                 ="(#{Rsvp.where(:visibility => true, :event_id => event, :response => "Attending").count})"
               %th.text-danger
                 N
-                ="(#{Rsvp.where(:visibility => true, :event_id => event, :response => "Attending").count})"
+                ="(#{Rsvp.where(:visibility => true, :event_id => event, :response => "Not Attending").count})"
               %th 
                 ?
                 ="(#{Rsvp.where(:visibility => true, :event_id => event, :response => "Not Responded").count})"
