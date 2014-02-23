@@ -9,7 +9,13 @@ class OccasionsController < ApplicationController
 
   def show    
     if (params[:first_name].present? || params[:last_name].present?)
-      @guests = User.find(@occasion.user_id).guests.where("LOWER(first_name) LIKE ? AND LOWER(last_name) LIKE ?",  "%#{params[:first_name].downcase}%", "%#{params[:last_name].downcase}%")
+      guests = User.find(@occasion.user_id).guests.where("LOWER(first_name) LIKE ? AND LOWER(last_name) LIKE ?",  "%#{params[:first_name].downcase}%", "%#{params[:last_name].downcase}%")
+      @guests = []
+      for guest in guests
+        if guest.household.invitations.where(:occasion_id => @occasion.id).present?
+          @guests.push(guest)
+        end
+      end
     end
   end
 

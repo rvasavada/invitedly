@@ -58,7 +58,14 @@ class RsvpController < ApplicationController
   
   def verify_first_last_name
     if (params[:first_name].present? || params[:last_name].present?)
-      @guests = User.find(@occasion.user_id).guests.where("LOWER(first_name) LIKE ? AND LOWER(last_name) LIKE ?",  "%#{params[:first_name].downcase}%", "%#{params[:last_name].downcase}%")
+      guests = User.find(@occasion.user_id).guests.where("LOWER(first_name) LIKE ? AND LOWER(last_name) LIKE ?",  "%#{params[:first_name].downcase}%", "%#{params[:last_name].downcase}%")
+      @guests = []
+      for guest in guests
+        if guest.household.invitations.where(:occasion_id => @occasion.id).present?
+          @guests.push(guest)
+        end
+      end
+            
       if @guests.blank?
         redirect_to occasion_path(@occasion, first_name: params[:first_name], last_name: params[:last_name]), alert: "No guests found."
       else
