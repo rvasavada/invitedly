@@ -6,8 +6,6 @@ class EventsController < ApplicationController
   before_filter :verify_occasion_ownership
   
   def index
-    @response = ResponseType.all
-    
     @events = @occasion.events
   end
 

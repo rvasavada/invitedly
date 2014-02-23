@@ -47,17 +47,26 @@
                 %br
                 %small="Last updated #{time_ago_in_words(invitation.updated_at)} ago"
               - rsvps = invitation.rsvps.where(:visibility => true)
+
               - @occasion.events.each do |event|
+                - attending = 0
+                - not_attending = 0
+                - not_responded = 0
+                - for rsvp in rsvps
+                  - case
+                    - when rsvp.event_id == event.id && rsvp.response == "Attending"
+                      - attending+=1
+                    - when rsvp.event_id == event.id && rsvp.response == "Not Attending"
+                      - not_attending+=1
+                    - when rsvp.event_id == event.id && rsvp.response == "Not Responded"
+                      - not_responded +=1
                 %td.text-success
-                  - attending = rsvps.where(:event_id => event.id, :response => "Attending").count
                   - if attending > 0
                     = attending
                 %td.text-danger
-                  - not_attending = rsvps.where(:event_id => event.id, :response => "Not Attending").count
                   - if not_attending > 0
                     = not_attending  
                 %td
-                  - not_responded = rsvps.where(:event_id => event.id, :response => "Not Responded").count
                   - if not_responded > 0
                     = not_responded  
               %td
