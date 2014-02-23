@@ -5,7 +5,7 @@ Invitedly::Application.routes.draw do
   #get 'privacy' => 'static#privacy'
   #get 'address_book' => 'guests#index'  
 
-
+  root 'static#home'
   
   devise_for :users, :controllers => { :registrations => "users/registrations",
     :omniauth_callbacks => "users/omniauth_callbacks",
@@ -31,7 +31,7 @@ Invitedly::Application.routes.draw do
   end
 
      
-  root 'static#home'
+  
   
   
   # The priority is based upon order of creation: first created -> highest priority.
