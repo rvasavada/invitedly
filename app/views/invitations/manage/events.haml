@@ -20,7 +20,7 @@
               - else
                 %h3.text-muted {An additional guest}
               
-              = guest.fields_for :rsvps do |rsvp|
+              = guest.fields_for :rsvps, guest.object.rsvps.event_view do |rsvp|
                 .checkbox
                   %label
                     = rsvp.check_box :visibility

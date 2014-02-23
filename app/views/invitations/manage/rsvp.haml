@@ -35,9 +35,10 @@
                     %thead
                       %tr
                         %th{style:"width:50%"} Guest name
-                        %th{style:"width:50%"} Response
+                        %th Response
+                        %th
                       %tbody
-                        = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id, :visibility => true) do |rsvp|
+                        = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id, :visibility => true).guest_view do |rsvp|
                           %tr
                             %td
                               - if rsvp.object.guest.first_name != "" && rsvp.object.guest.last_name != ""
@@ -45,18 +46,21 @@
                               - else 
                                 %em.text-muted Additional guest not needed
                                 = rsvp.hidden_field :response, value: "Not Attending"
-                            %td
-                              - if (rsvp.object.guest.first_name != "" && rsvp.object.guest.last_name != "")
+                            - if (rsvp.object.guest.first_name != "" && rsvp.object.guest.last_name != "")
+                              %td
                                 %label.radio-inline 
                                   = rsvp.radio_button :response, "Attending"
                                   Attending
+                              %td
                                 %label.radio-inline
                                   = rsvp.radio_button :response, "Not Attending"
                                   Not Attending
-                              - else
+                            - else
+                              %td
                                 %label.radio-inline 
                                   = rsvp.radio_button :response, "Attending", disabled: true
                                   Attending
+                              %td
                                 %label.radio-inline
                                   = rsvp.radio_button :response, "Not Attending", checked: true, disabled: true
                                   Not Attending
