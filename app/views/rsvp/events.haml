@@ -43,12 +43,21 @@
                               %em.text-muted Additional guest not needed
                               = rsvp.hidden_field :response, value: "Not Attending"
                           %td
-                            %label.radio-inline
-                              = rsvp.radio_button :response, "Attending", disabled: (rsvp.object.guest.first_name == "" && rsvp.object.guest.last_name == "")
-                              Attending
-                            %label.radio-inline
-                              = rsvp.radio_button :response, "Not Attending", checked: (rsvp.object.guest.first_name == "" && rsvp.object.guest.last_name == ""), disabled: (rsvp.object.guest.first_name == "" && rsvp.object.guest.last_name == "")
-                              Not Attending
+                            - if (rsvp.object.guest.first_name != "" && rsvp.object.guest.last_name != "")
+                              %label.radio-inline 
+                                = rsvp.radio_button :response, "Attending"
+                                Attending
+                              %label.radio-inline
+                                = rsvp.radio_button :response, "Not Attending"
+                                Not Attending
+                            - else
+                              %label.radio-inline 
+                                = rsvp.radio_button :response, "Attending", disabled: true
+                                Attending
+                              %label.radio-inline
+                                = rsvp.radio_button :response, "Not Attending", checked: true, disabled: true
+                                Not Attending
+                            
                         
     .form-group.pull-right
       = f.submit "Next", :class => "btn btn-success btn-lg"

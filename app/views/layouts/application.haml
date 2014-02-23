@@ -28,7 +28,7 @@
                 %span.icon-bar
                 %span.icon-bar
               - if user_signed_in?
-                - if params[:occasion_id].present?
+                - if @occasion.present?
                   = link_to "Invitedly", occasion_invitations_path(@occasion), class: "navbar-brand"
                 - else
                   = link_to "Invitedly", root_url, class: "navbar-brand"
@@ -38,7 +38,7 @@
             #bs-example-navbar-collapse-1.collapse.navbar-collapse
               %ul.nav.navbar-nav
                 - if user_signed_in? 
-                  - if params[:occasion_id].present?
+                  - if @occasion.present?
                     %li{class: "#{'active' if current_page?(occasion_events_path(@occasion))}"}= link_to "Events", occasion_events_path(@occasion)
                     %li{class: "#{'active' if current_page?(occasion_invitations_path(@occasion))}"}= link_to "Invitations", occasion_invitations_path(@occasion)
                     %li{class: "#{'active' if current_page?(occasion_guestbook_path(@occasion))}"}= link_to "Guestbook", occasion_guestbook_path(@occasion)
@@ -46,7 +46,7 @@
 
               %ul.nav.navbar-nav.navbar-right
                 - if user_signed_in? 
-                  - if params[:occasion_id].present?
+                  - if @occasion.present?
                     %li.dropdown{class: "#{'active' if current_page?(@occasion)}"}
                       %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
                         =@occasion.name
