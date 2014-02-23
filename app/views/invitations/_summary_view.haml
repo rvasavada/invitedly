@@ -22,7 +22,9 @@
           %tr
             %th Invitation name
             - @occasion.events.each do |event|
-              %th.sorter-false{:colspan => 3}=event.name
+              %th.sorter-false{:colspan => 3}
+                =event.name
+                ="(#{Rsvp.where(:visibility => true, :event_id => event).count})"
             %th.sorter-false Actions
           %tr
             %th.sorter-false
