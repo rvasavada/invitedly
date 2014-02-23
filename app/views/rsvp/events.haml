@@ -11,7 +11,7 @@
   = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
     .panel.panel-default
       .panel-body
-        %h2 Now, select the events that you will be able to attend.
+        %h2 Now, confirm your RSVP.
       %ul.list-group
         %li.list-group-item      
           - @events.each_with_index do |event,index|
