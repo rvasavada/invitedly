@@ -58,7 +58,7 @@ class OccasionsController < ApplicationController
   
   def guestbook
     @occasion = Occasion.find_by_slug(params[:occasion_id])
-    @invitations = @occasion.invitations.where("message IS NOT NULL OR message != ''")
+    @invitations = @occasion.invitations.where("message IS NOT NULL AND length(message) > 0")
   end
 
   private
