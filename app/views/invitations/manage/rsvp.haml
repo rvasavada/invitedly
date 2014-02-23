@@ -37,15 +37,16 @@
                       %th{style:"width:50%"} Response
                     %tbody
                       = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id, :visibility => true) do |rsvp|
-                        %tr
-                          %td= rsvp.object.guest.full_name
-                          %td
-                            %label.radio-inline
-                              = rsvp.radio_button :response, "Attending"
-                              Attending
-                            %label.radio-inline
-                              = rsvp.radio_button :response, "Not Attending"
-                              Not Attending
+                        - if rsvp.object.guest.first_name != "" && rsvp.object.guest.last_name != ""
+                          %tr
+                            %td= rsvp.object.guest.full_name
+                            %td
+                              %label.radio-inline
+                                = rsvp.radio_button :response, "Attending"
+                                Attending
+                              %label.radio-inline
+                                = rsvp.radio_button :response, "Not Attending"
+                                Not Attending
                         
     .form-group.pull-right
       = f.submit "Next", :class => "btn btn-success btn-lg"
