@@ -15,7 +15,7 @@ class Invitations::ManageController < ApplicationController
       
       for guest in @household.guests
         for event in @occasion.events
-          guest.rsvps.find_or_initialize_by(event_id: event.id, invitation_id: @invitation.id)
+          guest.rsvps.find_or_create_by(event_id: event.id, invitation_id: @invitation.id)
         end
       end
     when :rsvp
