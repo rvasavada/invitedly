@@ -2,7 +2,7 @@ class Guest < ActiveRecord::Base
   acts_as_taggable
   belongs_to :household
 
-  has_many :rsvps, -> { includes(:event) }, :dependent => :destroy
+  has_many :rsvps, :dependent => :destroy
   accepts_nested_attributes_for :rsvps, :allow_destroy => true
   
   has_many :events, :through => :rsvps

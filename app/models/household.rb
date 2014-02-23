@@ -8,7 +8,7 @@ class Household < ActiveRecord::Base
   
   has_many :invitations, :dependent => :destroy
   
-  has_many :rsvps, -> { includes(:guest)}, through: :guests
+  has_many :rsvps, through: :guests
   
   has_many :events, through: :rsvps
   validates_presence_of :name

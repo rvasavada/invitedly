@@ -4,7 +4,7 @@ class Invitation < ActiveRecord::Base
   friendly_id :random_hex_id, use: :scoped, :scope => :occasion
   
   belongs_to :occasion
-  belongs_to :household, -> { includes(:guests) }
+  belongs_to :household
   accepts_nested_attributes_for :household, :allow_destroy => true
   
   has_many :guests, :through => :household
