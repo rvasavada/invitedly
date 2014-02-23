@@ -17,39 +17,49 @@
       %ul.list-group
         %li.list-group-item      
           - @events.each_with_index do |event,index|
-            .row{style: index != 0 ? "margin-top:30px;" : ""}
-              .col-lg-6
-                %h3{style:"margin-top:0px;margin-bottom:0px;"}=event.name
-                %p.text-muted{style:"margin-top:0px;"}
-                  = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time.strftime('%l:%M%P')}"
-                  %br
-                  - unless event.address_1.blank?
-                    = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
-                    = "| #{event.address}"
-                  - else
-                    = event.location
-                %p=event.description
-              .col-lg-6
-                %table.table
-                  %thead
-                    %tr
-                      %th{style:"width:50%"} Guest name
-                      %th{style:"width:50%"} Response
-                    %tbody
-                      = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id, :visibility => true) do |rsvp|
-                        %tr
-                          %td
-                            - if rsvp.object.guest.first_name != "" && rsvp.object.guest.last_name != ""
-                              = rsvp.object.guest.full_name
-                            - else 
-                              %em.text-muted Additional guest not needed
-                          %td
-                            %label.radio-inline
-                              = rsvp.radio_button :response, "Attending", disabled: (rsvp.object.guest.first_name == "" && rsvp.object.guest.last_name == "")
-                              Attending
-                            %label.radio-inline
-                              = rsvp.radio_button :response, "Not Attending", disabled: (rsvp.object.guest.first_name == "" && rsvp.object.guest.last_name == ""), checked: (rsvp.object.guest.first_name == "" && rsvp.object.guest.last_name == "")
-                              Not Attending
+            - if @invitation.rsvps.where(:event_id => event.id, :visibility => true).count > 0
+              .row
+                .col-lg-6
+                  %h3{style:"margin-top:0px;margin-bottom:0px;"}=event.name
+                  %p.text-muted{style:"margin-top:0px;"}
+                    = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time.strftime('%l:%M%P')}"
+                    %br
+                    - unless event.address_1.blank?
+                      = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
+                      = "| #{event.address}"
+                    - else
+                      = event.location
+                  %p=event.description
+                .col-lg-6
+                  %table.table
+                    %thead
+                      %tr
+                        %th{style:"width:50%"} Guest name
+                        %th{style:"width:50%"} Response
+                      %tbody
+                        = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id, :visibility => true) do |rsvp|
+                          %tr
+                            %td
+                              - if rsvp.object.guest.first_name != "" && rsvp.object.guest.last_name != ""
+                                = rsvp.object.guest.full_name
+                              - else 
+                                %em.text-muted Additional guest not needed
+                                = rsvp.hidden_field :response, value: "Not Attending"
+                            %td
+                              - if (rsvp.object.guest.first_name != "" && rsvp.object.guest.last_name != "")
+                                %label.radio-inline 
+                                  = rsvp.radio_button :response, "Attending"
+                                  Attending
+                                %label.radio-inline
+                                  = rsvp.radio_button :response, "Not Attending"
+                                  Not Attending
+                              - else
+                                %label.radio-inline 
+                                  = rsvp.radio_button :response, "Attending", disabled: true
+                                  Attending
+                                %label.radio-inline
+                                  = rsvp.radio_button :response, "Not Attending", checked: true, disabled: true
+                                  Not Attending
                         
     .form-group.pull-right
       = f.submit "Next", :class => "btn btn-success btn-lg"

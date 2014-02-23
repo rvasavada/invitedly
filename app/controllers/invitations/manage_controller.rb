@@ -18,19 +18,8 @@ class Invitations::ManageController < ApplicationController
           guest.rsvps.find_or_initialize_by(event_id: event.id, invitation_id: @invitation.id)
         end
       end
-        
-      
     when :rsvp
-      event_arr = []
-      @invitation.household.guests.each do |guest|
-        unless guest.full_name == ""
-          for rsvp in guest.rsvps.where(:visibility => true)
-            event_arr.push(rsvp.event)
-          end
-        end
-      end
-      
-      @events = event_arr.uniq
+      @events = @occasion.events
       
     end
     render_wizard
