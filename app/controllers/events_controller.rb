@@ -56,7 +56,7 @@ class EventsController < ApplicationController
 
   def destroy
     @event.destroy
-    redirect_to occasion_events_path(@occasion)
+    redirect_to occasion_events_path(@occasion), notice: 'Event was successfully deleted.'
   end
 
   def manage_guestlist

@@ -42,9 +42,9 @@
                       - if rsvp.event_id == event.id && rsvp.visibility == true
                         %p{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}=rsvp.response
                 %td
-                  = link_to occasion_invitation_manage_path(@occasion, invitation, :guest_info), data: {toggle: "tooltip", title: "Edit Invitation", placement: "bottom", trigger: "hover"}, class: "btn btn-primary btn-sm" do
+                  = link_to occasion_invitation_manage_path(@occasion, invitation, :guest_info), data: {title: "Edit Invitation", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-primary btn-sm" do
                     %span.glyphicon.glyphicon-pencil
-                  = link_to [@occasion, invitation], method: :delete, data: {toggle: "tooltip", title: "Delete Invitation...", placement: "bottom", trigger: "hover", confirm: "Are you sure you want to uninvite the #{invitation.household.name} group?"}, class: "btn btn-danger btn-sm" do
+                  = link_to [@occasion, invitation], method: :delete, data: {title: "Delete Invitation...", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-danger btn-sm" do
                     %span.glyphicon.glyphicon-trash
             
 -else

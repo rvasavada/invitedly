@@ -41,7 +41,7 @@
           - @invitations.each do |invitation|
             %tr
               %td
-                = link_to occasion_invitation_manage_path(@occasion, invitation, :guest_info), data: {toggle: "tooltip", title: "Edit Invitation", placement: "bottom", trigger: "hover"}, class: "btn btn-primary btn-xs" do
+                = link_to occasion_invitation_manage_path(@occasion, invitation, :guest_info), data: {title: "Edit Invitation", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-primary btn-xs" do
                   %span.glyphicon.glyphicon-pencil
                 = link_to occasion_invitation_path(@occasion, invitation), data: {title: "Delete Invitation", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-danger btn-xs", method: :delete do
                   %span.glyphicon.glyphicon-trash
