@@ -25,7 +25,11 @@ $("table#invitation_guest thead th:last").data("sorter", false).data "filter", f
 $("table#invitation_guest").tablesorter
   theme: "bootstrap"
   headerTemplate: "{content} {icon}"
-  widgets: ["uitheme", "stickyHeaders", "filter"]
+  widgets: [
+    "uitheme"
+    "stickyHeaders"
+    "filter"
+  ]
   widgetOptions:
     filter_reset: ".reset"
     filter_functions:
