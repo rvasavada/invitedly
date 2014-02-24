@@ -6,8 +6,8 @@ class InvitationsController < ApplicationController
   before_filter :verify_occasion_ownership, only: [:index,:new,:edit]
   
   def index
-    @invitations = @occasion.invitations
-    
+    @invitations = @occasion.invitations.includes(:household)
+    @rsvps = Rsvp.all
     respond_to do |format|
       format.html
       format.csv { send_data @invitations.to_csv(@occasion) }
@@ -78,6 +78,10 @@ class InvitationsController < ApplicationController
     
     @invitation.destroy
     redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully deleted.'
+  end
+  
+  def popover
+    render :layout => nil
   end
   
   private

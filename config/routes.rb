@@ -23,7 +23,7 @@ Invitedly::Application.routes.draw do
     get 'guestbook' => 'occasions#guestbook'  
         
     resources :invitations do
-      resources :manage, controller: 'invitations/manage'
+      resources :manage, controller: 'invitations/manage'      
       resources :rsvp
     end
     

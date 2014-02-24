@@ -14,7 +14,10 @@ class Invitation < ActiveRecord::Base
   accepts_nested_attributes_for :rsvps, :allow_destroy => true
   
   default_scope {order('updated_at DESC')}
-  
+  scope :last_updated, -> { order('updated_at DESC') } 
+  scope :status, -> { order(:status) } 
+  scope :name_asc, -> { joins(:household).order('name ASC').readonly(false) } 
+  scope :name_desc, -> { joins(:household).order('name DESC').readonly(false) } 
   def self.to_csv(occasion, options = {})
     CSV.generate(options) do |csv|
       cols = ["Family Name", "Email", "Notes", "Title", "First Name", "Last Name", "Full Name","Invitation Status"]

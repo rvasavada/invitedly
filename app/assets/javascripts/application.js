@@ -134,4 +134,5 @@ $("document").ready(function(){
   $(".tablesorter-filter.disabled").hide();
   $("[data-toggle=tooltip]").tooltip();
   
+  $(".example").popover({html:true});
 });
