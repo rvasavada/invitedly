@@ -79,5 +79,5 @@ $("document").ready(function(){
       });
   }, 4000);
   
-  $(".example").popover({html:true});
+  $('a[rel~="tooltip"]').tooltip();
 });

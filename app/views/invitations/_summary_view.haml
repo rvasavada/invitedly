@@ -41,13 +41,12 @@
           - @invitations.each do |invitation|
             %tr
               %td
-                = link_to occasion_invitation_manage_path(@occasion, invitation, :guest_info), data: {toggle: "tooltip", title: "Edit Invitation", placement: "bottom", trigger: "hover"}, class: "btn btn-primary btn-sm" do
+                = link_to occasion_invitation_manage_path(@occasion, invitation, :guest_info), data: {toggle: "tooltip", title: "Edit Invitation", placement: "bottom", trigger: "hover"}, class: "btn btn-primary btn-xs" do
                   %span.glyphicon.glyphicon-pencil
-                = link_to [@occasion, invitation], method: :delete, data: {toggle: "tooltip", title: "Delete Invitation...", placement: "bottom", trigger: "hover", confirm: "Are you sure you want to delete this invitation?"}, class: "btn btn-danger btn-sm" do
+                = link_to occasion_invitation_path(@occasion, invitation), data: {title: "Delete Invitation", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-danger btn-xs", method: :delete do
                   %span.glyphicon.glyphicon-trash
               %td
                 %strong{class: invitation.status == "Responded" ? "text-success" : ""}=invitation.household.name
-                %br
                 - invitation.household.tags.each do |t| 
                   %span.label.label-info=t
                 %br
