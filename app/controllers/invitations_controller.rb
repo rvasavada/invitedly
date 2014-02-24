@@ -6,8 +6,8 @@ class InvitationsController < ApplicationController
   before_filter :verify_occasion_ownership, only: [:index,:new,:edit]
   
   def index
-    @invitations = @occasion.invitations.includes(:household)
-    @rsvps = Rsvp.all
+    @invitations = @occasion.invitations.includes(:household, :rsvps)
+
     respond_to do |format|
       format.html
       format.csv { send_data @invitations.to_csv(@occasion) }

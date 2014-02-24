@@ -53,13 +53,13 @@
                 - attending = 0
                 - not_attending = 0
                 - not_responded = 0
-                - for rsvp in @rsvps
+                - for rsvp in invitation.rsvps
                   - case
-                    - when rsvp.event_id == event.id && rsvp.response == "Attending" && rsvp.visibility == true  && rsvp.invitation_id == invitation.id
+                    - when rsvp.event_id == event.id && rsvp.response == "Attending" && rsvp.visibility == true
                       - attending+=1
-                    - when rsvp.event_id == event.id && rsvp.response == "Not Attending" && rsvp.visibility == true && rsvp.invitation_id == invitation.id
+                    - when rsvp.event_id == event.id && rsvp.response == "Not Attending" && rsvp.visibility == true
                       - not_attending+=1
-                    - when rsvp.event_id == event.id && rsvp.response == "Not Responded" && rsvp.visibility == true && rsvp.invitation_id == invitation.id
+                    - when rsvp.event_id == event.id && rsvp.response == "Not Responded" && rsvp.visibility == true
                       - not_responded +=1
                 %td.text-success
                   - if attending > 0
