@@ -44,7 +44,7 @@
             %tr
               %td
                 = invitation.household.name
-                - invitation.household.tag_list.each do |t| 
+                - invitation.household.tags.each do |t| 
                   %span.label.label-info=t
                 %br
                 %small="Last updated #{time_ago_in_words(invitation.updated_at)} ago"

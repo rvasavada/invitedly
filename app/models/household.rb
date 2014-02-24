@@ -9,6 +9,7 @@ class Household < ActiveRecord::Base
   has_many :invitations, :dependent => :destroy
   
   has_many :rsvps, through: :guests
+  default_scope {includes(:tags)}
   
   has_many :events, through: :rsvps
   validates_presence_of :name
