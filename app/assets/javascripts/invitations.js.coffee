@@ -25,13 +25,25 @@ $("table#invitation_guest thead th:last").data("sorter", false).data "filter", f
 $("table#invitation_guest").tablesorter
   theme: "bootstrap"
   headerTemplate: "{content} {icon}"
-  widgets: [
-    "uitheme"
-    "zebra"
-    "filter"
-    "stickyHeaders"
-  ]
+  widgets: ["uitheme", "stickyHeaders", "filter"]
   widgetOptions:
+    filter_reset: ".reset"
+    filter_functions:
+      1: true
+      2: true
+      3: true
+      4: true
+      5: true
+      6: true
+      7: true
+      8: true
+      9: true
+      10: true
+      11: true
+      12: true
+      13: true
+      14: true
+      15: true
     
     # extra class name added to the sticky header row
     stickyHeaders: "stickyHeader"
@@ -53,28 +65,6 @@ $("table#invitation_guest").tablesorter
     
     # jQuery selector or object to attach sticky header to
     stickyHeaders_attachTo: null
-    zebra: [
-      "even"
-      "odd"
-    ]
-    
-    filter_reset: ".reset"
-    filter_functions:
-      1: true
-      2: true
-      3: true
-      4: true
-      5: true
-      6: true
-      7: true
-      8: true
-      9: true
-      10: true
-      11: true
-      12: true
-      13: true
-      14: true
-      15: true
 
 $(".tablesorter-filter").addClass "form-control input-sm"
 $(".tablesorter-filter.disabled").hide()
