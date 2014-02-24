@@ -12,7 +12,7 @@
             .pull-right
               = link_to edit_occasion_event_path(@occasion,event), data: {title: "Edit Event", placement: "bottom", trigger: "hover"},rel: "tooltip", class: "btn btn-primary btn-sm" do
                 %span.glyphicon.glyphicon-pencil
-              = link_to occasion_event_path(@occasion,event), method: :delete, data: {toggle: "tooltip", title: "Delete Event...", placement: "bottom", trigger: "hover"}, class: "btn btn-danger btn-sm" do
+              = link_to occasion_event_path(@occasion,event), method: :delete, data: {title: "Delete Event", placement: "bottom", trigger: "hover"},rel: "tooltip", class: "btn btn-danger btn-sm" do
                 %span.glyphicon.glyphicon-trash
             =event.name
             %br

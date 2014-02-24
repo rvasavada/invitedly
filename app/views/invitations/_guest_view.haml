@@ -44,7 +44,7 @@
                 %td
                   = link_to occasion_invitation_manage_path(@occasion, invitation, :guest_info), data: {title: "Edit Invitation", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-primary btn-sm" do
                     %span.glyphicon.glyphicon-pencil
-                  = link_to [@occasion, invitation], method: :delete, data: {title: "Delete Invitation...", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-danger btn-sm" do
+                  = link_to [@occasion, invitation], method: :delete, data: {title: "Delete Invitation", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-danger btn-sm" do
                     %span.glyphicon.glyphicon-trash
             
 -else
