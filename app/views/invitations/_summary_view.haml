@@ -17,16 +17,19 @@
       %strong Download:
       = link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
     .table-responsive
-      %table.table.table-hover.table-condensed#invitation
+      %table.table.table-striped.table-bordered#invitation
         %thead
           %tr
-            %th{colspan: 2} Invitation name
+            %th
+            %th 
             - @occasion.events.each do |event|
-              %th.sorter-false{:colspan => 3}
+              %th.text-center{colspan:3}
                 =event.name
                 ="(#{Rsvp.where(:visibility => true, :event_id => event).count})"
+        %thead
           %tr
-            %th.sorter-false{colspan: 2}
+            %th= check_box_tag 'invitation'
+            %th Invitation name
             - @occasion.events.each do |event|
               %th.text-success
                 Y
@@ -41,9 +44,10 @@
           - @invitations.each do |invitation|
             %tr
               %td
-                = link_to occasion_invitation_manage_path(@occasion, invitation, :guest_info), data: {title: "Edit Invitation", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-primary btn-xs" do
+                = check_box_tag 'invitation'
+                -#= link_to occasion_invitation_manage_path(@occasion, invitation, :guest_info), data: {title: "Edit Invitation", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-primary btn-xs" do
                   %span.glyphicon.glyphicon-pencil
-                = link_to occasion_invitation_path(@occasion, invitation), data: {title: "Delete Invitation", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-danger btn-xs", method: :delete do
+                -#= link_to occasion_invitation_path(@occasion, invitation), data: {title: "Delete Invitation", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-danger btn-xs", method: :delete do
                   %span.glyphicon.glyphicon-trash
               %td
                 %strong{class: invitation.status == "Responded" ? "text-success" : ""}=invitation.household.name
@@ -72,8 +76,7 @@
                     = not_attending  
                 %td
                   - if not_responded > 0
-                    = not_responded  
-              %td
+                    = not_responded
                 
 -else
   .well.text-center{style: "background-color:#fff;"}
