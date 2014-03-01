@@ -65,13 +65,13 @@
                       - not_responded.push(rsvp.guest.full_name)
                 %td.text-success
                   - if attending.length > 0
-                    = link_to attending.length, "#", data: {html: true, title: "#{event.name} (#{attending.length})", content: "#{render 'response_info', :invitation => invitation, :response => attending, :type => "attending", :event => event.name}", trigger: "hover", container: 'body', placement: "top", toggle: 'popover'}, rel: "popover", style: "color: #18bc9c;font-size:16px;"
+                    = link_to attending.length, "#", data: {html: true, title: "#{event.name} (#{attending.length})", content: "#{render 'response_info', :invitation => invitation, :response => attending, :type => "attending", :event => event.name}", trigger: "click", container: 'body', placement: "top", toggle: 'popover'}, rel: "popover", style: "color: #18bc9c;font-size:16px;"
                 %td.text-danger
                   - if not_attending.length > 0
-                    = link_to not_attending.length, "#", data: {html: true, title: "#{event.name} (#{not_attending.length})", content: "#{render 'response_info', :invitation => invitation, :response => not_attending, :type => "not_attending", :event => event.name}", trigger: "hover", placement: "top", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #E74C3B;font-size:16px;"
+                    = link_to not_attending.length, "#", data: {html: true, title: "#{event.name} (#{not_attending.length})", content: "#{render 'response_info', :invitation => invitation, :response => not_attending, :type => "not_attending", :event => event.name}", trigger: "click", placement: "top", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #E74C3B;font-size:16px;"
                 %td
                   - if not_responded.length > 0
-                    = link_to not_responded.length, "#", data: {html: true, title: "#{event.name} (#{not_responded.length})", content: "#{render 'response_info', :invitation => invitation, :response => not_responded, :type => "not_responded", :event => event.name}", trigger: "hover", placement: "top", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #2c3e50;font-size:16px;"
+                    = link_to not_responded.length, "#", data: {html: true, title: "#{event.name} (#{not_responded.length})", content: "#{render 'response_info', :invitation => invitation, :response => not_responded, :type => "not_responded", :event => event.name}", trigger: "click", placement: "top", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #2c3e50;font-size:16px;"
                 
 -else
   .well.text-center{style: "background-color:#fff;"}
