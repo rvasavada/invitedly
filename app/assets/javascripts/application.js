@@ -101,6 +101,8 @@ $("document").ready(function(){
                 $(_this).popover("hide")
             }
         }, 100);
-    });
+    }).click(function(e) {
+        e.preventDefault();
+     });
   
 });
