@@ -58,26 +58,26 @@
                 %small="Last updated #{time_ago_in_words(invitation.updated_at)} ago"
 
               - @occasion.events.each do |event|
-                - attending = 0
-                - not_attending = 0
-                - not_responded = 0
-                - for rsvp in invitation.rsvps
+                - attending = []
+                - not_attending = []
+                - not_responded = []
+                - for rsvp in invitation.rsvps.guest_view
                   - case
                     - when rsvp.event_id == event.id && rsvp.response == "Attending" && rsvp.visibility == true
-                      - attending+=1
+                      - attending.push(rsvp.guest.full_name)
                     - when rsvp.event_id == event.id && rsvp.response == "Not Attending" && rsvp.visibility == true
-                      - not_attending+=1
+                      - not_attending.push(rsvp.guest.full_name)
                     - when rsvp.event_id == event.id && rsvp.response == "Not Responded" && rsvp.visibility == true
-                      - not_responded +=1
+                      - not_responded.push(rsvp.guest.full_name)
                 %td.text-success
-                  - if attending > 0
-                    = attending
+                  - if attending.length > 0
+                    = link_to attending.length, "#", data: {html: true, title: "#{invitation.household.name} (#{attending.length}) - Attending", content: "#{render 'response_info', :invitation => invitation, :response => attending}", trigger: "hover", container: 'body', toggle: 'popover'}, rel: "popover"
                 %td.text-danger
-                  - if not_attending > 0
-                    = not_attending  
+                  - if not_attending.length > 0
+                    = link_to not_attending.length, "#", data: {html: true, title: "#{invitation.household.name} (#{not_attending.length}) - Not Attending", content: "#{render 'response_info', :invitation => invitation, :response => not_attending}", trigger: "hover", container: 'body', toggle: 'popover'}, rel: "popover"
                 %td
-                  - if not_responded > 0
-                    = not_responded
+                  - if not_responded.length > 0
+                    = link_to not_responded.length, "#", data: {html: true, title: "#{invitation.household.name} (#{not_responded.length}) - Not Responded", content: "#{render 'response_info', :invitation => invitation, :response => not_responded}", trigger: "hover", container: 'body', toggle: 'popover'}, rel: "popover"
                 
 -else
   .well.text-center{style: "background-color:#fff;"}

@@ -80,4 +80,6 @@ $("document").ready(function(){
   }, 4000);
   
   $('a[rel~="tooltip"]').tooltip();
+  $('a[rel~="popover"]').popover();
+  
 });

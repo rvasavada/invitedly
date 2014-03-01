@@ -10,7 +10,11 @@ class Guest < ActiveRecord::Base
   default_scope { includes(:rsvps).order('created_at ASC')}
   
   def full_name
-    "#{title} #{first_name} #{last_name}"
+    if first_name != "" && last_name != ""
+      "#{title} #{first_name} #{last_name}"
+    else
+      "Additional guest"
+    end
   end
   
   def self.import(file,occasion,user)
