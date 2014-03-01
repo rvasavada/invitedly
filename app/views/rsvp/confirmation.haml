@@ -52,7 +52,7 @@
                   - @invitation.household.rsvps.where(:event_id => event.id, :visibility => true).each do |rsvp|                  
                     %tr
                       %td
-                        - if rsvp.guest.first_name != "" && rsvp.guest.last_name != ""
+                        - if rsvp.guest.last_name != ""
                           = rsvp.guest.full_name
                         - else 
                           %em.text-muted Additional guest not needed
