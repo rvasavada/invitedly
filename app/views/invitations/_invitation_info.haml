@@ -1,6 +1,6 @@
-.text-success= invitation.status
-.btn-group
-  = link_to occasion_invitation_manage_path(occasion, invitation, :guest_info), class: "btn btn-primary btn-sm" do
-    %span.glyphicon.glyphicon-pencil
-  = link_to occasion_invitation_path(occasion, invitation), method: :delete, class: "btn btn-danger btn-sm" do
-    %span.glyphicon.glyphicon-trash
+.text-success=invitation.status
+%strong Email:
+=invitation.household.email
+%br
+%strong Notes:
+= invitation.household.notes
