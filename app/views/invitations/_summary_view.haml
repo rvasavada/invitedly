@@ -55,7 +55,7 @@
                 - attending = []
                 - not_attending = []
                 - not_responded = []
-                - for rsvp in invitation.rsvps.guest_view
+                - for rsvp in invitation.rsvps
                   - case
                     - when rsvp.event_id == event.id && rsvp.response == "Attending" && rsvp.visibility == true
                       - attending.push(rsvp.guest.full_name)

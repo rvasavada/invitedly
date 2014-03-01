@@ -10,7 +10,7 @@ class Invitation < ActiveRecord::Base
   has_many :guests, :through => :household
   validates_presence_of :occasion_id
   
-  has_many :rsvps
+  has_many :rsvps, -> {includes(:guest) }
   accepts_nested_attributes_for :rsvps, :allow_destroy => true
   
   default_scope {order('updated_at DESC')}
