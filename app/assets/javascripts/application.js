@@ -80,18 +80,10 @@ $("document").ready(function(){
   }, 4000);
   
   $('a[rel~="tooltip"]').tooltip();
-  $('a[rel~="popover"]').popover({
-        html: true,
-        trigger: 'manual',
-        container: $(this).attr('id'),
-        placement: 'top',
-        content: function () {
-            $return = '<div class="hover-hovercard"></div>';
-        }
-    }).on("mouseenter", function () {
+  $('a[rel~="popover"]').on("mouseenter", function () {
         var _this = this;
         $(this).popover("show");
-        $(this).siblings(".popover").on("mouseleave", function () {
+        $(".popover").on("mouseleave", function () {
             $(_this).popover('hide');
         });
     }).on("mouseleave", function () {
