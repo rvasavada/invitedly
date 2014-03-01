@@ -15,7 +15,7 @@
         %li.list-group-item
           = f.fields_for :household do |household|
             = household.fields_for :guests do |guest|
-              - if guest.object.first_name != "" && guest.object.first_name != ""
+              - if guest.object.last_name != ""
                 %h3=guest.object.full_name
               - else
                 %h3.text-muted {An additional guest}

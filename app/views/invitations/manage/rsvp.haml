@@ -38,15 +38,15 @@
                         %th Response
                         %th
                       %tbody
-                        = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id, :visibility => true).guest_view do |rsvp|
+                        = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id, :visibility => true) do |rsvp|
                           %tr
                             %td
-                              - if rsvp.object.guest.first_name != "" && rsvp.object.guest.last_name != ""
+                              - if rsvp.object.guest.last_name != ""
                                 = rsvp.object.guest.full_name
                               - else 
                                 %em.text-muted Additional guest not needed
                                 = rsvp.hidden_field :response, value: "Not Attending"
-                            - if (rsvp.object.guest.first_name != "" && rsvp.object.guest.last_name != "")
+                            - if rsvp.object.guest.last_name != ""
                               %td
                                 %label.radio-inline 
                                   = rsvp.radio_button :response, "Attending"
