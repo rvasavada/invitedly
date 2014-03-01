@@ -39,7 +39,7 @@
                         %th Response
                         %th
                       %tbody
-                        = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id, :visibility => true).guest_view do |rsvp|
+                        = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id, :visibility => true) do |rsvp|
                           %tr
                             %td
                               - if rsvp.object.guest.first_name != "" && rsvp.object.guest.last_name != ""
