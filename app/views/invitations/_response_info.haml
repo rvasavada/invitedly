@@ -1,1 +1,6 @@
-= response.join('<br>').html_safe
+- if type == "attending"
+  .text-success
+    = response.join('<br>').html_safe
+- else type == "not_attending"
+  .text-danger
+    = response.join('<br>').html_safe

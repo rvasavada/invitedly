@@ -42,13 +42,7 @@
           - @invitations.each do |invitation|
             %tr
               %td
-                .btn-group
-                  %button.btn.btn-xs.dropdown-toggle{type: "button", "data-toggle" => "dropdown", class: invitation.status == "Responded" ? "btn-success" : ""}
-                    =invitation.household.name
-                    %span.caret
-                  %ul.dropdown-menu
-                    %li= link_to "Edit Invitation", occasion_invitation_manage_path(@occasion, invitation, :guest_info)
-                    %li= link_to "Delete Invitation", occasion_invitation_path(@occasion, invitation), method: :delete
+                = link_to invitation.household.name, "#", data: {html: true, title: invitation.household.name, content: "#{render 'invitation_info', :invitation => invitation, :occasion => @occasion}", trigger: "click", toggle: 'popover'}, rel: "popover", style: invitation.status == "Responded" ? "color: #18bc9c;" : "color: #2c3e50;"
                     
                 -if invitation.household.tags.present?
                   %br
@@ -71,13 +65,13 @@
                       - not_responded.push(rsvp.guest.full_name)
                 %td.text-success
                   - if attending.length > 0
-                    = link_to attending.length, "#", data: {html: true, title: "#{invitation.household.name} (#{attending.length}) - Attending", content: "#{render 'response_info', :invitation => invitation, :response => attending}", trigger: "hover", container: 'body', toggle: 'popover'}, rel: "popover"
+                    = link_to attending.length, "#", data: {html: true, title: "#{event.name} (#{attending.length})", content: "#{render 'response_info', :invitation => invitation, :response => attending, :type => "attending", :event => event.name}", trigger: "hover", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #18bc9c;"
                 %td.text-danger
                   - if not_attending.length > 0
-                    = link_to not_attending.length, "#", data: {html: true, title: "#{invitation.household.name} (#{not_attending.length}) - Not Attending", content: "#{render 'response_info', :invitation => invitation, :response => not_attending}", trigger: "hover", container: 'body', toggle: 'popover'}, rel: "popover"
+                    = link_to not_attending.length, "#", data: {html: true, title: "#{event.name} (#{not_attending.length})", content: "#{render 'response_info', :invitation => invitation, :response => not_attending, :type => "not_attending", :event => event.name}", trigger: "hover", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #E74C3B;"
                 %td
                   - if not_responded.length > 0
-                    = link_to not_responded.length, "#", data: {html: true, title: "#{invitation.household.name} (#{not_responded.length}) - Not Responded", content: "#{render 'response_info', :invitation => invitation, :response => not_responded}", trigger: "hover", container: 'body', toggle: 'popover'}, rel: "popover"
+                    = link_to not_responded.length, "#", data: {html: true, title: "#{event.name} (#{not_responded.length})", content: "#{render 'response_info', :invitation => invitation, :response => not_responded, :type => "not_responded", :event => event.name}", trigger: "hover", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #2c3e50;"
                 
 -else
   .well.text-center{style: "background-color:#fff;"}
