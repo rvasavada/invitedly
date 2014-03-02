@@ -3,7 +3,7 @@
     %h1=@occasion.name
     %p#description=@occasion.description
     %br
-    = form_tag occasion_rsvp_verify_first_last_name_path(@occasion, :preview => "true") do
+    = form_tag occasion_rsvp_verify_first_last_name_path(@occasion) do
       .row
         .col-sm-6
           %p.lead Enter your first or last name to begin!
