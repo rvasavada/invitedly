@@ -9,9 +9,8 @@
       >
       = link_to "Confirmation", occasion_invitation_rsvp_path(@occasion, @invitation,:confirmation), class: "text-primary", style: "font-weight: bold;"
   
-  .alert.alert-success.hidden-print
-    Thanks for your RSVP.  You're all set!
-  
+  .alert.alert-success Thanks for your RSVP.  You're all set!
+  %button.pull-right{id:"print", onclick:"javascript:print()", value:"Print", class: "btn btn-link"} Print this page
   %h1 Confirmation
     
   .panel.panel-default
@@ -57,4 +56,8 @@
                         - else 
                           %em.text-muted Additional guest not needed
                       %td{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}=rsvp.response
-  %button.hidden-print{id:"print", onclick:"javascript:print()", value:"Print", class: "btn btn-primary btn-lg btn-block"} Print this page
+    
+    %p.text-info.text-center
+      Let us manage your RSVPs for you.
+      = link_to new_user_registration_path do
+        %strong Sign up for Invitedly
