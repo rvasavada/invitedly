@@ -12,8 +12,9 @@ Invitedly::Application.routes.draw do
     :sessions => "users/sessions"
      }
   get 'occasions' => 'occasions#index'  
-  
+  post 'occasions' => 'occasions#create'
   resources :occasions, :path => '' do
+
     match 'rsvp/verify_email_address' => 'rsvp#verify_email_address', :via => :post
     match 'rsvp/verify_first_last_name' => 'rsvp#verify_first_last_name', :via => :post
     
