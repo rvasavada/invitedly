@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140211094457) do
+ActiveRecord::Schema.define(version: 20140306065554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 20140211094457) do
     t.integer  "max_guests"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "message"
+    t.text     "message"
     t.integer  "household_id"
   end
 
