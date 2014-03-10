@@ -7,7 +7,7 @@ class Guest < ActiveRecord::Base
   
   has_many :events, :through => :rsvps
   
-  default_scope { includes(:rsvps).order('created_at ASC')}
+  default_scope { includes(:rsvps).order('guests.created_at ASC')}
   
   def full_name
     if last_name != ""
