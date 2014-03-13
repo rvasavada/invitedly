@@ -61,7 +61,7 @@ gem 'google-analytics-rails' #, '~> 0.0.4'
 gem 'acts-as-taggable-on' #, '~> 3.0.1'
 gem 'newrelic_rpm' #, '~> 3.7.2.195'
 
-
+gem 'mandrill-api' #, '~> 1.0.51'
 
 group :production do
   gem 'rails_12factor', '~> 0.0.2'
