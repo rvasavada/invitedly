@@ -7,7 +7,7 @@ class InvitationMailer < ActionMailer::Base
     invitations = occasion.invitations - occasion.invitations.where(:status => 'Responded')
     invitations.each do |invitation|
       @invitation = invitation
-      mail(:to => "Rhut Vasavada <rhut@vasvada.us>", :subject => "RSVP reminder: #{@occasion.name}", :from => "Invitedly <notifications@invitedly.com>", :reply_to => "<#{@user.email}>")
+      mail(:to => "Rhut Vasavada <rhut@vasvada.us>", :subject => "RSVP reminder: #{@occasion.name}", :from => "Invitedly <notifications@invitedly.com>", :reply_to => "<#{@user.email}>").deliver
     end
     
   end
