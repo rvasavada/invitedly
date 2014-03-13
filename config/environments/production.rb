@@ -80,4 +80,5 @@ Invitedly::Application.configure do
   
   GA.tracker = "UA-47251032-1"
   
+  config.action_mailer.default_url_options = { :host => 'invitedly.com' }
 end
