@@ -1,4 +1,4 @@
-= form_for @occasion, :url => wizard_path, :method => :put, :html => { :role => "form"} do |f|
+= form_for @occasion, :html => { :role => "form"} do |f|
   .panel.panel-default
     .panel-body
       %legend
@@ -7,7 +7,8 @@
         .row
           .col-md-8
             .form-group{class: @occasion.errors.include?(:name) ? 'has-error has-feedback' : ''}
-              = f.label :name, "Title #{@occasion.errors.get(:name)}"
+              - verbal_error = @occasion.errors.get(:name).join('; ')
+              = f.label :name, "Title #{verbal_error}"
               = f.text_field :name, :autofocus => true, class: "form-control", :placeholder => "John and Mary's Wedding!"
               %span{class: @occasion.errors.include?(:name) ? 'glyphicon glyphicon-remove form-control-feedback' : ''}
               %span.help-block This is publicly displayed on your RSVP site

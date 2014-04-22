@@ -1,9 +1,0 @@
-.container
-  .alert.alert-info
-    = link_to "Create Occasion", sign_up_path(:create_occasion), class:"text-primary", style: "font-weight: bold;"
-    >
-    = link_to "Events", sign_up_path(:create_events), class: "text-primary"
-
-.container
-  %h1 New Occasion
-  = render 'occasions/form'
