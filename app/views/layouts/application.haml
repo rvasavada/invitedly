@@ -18,8 +18,8 @@
         .alert.alert-danger
           = alert
       
-      -#.container#main{style:"margin-top:20px;"}
-        - if user_signed_in? & !current_page?(sign_up_path)
+      .container#main{style:"margin-top:20px;"}
+        -#- if user_signed_in? & current_user.occasion.present? & controller.controller_name != 'sign_up' 
           %nav.navbar.navbar-default{role: "navigation"}
             / Brand and toggle get grouped for better mobile display
             .navbar-header
@@ -29,23 +29,23 @@
                 %span.icon-bar
                 %span.icon-bar
               - if user_signed_in?
-                - if @occasion.present? && !current_page?(new_occasion_path)
-                  = link_to "Invitedly", occasion_invitations_path(@occasion), class: "navbar-brand"
+                - if current_user.occasion.present? & controller.controller_name != 'sign_up'
+                  = link_to "Invitedly", occasion_invitations_path(current_user.occasion), class: "navbar-brand"
                 - else
                   = link_to "Invitedly", root_url, class: "navbar-brand"
             / Collect the nav links, forms, and other content for toggling
             #bs-example-navbar-collapse-1.collapse.navbar-collapse
               %ul.nav.navbar-nav
                 - if user_signed_in? 
-                  - if @occasion.present? && !current_page?(new_occasion_path)
-                    %li{class: "#{'active' if current_page?(occasion_events_path(@occasion))}"}= link_to "Events", occasion_events_path(@occasion)
-                    %li{class: "#{'active' if current_page?(occasion_invitations_path(@occasion))}"}= link_to "Invitations", occasion_invitations_path(@occasion)
-                    %li{class: "#{'active' if current_page?(occasion_guestbook_path(@occasion))}"}= link_to "Guestbook", occasion_guestbook_path(@occasion)
+                  - if current_user.occasion.present? & controller.controller_name != 'sign_up'
+                    %li{class: "#{'active' if current_page?(occasion_events_path(current_user.occasion))}"}= link_to "Events", occasion_events_path(current_user.occasion)
+                    %li{class: "#{'active' if current_page?(occasion_invitations_path(current_user.occasion))}"}= link_to "Invitations", occasion_invitations_path(current_user.occasion)
+                    %li{class: "#{'active' if current_page?(occasion_guestbook_path(current_user.occasion))}"}= link_to "Guestbook", occasion_guestbook_path(current_user.occasion)
   
 
               %ul.nav.navbar-nav.navbar-right
                 - if user_signed_in? 
-                  - if @occasion.present? && !current_page?(new_occasion_path)
+                  - if current_user.occasion.present? && controller.controller_name != 'sign_up'
                     %li.dropdown{class: "#{'active' if current_page?(@occasion)}"}
                       %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
                         =@occasion.name
@@ -54,8 +54,6 @@
                       %ul.dropdown-menu
                         %li= link_to "Edit Occasion Details", edit_occasion_path(@occasion)
                         %li= link_to "Preview Occasion Page", occasion_path(@occasion)
-                  - else
-                    %li{class: "#{'active' if current_page?(occasions_path)}"}= link_to "Occasions", occasions_path
                 - if user_signed_in? 
                   %li{class: "#{'active' if current_page?(edit_user_registration_path)}"}= link_to "Settings", edit_user_registration_path
                   %li= link_to "Sign out", destroy_user_session_path, method: :delete

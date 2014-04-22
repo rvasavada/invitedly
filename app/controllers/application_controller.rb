@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   def verify_occasion_ownership
     if params[:occasion_id].present?
       @occasion = Occasion.find_by_slug(params[:occasion_id])
-      unless current_user == @occasion.user || current_user == User.find(1)
+      unless current_user == @occasion.user
         redirect_to root_url, alert: "Sorry, you're not allowed to see that page!"
       end
     end
@@ -16,6 +16,6 @@ class ApplicationController < ActionController::Base
   
   # Use callbacks to share common setup or constraints between actions.
   def set_occasion
-    @occasion = Occasion.find_by_slug(params[:occasion_id])
+    @occasion = current_user.occasion
   end
 end
