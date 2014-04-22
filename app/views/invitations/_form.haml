@@ -1,31 +1,33 @@
 = f.fields_for :household, @household do |household|
-  .panel.panel-default
-    .panel-body
-
-      %legend Guest Information
       
-      .form-group{class: household.object.errors.include?(:name) ? 'has-error' : ''}
-        = household.label :name, "Invitation Name", class: "control-label"
-        = household.text_field :name, placeholder: "Invitation Name", :autofocus => true, :maxlength => 50, class: "form-control"
-        - if household.object.errors.include?(:name)
-          %span.help-block=household.object.errors.get(:name).join('; ')
-        - else
-          %span.help-block This name is private and won't be shared with the guests.
-      
-      = household.label :guests, "Guest Names", class: "control-label"
-      %small (Guest names can be left blank for guests to fill out)
-      #guests  
-        = household.fields_for :guests do |guest|
-          = render 'invitations/guest_fields', :f => guest
-        .links
-          = link_to_add_association 'Add Guest', household, :guests, :class => "btn btn-primary", :partial => 'invitations/guest_fields'
-  
-  .panel.panel-default
-    .panel-body
-      %legend Contact Information & Notes
-      
+  %ul.list-group
+    %li.list-group-item
+      %h2 Tell us more about the guests in this party
+    %li.list-group-item
       .row
-        .col-lg-9
+        .col-md-8
+          .form-group{class: household.object.errors.include?(:name) ? 'has-error' : ''}
+            = household.label :name, "Invitation Name", class: "control-label"
+            = household.text_field :name, placeholder: "Invitation Name", :autofocus => true, :maxlength => 50, class: "form-control"
+            - if household.object.errors.include?(:name)
+              %span.help-block=household.object.errors.get(:name).join('; ')
+            - else
+              %span.help-block This name is private and won't be shared with the guests.
+    
+          = household.label :guests, "Guest Names", class: "control-label"
+          %small (Guest names can be left blank for guests to fill out)
+          #guests  
+            = household.fields_for :guests do |guest|
+              = render 'invitations/guest_fields', :f => guest
+            .links
+              = link_to_add_association 'Add another guest', household, :guests, :class => "btn btn-link", :partial => 'invitations/guest_fields'
+    %li.list-group-item
+      %h2 
+        How can we reach you?
+        %small Add some private notes about this guest
+    %li.list-group-item
+      .row
+        .col-md-8
           .form-group
             = household.label :email, class: "control-label"
             = household.text_field :email, :maxlength => 50, class: "form-control"

@@ -3,7 +3,7 @@
     .col-sm-2
       .form-group
         = f.label :title, class: "sr-only"
-        = f.collection_select(:title,	@title, :name, :name, {:include_blank => true}, {class: "form-control"})
+        = f.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
     .col-sm-3
       .form-group
         = f.label :first_name, class: "sr-only"
@@ -14,5 +14,5 @@
         = f.text_field :last_name, class: "form-control", placeholder: "Last Name"
     .col-sm-2
       .form-group
-        = link_to_remove_association f, :class => "btn btn-danger", data: {toggle: "tooltip", title: "Delete Guest", placement: "bottom"} do
+        = link_to_remove_association f, :class => "btn btn-link", data: {toggle: "tooltip", title: "Delete Guest", placement: "bottom"} do
           %span.glyphicon.glyphicon-trash
