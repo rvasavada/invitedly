@@ -1,77 +1,21 @@
 .container
-  = form_for [@occasion,@event], :url => wizard_path, :method => :put, :html => { :role => "form"} do |f|
+  .alert.alert-info
+    %span.text-muted Wedding Information
+    >
+    %strong Event Information
+
+
+  = form_for @occasion, :url => wizard_path, :method => :put, :html => { :role => "form"} do |f|
     .panel.panel-default
       .panel-body
         %legend
           Event Information
-          %small (Give us some information about the event including date, time, and a brief description)
-        %fieldset
-          .form-group{class: @event.errors.include?(:name) ? 'has-error' : ''}
-            = f.label :name, class: "control-label" do
-              Event Title
-              %span{style: "color:red"}*
-            = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control input-lg", style: "font-weight:bold;"
-            %span.help-block= @event.errors.get(:name).join('; ')
-          .row
-            .col-sm-5
-              .form-group{class: @event.errors.include?(:start_date) ? 'has-error' : ''}
-                = f.label :start_date, class: "control-label" do
-                  Event Date
-                  %span{style: "color:red"}*
-                = f.text_field :start_date, :value => @event.start_date.blank? ? nil : @event.start_date.strftime("%b %e, %Y"), class: "form-control datepicker"
-                %span.help-block= @event.errors.get(:start_date).join('; ')
-            .col-sm-5
-              .form-group{class: @event.errors.include?(:start_time) ? 'has-error' : ''}
-                = f.label :start_time, class: "control-label" do
-                  Event Time
-                  %span{style: "color:red"}*
-                = f.text_field :start_time, :value => f.object.start_time.present? ? f.object.start_time.strftime('%l:%M %p') : '',:id => "spinner", :class => "form-control"
-                %span.help-block= @event.errors.get(:start_time).join('; ')
-          .form-group{class: @event.errors.include?(:description) ? 'has-error' : ''}
-            = f.label :description, class: "control-label" do
-              Description
-              %span{style: "color:red"}*
-            = f.text_area :description, :rows => 3, :maxlength => 250, :class => "form-control input-sm"
-            %span.help-block= @event.errors.get(:description).join('; ')
-
-    .panel.panel-default
-      .panel-body
-        %legend
-          Venue Information
-          %small (If you know the location of the venue, add it here so that your guests can print out their itinerary)
-        %fieldset
-          .form-group{class: @event.errors.include?(:location) ? 'has-error' : ''}
-            = f.label :location, class: "control-label" do
-              Location Name
-              %span{style: "color:red"}*
-            = f.text_field :location, :rows => 3, :maxlength => 100, class: "form-control"
-            %span.help-block= @event.errors.get(:location).join('; ')
-          .row
-            .col-sm-7
-              .form-group
-                = f.text_field :address_1, placeholder: "Address 1", :maxlength => 100, class: "form-control"
-            .col-sm-5
-              .form-group
-                = f.text_field :address_2, placeholder: "Address 2", :maxlength => 100, class: "form-control"
-          .row
-            .col-sm-5
-              .form-group      
-                = f.text_field :city, placeholder: "City", :maxlength => 100, class: "form-control"
-            .col-sm-4.domestic
-              .form-group
-                = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
-            .domestic.col-sm-3
-              .form-group
-                = f.text_field :zip, placeholder: "Zip", :maxlength => 5, class: "form-control"
-            .international.col-sm-4
-              .form-group
-                = f.text_field :region, placeholder: "Region", :maxlength => 100, class: "form-control"
-            .international.col-sm-3
-              .form-group
-                = f.text_field :postal_code, placeholder: "Postal Code", :maxlength => 20, class: "form-control"
-          .form-group
-            = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control",:id => "countrySelect"})
-
+        #events  
+          = f.fields_for :events do |event|
+            = render 'event_fields', :f => event
+          .links
+            = link_to_add_association 'Add Event', f, :events, :class => "btn btn-link"
+        
     .pull-right
       .form-group
         = f.submit "Save & Add more", :class => "btn btn-success btn-lg"

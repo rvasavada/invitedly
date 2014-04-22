@@ -26,10 +26,7 @@ class SignUpController < ApplicationController
       @occasion = @user.build_occasion(occasion_params)
       @occasion.save
     when :event_info
-      @invitation.status = "Responded"
-      @invitation.update(invitation_params)
-    when :guestbook
-      @invitation.update(invitation_params)
+      @occasion.update(invitation_params)
     end
     
     render_wizard @occasion
