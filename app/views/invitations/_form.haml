@@ -2,7 +2,9 @@
       
   %ul.list-group
     %li.list-group-item
-      %h2 Tell us more about the guests in this party
+      %h2 
+        Who's coming?
+        %small Tell us more about the guests in this party
     %li.list-group-item
       .row
         .col-md-8
@@ -23,8 +25,8 @@
               = link_to_add_association 'Add another guest', household, :guests, :class => "btn btn-link", :partial => 'invitations/guest_fields'
     %li.list-group-item
       %h2 
-        How can we reach you?
-        %small Add some private notes about this guest
+        Let's stay in touch.  
+        %small Add contact info & notes
     %li.list-group-item
       .row
         .col-md-8
