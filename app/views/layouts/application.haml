@@ -2,7 +2,8 @@
 %html{lang: "en"}    
   %head
     %title Invitedly
-    = stylesheet_link_tag "//netdna.bootstrapcdn.com/bootswatch/3.1.0/flatly/bootstrap.min.css"
+    -#= stylesheet_link_tag "//netdna.bootstrapcdn.com/bootswatch/3.1.1/flatly/bootstrap.min.css"
+    = stylesheet_link_tag "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"
     = stylesheet_link_tag "application", media: "all"
     
     = analytics_init if Rails.env.production?
@@ -17,8 +18,8 @@
         .alert.alert-danger
           = alert
       
-      .container#main{style:"margin-top:20px;"}
-        - if user_signed_in?
+      -#.container#main{style:"margin-top:20px;"}
+        - if user_signed_in? & !current_page?(sign_up_path)
           %nav.navbar.navbar-default{role: "navigation"}
             / Brand and toggle get grouped for better mobile display
             .navbar-header
@@ -32,8 +33,6 @@
                   = link_to "Invitedly", occasion_invitations_path(@occasion), class: "navbar-brand"
                 - else
                   = link_to "Invitedly", root_url, class: "navbar-brand"
-              - else
-                = link_to "Invitedly", root_url, class: "navbar-brand"
             / Collect the nav links, forms, and other content for toggling
             #bs-example-navbar-collapse-1.collapse.navbar-collapse
               %ul.nav.navbar-nav

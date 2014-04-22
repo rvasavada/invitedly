@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   devise :omniauthable, :omniauth_providers => [:facebook]
   
-  has_many :occasions, :dependent => :destroy
+  has_one :occasions, :dependent => :destroy
   has_many :households, :dependent => :destroy
   
   has_many :events, :through => :occasions

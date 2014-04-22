@@ -1,0 +1,10 @@
+.container
+  %h1= @event.name
+  
+  .row
+    .col-md-3
+    .col-md-9
+      - if params[:view] == "guest"
+        = render 'guest_view'
+      - else
+        = render 'summary_view'

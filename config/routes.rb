@@ -11,6 +11,9 @@ Invitedly::Application.routes.draw do
     :omniauth_callbacks => "users/omniauth_callbacks",
     :sessions => "users/sessions"
      }
+  
+  resources :sign_up
+  
   get 'occasions' => 'occasions#index'  
   post 'occasions' => 'occasions#create'
   resources :occasions, :path => '' do
@@ -28,7 +31,7 @@ Invitedly::Application.routes.draw do
       resources :rsvp
     end
     
-    resources :events, :except => [:show]
+    resources :events
   end
 
      

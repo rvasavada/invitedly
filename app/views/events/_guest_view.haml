@@ -1,0 +1,53 @@
+.panel.panel-default
+  .panel-body
+    .pull-right
+      %strong View:
+      - if params[:v] == "d"
+        = link_to "Summary", occasion_event_path(@occasion, @event, v: "d")
+      - else
+        Details
+      |
+      - unless params[:v] == "d"
+        = link_to "Summary", occasion_event_path(@occasion, @event, v: "s")
+      - else
+        Details
+    %ul.list-inline
+      %li.text-danger
+        %strong=@event.rsvps.where(:visibility => true, :response => "Not Attending").count
+        Not Attending
+      %li.text-success
+        %strong.text-success=@event.rsvps.where(:visibility => true, :response => "Attending").count
+        Attending
+      
+      %li
+        %strong=@event.rsvps.where(:visibility => true, :response => "Not Responded").count
+        Not Sent/Modified
+      
+      %li
+        %strong=@event.rsvps.where(:visibility => true, :response => "Not Responded").count
+        Not Responded
+  
+    -#%strong Download:
+    -#= link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
+  .table-responsive
+    %table.table.table-hover.table-condensed
+      %thead
+        %tr
+          %th Guest name
+          %th Response
+      %tbody
+        - @event.rsvps.where(:visibility => true).each do |rsvp|
+          - guest = rsvp.guest
+          - household = guest.household
+          - invitation = guest.household.invitations.where(:occasion_id => @occasion.id, :household_id => household.id)
+          %tr
+            %td
+              = rsvp.guest.full_name
+              - rsvp.guest.household.tags.each do |t| 
+                %span.label.label-info=t
+              %br
+              %small.text-muted= rsvp.guest.household.name
+            %td
+              %span{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : "", style: "vertical-align:middle;"}=rsvp.response
+              = link_to '#', data: {title: "Edit Response", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-link btn-sm" do
+                %span.glyphicon.glyphicon-pencil

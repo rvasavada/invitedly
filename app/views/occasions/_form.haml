@@ -1,27 +1,35 @@
-= form_for @occasion, :html => { :role => "form"} do |f|
+= form_for @occasion, :url => wizard_path, :method => :put, :html => { :role => "form"} do |f|
   .panel.panel-default
     .panel-body
       %legend
-        Occasion Details
-        %small (Give us the title and a brief description about the occasion.)
+        Wedding Information
       %fieldset
-        .form-group{class: @occasion.errors.include?(:name) ? 'has-error' : ''}
-          = f.text_field :name, :autofocus => true, class: "form-control input-lg", :placeholder => "Title (e.g. John and Mary's Wedding!)", style: "font-weight:bold;"
-          %small This will publicly be displayed on your RSVP site.
-          %span.help-block= @occasion.errors.get(:name).join('; ')
-
-        .form-group{class: @occasion.errors.include?(:description) ? 'has-error' : ''}
-          = f.text_area :description, :rows => 5, :class => "form-control", :placeholder => "Description"
-          %small This will publicly be displayed on your RSVP site.
-          %span.help-block= @occasion.errors.get(:description).join('; ')
-
-        .form-group{class: @occasion.errors.include?(:slug) ? 'has-error' : ''}
-          .input-group
-            %span.input-group-addon http://www.invitely.com/
-            = f.text_field :slug, :placeholder => "(e.g. johnandmary)", :maxlength => 20, class: "form-control"      
-          %small For your unique rsvp page!
-          %span.help-block
-            = @occasion.errors.get(:slug).join('; ')
+        .row
+          .col-md-8
+            .form-group{class: @occasion.errors.include?(:name) ? 'has-error has-feedback' : ''}
+              = f.label :name, "Title #{@occasion.errors.get(:name)}"
+              = f.text_field :name, :autofocus => true, class: "form-control", :placeholder => "John and Mary's Wedding!"
+              %span{class: @occasion.errors.include?(:name) ? 'glyphicon glyphicon-remove form-control-feedback' : ''}
+              %span.help-block This is publicly displayed on your RSVP site
+          
+        .row
+          .col-md-8
+            .form-group{class: @occasion.errors.include?(:description) ? 'has-error' : ''}
+              = f.label :description, "Description #{@occasion.errors.get(:description)}"
+              = f.text_area :description, :rows => 5, :class => "form-control", :placeholder => "We're celebrating the marriage of John and Mary.  Please join us on this special occasion!"
+              %span{class: @occasion.errors.include?(:description) ? 'glyphicon glyphicon-remove form-control-feedback' : ''}
+              %span.help-block This is publicly displayed on your RSVP site
+            
+        .row
+          .col-md-8
+            .form-group{class: @occasion.errors.include?(:slug) ? 'has-error' : ''}
+              = f.label :slug, "Unique RSVP site"
+              .input-group
+                %span.input-group-addon http://www.invitedly.com/
+                = f.text_field :slug, :placeholder => "johnandmary", :maxlength => 20, class: "form-control"      
+              %span{class: @occasion.errors.include?(:slug) ? 'glyphicon glyphicon-remove form-control-feedback' : ''}
+              %span.help-block Send your friends and family here to collect guest info
+          
 
 
   = f.submit "Save Occasion Details", :class => "btn btn-success btn-lg pull-right"
