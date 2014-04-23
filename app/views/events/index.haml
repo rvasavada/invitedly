@@ -10,9 +10,9 @@
         %li.list-group-item
           %h4
             .pull-right
-              = link_to edit_occasion_event_path(@occasion,event), data: {title: "Edit Event", placement: "bottom", trigger: "hover"},rel: "tooltip", class: "btn btn-primary btn-sm" do
+              = link_to edit_occasion_event_path(@occasion,event), class: "btn btn-link btn-sm" do
                 %span.glyphicon.glyphicon-pencil
-              = link_to occasion_event_path(@occasion,event), method: :delete, data: {title: "Delete Event", placement: "bottom", trigger: "hover"},rel: "tooltip", class: "btn btn-danger btn-sm" do
+              = link_to occasion_event_path(@occasion,event), method: :delete, class: "btn btn-link btn-sm" do
                 %span.glyphicon.glyphicon-trash
             =link_to event.name, occasion_event_path(@occasion,event)
             %br
@@ -25,6 +25,22 @@
               - else
                 = event.location
           %p=event.description
+          
+          %ul.list-inline.well
+            %li.text-danger
+              %strong= event.rsvps.not_attending(event).count
+              Not Attending
+            %li.text-success
+              %strong.text-success= event.rsvps.attending(event).count
+              Attending
+      
+            %li
+              %strong N/A
+              Not Sent/Modified
+      
+            %li
+              %strong= event.rsvps.not_responded(event).count
+              Not Responded
 
 
   -else

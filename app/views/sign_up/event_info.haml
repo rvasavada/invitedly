@@ -1,10 +1,12 @@
 .container
-  .alert.alert-info
+  .alert.alert-warning
     %span.text-muted Host Information
     >
     %span.text-muted Wedding Information
     >
     %strong Event Information
+    >
+    %span.text-muted Invitations
 
 
   = form_for @occasion, :url => wizard_path, :method => :put, :html => { :role => "form"} do |f|
