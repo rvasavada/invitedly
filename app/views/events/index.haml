@@ -1,11 +1,12 @@
 .container
-  %h1 
-    .pull-right= link_to 'New Event', new_occasion_event_path(@occasion), class: "btn btn-success"
-    Events
+  %ul.list-group
+    %li.list-group-item
+      %h2 
+        .pull-right= link_to 'New Event', new_occasion_event_path(@occasion), class: "btn btn-success"
+        Events
+        %span.text-muted="(#{@events.count})"
 
-
-  - if @events.present?
-    %ul.list-group
+    - if @events.present?
       - @events.each do |event|
         %li.list-group-item
           %h4
@@ -25,7 +26,7 @@
               - else
                 = event.location
           %p=event.description
-          
+        
           %ul.list-inline.well
             %li.text-danger
               %strong= event.rsvps.not_attending(event).count
@@ -33,17 +34,17 @@
             %li.text-success
               %strong.text-success= event.rsvps.attending(event).count
               Attending
-      
+    
             %li
               %strong N/A
               Not Sent/Modified
-      
+    
             %li
               %strong= event.rsvps.not_responded(event).count
               Not Responded
 
 
-  -else
-    .well.text-center{style: "background-color:#fff;"}
-      %h3 No events found.
-      =link_to "Add an event!", new_occasion_event_path(@occasion)
+    -else
+      .well.text-center{style: "background-color:#fff;"}
+        %h3 No events found.
+        =link_to "Add an event!", new_occasion_event_path(@occasion)
