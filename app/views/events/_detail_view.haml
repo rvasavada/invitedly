@@ -37,16 +37,15 @@
       %tbody
         - @event.rsvps.where(:visibility => true).each do |rsvp|
           - guest = rsvp.guest
-          - household = guest.household
-          - invitation = guest.household.invitation
+          - invitation = guest.invitation
           %tr
             %td
               = rsvp.guest.full_name
-              - rsvp.guest.household.tags.each do |t| 
+              - rsvp.guest.invitation.tags.each do |t| 
                 %span.label.label-info=t
               %br
-              %small.text-muted= rsvp.guest.household.name
+              %small.text-muted= invitation.name
             %td
-              %span{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : "", style: "vertical-align:middle;"}=rsvp.response
+              %span{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}=rsvp.response
               = link_to '#', data: {title: "Edit Response", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-link btn-sm" do
                 %span.glyphicon.glyphicon-pencil

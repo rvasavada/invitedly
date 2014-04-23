@@ -1,5 +1,7 @@
 class Invitation < ActiveRecord::Base
   extend FriendlyId
+  acts_as_taggable
+  
   
   friendly_id :random_hex_id, use: :scoped, :scope => :occasion
   
@@ -7,13 +9,14 @@ class Invitation < ActiveRecord::Base
   belongs_to :user
 
   has_many :guests
+  accepts_nested_attributes_for :guests, :allow_destroy => true
   
   validates_presence_of :occasion_id
   
   has_many :rsvps, -> {includes(:guest) }
   accepts_nested_attributes_for :rsvps, :allow_destroy => true
   
-  default_scope {order('updated_at DESC')}
+  #default_scope {includes(:tags, :guests)}
   scope :last_updated, -> { order('updated_at DESC') } 
   scope :status, -> { order(:status) } 
   #scope :name_asc, -> { joins(:household).order('name ASC').readonly(false) } 

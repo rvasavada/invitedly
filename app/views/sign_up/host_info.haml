@@ -7,38 +7,3 @@
     %span.text-muted Event Information
     >
     %span.text-muted Invitations
-
-  = form_for @user, :url => wizard_path, :method => :put, :html => { :role => "form"} do |f|
-    %ul.list-group
-      %li.list-group-item
-        %h2 First, give us some information about your wedding!
-      %li.list-group-item
-        %fieldset
-          .row
-            .col-md-8
-              .form-group{class: @occasion.errors.include?(:name) ? 'has-error has-feedback' : ''}
-                = f.label :name, "Wedding name #{@occasion.errors.get(:name).join('; ') if @occasion.errors.get(:name).present?}", class: "control-label"
-                = f.text_field :name, :autofocus => true, class: "form-control", :placeholder => "John and Mary's Wedding!"
-                %span{class: @occasion.errors.include?(:name) ? 'glyphicon glyphicon-remove form-control-feedback' : ''}
-                %span.help-block This is publicly displayed on your RSVP site
-        
-          .row
-            .col-md-8
-              .form-group{class: @occasion.errors.include?(:description) ? 'has-error has-feedback' : ''}
-                = f.label :description, "Description #{@occasion.errors.get(:description).join('; ') if @occasion.errors.get(:description).present?}", class: "control-label"
-                = f.text_area :description, :rows => 5, :class => "form-control", :placeholder => "We're celebrating the marriage of John and Mary.  Please join us on this special occasion!"
-                %span{class: @occasion.errors.include?(:description) ? 'glyphicon glyphicon-remove form-control-feedback' : ''}
-                %span.help-block This is publicly displayed on your RSVP site
-          
-          .row
-            .col-md-8
-              .form-group{class: @occasion.errors.include?(:slug) ? 'has-error has-feedback' : ''}
-                = f.label :slug, "Custom URL #{@occasion.errors.get(:slug).join('; ') if @occasion.errors.get(:slug).present?}", class: "control-label"
-                .input-group
-                  %span.input-group-addon http://www.invitedly.com/
-                  = f.text_field :slug, :placeholder => "johnandmary", :maxlength => 20, class: "form-control"      
-                %span.help-block Send your friends and family here to collect guest info
-        
-
-
-    = f.submit "Next: Event Information", :class => "btn btn-success btn-lg pull-right"
