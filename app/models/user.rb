@@ -6,10 +6,10 @@ class User < ActiveRecord::Base
   devise :omniauthable, :omniauth_providers => [:facebook]
   
   has_one :occasion, :dependent => :destroy
-  has_many :households, :dependent => :destroy
   
+  has_many :invitations, :dependent => :destroy
   has_many :events, :through => :occasions
-  has_many :guests, :through => :households
+  has_many :guests, :through => :invitations
   
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     signed_in_resource.facebook_uid = auth.uid

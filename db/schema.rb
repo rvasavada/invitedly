@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140306065554) do
+ActiveRecord::Schema.define(version: 20140423054712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 20140306065554) do
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "guests", force: true do |t|
-    t.integer  "user_id"
+    t.integer  "invitation_id"
     t.string   "email"
     t.string   "address_1"
     t.string   "address_2"
@@ -77,16 +77,6 @@ ActiveRecord::Schema.define(version: 20140306065554) do
     t.string   "facebook_uid"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "household_id"
-  end
-
-  create_table "households", force: true do |t|
-    t.string   "name"
-    t.integer  "user_id"
-    t.string   "notes"
-    t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "invitations", force: true do |t|
@@ -101,7 +91,7 @@ ActiveRecord::Schema.define(version: 20140306065554) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "message"
-    t.integer  "household_id"
+    t.integer  "user_id"
   end
 
   create_table "occasions", force: true do |t|

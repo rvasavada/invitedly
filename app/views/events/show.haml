@@ -1,9 +1,8 @@
 .container
-  %h1= @event.name
-  
-  .row
-    .col-md-3
-    .col-md-9
+  .panel.panel-default
+    %ul.list-group
+      %li.list-group-item
+        %h2= @event.name
       - if params[:v] == "d"
         = render 'detail_view'
       - else

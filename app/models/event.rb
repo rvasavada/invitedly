@@ -9,7 +9,8 @@ class Event < ActiveRecord::Base
   accepts_nested_attributes_for :rsvps, :reject_if => :all_blank, :allow_destroy => true
   
   has_many :guests, through: :active_rsvps
-  has_many :households, through: :guests
+  has_many :invitations, through: :guests
+
   default_scope { order('start_date ASC, start_time ASC') } 
   validates_presence_of :name,:location,:start_time,:start_date,:description
   

@@ -1,6 +1,6 @@
 class Guest < ActiveRecord::Base
   acts_as_taggable
-  belongs_to :household
+  belongs_to :invitation
 
   has_many :rsvps, :dependent => :destroy
   accepts_nested_attributes_for :rsvps, :allow_destroy => true

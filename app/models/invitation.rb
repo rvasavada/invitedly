@@ -4,10 +4,10 @@ class Invitation < ActiveRecord::Base
   friendly_id :random_hex_id, use: :scoped, :scope => :occasion
   
   belongs_to :occasion
-  belongs_to :household
-  accepts_nested_attributes_for :household, :allow_destroy => true
+  belongs_to :user
+
+  has_many :guests
   
-  has_many :guests, :through => :household
   validates_presence_of :occasion_id
   
   has_many :rsvps, -> {includes(:guest) }
@@ -16,9 +16,9 @@ class Invitation < ActiveRecord::Base
   default_scope {order('updated_at DESC')}
   scope :last_updated, -> { order('updated_at DESC') } 
   scope :status, -> { order(:status) } 
-  scope :name_asc, -> { joins(:household).order('name ASC').readonly(false) } 
-  scope :name_desc, -> { joins(:household).order('name DESC').readonly(false) } 
-  def self.to_csv(occasion, options = {})
+  #scope :name_asc, -> { joins(:household).order('name ASC').readonly(false) } 
+  #scope :name_desc, -> { joins(:household).order('name DESC').readonly(false) } 
+  -#def self.to_csv(occasion, options = {})
     CSV.generate(options) do |csv|
       cols = ["Family Name", "Email", "Notes", "Title", "First Name", "Last Name", "Full Name","Invitation Status"]
       $i = 0
