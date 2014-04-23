@@ -1,8 +1,10 @@
-- if type == "attending"
-  .text-success
-    = response.join('<br>').html_safe
-- elsif type == "not_attending"
-  .text-danger
-    = response.join('<br>').html_safe
-- else type == "not_responded"
-  = response.join('<br>').html_safe
+- response.each do |guests|
+  - if type == "attending"
+    %span.text-success= guests.guest.full_name
+    %br
+  - elsif type == "not_attending"
+    %span.text-danger= guests.guest.full_name
+    %br
+  - else type == "not_responded"
+    %span= guests.guest.full_name
+    %br
