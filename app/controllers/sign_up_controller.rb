@@ -7,6 +7,9 @@ class SignUpController < ApplicationController
     
     case step
     when :host_info
+      @title = Title.all
+      @country = Country.all
+      @state = State.all
     when :wedding_info
       if @user.occasion.present?
         @occasion = @user.occasion
@@ -27,25 +30,28 @@ class SignUpController < ApplicationController
 
     case step
     when :host_info
+      @user.update(user_params)
+      @title = Title.all
+      @country = Country.all
+      @state = State.all
     when :wedding_info
-      @occasion = @user.build_occasion(occasion_params)
-      @occasion.save
+      @user.update(user_params)
     when :event_info
       @country = Country.all
       @state = State.all
       
       @occasion = @user.occasion
-      @occasion.update(occasion_params)
+     #@occasion.update(occasion_params)
     end
     
-    render_wizard @occasion
+    render_wizard @user
     
   end
   
   private
 
     # Never trust parameters from the scary internet, only allow the white list through
-    def occasion_params
-      params.require(:occasion).permit(:name, :description, :slug, events_attributes: [:name, :description, :start_date, :start_time, :address_1, :address_2, :city, :state, :zip, :country, :region, :postal_code, :location, :slug, :_destroy])
+    def user_params
+      params.require(:user).permit(occasion_attributes: [:name, :description, :slug, events_attributes: [:name, :description, :start_date, :start_time, :address_1, :address_2, :city, :state, :zip, :country, :region, :postal_code, :location, :slug, :_destroy]])
     end
 end

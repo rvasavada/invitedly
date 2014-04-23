@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140423055229) do
+ActiveRecord::Schema.define(version: 20140423062632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,20 +60,9 @@ ActiveRecord::Schema.define(version: 20140423055229) do
   create_table "guests", force: true do |t|
     t.integer  "invitation_id"
     t.string   "email"
-    t.string   "address_1"
-    t.string   "address_2"
-    t.string   "city"
-    t.string   "state"
-    t.string   "zip"
-    t.string   "country"
-    t.string   "region"
-    t.string   "postal_code"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "title"
-    t.string   "cell_phone"
-    t.string   "home_phone"
-    t.string   "notes"
     t.string   "facebook_uid"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -95,6 +84,14 @@ ActiveRecord::Schema.define(version: 20140423055229) do
     t.string   "name"
     t.text     "notes"
     t.string   "email"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "country"
+    t.string   "region"
+    t.string   "postal_code"
+    t.string   "cell_phone"
+    t.string   "home_phone"
   end
 
   create_table "occasions", force: true do |t|
@@ -184,6 +181,9 @@ ActiveRecord::Schema.define(version: 20140423055229) do
     t.string   "facebook_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "partner_title"
+    t.string   "partner_first_name"
+    t.string   "partner_last_name"
   end
 
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree

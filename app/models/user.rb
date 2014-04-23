@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   devise :omniauthable, :omniauth_providers => [:facebook]
   
   has_one :occasion, :dependent => :destroy
+  accepts_nested_attributes_for :occasion, :allow_destroy => true
   
   has_many :invitations, :dependent => :destroy
   has_many :events, :through => :occasions
