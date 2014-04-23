@@ -20,7 +20,7 @@
       
       .container#main{style:"margin-top:20px;"}
         - if user_signed_in? 
-          - if current_user.occasion.present? & controller.controller_name != 'sign_up' 
+          - if current_user.occasion.present? && controller.controller_name != 'sign_up' 
             %nav.navbar.navbar-default{role: "navigation"}
               / Brand and toggle get grouped for better mobile display
               .navbar-header

@@ -1,57 +1,64 @@
 .container
   .alert.alert-info
+    %span.text-muted Host Information
+    >
     %span.text-muted Wedding Information
     >
     %strong Event Information
 
 
   = form_for @occasion, :url => wizard_path, :method => :put, :html => { :role => "form"} do |f|
-    .panel.panel-default
-      .panel-body        
+    %ul.list-group
+      %li.list-group-item
         %h2 Next, add each of your events!
-      %ul.list-group
-        %li.list-group-item
-        
-          = f.fields_for :events do |event|
+      %li.list-group-item.list-group-item-info
+        %h4 Event what? when? where? why?
+        = f.fields_for :events do |event|
+          %li.list-group-item
             .row
-              .col-md-8
+              .col-md-8          
                 %fieldset
-                  .form-group{class: @event.errors.include?(:name) ? 'has-error' : ''}
+                  .form-group{class: event.object.errors.include?(:name) ? 'has-error' : ''}
                     = event.label :name, class: "control-label" do
                       Event Title
                       %span{style: "color:red"}*
                     = event.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control", style: "font-weight:bold;"
-                    %span.help-block= @event.errors.get(:name).join('; ')
+                    %span.help-block= event.object.errors.get(:name).join('; ')
                   .row
                     .col-sm-5
-                      .form-group{class: @event.errors.include?(:start_date) ? 'has-error' : ''}
+                      .form-group{class: event.object.errors.include?(:start_date) ? 'has-error' : ''}
                         = event.label :start_date, class: "control-label" do
                           Event Date
                           %span{style: "color:red"}*
-                        = event.text_field :start_date, :value => @event.start_date.blank? ? nil : @event.start_date.strftime("%b %e, %Y"), class: "form-control datepicker"
-                        %span.help-block= @event.errors.get(:start_date).join('; ')
+                        = event.text_field :start_date, :value => event.object.start_date.blank? ? nil : event.object.start_date.strftime("%b %e, %Y"), class: "form-control datepicker"
+                        %span.help-block= event.object.errors.get(:start_date).join('; ')
                     .col-sm-5
-                      .form-group{class: @event.errors.include?(:start_time) ? 'has-error' : ''}
+                      .form-group{class: event.object.errors.include?(:start_time) ? 'has-error' : ''}
                         = event.label :start_time, class: "control-label" do
                           Event Time
                           %span{style: "color:red"}*
                         = event.text_field :start_time, :value => event.object.start_time.present? ? event.object.start_time.strftime('%l:%M %p') : '',:id => "spinner", :class => "form-control"
-                        %span.help-block= @event.errors.get(:start_time).join('; ')
-                  .form-group{class: @event.errors.include?(:description) ? 'has-error' : ''}
+                        %span.help-block= event.object.errors.get(:start_time).join('; ')
+                  .form-group{class: event.object.errors.include?(:description) ? 'has-error' : ''}
                     = event.label :description, class: "control-label" do
                       Description
                       %span{style: "color:red"}*
                     = event.text_area :description, :rows => 3, :maxlength => 250, :class => "form-control input-sm"
-                    %span.help-block= @event.errors.get(:description).join('; ')
+                    %span.help-block= event.object.errors.get(:description).join('; ')
 
-
+          %li.list-group-item.list-group-item-info
+            %h4 
+              Enter some info about the venue
+          %li.list-group-item
+            .row
+              .col-md-8
                 %fieldset
-                  .form-group{class: @event.errors.include?(:location) ? 'has-error' : ''}
+                  .form-group{class: event.object.errors.include?(:location) ? 'has-error' : ''}
                     = event.label :location, class: "control-label" do
                       Location Name
                       %span{style: "color:red"}*
                     = event.text_field :location, :rows => 3, :maxlength => 100, class: "form-control"
-                    %span.help-block= @event.errors.get(:location).join('; ')
+                    %span.help-block= event.object.errors.get(:location).join('; ')
                   = event.label :location, class: "control-label" do
                     Location Address (optional)
 

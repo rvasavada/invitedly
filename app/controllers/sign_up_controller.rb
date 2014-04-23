@@ -1,12 +1,12 @@
 class SignUpController < ApplicationController
-  
   include Wicked::Wizard
-  steps :wedding_info, :event_info
+  steps :host_info, :wedding_info, :event_info
 
   def show
     @user = current_user
     
     case step
+    when :host_info
     when :wedding_info
       if @user.occasion.present?
         @occasion = @user.occasion
@@ -26,10 +26,14 @@ class SignUpController < ApplicationController
     @user = current_user
 
     case step
+    when :host_info
     when :wedding_info
       @occasion = @user.build_occasion(occasion_params)
       @occasion.save
     when :event_info
+      @country = Country.all
+      @state = State.all
+      
       @occasion = @user.occasion
       @occasion.update(occasion_params)
     end

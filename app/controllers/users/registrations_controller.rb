@@ -8,6 +8,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
   def after_sign_up_path_for(resource)
-    sign_up_path
+    sign_up_path(:wedding_info)
   end
 end
