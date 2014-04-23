@@ -38,7 +38,7 @@
         - @event.rsvps.where(:visibility => true).each do |rsvp|
           - guest = rsvp.guest
           - household = guest.household
-          - invitation = guest.household.invitations.where(:occasion_id => @occasion.id, :household_id => household.id)
+          - invitation = guest.household.invitation
           %tr
             %td
               = rsvp.guest.full_name
