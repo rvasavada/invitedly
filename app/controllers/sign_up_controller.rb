@@ -37,11 +37,9 @@ class SignUpController < ApplicationController
     when :wedding_info
       @user.update(user_params)
     when :event_info
+      @user.update(user_params)
       @country = Country.all
       @state = State.all
-      
-      @occasion = @user.occasion
-     #@occasion.update(occasion_params)
     end
     
     render_wizard @user

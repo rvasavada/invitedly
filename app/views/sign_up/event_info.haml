@@ -24,7 +24,7 @@
                     = event.label :name, class: "control-label" do
                       Event Title
                       %span{style: "color:red"}*
-                    = event.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control", style: "font-weight:bold;"
+                    = event.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control"
                     %span.help-block= event.object.errors.get(:name).join('; ')
                   .row
                     .col-sm-5
@@ -52,46 +52,44 @@
             %h4 
               Enter some info about the venue
           %li.list-group-item
-            .row
-              .col-md-8
-                %fieldset
-                  .form-group{class: event.object.errors.include?(:location) ? 'has-error' : ''}
-                    = event.label :location, class: "control-label" do
-                      Location Name
-                      %span{style: "color:red"}*
-                    = event.text_field :location, :rows => 3, :maxlength => 100, class: "form-control"
-                    %span.help-block= event.object.errors.get(:location).join('; ')
-                  = event.label :location, class: "control-label" do
-                    Location Address (optional)
+       
+            %fieldset
+              .form-group{class: event.object.errors.include?(:location) ? 'has-error' : ''}
+                = event.label :location, class: "control-label" do
+                  Location Name
+                  %span{style: "color:red"}*
+                = event.text_field :location, :rows => 3, :maxlength => 100, class: "form-control"
+                %span.help-block= event.object.errors.get(:location).join('; ')
+              = event.label :location, class: "control-label" do
+                Location Address (optional)
 
-                  .row
-                    .col-sm-7
-                      .form-group
-                        = event.text_field :address_1, placeholder: "Address 1", :maxlength => 100, class: "form-control"
-                    .col-sm-5
-                      .form-group
-                        = event.text_field :address_2, placeholder: "Address 2", :maxlength => 100, class: "form-control"
-                  .row
-                    .col-sm-5
-                      .form-group      
-                        = event.text_field :city, placeholder: "City", :maxlength => 100, class: "form-control"
-                    .col-sm-4.domestic
-                      .form-group
-                        = event.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
-                    .domestic.col-sm-3
-                      .form-group
-                        = event.text_field :zip, placeholder: "Zip", :maxlength => 5, class: "form-control"
-                    .international.col-sm-4
-                      .form-group
-                        = event.text_field :region, placeholder: "Region", :maxlength => 100, class: "form-control"
-                    .international.col-sm-3
-                      .form-group
-                        = event.text_field :postal_code, placeholder: "Postal Code", :maxlength => 20, class: "form-control"
-
+              .row
+                .col-sm-7
                   .form-group
-                    = event.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control",:id => "countrySelect"})
+                    = event.text_field :address_1, placeholder: "Address 1", :maxlength => 100, class: "form-control"
+                .col-sm-5
+                  .form-group
+                    = event.text_field :address_2, placeholder: "Address 2", :maxlength => 100, class: "form-control"
+              .row
+                .col-sm-5
+                  .form-group      
+                    = event.text_field :city, placeholder: "City", :maxlength => 100, class: "form-control"
+                .col-sm-4.domestic
+                  .form-group
+                    = event.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
+                .domestic.col-sm-3
+                  .form-group
+                    = event.text_field :zip, placeholder: "Zip", :maxlength => 5, class: "form-control"
+                .international.col-sm-4
+                  .form-group
+                    = event.text_field :region, placeholder: "Region", :maxlength => 100, class: "form-control"
+                .international.col-sm-3
+                  .form-group
+                    = event.text_field :postal_code, placeholder: "Postal Code", :maxlength => 20, class: "form-control"
+
+              .form-group
+                = event.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control",:id => "countrySelect"})
       
-    .pull-right
-      .form-group
-        = f.submit "Add another event", :class => "btn btn-default btn-lg"
-        = f.submit "Next: Invitations", :class => "btn btn-success btn-lg"
+              .form-group
+                = f.submit "Next", :class => "btn btn-success btn-block"
+    = f.submit "Add another event", :class => "btn btn-default btn-block"

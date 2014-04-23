@@ -4,11 +4,6 @@
       %button.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"} Import from CSV
       =link_to "New Invitation", new_occasion_invitation_path(@occasion), class: "btn btn-success"
     Invitations
-    
-  - if params[:view] == "guest"
-    = render 'guest_view'
-  - else
-    = render 'summary_view'
 
 .modal.fade#myModal{:tabindex=> "-1", :role=>"dialog", "aria-labelledby"=>"myModalLabel", "aria-hidden"=> "true"}
   .modal-dialog

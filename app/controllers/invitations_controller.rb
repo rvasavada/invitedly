@@ -6,7 +6,7 @@ class InvitationsController < ApplicationController
   before_filter :verify_occasion_ownership, only: [:index,:new,:edit]
   
   def index
-    @invitations = @occasion.invitations.includes(:household, :rsvps)
+    @invitations = @occasion.invitations.includes(:rsvps)
 
     respond_to do |format|
       format.html
@@ -18,8 +18,7 @@ class InvitationsController < ApplicationController
     @title = Title.all
     
     @invitation = @occasion.invitations.build
-    @household = current_user.households.new
-    @household.guests.build
+    @invitation.guests.build
   end
   
   def show
@@ -36,7 +35,7 @@ class InvitationsController < ApplicationController
    
   def create
     @invitation = @occasion.invitations.new(invitation_params)
-    @invitation.household.user_id = current_user.id
+    @invitation.user_id = current_user.id
     
     if @invitation.save
       redirect_to occasion_invitation_manage_path(@occasion, @invitation, :events), notice: 'Invitation was successfully created.'
@@ -92,9 +91,8 @@ class InvitationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def invitation_params
-      params.require(:invitation).permit(:message,
-        household_attributes: [:id, :name, :email, :notes, :tag_list,
-          guests_attributes: [:id, :title, :first_name, :last_name, :_destroy]])
+      params.require(:invitation).permit(:message, :name, :email, :notes, :tag_list,
+          guests_attributes: [:id, :title, :first_name, :last_name, :_destroy])
     end
   
 end

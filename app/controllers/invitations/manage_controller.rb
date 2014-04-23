@@ -10,10 +10,9 @@ class Invitations::ManageController < ApplicationController
     when :guest_info
       @title = Title.all
     when :events
-      @household = @invitation.household
-      @guests = @household.guests
+      @guests = @invitation.guests
       
-      for guest in @household.guests
+      for guest in @guests
         for event in @occasion.events
           guest.rsvps.find_or_create_by(event_id: event.id, invitation_id: @invitation.id)
         end
@@ -35,9 +34,8 @@ class Invitations::ManageController < ApplicationController
     when :events
       @invitation.update(invitation_params)
       
-      @household = @invitation.household
-      @guests = @household.guests
-      for guest in @household.guests
+      @guests = @invitation.guests
+      for guest in @guests
         for event in @occasion.events
           guest.rsvps.find_or_initialize_by_event_id(event.id)
         end
@@ -57,9 +55,6 @@ class Invitations::ManageController < ApplicationController
   end  
   # Never trust parameters from the scary internet, only allow the white list through.
   def invitation_params
-    params.require(:invitation).permit(rsvps_attributes: [:id, :response],
-      household_attributes: [:id, :name, :email, :notes, :tag_list,
-        guests_attributes: [:id, :title, :first_name, :last_name, :_destroy,
-          rsvps_attributes: [:id, :visibility, :invitation_id, :event_id]]])
+    params.require(:invitation).permit(:name, :email, :notes, :tag_list, rsvps_attributes: [:id, :response], guests_attributes: [:id, :title, :first_name, :last_name, :_destroy, rsvps_attributes: [:id, :visibility, :invitation_id, :event_id]])
   end
 end
