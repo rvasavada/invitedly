@@ -10,6 +10,7 @@ class EventsController < ApplicationController
   end
 
   def show
+    @invitations = @occasion.invitations#.includes(:household, :rsvps)
   end
 
   def new

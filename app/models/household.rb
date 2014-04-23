@@ -6,7 +6,7 @@ class Household < ActiveRecord::Base
   has_many :guests, :dependent => :destroy
   accepts_nested_attributes_for :guests, :allow_destroy => true
   
-  has_many :invitations, :dependent => :destroy
+  has_one :invitation, :dependent => :destroy
   
   has_many :rsvps, through: :guests
   default_scope {includes(:tags, :guests)}

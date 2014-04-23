@@ -3,14 +3,13 @@
     .pull-right
       %strong View:
       - if params[:v] == "d"
-        = link_to "Summary", occasion_event_path(@occasion, @event, v: "d")
-      - else
+        = link_to "Summary", occasion_event_path(@occasion, @event)
+        |
         Details
-      |
-      - unless params[:v] == "d"
-        = link_to "Summary", occasion_event_path(@occasion, @event, v: "s")
       - else
-        Details
+        Summary
+        |
+        = link_to "Details", occasion_event_path(@occasion, @event, v: "d")
     %ul.list-inline
       %li.text-danger
         %strong=@event.rsvps.where(:visibility => true, :response => "Not Attending").count

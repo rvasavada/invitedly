@@ -42,8 +42,8 @@
           - @invitations.each do |invitation|
             %tr
               %td
-                = link_to invitation.household.name, "#", data: {html: true, title: "#{render 'invitation_title', :invitation => invitation, :occasion => @occasion}", content: "#{render 'invitation_info', :invitation => invitation, :occasion => @occasion}", trigger: "click", toggle: 'popover'}, rel: "popover", style: invitation.status == "Responded" ? "color: #18bc9c;font-size:18px;" : "color: #2c3e50;font-size:16px;"
-                    
+                = link_to invitation.household.name, "#", data: {html: true, title: "#{render 'invitation_title', :invitation => invitation, :occasion => @occasion}", content: "#{render 'invitation_info', :invitation => invitation, :occasion => @occasion}", trigger: "click", toggle: 'popover'}, rel: "popover"
+                
                 -if invitation.household.tags.present?
                   %br
                   - invitation.household.tags.each do |t| 

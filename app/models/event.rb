@@ -4,9 +4,11 @@ class Event < ActiveRecord::Base
   
   belongs_to :occasion
   has_many :rsvps, dependent: :destroy
+  
   accepts_nested_attributes_for :rsvps, :reject_if => :all_blank, :allow_destroy => true
   
   has_many :guests, through: :rsvps
+  has_many :households, through: :guests
   default_scope { order('start_date ASC, start_time ASC') } 
   validates_presence_of :name,:location,:start_time,:start_date,:description
   
