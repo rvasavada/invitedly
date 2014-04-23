@@ -25,7 +25,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    params[:event][:start_time] = DateTime.parse(params[:event][:start_time])   
+    params[:event][:start_time] = DateTime.parse(params[:event][:start_time]) if params[:event][:start_time].present?
     @event = @occasion.events.new(event_params)
     if @event.save
       unless params[:commit] == "Save & Add more"
