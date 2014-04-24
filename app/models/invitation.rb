@@ -18,7 +18,11 @@ class Invitation < ActiveRecord::Base
   
   #default_scope {includes(:tags, :guests)}
   scope :last_updated, -> { order('updated_at DESC') } 
-  scope :status, -> { order(:status) } 
+  scope :status, -> { order(:status) }
+  
+  validates_presence_of :name, :email
+  validates_uniqueness_of :name, :scope => :user_id
+  
   #scope :name_asc, -> { joins(:household).order('name ASC').readonly(false) } 
   #scope :name_desc, -> { joins(:household).order('name DESC').readonly(false) } 
   def self.to_csv(occasion, options = {})

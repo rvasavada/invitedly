@@ -34,6 +34,8 @@ class Invitations::ManageController < ApplicationController
     when :guest_info
       @invitation.update(invitation_params)
       @title = Title.all
+      @country = Country.all
+      @state = State.all
     when :events
       @invitation.update(invitation_params)
       

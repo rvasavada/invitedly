@@ -1,25 +1,28 @@
 .container
-  .row
-    .col-md-offset-2.col-md-8
-      .alert.alert-warning
-        %strong Host Information
-        >
-        %span.text-muted Wedding Information
-        >
-        %span.text-muted Event Information
-        >
-        %span.text-muted Invitations
+  %ul.list-inline
+    %li
+      %strong 1. Host Information
+    %li
+      %small.glyphicon.glyphicon-chevron-right
+    %li 2. Wedding Information
+    %li
+      %small.glyphicon.glyphicon-chevron-right
+    %li 3. Event Information
+    %li
+      %small.glyphicon.glyphicon-chevron-right
+    %li 4. Invitations
   
-      = form_for @user, :url => wizard_path, :method => :put, :html => { :role => "form"} do |f|
-        %ul.list-group
-          %li.list-group-item
-            %h2 First, tell us about the lovely couple!
-          %li.list-group-item.list-group-item-info
-            %h4
-              What are your names?
-              %small So your guests recognize our emails.
-          %li.list-group-item
-      
+  %h2 Host Information
+  
+  = form_for @user, :url => wizard_path, :method => :put, :html => { :role => "form"} do |f|
+    %ul.list-group
+      %li.list-group-item
+        %h3
+          %strong What are your names?
+          %small So your guests recognize our emails.
+      %li.list-group-item
+        .row
+          .col-md-8
             %fieldset
               %label Your name
               .row
@@ -50,11 +53,13 @@
                   .form-group
                     = f.label :partner_last_name, class: "sr-only"
                     = f.text_field :partner_last_name, class: "form-control", placeholder: "Last Name"
-          %li.list-group-item.list-group-item-info
-            %h4
-              How should guests get in touch with you?
-              %small In case they want to send gifts, get directions, etc.
-          %li.list-group-item
+      %li.list-group-item
+        %h3
+          %strong How should guests get in touch with you?
+          %small In case they want to send gifts, get directions, etc.
+      %li.list-group-item
+        .row
+          .col-md-8
             %fieldset
               = f.label :location, class: "control-label" do
                 Address (optional)
@@ -85,7 +90,7 @@
 
               .form-group
                 = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control",:id => "countrySelect"})
-          
+      
               .row
                 .col-sm-5
                   .form-group
@@ -95,5 +100,5 @@
                   .form-group
                     = f.label :home_phone, class: "form-label"
                     = f.text_field :home_phone, :maxlength => 100, class: "form-control"
-  
-              = f.submit "Next", :class => "btn btn-success btn-block"
+
+    = f.submit "Next", :class => "btn btn-success btn-lg pull-right"
