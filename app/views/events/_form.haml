@@ -79,13 +79,6 @@
             .form-group
               = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control",:id => "countrySelect"})
             
-            .row
-              .col-sm-7
-                .form-group
-                  = f.text_field :cell_phone, placeholder: "Cell Phone", :maxlength => 100, class: "form-control"
-              .col-sm-5
-                .form-group
-                  = f.text_field :address_2, placeholder: "Home Phone", :maxlength => 100, class: "form-control"
   .pull-right
     .form-group
       = f.submit "Save & Add more", :class => "btn btn-success btn-lg"

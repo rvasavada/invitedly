@@ -1,9 +1,49 @@
 .container
-  %h1
-    .pull-right
-      %button.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"} Import from CSV
-      =link_to "New Invitation", new_occasion_invitation_path(@occasion), class: "btn btn-success"
-    Invitations
+  .panel.panel-default
+    %ul.list-group
+      %li.list-group-item
+        %h2
+          .pull-right
+            %button.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"} Import from CSV
+            =link_to "New Invitation", new_occasion_invitation_path(@occasion), class: "btn btn-success"
+          Invitations
+      %li.list-group-item
+        %ul.list-inline
+          %li.text-success
+            %strong=@invitations.where(:status => "Responded").count
+            Responded
+          %li
+            %strong=@invitations.where(:status => "Not Sent/Modified").count
+            Not Sent/Modified
+          %li
+            %strong=@invitations.where(:status => "Not Sent/Modified").count
+            Not Responded
+  
+          %strong Download:
+          = link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
+      %table.table.table-hover.table-condensed
+        %thead
+          %tr
+            %th Invitation name
+            %th Response       
+            %th Date
+            %th
+        %tbody
+          - @invitations.each do |invitation|
+            %tr
+              %td
+                = invitation.name
+              
+                - invitation.tags.each do |t| 
+                  %span.label.label-info=t
+        
+              %td
+                = invitation.status
+              %td
+                %small.text-muted=" #{time_ago_in_words(invitation.updated_at)} ago"
+              %td
+                = link_to occasion_invitation_manage_path(@occasion,invitation, :guest_info), data: {title: "Edit Invitation", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-link btn-sm" do
+                  %span.glyphicon.glyphicon-pencil
 
 .modal.fade#myModal{:tabindex=> "-1", :role=>"dialog", "aria-labelledby"=>"myModalLabel", "aria-hidden"=> "true"}
   .modal-dialog
@@ -16,6 +56,8 @@
           Follow this
           =link_to "example template.", "https://docs.google.com/a/vasavada.us/spreadsheet/ccc?key=0Ar12fAF1l7BJdGZfRUdZMy1NaDhGNER6SU9TX1h2UlE#gid=0"
         %dl
+          %dt Tags
+          %dd Comma separated words (e.g. Bride, Groom, Tier 1, etc.)
           %dt Family Name (optional)
           %dd If this is a family, add a family name else leave blank.  All guests under the same family name will be grouped together.
           %dt Email (optional)
@@ -38,4 +80,4 @@
               =form_tag import_occasion_guests_path(@occasion), multipart: true do
               
                 = submit_tag "Import guests", :class => "btn btn-success btn-sm pull-right"
-                = file_field_tag :file              
+                = file_field_tag :file          

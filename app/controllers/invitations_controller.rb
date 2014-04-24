@@ -19,6 +19,9 @@ class InvitationsController < ApplicationController
     
     @invitation = @occasion.invitations.build
     @invitation.guests.build
+    
+    @country = Country.all
+    @state = State.all
   end
   
   def show

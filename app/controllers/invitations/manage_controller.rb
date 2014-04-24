@@ -9,6 +9,9 @@ class Invitations::ManageController < ApplicationController
     case step
     when :guest_info
       @title = Title.all
+      
+      @country = Country.all
+      @state = State.all
     when :events
       @guests = @invitation.guests
       

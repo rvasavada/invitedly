@@ -32,24 +32,36 @@ class Guest < ActiveRecord::Base
         $row_count += 1
       else  
         if row[1].present?
-          household = Household.find_or_create_by_name_and_user_id(row[1],user.id, :email => row[2], :notes => row[3])
-          household.tag_list.add(row[0], parse: true)
+          invitation = Invitation.find_or_create_by(name: row[1],
+                                                    user_id: user.id, 
+                                                    :email => row[2], 
+                                                    :notes => row[3],
+                                                    :occasion_id => occasion.id)
+          invitation.tag_list.add(row[0], parse: true)
         else
-          household = Household.find_or_create_by_name_and_user_id(name: "#{row[4]} #{row[5]} #{row[6]}",user_id: user.id, :email => row[2], :notes => row[3])
-          household.tag_list.add(row[0], parse: true)
+          invitation = Invitation.find_or_create_by(name: "#{row[4]} #{row[5]} #{row[6]}",
+                                                    user_id: user.id, 
+                                                    :email => row[2], 
+                                                    :notes => row[3], 
+                                                    :occasion_id => occasion.id)
+          invitation.tag_list.add(row[0], parse: true)
         end
         
-        guest = Guest.find_or_create_by_household_id_and_title_and_first_name_and_last_name(household.id, row[4], row[5], row[6], :user_id => user.id)
+        guest = Guest.find_or_create_by(invitation_id: invitation.id, 
+                                        title: row[4], 
+                                        first_name: row[5], 
+                                        last_name: row[6])
         guest.save
-        
-        invitation = Invitation.find_or_create_by_household_id_and_occasion_id(household.id, occasion.id)
-        
+                
         $i = 7 #where events starts
         while $i < row.length do
           if row[$i].present?
-            event = Event.find_by_name_and_occasion_id(events[$i],occasion.id)
+            event = Event.find_by(name: events[$i], occasion_id: occasion.id)
             if event.present?
-              Rsvp.find_or_create_by_event_id_and_guest_id!(event.id, guest.id, visibility: true, invitation_id: invitation.id)
+              Rsvp.find_or_create_by(event_id: event.id, 
+                                     guest_id: guest.id, 
+                                     :visibility => true, 
+                                     :invitation_id => invitation.id)
             end
           end
           $i += 1

@@ -36,9 +36,9 @@ class Invitation < ActiveRecord::Base
       occasion.invitations.each do |invitation|
         invitation.guests.each do |guest|
           entry = []
-          entry.push(invitation.household.name)
-          entry.push(invitation.household.email)
-          entry.push(invitation.household.notes)
+          entry.push(invitation.name)
+          entry.push(invitation.email)
+          entry.push(invitation.notes)
           entry.push(guest.title)
           entry.push(guest.first_name)
           entry.push(guest.last_name)
