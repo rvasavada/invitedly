@@ -1,12 +1,13 @@
 .container
   %ul.list-inline
-    %li= link_to "Guest Information", occasion_invitation_manage_path(@occasion, @invitation,:guest_info), class:"text-primary", style: "font-weight: bold;"
+    %li.text-primary
+      %strong 1. Guest Information
     %li
       %small.glyphicon.glyphicon-chevron-right
-    %li= link_to "Events", occasion_invitation_manage_path(@occasion, @invitation,:events), class: "text-primary"
+    %li 2. Events
     %li
       %small.glyphicon.glyphicon-chevron-right
-    %li= link_to "RSVP", occasion_invitation_manage_path(@occasion, @invitation,:rsvp), class: "text-primary"
+    %li 3. RSVP
   
   %h2 Guest Information
   = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|  

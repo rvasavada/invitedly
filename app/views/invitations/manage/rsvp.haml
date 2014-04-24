@@ -1,26 +1,27 @@
 .container
-  %h1 RSVP
-  = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
-    .panel.panel-warning
-      .panel-heading
-        = link_to "Guest Information", occasion_invitation_manage_path(@occasion, @invitation,:guest_info), class:"text-primary"
-        >
-        = link_to "Events", occasion_invitation_manage_path(@occasion, @invitation,:events), class: "text-primary"
-        >
-        = link_to "RSVP", occasion_invitation_manage_path(@occasion, @invitation,:rsvp), class: "text-primary", style: "font-weight: bold;"
+  %ul.list-inline
+    %li.text-muted 1. Guest Information
+    %li
+      %small.glyphicon.glyphicon-chevron-right
+    %li.text-muted 2. Events
+    %li
+      %small.glyphicon.glyphicon-chevron-right
+    %li.text-primary
+      %strong 3. RSVP
 
-
+  %h2 RSVP
   = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
     .panel.panel-default
       .panel-body
-        %h2 Confirm your RSVP.
+        %h3
+          %strong Confirm your RSVP.
       %ul.list-group
         %li.list-group-item      
           - @events.each_with_index do |event,index|
             - if @invitation.rsvps.where(:event_id => event.id, :visibility => true).count > 0
               .row
                 .col-lg-6
-                  %h3{style:"margin-top:0px;margin-bottom:0px;"}=event.name
+                  %h4{style:"font-weight:bold;margin-top:0px;margin-bottom:0px;"}=event.name
                   %p.text-muted{style:"margin-top:0px;"}
                     = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time.strftime('%l:%M%P')}"
                     %br
