@@ -32,20 +32,12 @@ class Guest < ActiveRecord::Base
         $row_count += 1
       else  
         if row[1].present?
-          invitation = Invitation.find_or_create_by(name: row[1],
-                                                    user_id: user.id, 
-                                                    :email => row[2], 
-                                                    :notes => row[3],
-                                                    :occasion_id => occasion.id)
-          invitation.tag_list.add(row[0], parse: true)
+          invitation = Invitation.create_with(email: row[2], notes: row[3], occasion_id: occasion.id).find_or_create_by(name: row[1], user_id: user.id)
         else
-          invitation = Invitation.find_or_create_by(name: "#{row[4]} #{row[5]} #{row[6]}",
-                                                    user_id: user.id, 
-                                                    :email => row[2], 
-                                                    :notes => row[3], 
-                                                    :occasion_id => occasion.id)
-          invitation.tag_list.add(row[0], parse: true)
+          invitation = Invitation.create_with(email: row[2], notes: row[3], occasion_id: occasion.id).find_or_create_by(name: "#{row[4]} #{row[5]} #{row[6]}", user_id: user.id)
         end
+        
+        invitation.tag_list.add(row[0], parse: true)
         
         guest = Guest.find_or_create_by(invitation_id: invitation.id, 
                                         title: row[4], 
@@ -58,10 +50,7 @@ class Guest < ActiveRecord::Base
           if row[$i].present?
             event = Event.find_by(name: events[$i], occasion_id: occasion.id)
             if event.present?
-              Rsvp.find_or_create_by(event_id: event.id, 
-                                     guest_id: guest.id, 
-                                     :visibility => true, 
-                                     :invitation_id => invitation.id)
+              Rsvp.create_with(visibility: true, invitation_id: invitation.id).find_or_create_by(event_id: event.id, guest_id: guest.id)
             end
           end
           $i += 1

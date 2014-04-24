@@ -51,13 +51,13 @@
           
           %td.text-success
             - if attending.count > 0
-              = link_to attending.count, "#", data: {html: true, title: "Attending (#{attending.count})", content: "#{render 'response_info', :invitation => household.invitation, :response => attending, :type => "attending", :event => @event.name}", trigger: "click", container: 'body', placement: "top", toggle: 'popover'}, rel: "popover", style: "color: #18bc9c;font-size:16px;"
+              = link_to attending.count, "#", data: {html: true, title: "Attending (#{attending.count})", content: "#{render 'response_info', :invitation => invitation, :response => attending, :type => "attending", :event => @event.name}", trigger: "click", container: 'body', placement: "top", toggle: 'popover'}, rel: "popover", style: "color: #18bc9c;font-size:16px;"
           %td.text-danger
             - if not_attending.count > 0
-              = link_to not_attending.count, "#", data: {html: true, title: "Not Attending (#{not_attending.count})", content: "#{render 'response_info', :invitation => household.invitation, :response => not_attending, :type => "not_attending", :event => @event.name}", trigger: "click", placement: "top", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #E74C3B;font-size:16px;"
+              = link_to not_attending.count, "#", data: {html: true, title: "Not Attending (#{not_attending.count})", content: "#{render 'response_info', :invitation => invitation, :response => not_attending, :type => "not_attending", :event => @event.name}", trigger: "click", placement: "top", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #E74C3B;font-size:16px;"
           %td
             - if not_responded.count > 0
-              = link_to not_responded.count, "#", data: {html: true, title: "Not Responded (#{not_responded.count})", content: "#{render 'response_info', :invitation => household.invitation, :response => not_responded, :type => "not_responded", :event => @event.name}", trigger: "click", placement: "top", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #2c3e50;font-size:16px;"
+              = link_to not_responded.count, "#", data: {html: true, title: "Not Responded (#{not_responded.count})", content: "#{render 'response_info', :invitation => invitation, :response => not_responded, :type => "not_responded", :event => @event.name}", trigger: "click", placement: "top", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #2c3e50;font-size:16px;"
           %td
             = invitation.status
-            %small.text-muted=" #{time_ago_in_words(household.invitation.updated_at)} ago"
+            %small.text-muted=" #{time_ago_in_words(invitation.updated_at)} ago"

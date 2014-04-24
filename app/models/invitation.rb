@@ -8,7 +8,7 @@ class Invitation < ActiveRecord::Base
   belongs_to :occasion
   belongs_to :user
 
-  has_many :guests
+  has_many :guests, dependent: :destroy
   accepts_nested_attributes_for :guests, :allow_destroy => true
   
   validates_presence_of :occasion_id
