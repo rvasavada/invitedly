@@ -1,9 +1,9 @@
 = form_for [@occasion,@event], :html => { :role => "form"} do |f|
   %ul.list-group
     %li.list-group-item
-      %h2 Add an event
-    %li.list-group-item.list-group-item-info
-      %h4 Event what? when? where? why?
+      %h3
+        %strong Event details
+        %small What? When? Where? Why?
     %li.list-group-item
       .row
         .col-md-8          
@@ -36,9 +36,10 @@
               = f.text_area :description, :rows => 3, :maxlength => 250, :class => "form-control input-sm"
               %span.help-block= @event.errors.get(:description).join('; ')
 
-    %li.list-group-item.list-group-item-info
-      %h4 
-        Enter some info about the venue
+    %li.list-group-item
+      %h3
+        %strong Enter some info about the venue
+        %small Guests like to know where to go.
     %li.list-group-item
       .row
         .col-md-8

@@ -27,8 +27,7 @@ $("table#invitation_guest").tablesorter
   headerTemplate: "{content} {icon}"
   widgets: [
     "uitheme"
-    "stickyHeaders"
-    "filter"
+    #"stickyHeaders"
   ]
   widgetOptions:
     filter_reset: ".reset"
@@ -70,5 +69,5 @@ $("table#invitation_guest").tablesorter
     # jQuery selector or object to attach sticky header to
     stickyHeaders_attachTo: null
 
-$(".tablesorter-filter").addClass "form-control input-sm"
-$(".tablesorter-filter.disabled").hide()
+#$(".tablesorter-filter").addClass "form-control input-sm"
+#$(".tablesorter-filter.disabled").hide()
