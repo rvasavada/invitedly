@@ -28,7 +28,7 @@ Invitedly::Application.routes.draw do
         
     resources :invitations do
       resources :manage, controller: 'invitations/manage'      
-      resources :rsvp
+      resources :rsvp, controller: 'invitations/rsvp'      
     end
     
     resources :events

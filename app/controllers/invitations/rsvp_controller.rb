@@ -1,4 +1,4 @@
-class RsvpController < ApplicationController
+class Invitations::RsvpController < ApplicationController
   before_action :set_occasion
   
   include Wicked::Wizard
@@ -10,6 +10,8 @@ class RsvpController < ApplicationController
     case step
     when :guest_info
       @title = Title.all
+      @state = State.all
+      @country = Country.all
     when :events
       @events = @occasion.events
     when :guestbook
@@ -26,6 +28,8 @@ class RsvpController < ApplicationController
     when :guest_info
       @invitation.update(invitation_params)
       @title = Title.all
+      @state = State.all
+      @country = Country.all
     when :events
       @invitation.status = "Responded"
       @invitation.update(invitation_params)
