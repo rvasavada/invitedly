@@ -1,26 +1,34 @@
 .container
-  .panel.panel-warning
-    .panel-heading
-      = link_to "Guest Information", occasion_invitation_rsvp_path(@occasion, @invitation,:guest_info), class:"text-primary"
-      >
-      = link_to "Events", occasion_invitation_rsvp_path(@occasion, @invitation,:events), class: "text-primary"
-      >
-      = link_to "Guestbook", occasion_invitation_rsvp_path(@occasion, @invitation,:guestbook), class: "text-primary", style: "font-weight: bold;"
-      >
-      = link_to "Confirmation", occasion_invitation_rsvp_path(@occasion, @invitation,:confirmation), class: "text-primary"
+  %ul.list-inline
+    %li.text-muted 1. Guest Information
+    %li
+      %small.glyphicon.glyphicon-chevron-right
+    %li.text-muted 2. RSVP
+    %li
+      %small.glyphicon.glyphicon-chevron-right
+    %li.text-primary
+      %strong 3. Guestbook
+    %li
+      %small.glyphicon.glyphicon-chevron-right
+    %li 4. Confirmation
 
-  %h1 Guestbook
+  %h2 Guestbook
 
   = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
     .panel.panel-default
       .panel-body
-        %h2 Sign our guestbook or leave us a message, if you want.
+        %h3 
+          %strong Sign our guestbook!
+          %small Leave us a message (optional).
       %ul.list-group
         %li.list-group-item    
-          = f.label :message, class: "control-label"
-          = f.text_area :message, :rows => 7, class: "form-control"
+          .row
+            .col-md-8
+              = f.label :message, class: "control-label"
+              = f.text_area :message, :rows => 7, class: "form-control"
 
     .form-group.pull-right
+      = f.submit "Skip & Finish", :class => "btn btn-info btn-lg"
       = f.submit "Save & Finish", :class => "btn btn-success btn-lg"
     .form-group
-      = link_to 'Previous', previous_wizard_path, :class=> "btn btn-default btn-lg"
+      = link_to 'Previous', previous_wizard_path, :class=> "btn btn-primary btn-lg"

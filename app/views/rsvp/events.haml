@@ -1,27 +1,31 @@
 .container
-  .panel.panel-warning
-    .panel-heading
-      = link_to "Guest Information", occasion_invitation_rsvp_path(@occasion, @invitation,:guest_info), class:"text-primary"
-      >
-      = link_to "Events", occasion_invitation_rsvp_path(@occasion, @invitation,:events), class: "text-primary", style: "font-weight: bold;"
-      >
-      = link_to "Guestbook", occasion_invitation_rsvp_path(@occasion, @invitation,:guestbook), class: "text-primary"
-      >
-      = link_to "Confirmation", occasion_invitation_rsvp_path(@occasion, @invitation,:confirmation), class: "text-primary"
+  %ul.list-inline
+    %li.text-muted 1. Guest Information
+    %li
+      %small.glyphicon.glyphicon-chevron-right
+    %li.text-primary
+      %strong 2. RSVP
+    %li
+      %small.glyphicon.glyphicon-chevron-right
+    %li 3. Guestbook
+    %li
+      %small.glyphicon.glyphicon-chevron-right
+    %li 4. Confirmation
 
-  %h1 Events
+  %h2 RSVP
 
   = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
     .panel.panel-default
       .panel-body
-        %h2 Now, confirm your RSVP.
+        %h3
+          %strong Now, confirm your RSVP.
       %ul.list-group
         %li.list-group-item      
           - @events.each_with_index do |event,index|
             - if @invitation.rsvps.where(:event_id => event.id, :visibility => true).count > 0
               .row
-                .col-lg-6
-                  %h3{style:"margin-top:0px;margin-bottom:0px;"}=event.name
+                .col-md-6
+                  %h4.text-warning{style:"margin-top:0px;margin-bottom:0px;font-weight:bold;"}=event.name
                   %p.text-muted{style:"margin-top:0px;"}
                     = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time.strftime('%l:%M%P')}"
                     %br
@@ -31,13 +35,12 @@
                     - else
                       = event.location
                   %p=event.description
-                .col-lg-6
+                .col-md-6
                   %table.table
                     %thead
                       %tr
-                        %th{style:"width:50%"} Guest name
-                        %th Response
-                        %th
+                        %th Guest name
+                        %th.text-center{colspan: 2} Response
                       %tbody
                         = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id, :visibility => true) do |rsvp|
                           %tr
@@ -70,4 +73,4 @@
     .form-group.pull-right
       = f.submit "Next", :class => "btn btn-success btn-lg"
     .form-group
-      = link_to 'Previous', previous_wizard_path, :class=> "btn btn-default btn-lg"
+      = link_to 'Previous', previous_wizard_path, :class=> "btn btn-primary btn-lg"

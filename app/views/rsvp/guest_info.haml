@@ -1,42 +1,45 @@
 .container
-  .panel.panel-warning
-    .panel-heading
-      = link_to "Guest Information", occasion_invitation_rsvp_path(@occasion, @invitation,:guest_info), class:"text-primary", style: "font-weight: bold;"
-      >
-      = link_to "Events", occasion_invitation_rsvp_path(@occasion, @invitation,:events), class: "text-primary"
-      >
-      = link_to "Guestbook", occasion_invitation_rsvp_path(@occasion, @invitation,:guestbook), class: "text-primary"
-      >
-      = link_to "Confirmation", occasion_invitation_rsvp_path(@occasion, @invitation,:confirmation), class: "text-primary"
+  %ul.list-inline
+    %li.text-primary
+      %strong 1. Guest Information
+    %li
+      %small.glyphicon.glyphicon-chevron-right
+    %li 2. RSVP
+    %li
+      %small.glyphicon.glyphicon-chevron-right
+    %li 3. Guestbook
+    %li
+      %small.glyphicon.glyphicon-chevron-right
+    %li 4. Confirmation
 
-  %h1 Guest Information
+
+  %h2 Guest Information
 
   = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
     .panel.panel-default
       .panel-body
-        %h2 First, check your names and contact information.
+        %h3
+          %strong First, check your names and contact information.
       %ul.list-group
         %li.list-group-item
           .row
             .col-md-8
-              = f.fields_for :household, @invitation.household do |household|
-                .form-group
-                  = household.label :guests, "Guest names"
-                  = household.fields_for :guests do |guest|
-                    .row
-                      .form-group.col-sm-3.col-lg-2
-                        = guest.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
-                      .form-group.col-sm-4.col-lg-3
-                        = guest.text_field :first_name, :maxlength => 50, class: "form-control", :placeholder => "First name"
-                      .form-group.col-sm-5.col-lg-4
-                        = guest.text_field :last_name, :maxlength => 50, class: "form-control", :placeholder => "Last name"
-                  %span.help-block Please correct any mistakes you find.
-                .row
-                  .col-lg-9
-                    .form-group
-                      = household.label :email, class: "control-label"
-                      = household.text_field :email, :maxlength => 50, class: "form-control"
-                      %span.help-block You can optionally add an email address (in case we need to contact you later).
+              .form-group
+                = f.label :guests, "Guest names"
+                = f.fields_for :guests do |guest|
+                  .row
+                    .form-group.col-sm-3
+                      = guest.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
+                    .form-group.col-sm-4
+                      = guest.text_field :first_name, :maxlength => 50, class: "form-control", :placeholder => "First name"
+                    .form-group.col-sm-5
+                      = guest.text_field :last_name, :maxlength => 50, class: "form-control", :placeholder => "Last name"
+                %span.help-block Please correct any mistakes you find.
+
+              .form-group
+                = f.label :email, class: "control-label"
+                = f.text_field :email, :maxlength => 50, class: "form-control"
+                %span.help-block You can optionally add an email address (in case we need to contact you later).
 
     .form-group.pull-right
       = f.submit "Next", :class => "btn btn-success btn-lg"
