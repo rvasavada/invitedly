@@ -20,7 +20,8 @@
             = f.fields_for :guests do |guest|
               = render 'invitations/guest_fields', :f => guest
             .links
-              = link_to_add_association 'Add another guest', f, :guests, :class => "btn btn-link", :partial => 'invitations/guest_fields'
+              = link_to_add_association 'Add another guest', f, :guests, :class => "", :partial => 'invitations/guest_fields'
+          
     %li.list-group-item
       %h3 
         %strong Let's stay in touch  

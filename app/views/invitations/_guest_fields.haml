@@ -1,5 +1,9 @@
 .nested-fields
   .row
+    .col-sm-1
+      .form-group    
+        = link_to_remove_association f, :class => "btn btn-link", style: "color:#E41313;" do
+          %span.glyphicon.glyphicon-trash
     .col-sm-2
       .form-group
         = f.label :title, class: "sr-only"
@@ -8,11 +12,16 @@
       .form-group
         = f.label :first_name, class: "sr-only"
         = f.text_field :first_name, class: "form-control", placeholder: "First Name"
-    .col-sm-4
+    .col-sm-3
       .form-group
         = f.label :last_name, class: "sr-only"
         = f.text_field :last_name, class: "form-control", placeholder: "Last Name"
-    .col-sm-2
+    .col-sm-3
       .form-group
-        = link_to_remove_association f, :class => "btn btn-link", data: {toggle: "tooltip", title: "Delete Guest", placement: "bottom"} do
-          %span.glyphicon.glyphicon-trash
+        = f.label :is_child, style: "font-weight:normal;" do
+          = f.check_box :is_child
+          Child (under 10)
+      
+        = f.label :is_additional_guest, style: "font-weight:normal;" do
+          = f.check_box :is_additional_guest
+          Mark as a +1

@@ -28,7 +28,7 @@ class Invitation < ActiveRecord::Base
   #scope :name_desc, -> { joins(:household).order('name DESC').readonly(false) } 
   def self.to_csv(occasion, options = {})
     CSV.generate(options) do |csv|
-      cols = ["Family Name", "Email", "Notes", "Title", "First Name", "Last Name", "Full Name","Invitation Status"]
+      cols = ["Tags", "Family Name", "Email", "Notes", "Title", "First Name", "Last Name", "Full Name","Invitation Status"]
       $i = 0
       events = []
       occasion.events.each do |event|
@@ -41,6 +41,7 @@ class Invitation < ActiveRecord::Base
       occasion.invitations.each do |invitation|
         invitation.guests.each do |guest|
           entry = []
+          entry.push(invitation.tag_list)
           entry.push(invitation.name)
           entry.push(invitation.email)
           entry.push(invitation.notes)
@@ -50,11 +51,15 @@ class Invitation < ActiveRecord::Base
           entry.push(guest.full_name)
           entry.push(invitation.status)
           events.each do |event|
+            found = false
             guest.rsvps.where(:visibility => true).each do |rsvp|            
               if(event == rsvp.event)
                 entry.push(rsvp.response)
+                found = true
+                break
               end
             end
+            entry.push("") if not found
           end
           csv << entry
         end
