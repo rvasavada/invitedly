@@ -1,12 +1,12 @@
 .container
+  %h2
+    .pull-right
+      %button.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"} Import from CSV
+      =link_to "New Invitation", new_occasion_invitation_path(@occasion), class: "btn btn-success"
+    Invitations
+    
   .panel.panel-default
     %ul.list-group
-      %li.list-group-item
-        %h2
-          .pull-right
-            %button.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"} Import from CSV
-            =link_to "New Invitation", new_occasion_invitation_path(@occasion), class: "btn btn-success"
-          Invitations
       %li.list-group-item
         %ul.list-inline
           %li.text-success
@@ -25,7 +25,7 @@
         %thead
           %tr
             %th Invitation name
-            %th Response       
+            %th Status       
             %th Date
             %th
         %tbody

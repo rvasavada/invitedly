@@ -96,5 +96,5 @@
               = event.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control",:id => "countrySelect"})
   
     .pull-right
+      = f.submit "Add another event", :class => "btn btn-primary btn-lg"
       = f.submit "Next", :class => "btn btn-success btn-lg"
-      = f.submit "Add another event", :class => "btn btn-default btn-lg"

@@ -1,19 +1,18 @@
 .container
+  %h2 
+    .pull-right= link_to 'New Event', new_occasion_event_path(@occasion), class: "btn btn-success"
+    Events
+    %small.text-muted="(#{pluralize(@events.count, 'event')} found)"
+    
   %ul.list-group
-    %li.list-group-item
-      %h2 
-        .pull-right= link_to 'New Event', new_occasion_event_path(@occasion), class: "btn btn-success"
-        Events
-        %span.text-muted="(#{@events.count})"
-
     - if @events.present?
       - @events.each do |event|
         %li.list-group-item
           %h4
             .pull-right
-              = link_to edit_occasion_event_path(@occasion,event), data: {title: "Edit Event", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-link btn-sm" do
+              = link_to edit_occasion_event_path(@occasion,event), data: {title: "Edit Event", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-link" do
                 %span.glyphicon.glyphicon-pencil
-              = link_to occasion_event_path(@occasion,event), method: :delete, data: {title: "Delete Event", placement: "bottom", trigger: "hover"},rel: "tooltip", confirm: 'Are you sure you want to delete this event?', class: "btn btn-link btn-sm" do
+              = link_to occasion_event_path(@occasion,event), method: :delete, data: {title: "Delete Event", placement: "bottom", trigger: "hover"},rel: "tooltip", confirm: 'Are you sure you want to delete this event?', class: "btn btn-link" do
                 %span.glyphicon.glyphicon-trash
             =link_to event.name, occasion_event_path(@occasion,event)
             %br
@@ -45,6 +44,6 @@
 
 
     -else
-      .well.text-center{style: "background-color:#fff;"}
+      .well.text-center
         %h3 No events found.
         =link_to "Add an event!", new_occasion_event_path(@occasion)

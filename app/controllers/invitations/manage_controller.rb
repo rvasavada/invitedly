@@ -2,7 +2,7 @@ class Invitations::ManageController < ApplicationController
   include Wicked::Wizard
   before_action :set_occasion
 
-  steps :guest_info, :events, :rsvp
+  steps :guest_info, :events
   
   def show
     @invitation = Invitation.friendly.find(params[:invitation_id])
@@ -20,9 +20,6 @@ class Invitations::ManageController < ApplicationController
           guest.rsvps.find_or_create_by(event_id: event.id, invitation_id: @invitation.id)
         end
       end
-    when :rsvp
-      @events = @occasion.events
-      
     end
     render_wizard
   end
@@ -45,8 +42,6 @@ class Invitations::ManageController < ApplicationController
           guest.rsvps.find_or_initialize_by_event_id(event.id)
         end
       end
-    when :rsvp
-      @invitation.update(invitation_params)
     end
     
     render_wizard @invitation

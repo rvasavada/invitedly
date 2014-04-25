@@ -47,8 +47,8 @@
   
                           %b.caret
                         %ul.dropdown-menu
-                          %li= link_to "Edit Occasion Details", edit_occasion_path(current_user.occasion)
-                          %li= link_to "Preview Occasion Page", occasion_path(current_user.occasion)
+                          %li= link_to "Edit wedding details", edit_occasion_path(current_user.occasion)
+                          %li= link_to "Preview wedding page", occasion_path(current_user.occasion)
                   - if user_signed_in? 
                     %li{class: "#{'active' if current_page?(edit_user_registration_path)}"}= link_to "Settings", edit_user_registration_path
                     %li= link_to "Sign out", destroy_user_session_path, method: :delete

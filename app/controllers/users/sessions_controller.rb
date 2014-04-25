@@ -6,7 +6,7 @@ protected
     if current_user.occasion.blank?
       sign_up_path(:create_occasion)
     else
-      occasion_path(current_user.occasion)
+      occasion_invitations_path(current_user.occasion)
     end
   end
 end

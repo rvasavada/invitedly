@@ -5,9 +5,6 @@
       %small.glyphicon.glyphicon-chevron-right
     %li.text-primary
       %strong 2. Events
-    %li
-      %small.glyphicon.glyphicon-chevron-right
-    %li 3. RSVP
   
   %h2 Events
 
@@ -20,21 +17,20 @@
       %ul.list-group
         %li.list-group-item
           = f.fields_for :guests do |guest|
-            - if guest.object.last_name != ""
-              %h4
-                %strong=guest.object.full_name
-            - else
-              %h3.text-muted {An additional guest}
+            %fieldset
+              - if guest.object.last_name != ""
+                %h4
+                  %strong=guest.object.full_name
+              - else
+                %h4.text-muted {Additional guest}
             
-            = guest.fields_for :rsvps, guest.object.rsvps.event_view do |rsvp|
-              .checkbox
-                %label
-                  = rsvp.check_box :visibility
-                  = rsvp.hidden_field :event_id
-                  = rsvp.hidden_field :invitation_id
-                  = Event.find(rsvp.object.event_id).name
+              = guest.fields_for :rsvps, guest.object.rsvps.event_view do |rsvp|
+                .checkbox
+                  %label
+                    = rsvp.check_box :visibility
+                    = rsvp.hidden_field :event_id
+                    = rsvp.hidden_field :invitation_id
+                    = Event.find(rsvp.object.event_id).name
 
-    .form-group.pull-right
-      = f.submit "Next", :class => "btn btn-success btn-lg"
-    .form-group
-      = link_to 'Previous', previous_wizard_path, :class=> "btn btn-default btn-lg"
+    = link_to 'Previous', previous_wizard_path, :class=> "btn btn-default btn-lg"
+    = f.submit "Save", :class => "btn btn-success btn-lg pull-right"

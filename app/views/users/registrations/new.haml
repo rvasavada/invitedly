@@ -33,4 +33,4 @@
                 %span.help-block= resource.errors.get(:password_confirmation).join('; ')
               
               = f.submit "Sign up", :class=> "btn btn-success btn-block"
-        = link_to "Already have an account? <strong>Sign in</strong>.".html_safe, new_session_path(resource_name), :class=> "btn btn-default btn-block"
+        = link_to "Already have an account? <strong>Sign in</strong>.".html_safe, new_session_path(resource_name), :class=> "btn btn-primary btn-block"

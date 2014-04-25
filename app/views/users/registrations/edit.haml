@@ -1,14 +1,54 @@
 .container
+  %h2 Make changes to your account
   = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
     %ul.list-group
-      %li.list-group-item      
-        %h2 Make changes to your account
-      %li.list-group-item.list-group-item-info
-        %h4 Contact Information
       %li.list-group-item
-        %fieldset
-          .row
-            .col-md-6
+        %h3
+          %strong What are your names?
+          %small So your guests recognize our emails.
+      %li.list-group-item
+        .row
+          .col-md-8
+            %fieldset
+              %label Your name
+              .row
+                .col-sm-3
+                  .form-group
+                    = f.label :title, class: "sr-only"
+                    = f.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
+                .col-sm-4
+                  .form-group
+                    = f.label :first_name, class: "sr-only"
+                    = f.text_field :first_name, class: "form-control", placeholder: "First Name"
+                .col-sm-5
+                  .form-group
+                    = f.label :last_name, class: "sr-only"
+                    = f.text_field :last_name, class: "form-control", placeholder: "Last Name"
+
+              %label Partner name
+              .row
+                .col-sm-3
+                  .form-group
+                    = f.label :partner_title, class: "sr-only"
+                    = f.collection_select(:partner_title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
+                .col-sm-4
+                  .form-group
+                    = f.label :partner_first_name, class: "sr-only"
+                    = f.text_field :partner_first_name, class: "form-control", placeholder: "First Name"
+                .col-sm-5
+                  .form-group
+                    = f.label :partner_last_name, class: "sr-only"
+                    = f.text_field :partner_last_name, class: "form-control", placeholder: "Last Name"
+                
+      %li.list-group-item
+        %h3
+          %strong How should guests get in touch with you?
+          %small In case they want to send gifts, get directions, etc.
+      %li.list-group-item
+        .row
+          .col-md-8
+            %fieldset
+          
               .form-group{class: resource.errors.include?(:email) ? 'has-error' : ''}
                 = f.label :email, class: "control-label" do
                   Email
@@ -16,12 +56,53 @@
                 = f.text_field :email, class: "form-control"
                 %span.help-block= resource.errors.get(:email).join('; ')
                 
-      %li.list-group-item.list-group-item-info
-        %h4 Change Password
+              = f.label :address_1, class: "control-label" do
+                Address (optional)
+
+              .row
+                .col-sm-7
+                  .form-group
+                    = f.text_field :address_1, placeholder: "Address 1", :maxlength => 100, class: "form-control"
+                .col-sm-5
+                  .form-group
+                    = f.text_field :address_2, placeholder: "Address 2", :maxlength => 100, class: "form-control"
+              .row
+                .col-sm-5
+                  .form-group      
+                    = f.text_field :city, placeholder: "City", :maxlength => 100, class: "form-control"
+                .col-sm-4.domestic
+                  .form-group
+                    = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
+                .domestic.col-sm-3
+                  .form-group
+                    = f.text_field :zip, placeholder: "Zip", :maxlength => 5, class: "form-control"
+                .international.col-sm-4
+                  .form-group
+                    = f.text_field :region, placeholder: "Region", :maxlength => 100, class: "form-control"
+                .international.col-sm-3
+                  .form-group
+                    = f.text_field :postal_code, placeholder: "Postal Code", :maxlength => 20, class: "form-control"
+
+              .form-group
+                = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control",:id => "countrySelect"})
+      
+              .row
+                .col-sm-5
+                  .form-group
+                    = f.label :cell_phone, class: "form-label"
+                    = f.text_field :cell_phone, :maxlength => 100, class: "form-control"
+                .col-sm-5
+                  .form-group
+                    = f.label :home_phone, class: "form-label"
+                    = f.text_field :home_phone, :maxlength => 100, class: "form-control"
+      
+      %li.list-group-item
+        %h3 
+          %strong Change Password
       %li.list-group-item
         %fieldset
           .row
-            .col-md-6
+            .col-md-8
               .form-group{class: resource.errors.include?(:password) ? 'has-error' : ''}
                 = f.label :password, class: "control-label" do
                   Password
