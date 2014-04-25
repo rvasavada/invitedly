@@ -1,9 +1,19 @@
 .container
+  %ul.list-inline
+    %li
+      %strong=link_to "Events", occasion_events_path(@occasion)
+    %li
+      %small.glyphicon.glyphicon-chevron-right
+
+  %h2= @event.name
   .panel.panel-default
-    %ul.list-group
-      %li.list-group-item
-        %h2= @event.name
+    - if @event.rsvps.where(:visibility => true).present?
       - if params[:v] == "d"
         = render 'detail_view'
       - else
         = render 'summary_view'
+    - else
+      %ul.list-group
+        %li.list-group-item.text-center
+          %h3
+            %strong You haven't invited any guests yet!

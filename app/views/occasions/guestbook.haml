@@ -1,5 +1,5 @@
 .container
-  %h1 Guestbook
+  %h2 Guestbook
   
   %ul.list-group
     - if @invitations.present?
@@ -12,4 +12,5 @@
           %small="#{time_ago_in_words(invitation.updated_at)} ago"
     - else
       %li.list-group-item.text-center
-        %strong No one has left you a message yet!
+        %h3
+          %strong No one has left you a message yet!

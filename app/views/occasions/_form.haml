@@ -1,7 +1,8 @@
 = form_for @occasion, :html => { :role => "form"} do |f|
   %ul.list-group
     %li.list-group-item
-      %h2 Give us your wedding "deets"
+      %h3
+        %strong Give us your wedding "deets"
     %li.list-group-item
       %fieldset
         .row
@@ -29,4 +30,4 @@
                 = f.text_field :slug, :placeholder => "johnandmary", :maxlength => 20, class: "form-control"      
               %span.help-block Send your friends and family here to collect guest info
 
-  = f.submit "Save Occasion Details", :class => "btn btn-success btn-lg pull-right"
+  = f.submit "Save", :class => "btn btn-success btn-lg pull-right"

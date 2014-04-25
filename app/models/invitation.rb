@@ -20,7 +20,8 @@ class Invitation < ActiveRecord::Base
   scope :last_updated, -> { order('updated_at DESC') } 
   scope :status, -> { order(:status) }
   
-  validates_presence_of :name, :email
+  validates_presence_of :name
+  validates_presence_of :email, :if => {has_email: false}
   validates_uniqueness_of :name, :scope => :user_id
   
   #scope :name_asc, -> { joins(:household).order('name ASC').readonly(false) } 

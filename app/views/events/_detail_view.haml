@@ -1,5 +1,5 @@
-.panel.panel-default
-  .panel-body
+%ul.list-group
+  %li.list-group-item
     .pull-right
       %strong View:
       - if params[:v] == "d"
@@ -42,7 +42,8 @@
             %td
               = rsvp.guest.full_name
               - rsvp.guest.invitation.tags.each do |t| 
-                %span.label.label-info=t
+                %span.label.label-primary=t
+
               %br
               %small.text-muted= invitation.name
             %td

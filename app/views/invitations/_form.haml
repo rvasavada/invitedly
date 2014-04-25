@@ -26,64 +26,69 @@
         %strong Let's stay in touch  
         %small Add contact info
     %li.list-group-item
-      .form-group
-        = f.label :email, class: "control-label"
-        = f.text_field :email, :maxlength => 50, class: "form-control"
-        %span.help-block You can optionally add an email address.
+      .row
+        .col-md-8
+          .form-group
+            = f.label :email, class: "control-label"
+            = f.text_field :email, :maxlength => 50, class: "form-control"
+            %span.help-block You can optionally add an email address.
       
-      %fieldset
-        = f.label :location, class: "control-label" do
-          Address (optional)
+          %fieldset
+            = f.label :location, class: "control-label" do
+              Address (optional)
 
-        .row
-          .col-sm-7
-            .form-group
-              = f.text_field :address_1, placeholder: "Address 1", :maxlength => 100, class: "form-control"
-          .col-sm-5
-            .form-group
-              = f.text_field :address_2, placeholder: "Address 2", :maxlength => 100, class: "form-control"
-        .row
-          .col-sm-5
-            .form-group      
-              = f.text_field :city, placeholder: "City", :maxlength => 100, class: "form-control"
-          .col-sm-4.domestic
-            .form-group
-              = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
-          .domestic.col-sm-3
-            .form-group
-              = f.text_field :zip, placeholder: "Zip", :maxlength => 5, class: "form-control"
-          .international.col-sm-4
-            .form-group
-              = f.text_field :region, placeholder: "Region", :maxlength => 100, class: "form-control"
-          .international.col-sm-3
-            .form-group
-              = f.text_field :postal_code, placeholder: "Postal Code", :maxlength => 20, class: "form-control"
+            .row
+              .col-sm-7
+                .form-group
+                  = f.text_field :address_1, placeholder: "Address 1", :maxlength => 100, class: "form-control"
+              .col-sm-5
+                .form-group
+                  = f.text_field :address_2, placeholder: "Address 2", :maxlength => 100, class: "form-control"
+            .row
+              .col-sm-5
+                .form-group      
+                  = f.text_field :city, placeholder: "City", :maxlength => 100, class: "form-control"
+              .col-sm-4.domestic
+                .form-group
+                  = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
+              .domestic.col-sm-3
+                .form-group
+                  = f.text_field :zip, placeholder: "Zip", :maxlength => 5, class: "form-control"
+              .international.col-sm-4
+                .form-group
+                  = f.text_field :region, placeholder: "Region", :maxlength => 100, class: "form-control"
+              .international.col-sm-3
+                .form-group
+                  = f.text_field :postal_code, placeholder: "Postal Code", :maxlength => 20, class: "form-control"
 
-        .form-group
-          = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control",:id => "countrySelect"})
+            .form-group
+              = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control",:id => "countrySelect"})
     
-        .row
-          .col-sm-5
-            .form-group
-              = f.label :cell_phone, class: "form-label"
-              = f.text_field :cell_phone, :maxlength => 100, class: "form-control"
-          .col-sm-5
-            .form-group
-              = f.label :home_phone, class: "form-label"
-              = f.text_field :home_phone, :maxlength => 100, class: "form-control"
+            .row
+              .col-sm-5
+                .form-group
+                  = f.label :cell_phone, class: "form-label"
+                  = f.text_field :cell_phone, :maxlength => 100, class: "form-control"
+              .col-sm-5
+                .form-group
+                  = f.label :home_phone, class: "form-label"
+                  = f.text_field :home_phone, :maxlength => 100, class: "form-control"
     %li.list-group-item
       %h3 
         %strong Notes
         %small Add notes & tags
     %li.list-group-item      
-      .form-group
-        = f.label :notes, "Private Notes", class: "control-label"
-        = f.text_area :notes, {:rows => 5, :maxlength => 500, class: "form-control"}
-        %span.help-block These notes are private and won't be shared with the guests.
+      .row
+        .col-md-8
+          .form-group
+            = f.label :notes, "Private Notes", class: "control-label"
+            = f.text_area :notes, {:rows => 5, :maxlength => 500, class: "form-control"}
+            %span.help-block These notes are private and won't be shared with the guests.
     
-      .form-group
-        = f.label :tag_list, "Tags (separated by commas)"
-        = f.text_field :tag_list, class: "form-control", :placeholder => "Bride, Groom, Tier 1, etc."
+          .form-group
+            = f.label :tag_list, "Tags (separated by commas)"
+            = f.text_field :tag_list, class: "form-control", :placeholder => "Bride, Groom, Tier 1, etc."
 
   .form-group
+    = link_to 'Cancel', :back, :class=> "btn btn-primary btn-lg"
     = f.submit "Next", :class => "btn btn-success btn-lg pull-right"

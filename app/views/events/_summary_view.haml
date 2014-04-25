@@ -1,63 +1,66 @@
-%li.list-group-item
-  .pull-right
-    %strong View:
-    - if params[:v] == "d"
-      = link_to "Summary", occasion_event_path(@occasion, @event)
-      |
-      Details
-    - else
-      Summary
-      |
-      = link_to "Details", occasion_event_path(@occasion, @event, v: "d")
-  %ul.list-inline
-    %li.text-danger
-      %strong=@event.rsvps.where(:visibility => true, :response => "Not Attending").count
-      Not Attending
-    %li.text-success
-      %strong.text-success=@event.rsvps.where(:visibility => true, :response => "Attending").count
-      Attending
+%ul.list-group
+  %li.list-group-item
+    .pull-right
+      %strong View:
+      - if params[:v] == "d"
+        = link_to "Summary", occasion_event_path(@occasion, @event)
+        |
+        Details
+      - else
+        Summary
+        |
+        = link_to "Details", occasion_event_path(@occasion, @event, v: "d")
+    %ul.list-inline
+      %li.text-danger
+        %strong=@event.rsvps.where(:visibility => true, :response => "Not Attending").count
+        Not Attending
+      %li.text-success
+        %strong.text-success=@event.rsvps.where(:visibility => true, :response => "Attending").count
+        Attending
   
-    %li
-      %strong=@event.rsvps.where(:visibility => true, :response => "Not Responded").count
-      Not Sent/Modified
+      %li
+        %strong=@event.rsvps.where(:visibility => true, :response => "Not Responded").count
+        Not Sent/Modified
   
-    %li
-      %strong=@event.rsvps.where(:visibility => true, :response => "Not Responded").count
-      Not Responded
+      %li
+        %strong=@event.rsvps.where(:visibility => true, :response => "Not Responded").count
+        Not Responded
   
-    -#%strong Download:
-    -#= link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
-%table.table.table-hover.table-condensed#invitation_guest
-  %thead
-    %tr
-      %th Invitation name
-      %th Attending
-      %th Not Attending
-      %th Not Responded          
-      %th Status
-      %th
-  %tbody
-    - @event.invitations.uniq.each do |invitation|
-      %tr
-        %td
-          = invitation.name
+      -#%strong Download:
+      -#= link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
+  .table-responsive
+    %table.table.table-hover.table-condensed#invitation_guest
+      %thead
+        %tr
+          %th Invitation name
+          %th Attending
+          %th Not Attending
+          %th Not Responded          
+          %th Invitation Status
+          %th
+      %tbody
+        - @event.invitations.uniq.each do |invitation|
+          %tr
+            %td
+              = invitation.name
               
-          - invitation.tags.each do |t| 
-            %span.label.label-info=t
+              - invitation.tags.each do |t| 
+                %span.label.label-primary=t
 
-          - attending = invitation.rsvps.attending(@event)
-          - not_attending = invitation.rsvps.not_attending(@event)
-          - not_responded = invitation.rsvps.not_responded(@event)
+              - attending = invitation.rsvps.attending(@event)
+              - not_attending = invitation.rsvps.not_attending(@event)
+              - not_responded = invitation.rsvps.not_responded(@event)
           
-          %td.text-success
-            - if attending.count > 0
-              = link_to attending.count, "#", data: {html: true, title: "Attending (#{attending.count})", content: "#{render 'response_info', :invitation => invitation, :response => attending, :type => "attending", :event => @event.name}", trigger: "click", container: 'body', placement: "top", toggle: 'popover'}, rel: "popover", style: "color: #18bc9c;font-size:16px;"
-          %td.text-danger
-            - if not_attending.count > 0
-              = link_to not_attending.count, "#", data: {html: true, title: "Not Attending (#{not_attending.count})", content: "#{render 'response_info', :invitation => invitation, :response => not_attending, :type => "not_attending", :event => @event.name}", trigger: "click", placement: "top", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #E74C3B;font-size:16px;"
-          %td
-            - if not_responded.count > 0
-              = link_to not_responded.count, "#", data: {html: true, title: "Not Responded (#{not_responded.count})", content: "#{render 'response_info', :invitation => invitation, :response => not_responded, :type => "not_responded", :event => @event.name}", trigger: "click", placement: "top", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #2c3e50;font-size:16px;"
-          %td
-            = invitation.status
-            %small.text-muted=" #{time_ago_in_words(invitation.updated_at)} ago"
+              %td.text-success
+                - if attending.count > 0
+                  = link_to attending.count, "#", data: {html: true, title: "Attending (#{attending.count})", content: "#{render 'response_info', :invitation => invitation, :response => attending, :type => "attending", :event => @event.name}", trigger: "click", container: 'body', placement: "top", toggle: 'popover'}, rel: "popover", style: "color: #18bc9c;font-size:16px;"
+              %td.text-danger
+                - if not_attending.count > 0
+                  = link_to not_attending.count, "#", data: {html: true, title: "Not Attending (#{not_attending.count})", content: "#{render 'response_info', :invitation => invitation, :response => not_attending, :type => "not_attending", :event => @event.name}", trigger: "click", placement: "top", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #E74C3B;font-size:16px;"
+              %td
+                - if not_responded.count > 0
+                  = link_to not_responded.count, "#", data: {html: true, title: "Not Responded (#{not_responded.count})", content: "#{render 'response_info', :invitation => invitation, :response => not_responded, :type => "not_responded", :event => @event.name}", trigger: "click", placement: "top", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #2c3e50;font-size:16px;"
+              %td
+                = invitation.status
+                %small.text-muted=" #{time_ago_in_words(invitation.updated_at)} ago"
+              %td

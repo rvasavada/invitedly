@@ -33,11 +33,6 @@
             %li.text-success
               %strong.text-success= event.rsvps.attending(event).count
               Attending
-    
-            %li
-              %strong N/A
-              Not Sent/Modified
-    
             %li
               %strong= event.rsvps.not_responded(event).count
               Not Responded
