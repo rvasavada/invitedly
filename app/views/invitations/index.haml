@@ -29,13 +29,15 @@
         %table.table.table-hover.table-condensed#invitation_guest
           %thead
             %tr
-              %th Invitation name
+              %th{colspan: 2} Invitation name
               %th Status       
               %th Last updated
               %th
           %tbody
             - @invitations.each do |invitation|
               %tr
+                %td
+                  %span.glyphicon.glyphicon-chevron-right.small
                 %td
                   = invitation.name
               
@@ -49,6 +51,27 @@
                 %td
                   = link_to occasion_invitation_manage_path(@occasion,invitation, :guest_info), data: {title: "Edit Invitation", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-link btn-sm" do
                     %span.glyphicon.glyphicon-pencil
+                  = link_to "#", data: {title: "Send Invitation", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-link btn-sm" do
+                    %span.glyphicon.glyphicon-envelope
+                  = link_to "#", data: {title: "Delete Invitation", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-link btn-sm", style: "color:#E41313;" do
+                    %span.glyphicon.glyphicon-trash
+              %tr
+                %td{colspan:5}
+                  .row
+                    .col-md-4
+                      .well.well-sm
+                        %p.text-muted.small  Guests
+                        - invitation.guests.each do |guest|
+                          =guest.full_name
+                          %br
+                    .col-md-4
+                      .well.well-sm
+                        %p.text-muted.small  Contact Info
+                        = invitation.email
+                    .col-md-4
+                      .well.well-sm
+                        %p.text-muted.small Private Notes
+                        =invitation.notes
   - else
     %ul.list-group
       %li.list-group-item.text-center
