@@ -25,7 +25,8 @@ $("document").ready(function(){
 	$(document).ready(function(){	
 		$('.datepicker').datetimepicker({
     	timepicker:false,
-			format: "M d, Y"
+			format: "M d, Y",
+      scrollInput:false
 			});
 	});
   
