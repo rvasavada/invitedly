@@ -1,7 +1,7 @@
 = form_for [@occasion,@event], :html => { :role => "form"} do |f|
   %ul.list-group
     %li.list-group-item
-      %h3
+      %h4.text-warning
         %strong Event details
         %small What? When? Where? Why?
     %li.list-group-item
@@ -37,7 +37,7 @@
               %span.help-block= @event.errors.get(:description).join('; ')
 
     %li.list-group-item
-      %h3
+      %h4.text-warning
         %strong Enter some info about the venue
         %small Guests like to know where to go.
     %li.list-group-item

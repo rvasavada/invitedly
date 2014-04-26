@@ -53,7 +53,7 @@
     %ul.list-group
       %li.list-group-item.text-center
         %h3
-          You haven't invited any guests yet!
+          %strong You haven't invited any guests yet!
           =link_to "Create an invitation", new_occasion_invitation_path(@occasion), class: "btn btn-primary"
 
 .modal.fade#myModal{:tabindex=> "-1", :role=>"dialog", "aria-labelledby"=>"myModalLabel", "aria-hidden"=> "true"}
@@ -61,34 +61,46 @@
     .modal-content
       .modal-header
         %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
-        %h4.modal-title Import a CSV file of your guests
+        %h2.modal-title
+          %strong Import a CSV file of your guests
       .modal-body
         %h4 
-          Follow this
-          =link_to "example template.", "https://docs.google.com/a/vasavada.us/spreadsheet/ccc?key=0Ar12fAF1l7BJdGZfRUdZMy1NaDhGNER6SU9TX1h2UlE#gid=0"
-        %dl
-          %dt Tags
-          %dd Comma separated words (e.g. Bride, Groom, Tier 1, etc.)
-          %dt Family Name (optional)
-          %dd If this is a family, add a family name else leave blank.  All guests under the same family name will be grouped together.
-          %dt Email (optional)
-          %dd Add email else leave blank.
+          %strong 1.  Download this example template
+        .form-group
+          = link_to "https://docs.google.com/a/vasavada.us/spreadsheet/ccc?key=0Ar12fAF1l7BJdGZfRUdZMy1NaDhGNER6SU9TX1h2UlE#gid=0", target: :blank, class:"btn btn-primary" do        
+            %span.glyphicon.glyphicon-new-window
+            Example template
+        %h4
+          %strong 2. Import your CSV!
+        =form_tag import_occasion_guests_path(@occasion), multipart: true do
+          .row
+            .col-sm-8
+              .well.well-sm
+                %strong= file_field_tag :file
+            .col-sm-4
+              = submit_tag "Import guests", :class => "btn btn-success"
+        %hr
+        %h4
+          %strong Field Descriptions
+        %small
+          %dl
+            %dt Tags
+            %dd Comma separated words (e.g. Bride, Groom, Tier 1, etc.)
+            %dt Family Name (optional)
+            %dd If this is a family, add a family name else leave blank.  All guests under the same family name will be grouped together.
+            %dt Email (optional)
+            %dd Add email else leave blank.
           
-          %dt Notes (optional)
-          %dd Add any notes.  These notes will be kept private.
-          %dt Title
-          %dd This can be either Dr., Mr., Mrs., and Ms. If you don't know the guest's name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
-          %dt First Name
-          %dd This is the guest's first name. If you don't know the guest's name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
-          %dt Last Name
-          %dd This is the guest's last name. If you don't know the guest's name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
-          %dt Events
-          %dd
-            For every event that has been created, add an additional column with the
-            %strong exact
-            event name in the header and "Y" to the events to which the guest is invited, else leave the fields blank.
-            .well.form-group
-              =form_tag import_occasion_guests_path(@occasion), multipart: true do
-              
-                = submit_tag "Import guests", :class => "btn btn-success btn-sm pull-right"
-                = file_field_tag :file          
+            %dt Notes (optional)
+            %dd Add any notes.  These notes will be kept private.
+            %dt Title
+            %dd This can be either Dr., Mr., Mrs., and Ms. If you don't know the guest's name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
+            %dt First Name
+            %dd This is the guest's first name. If you don't know the guest's name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
+            %dt Last Name
+            %dd This is the guest's last name. If you don't know the guest's name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
+            %dt Events
+            %dd
+              For every event that has been created, add an additional column with the
+              %strong exact
+              event name in the header and "Y" to the events to which the guest is invited, else leave the fields blank.

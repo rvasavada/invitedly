@@ -1,10 +1,10 @@
 .container
   %ul.list-inline
     %li.text-primary
-      %strong 1. Wedding Information
+      %strong 1. Wedding information
     %li
       %small.glyphicon.glyphicon-chevron-right
-    %li 2. Host Information
+    %li 2. About the couple
     %li
       %small.glyphicon.glyphicon-chevron-right
     %li 3. Get started!
@@ -14,7 +14,7 @@
   = form_for @user, :url => wizard_path, :method => :put, :html => { :role => "form"} do |f|
     %ul.list-group
       %li.list-group-item
-        %h3
+        %h4
           %strong First, tell us about the wedding!
       %li.list-group-item
         .row

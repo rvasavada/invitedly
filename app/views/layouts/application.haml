@@ -20,7 +20,7 @@
       
       .container#main{style:"margin-top:20px;"}
         - if user_signed_in? 
-          - if current_user.occasion.present? && controller.controller_name != 'sign_up' 
+          - if current_user.occasion.present? && controller.controller_name != 'wedding' 
             %nav.navbar.navbar-default{role: "navigation"}
               / Brand and toggle get grouped for better mobile display
               .navbar-header
@@ -40,7 +40,7 @@
 
                 %ul.nav.navbar-nav.navbar-right
                   - if user_signed_in? 
-                    - if current_user.occasion.present? && controller.controller_name != 'sign_up'
+                    - if current_user.occasion.present? && controller.controller_name != 'wedding'
                       %li.dropdown{class: "#{'active' if current_page?(current_user.occasion)}"}
                         %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
                           =current_user.occasion.name

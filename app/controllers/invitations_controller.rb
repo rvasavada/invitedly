@@ -44,6 +44,8 @@ class InvitationsController < ApplicationController
       redirect_to occasion_invitation_manage_path(@occasion, @invitation, :events), notice: 'Invitation was successfully created.'
     else
       @title = Title.all
+      @state = State.all
+      @country = Country.all
       @events = @occasion.events
       
       render action: 'new'
