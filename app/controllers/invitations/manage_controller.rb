@@ -2,18 +2,18 @@ class Invitations::ManageController < ApplicationController
   include Wicked::Wizard
   before_action :set_occasion
 
-  steps :guest_info, :events
+  steps :guest_info, :rsvp
   
   def show
     @invitation = Invitation.friendly.find(params[:invitation_id])
     case step
     when :guest_info
       @title = Title.all
-      
       @country = Country.all
       @state = State.all
-    when :events
+    when :rsvp
       @guests = @invitation.guests
+      @events = @occasion.events
       
       for guest in @guests
         for event in @occasion.events
@@ -33,7 +33,7 @@ class Invitations::ManageController < ApplicationController
       @title = Title.all
       @country = Country.all
       @state = State.all
-    when :events
+    when :rsvp
       @invitation.update(invitation_params)
       
       @guests = @invitation.guests
@@ -55,6 +55,6 @@ class Invitations::ManageController < ApplicationController
   end  
   # Never trust parameters from the scary internet, only allow the white list through.
   def invitation_params
-    params.require(:invitation).permit(:name, :email, :notes, :tag_list, rsvps_attributes: [:id, :response], guests_attributes: [:id, :title, :first_name, :last_name, :_destroy, rsvps_attributes: [:id, :visibility, :invitation_id, :event_id]])
+    params.require(:invitation).permit(:name, :has_email, :email, :notes, :tag_list, rsvps_attributes: [:id, :visibility, :response], guests_attributes: [:id, :title, :first_name, :last_name, :_destroy,  :is_child, :is_additional_guest])
   end
 end

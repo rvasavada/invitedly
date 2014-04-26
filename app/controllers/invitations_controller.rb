@@ -96,8 +96,8 @@ class InvitationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def invitation_params
-      params.require(:invitation).permit(:message, :name, :email, :notes, :tag_list,
-          guests_attributes: [:id, :title, :first_name, :last_name, :_destroy])
+      params.require(:invitation).permit(:message, :name, :email, :has_email, :notes, :tag_list,
+          guests_attributes: [:id, :title, :first_name, :last_name, :is_child, :is_additional_guest, :_destroy])
     end
   
 end

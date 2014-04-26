@@ -1,0 +1,60 @@
+.container
+  %ul.list-inline
+    %li.text-muted 1. Guest Information
+    %li
+      %small.glyphicon.glyphicon-chevron-right
+    %li.text-primary
+      %strong 2. RSVP
+  
+  %h2 RSVP
+
+  = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
+    .panel.panel-default
+      .panel-body
+        %h4.text-warning
+          %strong You're invited!
+          %small Invite your guests to an event, and optionally add their response.
+      %ul.list-group
+        %li.list-group-item
+          - @events.each_with_index do |event,index|
+            .row
+              .col-md-6
+                %p{style:"margin-top:0px;margin-bottom:0px;font-weight:bold;"}=event.name
+                %p.text-muted{style:"margin-top:0px;"}
+                  = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time.strftime('%l:%M%P')}"
+                  %br
+                  - unless event.address_1.blank?
+                    = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
+                    = "| #{event.address}"
+                  - else
+                    = event.location
+                %p=event.description
+              .col-md-6
+                %table.table
+                  %thead
+                    %tr
+                      %th Invited?
+                      %th Guest name
+                      %th.text-center{colspan: 2} Response
+                    %tbody
+                      = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id) do |rsvp|
+                        %tr
+                          %td{style: "vertical-align:middle;"}
+                            = rsvp.check_box :visibility
+                          %td{style: "vertical-align:middle;"}
+                            - unless rsvp.object.guest.is_additional_guest
+                              = rsvp.object.guest.full_name
+                            - else 
+                              %em.text-muted=rsvp.object.guest.full_name
+                          %td
+                            .radio
+                              %label
+                                = rsvp.radio_button :response, "Attending"
+                                Attending
+                            .radio
+                              %label
+                                = rsvp.radio_button :response, "Not Attending"
+                                Not Attending
+
+    = link_to 'Previous', previous_wizard_path, :class=> "btn btn-primary btn-lg"
+    = f.submit "Save", :class => "btn btn-success btn-lg pull-right"

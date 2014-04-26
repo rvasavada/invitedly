@@ -21,7 +21,7 @@ class Invitation < ActiveRecord::Base
   scope :status, -> { order(:status) }
   
   validates_presence_of :name
-  validates_presence_of :email, :if => {has_email: false}
+  validates_presence_of :email, :if => lambda { |o| o.has_email }
   validates_uniqueness_of :name, :scope => :user_id
   
   #scope :name_asc, -> { joins(:household).order('name ASC').readonly(false) } 
@@ -71,7 +71,7 @@ class Invitation < ActiveRecord::Base
   private
 
   def random_hex_id
-    SecureRandom.hex(8)
+    SecureRandom.hex(3)
   end
   
   def active?
