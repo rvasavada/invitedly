@@ -1,4 +1,4 @@
-class SignUpController < ApplicationController
+class WeddingController < ApplicationController
   include Wicked::Wizard
   steps :info, :about_the_couple, :get_started
 
