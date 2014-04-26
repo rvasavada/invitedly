@@ -4,6 +4,7 @@
     Events
     %small.text-muted="(#{pluralize(@events.count, 'event')} found)"
     
+  
   %ul.list-group
     - if @events.present?
       - @events.each do |event|
@@ -25,7 +26,7 @@
               - else
                 = event.location
           %p=event.description
-        
+      
           %ul.list-inline.well
             %li.text-danger
               %strong= event.rsvps.not_attending(event).count
@@ -38,7 +39,8 @@
               Not Responded
 
 
-    -else
-      .well.text-center
-        %h3 No events found.
-        =link_to "Add an event!", new_occasion_event_path(@occasion)
+    -else      
+      %li.list-group-item.text-center
+        %h3
+          You haven't added any events yet!
+          = link_to 'Add Event', new_occasion_event_path(@occasion), class: "btn btn-primary"

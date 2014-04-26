@@ -6,9 +6,10 @@
     Invitations
     %small.text-muted="(#{pluralize(@invitations.count, 'invitations')} found)"
     
-  .panel.panel-default
-    %ul.list-group
-      - if @invitations.present?
+  
+  - if @invitations.present?
+    .panel.panel-default
+      %ul.list-group
         %li.list-group-item
           .pull-right
             %strong Download:
@@ -48,10 +49,12 @@
                 %td
                   = link_to occasion_invitation_manage_path(@occasion,invitation, :guest_info), data: {title: "Edit Invitation", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-link btn-sm" do
                     %span.glyphicon.glyphicon-pencil
-      - else
-        %li.list-group-item.text-center
-          %h3
-            %strong You haven't invited any guests yet!
+  - else
+    %ul.list-group
+      %li.list-group-item.text-center
+        %h3
+          You haven't invited any guests yet!
+          =link_to "Create an invitation", new_occasion_invitation_path(@occasion), class: "btn btn-primary"
 
 .modal.fade#myModal{:tabindex=> "-1", :role=>"dialog", "aria-labelledby"=>"myModalLabel", "aria-hidden"=> "true"}
   .modal-dialog

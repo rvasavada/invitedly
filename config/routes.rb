@@ -12,7 +12,7 @@ Invitedly::Application.routes.draw do
     :sessions => "users/sessions"
      }
   
-  resources :sign_up
+  resources :create_wedding
   
   get 'occasions' => 'occasions#index'  
   post 'occasions' => 'occasions#create'
