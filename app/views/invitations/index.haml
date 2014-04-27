@@ -5,9 +5,7 @@
       =link_to "New Invitation", new_occasion_invitation_path(@occasion), class: "btn btn-success"
     Invitations
     %small.text-muted="(#{pluralize(@invitations.count, 'invitations')} found)"
-    
-  
-  
+
   .panel.panel-default
     %ul.list-group
       %li.list-group-item
@@ -16,18 +14,25 @@
           = link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
       
         %ul.list-inline
-          %li.text-info
+          %li
+            %strong Status:
+          %li.text-info{style: params[:status].blank? && params[:tag].blank? ? "background-color:yellow;": ""}
             %strong=@occasion.invitations.count
             =link_to "All", occasion_invitations_path(@occasion)
-          %li.text-success
+          %li.text-success{style: params[:status] == "Responded" ? "background-color:yellow;" : ""}
             %strong=@occasion.invitations.where(:status => "Responded").count
             =link_to "Responded", occasion_invitations_path(@occasion, :status => "Responded")
-          %li
+          %li{style: params[:status] == "Not Responded" ? "background-color:yellow;" : ""}
             %strong=@occasion.invitations.where(:status => "Not Responded").count
             =link_to "Not Responded", occasion_invitations_path(@occasion, :status => "Not Responded")
-          %li.text-warning
+          %li.text-warning{style: params[:status] == "Not Sent" ? "background-color:yellow;" : ""}
             %strong=@occasion.invitations.where(:status => "Not Sent").count
             =link_to "Not Sent", occasion_invitations_path(@occasion, :status => "Not Sent")
+      %li.list-group-item
+        %strong Tags:
+        - Invitation.tag_counts.each do |t|
+          =link_to t.name, occasion_invitations_path(@occasion, :tag => t.name), class: "btn btn-info btn-xs"
+
             
     - unless @occasion.invitations.present?
       %ul.list-group
@@ -43,33 +48,33 @@
               %th{colspan: 2} Invitation name
               %th Status       
               %th Last updated
-              %th
           %tbody
             - @invitations.each do |invitation|
               %tr.record_row{id: invitation.id}
                 %td
                   %span.glyphicon.glyphicon-chevron-right.small{id: "no_detail#{invitation.id}"}
                   %span.glyphicon.glyphicon-chevron-down.small{style:"display:none", id: "yes_detail#{invitation.id}"}
-                %td{id: "invitation_name#{invitation.id}"}
+                %td{id: "invitation_name#{invitation.id}", style:"height:50px;"}
                   = invitation.name
           
                   - invitation.tags.each do |t| 
                     %span.label.label-primary=t
+                  
+                  .btn-group.btn-group-sm{id: "invitation_tasks#{invitation.id}", style: "display:none;"}
+                    = link_to occasion_invitation_manage_path(@occasion,invitation, :guest_info), data: {title: "Edit", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-link" do
+                      %span.glyphicon.glyphicon-pencil
+                    = link_to "#", data: {title: "Send", placement: "bottom", trigger: "hover"}, rel: "tooltip", confirm: 'Are you sure you want to send this invitation?', class: "btn btn-link" do
+                      %span.glyphicon.glyphicon-envelope
+                    = link_to occasion_invitation_path(@occasion,invitation), method: :delete, data: {title: "Delete", placement: "bottom", trigger: "hover"},rel: "tooltip", confirm: 'Are you sure you want to delete this invitation?', class: "btn btn-link" do
+                      %span.glyphicon.glyphicon-trash
     
                 %td
                   = invitation.status
                 %td
                   %small.text-muted=" #{time_ago_in_words(invitation.updated_at)} ago"
-                %td
-                  .btn-group
-                    = link_to occasion_invitation_manage_path(@occasion,invitation, :guest_info), data: {title: "Edit Invitation", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-default btn-sm" do
-                      %span.glyphicon.glyphicon-pencil
-                    = link_to "#", data: {title: "Send Invitation", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-primary btn-sm" do
-                      %span.glyphicon.glyphicon-envelope
-                    = link_to occasion_invitation_path(@occasion,invitation), method: :delete, data: {title: "Delete Invitation", placement: "bottom", trigger: "hover"},rel: "tooltip", confirm: 'Are you sure you want to delete this invitation?', class: "btn btn-danger btn-sm" do
-                      %span.glyphicon.glyphicon-trash
+                  
               %tr.edit_row.tablesorter-childRow{style: "display:none;", id: "edit_row#{invitation.id}"}
-                %td{colspan:5, style: "border-top:0px;"}
+                %td{colspan:4, style: "border-top:0px;"}
                   .row
                     .col-md-4
                       .well.well-sm{style:"background-color:#fff;"}

@@ -108,7 +108,20 @@ $("document").ready(function(){
       $('#invitation_name'+this.id).toggleClass('important_name');
      } );
      
-     $('.record_row').hover( function () {
-      $('#record_actions'+this.id).toggle();
-     } );
+     $('.record_row').on("mouseenter", function () {
+        $('#invitation_tasks'+this.id).show();
+        $(".record_row").on("mouseleave", function () {
+          $('#invitation_tasks'+this.id).hide();
+        });
+    }).on("mouseleave", function () {
+        var _this = this;
+        setTimeout(function () {
+            if (!$(".record_row:hover").length) {
+                $('#invitation_tasks'+this.id).hide();
+            }
+        }, 100);
+    }).click(function(e) {
+        e.preventDefault();
+     });
+     
 });

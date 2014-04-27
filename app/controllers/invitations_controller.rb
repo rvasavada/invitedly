@@ -8,9 +8,11 @@ class InvitationsController < ApplicationController
   def index
     if params[:status].present?
       @invitations = @occasion.invitations.where("status = ?", params[:status])
+    elsif params[:tag].present?
+      @invitations = @occasion.invitations.tagged_with(params[:tag])
     else
       @invitations = @occasion.invitations
-    end
+    end    
 
     respond_to do |format|
       format.html
