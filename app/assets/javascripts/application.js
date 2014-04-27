@@ -99,14 +99,21 @@ $("document").ready(function(){
      });
   
   
-     $('.invitation_name').click( function () {
+     $('.invitation_name').click( function (e) {
       $('#edit_row'+this.id).toggle();
       $('#yes_detail'+this.id).toggle();
       $('#no_detail'+this.id).toggle();
       $(".record_row#"+this.id).toggleClass('active');
       $('#edit_row'+this.id).addClass('active');
       $("#"+this.id+".invitation_name").toggleClass('important_name');
+      e.preventDefault();
      } );
+     
+     /*
+     $(".record_row").hover( function () {
+       $('#invitation_tasks'+this.id).toggle();
+     });
+     */
      
      $('.record_row').on("mouseenter", function () {
         $('#invitation_tasks'+this.id).show();
@@ -120,8 +127,5 @@ $("document").ready(function(){
                 $('#invitation_tasks'+this.id).hide();
             }
         }, 100);
-    }).click(function(e) {
-        e.preventDefault();
-     });
-     
+    })
 });
