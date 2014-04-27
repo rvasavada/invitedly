@@ -24,6 +24,7 @@ $.extend $.tablesorter.themes.bootstrap,
 $("table#invitation_guest thead th:last").data("sorter", false).data "filter", false
 $("table#invitation_guest").tablesorter
   theme: "bootstrap"
+  cssChildRow: "edit_row"
   headerTemplate: "{content} {icon}"
   widgets: [
     "uitheme"

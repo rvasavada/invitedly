@@ -26,6 +26,30 @@ class Invitation < ActiveRecord::Base
   
   #scope :name_asc, -> { joins(:household).order('name ASC').readonly(false) } 
   #scope :name_desc, -> { joins(:household).order('name DESC').readonly(false) } 
+  
+  def address_line_1
+    address = "#{address_1} #{address_2}"
+    address if address.length > 1    
+  end
+  
+  def address_line_2
+    if country == "United States"
+      if city.present? && state.present?
+        "#{city}, #{state} #{zip}"
+      end
+    else
+      if city.present? && region.present?
+        "#{city}, #{region} #{postal_code}"
+      end
+    end
+  end
+  
+  def address_line_3
+    if country != "United States"
+      country 
+    end
+  end
+  
   def self.to_csv(occasion, options = {})
     CSV.generate(options) do |csv|
       cols = ["Tags", "Family Name", "Email", "Notes", "Title", "First Name", "Last Name", "Full Name","Invitation Status"]
