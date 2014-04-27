@@ -6,7 +6,11 @@ class InvitationsController < ApplicationController
   before_filter :verify_occasion_ownership, only: [:index,:new,:edit]
   
   def index
-    @invitations = @occasion.invitations.includes(:rsvps)
+    if params[:status].present?
+      @invitations = @occasion.invitations.where("status = ?", params[:status])
+    else
+      @invitations = @occasion.invitations
+    end
 
     respond_to do |format|
       format.html

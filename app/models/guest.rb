@@ -32,9 +32,9 @@ class Guest < ActiveRecord::Base
         $row_count += 1
       else
         if row[1].present?
-          invitation = Invitation.create_with(has_email: row[2].present?, email: row[2], notes: row[3], occasion_id: occasion.id, status: "Not Sent/Modified").find_or_create_by(name: row[1], user_id: user.id)
+          invitation = Invitation.create_with(has_email: row[2].present?, email: row[2], notes: row[3], occasion_id: occasion.id, status: "Not Sent").find_or_create_by(name: row[1], user_id: user.id)
         else
-          invitation = Invitation.create_with(has_email: row[2].present?, email: row[2], notes: row[3], occasion_id: occasion.id, status: "Not Sent/Modified").find_or_create_by(name: "#{row[4]} #{row[5]} #{row[6]}", user_id: user.id)
+          invitation = Invitation.create_with(has_email: row[2].present?, email: row[2], notes: row[3], occasion_id: occasion.id, status: "Not Sent").find_or_create_by(name: "#{row[4]} #{row[5]} #{row[6]}", user_id: user.id)
         end
         
         invitation.tag_list.add(row[0], parse: true)

@@ -7,25 +7,36 @@
     %small.text-muted="(#{pluralize(@invitations.count, 'invitations')} found)"
     
   
-  - if @invitations.present?
-    .panel.panel-default
+  
+  .panel.panel-default
+    %ul.list-group
+      %li.list-group-item
+        .pull-right
+          %strong Download:
+          = link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
+      
+        %ul.list-inline
+          %li.text-info
+            %strong=@occasion.invitations.count
+            =link_to "All", occasion_invitations_path(@occasion)
+          %li.text-success
+            %strong=@occasion.invitations.where(:status => "Responded").count
+            =link_to "Responded", occasion_invitations_path(@occasion, :status => "Responded")
+          %li
+            %strong=@occasion.invitations.where(:status => "Not Responded").count
+            =link_to "Not Responded", occasion_invitations_path(@occasion, :status => "Not Responded")
+          %li.text-warning
+            %strong=@occasion.invitations.where(:status => "Not Sent").count
+            =link_to "Not Sent", occasion_invitations_path(@occasion, :status => "Not Sent")
+            
+    - unless @occasion.invitations.present?
       %ul.list-group
-        %li.list-group-item
-          .pull-right
-            %strong Download:
-            = link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
-        
-          %ul.list-inline
-            %li.text-success
-              %strong=@invitations.where(:status => "Responded").count
-              Responded
-            %li
-              %strong=@invitations.where(:status => "Not Sent/Modified").count
-              Not Sent/Modified
-            %li
-              %strong=@invitations.where(:status => "Not Responded").count
-              Not Responded
-
+        %li.list-group-item.text-center
+          %h3
+            %strong You haven't invited any guests!
+            =link_to "Create an invitation", new_occasion_invitation_path(@occasion), class: "btn btn-primary"
+    - else
+      - if @invitations.present?
         %table.table#invitation_guest
           %thead
             %tr
@@ -41,10 +52,10 @@
                   %span.glyphicon.glyphicon-chevron-down.small{style:"display:none", id: "yes_detail#{invitation.id}"}
                 %td{id: "invitation_name#{invitation.id}"}
                   = invitation.name
-              
+          
                   - invitation.tags.each do |t| 
                     %span.label.label-primary=t
-        
+    
                 %td
                   = invitation.status
                 %td
@@ -91,12 +102,12 @@
                       .well.well-sm{style:"background-color:#fff;"}
                         %p.text-muted.small Private Notes
                         =invitation.notes
-  - else
-    %ul.list-group
-      %li.list-group-item.text-center
-        %h3
-          %strong You haven't invited any guests yet!
-          =link_to "Create an invitation", new_occasion_invitation_path(@occasion), class: "btn btn-primary"
+      - else
+        %ul.list-group
+          %li.list-group-item.text-center
+            %h3
+              %strong Sorry, no guests found!
+              =link_to "Create an invitation", new_occasion_invitation_path(@occasion), class: "btn btn-primary"
 
 .modal.fade#myModal{:tabindex=> "-1", :role=>"dialog", "aria-labelledby"=>"myModalLabel", "aria-hidden"=> "true"}
   .modal-dialog
