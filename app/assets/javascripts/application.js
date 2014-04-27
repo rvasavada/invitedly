@@ -99,13 +99,13 @@ $("document").ready(function(){
      });
   
   
-     $('.record_row').click( function () {
+     $('.invitation_name').click( function () {
       $('#edit_row'+this.id).toggle();
       $('#yes_detail'+this.id).toggle();
       $('#no_detail'+this.id).toggle();
-      $(this).toggleClass('active');
+      $(".record_row#"+this.id).toggleClass('active');
       $('#edit_row'+this.id).addClass('active');
-      $('#invitation_name'+this.id).toggleClass('important_name');
+      $("#"+this.id+".invitation_name").toggleClass('important_name');
      } );
      
      $('.record_row').on("mouseenter", function () {
