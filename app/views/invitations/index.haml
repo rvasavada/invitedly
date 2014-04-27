@@ -45,9 +45,10 @@
         %table.table#invitation_guest
           %thead
             %tr
-              %th{colspan: 2} Invitation name
-              %th Status       
-              %th Last updated
+              %th{colspan: 2, width:"55%"} Invitation name
+              %th{width:"15%"} Status       
+              %th{width:"15%"} Last updated
+              %th{width:"15%"}
           %tbody
             - @invitations.each do |invitation|
               %tr.record_row{id: invitation.id}
@@ -55,26 +56,29 @@
                   %span.glyphicon.glyphicon-chevron-right.small{id: "no_detail#{invitation.id}"}
                   %span.glyphicon.glyphicon-chevron-down.small{style:"display:none", id: "yes_detail#{invitation.id}"}
                 %td{id: "invitation_name#{invitation.id}", style:"height:50px;"}
-                  = invitation.name
+                  = link_to invitation.name, "#", style:"color:black;"
           
+
                   - invitation.tags.each do |t| 
-                    %span.label.label-primary=t
+                    %span.label.label-info{style:"font-weight:normal;"}=t.name
                   
-                  .btn-group.btn-group-sm{id: "invitation_tasks#{invitation.id}", style: "display:none;"}
-                    = link_to occasion_invitation_manage_path(@occasion,invitation, :guest_info), data: {title: "Edit", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-link" do
-                      %span.glyphicon.glyphicon-pencil
-                    = link_to "#", data: {title: "Send", placement: "bottom", trigger: "hover"}, rel: "tooltip", confirm: 'Are you sure you want to send this invitation?', class: "btn btn-link" do
-                      %span.glyphicon.glyphicon-envelope
-                    = link_to occasion_invitation_path(@occasion,invitation), method: :delete, data: {title: "Delete", placement: "bottom", trigger: "hover"},rel: "tooltip", confirm: 'Are you sure you want to delete this invitation?', class: "btn btn-link" do
-                      %span.glyphicon.glyphicon-trash
+                  
     
                 %td
                   = invitation.status
                 %td
                   %small.text-muted=" #{time_ago_in_words(invitation.updated_at)} ago"
+                %td
+                  .btn-group.btn-group-sm{id: "invitation_tasks#{invitation.id}", style: "display:none;"}
+                    = link_to occasion_invitation_manage_path(@occasion,invitation, :guest_info), data: {title: "Edit", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-link", style:"color:black;" do
+                      %span.glyphicon.glyphicon-pencil
+                    = link_to "#", data: {title: "Send", placement: "bottom", trigger: "hover"}, rel: "tooltip", confirm: 'Are you sure you want to send this invitation?', class: "btn btn-link" do
+                      %span.glyphicon.glyphicon-envelope
+                    = link_to occasion_invitation_path(@occasion,invitation), method: :delete, data: {title: "Delete", placement: "bottom", trigger: "hover"},rel: "tooltip", confirm: 'Are you sure you want to delete this invitation?', class: "btn btn-link", style:"color:red;" do
+                      %span.glyphicon.glyphicon-trash
                   
               %tr.edit_row.tablesorter-childRow{style: "display:none;", id: "edit_row#{invitation.id}"}
-                %td{colspan:4, style: "border-top:0px;"}
+                %td{colspan:5, style: "border-top:0px;"}
                   .row
                     .col-md-4
                       .well.well-sm{style:"background-color:#fff;"}
@@ -102,7 +106,8 @@
                           %abbr{title: "Home"} H
                           = invitation.home_phone
                           %br
-                        = link_to invitation.email, "mailto:#{invitation.email}", target: :blank
+                        - if invitation.has_email?
+                          = link_to invitation.email, "mailto:#{invitation.email}", target: :blank
                     .col-md-4
                       .well.well-sm{style:"background-color:#fff;"}
                         %p.text-muted.small Private Notes
