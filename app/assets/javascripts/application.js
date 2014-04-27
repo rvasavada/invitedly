@@ -98,4 +98,17 @@ $("document").ready(function(){
         e.preventDefault();
      });
   
+  
+     $('.record_row').click( function () {
+      $('#edit_row'+this.id).toggle();
+      $('#yes_detail'+this.id).toggle();
+      $('#no_detail'+this.id).toggle();
+      $(this).toggleClass('active');
+      $('#edit_row'+this.id).addClass('active');
+      $('#invitation_name'+this.id).toggleClass('important_name');
+     } );
+     
+     $('.record_row').hover( function () {
+      $('#record_actions'+this.id).toggle();
+     } );
 });
