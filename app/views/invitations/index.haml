@@ -29,9 +29,20 @@
             %strong=@occasion.invitations.where(:status => "Not Sent").count
             =link_to "Not Sent", occasion_invitations_path(@occasion, :status => "Not Sent")
       %li.list-group-item
-        %strong Tags:
-        - Invitation.tag_counts.each do |t|
-          =link_to t.name, occasion_invitations_path(@occasion, :tag => t.name), class: "btn btn-info btn-xs"
+        .row
+          .col-sm-4
+            .form-group
+              %strong Tags:
+              - Invitation.tag_counts.each do |t|
+                =link_to t.name, occasion_invitations_path(@occasion, :tag => t.name), class: "btn btn-info btn-xs"
+          .col-md-4.col-sm-offset-4
+            = form_tag occasion_invitations_path(@occasion), :method => :get do
+              .input-group
+                = search_field_tag :q, nil, placeholder: "Search invitation name", class: "form-control"
+                .input-group-btn
+                  %button.btn.btn-warning{type: "submit"}
+                    %span.glyphicon.glyphicon-search
+        
 
             
     - unless @occasion.invitations.present?

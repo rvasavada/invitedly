@@ -10,6 +10,9 @@ class InvitationsController < ApplicationController
       @invitations = @occasion.invitations.where("status = ?", params[:status])
     elsif params[:tag].present?
       @invitations = @occasion.invitations.tagged_with(params[:tag])
+    elsif params[:q].present?
+      q = "%#{params[:q]}%"
+      @invitations = @occasion.invitations.where("lower(name) ILIKE lower(?)",q)
     else
       @invitations = @occasion.invitations
     end    

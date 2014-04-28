@@ -126,6 +126,6 @@ $("document").ready(function(){
             if (!$(".record_row:hover").length) {
                 $('#invitation_tasks'+this.id).hide();
             }
-        }, 100);
+        }, 0);
     })
 });
