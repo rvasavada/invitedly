@@ -16,6 +16,8 @@ class ApplicationController < ActionController::Base
   
   # Use callbacks to share common setup or constraints between actions.
   def set_occasion
-    @occasion = current_user.occasion
+    if params[:occasion_id].present?
+      @occasion = Occasion.find_by_slug(params[:occasion_id])
+    end
   end
 end

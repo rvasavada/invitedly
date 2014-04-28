@@ -10,7 +10,14 @@ class OccasionsController < ApplicationController
   def show
     if @occasion.blank?
       raise ActionController::RoutingError.new('Not Found')
-    else  
+    else
+      @title = Title.all
+    
+      @invitation = @occasion.invitations.build
+      @invitation.guests.build
+    
+      @country = Country.all
+      @state = State.all
       if (params[:first_name].present? || params[:last_name].present?)
         guests = User.find(@occasion.user_id).guests.where("LOWER(first_name) LIKE ? AND LOWER(last_name) LIKE ?",  "%#{params[:first_name].downcase}%", "%#{params[:last_name].downcase}%")
         @guests = []
