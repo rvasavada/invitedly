@@ -1,11 +1,10 @@
 .container
-  %ul.list-inline
-    %li
-      %strong=link_to "Events", occasion_events_path(@occasion)
-    %li
-      %small.glyphicon.glyphicon-chevron-right
-
-  %h2= @event.name
+  %h2
+    %strong=link_to "Events", occasion_events_path(@occasion)
+    %small.glyphicon.glyphicon-chevron-right
+    = @event.name
+    %small.text-muted="(#{pluralize(@invitations.count, 'invitations')} found)"
+    
   .panel.panel-default
     - if @event.rsvps.where(:visibility => true).present?
       - if params[:v] == "d"

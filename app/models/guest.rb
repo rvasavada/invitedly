@@ -5,6 +5,7 @@ class Guest < ActiveRecord::Base
   has_many :rsvps, :dependent => :destroy
   accepts_nested_attributes_for :rsvps, :allow_destroy => true
   
+  validates_presence_of :first_name, :last_name, :if => lambda { |o| !o.is_additional_guest }
   has_many :events, :through => :rsvps
   
   #default_scope { includes(:rsvps).order('guests.created_at ASC')}

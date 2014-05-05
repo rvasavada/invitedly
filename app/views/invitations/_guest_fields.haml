@@ -9,13 +9,16 @@
         = f.label :title, class: "sr-only"
         = f.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
     .col-sm-3
-      .form-group
+      .form-group{class: f.object.errors.include?(:first_name) ? 'has-error' : ''}
         = f.label :first_name, class: "sr-only"
         = f.text_field :first_name, class: "form-control", placeholder: "First Name"
+        - if f.object.errors.include?(:first_name)
+          %span.help-block=f.object.errors.get(:first_name).join('; ')
     .col-sm-3
-      .form-group
-        = f.label :last_name, class: "sr-only"
+      .form-group{class: f.object.errors.include?(:last_name) ? 'has-error' : ''}
         = f.text_field :last_name, class: "form-control", placeholder: "Last Name"
+        - if f.object.errors.include?(:last_name)
+          %span.help-block=f.object.errors.get(:last_name).join('; ')
     .col-sm-3
       .form-group
         = f.label :is_child, style: "font-weight:normal;" do

@@ -43,85 +43,93 @@
 
       -#%strong Download:
       -#= link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
-  .table-responsive
-    %table.table#invitation_guest
-      %thead
-        %tr
-          %th{colspan: 2, width:"40%"} Invitation name
-          %th{width:"10%"} Attending       
-          %th{width:"10%"} Not Attending
-          %th{width:"10%"} Not Responded
-          %th{width:"15%"} Invitation Status          
-          %th{width:"15%"}
-      %tbody
-        - @event.invitations.uniq.each do |invitation|
-          %tr.record_row{id: invitation.id}
-            %td
-              %span.glyphicon.glyphicon-chevron-right.small{id: "no_detail#{invitation.id}"}
-              %span.glyphicon.glyphicon-chevron-down.small{style:"display:none", id: "yes_detail#{invitation.id}"}
-            %td{style:"height:50px;"}
-              = link_to invitation.name, "#", style:"color:black;", class: "invitation_name", id: invitation.id
+  - unless @invitations.present?
+    %ul.list-group
+      %li.list-group-item.text-center
+        %h3
+          %strong Sorry, no guests found!
+    
+  - else
+    .table-responsive
+      %table.table#invitation_guest
+        %thead
+          %tr
+            %th{colspan: 2, width:"40%"} Invitation name
+            %th{width:"10%"} Attending       
+            %th{width:"10%"} Not Attending
+            %th{width:"10%"} Not Responded
+            %th{width:"15%"} Invitation Status          
+            %th{width:"15%"}
+        %tbody
+          - @invitations.each do |invitation|
+            %tr.record_row{id: invitation.id}
+              %td
+                %span.glyphicon.glyphicon-chevron-right.small{id: "no_detail#{invitation.id}"}
+                %span.glyphicon.glyphicon-chevron-down.small{style:"display:none", id: "yes_detail#{invitation.id}"}
+              %td{style:"height:50px;"}
+                = link_to invitation.name, "#", style:"color:black;", class: "invitation_name", id: invitation.id
       
 
-              - invitation.tags.each do |t| 
-                %span.label.label-info{style:"font-weight:normal;"}=t.name
+                - invitation.tags.each do |t| 
+                  %span.label.label-info{style:"font-weight:normal;"}=t.name
 
-              - attending = invitation.rsvps.attending(@event)
-              - not_attending = invitation.rsvps.not_attending(@event)
-              - not_responded = invitation.rsvps.not_responded(@event)
+                - attending = invitation.rsvps.attending(@event)
+                - not_attending = invitation.rsvps.not_attending(@event)
+                - not_responded = invitation.rsvps.not_responded(@event)
           
-              %td.text-success
-                - if attending.count > 0
-                  = link_to attending.count, "#", data: {html: true, title: "Attending (#{attending.count})", content: "#{render 'response_info', :invitation => invitation, :response => attending, :type => "attending", :event => @event.name}", trigger: "click", container: 'body', placement: "top", toggle: 'popover'}, rel: "popover", style: "color: #18bc9c;font-size:16px;"
-              %td.text-danger
-                - if not_attending.count > 0
-                  = link_to not_attending.count, "#", data: {html: true, title: "Not Attending (#{not_attending.count})", content: "#{render 'response_info', :invitation => invitation, :response => not_attending, :type => "not_attending", :event => @event.name}", trigger: "click", placement: "top", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #E74C3B;font-size:16px;"
-              %td
-                - if not_responded.count > 0
-                  = link_to not_responded.count, "#", data: {html: true, title: "Not Responded (#{not_responded.count})", content: "#{render 'response_info', :invitation => invitation, :response => not_responded, :type => "not_responded", :event => @event.name}", trigger: "click", placement: "top", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #2c3e50;font-size:16px;"
-              %td
-                = invitation.status
-                %small.text-muted=" #{time_ago_in_words(invitation.updated_at)} ago"
-              %td
-                .btn-group.btn-group-md{id: "invitation_tasks#{invitation.id}", style: "display:none;font-size:40px;"}
-                  = link_to occasion_invitation_manage_path(@occasion,invitation, :guest_info), data: {title: "Edit", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-link", style:"color:black;padding:0px 10px;" do
-                    %span.glyphicon.glyphicon-pencil
-                  = link_to "#", data: {title: "Send", placement: "bottom", trigger: "hover"}, rel: "tooltip", confirm: 'Are you sure you want to send this invitation?', class: "btn btn-link", style:"padding:0px 10px;", disabled: !invitation.has_email do
-                    %span.glyphicon.glyphicon-envelope
-                  = link_to occasion_invitation_path(@occasion,invitation), method: :delete, data: {title: "Delete", placement: "bottom", trigger: "hover"},rel: "tooltip", confirm: 'Are you sure you want to delete this invitation?', class: "btn btn-link", style:"color:red;padding:0px 10px;" do
-                    %span.glyphicon.glyphicon-trash
-            %tr.edit_row.tablesorter-childRow{style: "display:none;", id: "edit_row#{invitation.id}"}
-              %td{colspan:7, style: "border-top:0px;"}
-                .row
-                  .col-md-4
-                    .well.well-sm{style:"background-color:#fff;"}
-                      %p.text-muted.small  Guests
-                      - invitation.guests.each do |guest|
-                        = "#{guest.full_name}"
-                        %br
-                  .col-md-4
-                    .well.well-sm{style:"background-color:#fff;"}
-                      %p.text-muted.small  Contact Info
-                      - if invitation.address_line_1.present?
-                        = invitation.address_line_1
-                        %br
-                      - if invitation.address_line_2.present?
-                        = invitation.address_line_2
-                        %br
-                      - if invitation.address_line_3.present?
-                        = invitation.address_line_3
-                        %br
-                      - if invitation.cell_phone.present?
-                        %abbr{title: "Mobile"} M
-                        = invitation.cell_phone
-                        %br
-                      - if invitation.home_phone.present?  
-                        %abbr{title: "Home"} H
-                        = invitation.home_phone
-                        %br
-                      - if invitation.has_email?
-                        = link_to invitation.email, "mailto:#{invitation.email}", target: :blank
-                  .col-md-4
-                    .well.well-sm{style:"background-color:#fff;"}
-                      %p.text-muted.small Private Notes
-                      =invitation.notes
+                %td.text-success
+                  - if attending.count > 0
+                    = link_to attending.count, "#", data: {html: true, title: "Attending (#{attending.count})", content: "#{render 'response_info', :invitation => invitation, :response => attending, :type => "attending", :event => @event.name}", trigger: "click", container: 'body', placement: "top", toggle: 'popover'}, rel: "popover", style: "color: #18bc9c;font-size:16px;"
+                %td.text-danger
+                  - if not_attending.count > 0
+                    = link_to not_attending.count, "#", data: {html: true, title: "Not Attending (#{not_attending.count})", content: "#{render 'response_info', :invitation => invitation, :response => not_attending, :type => "not_attending", :event => @event.name}", trigger: "click", placement: "top", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #E74C3B;font-size:16px;"
+                %td
+                  - if not_responded.count > 0
+                    = link_to not_responded.count, "#", data: {html: true, title: "Not Responded (#{not_responded.count})", content: "#{render 'response_info', :invitation => invitation, :response => not_responded, :type => "not_responded", :event => @event.name}", trigger: "click", placement: "top", container: 'body', toggle: 'popover'}, rel: "popover", style: "color: #2c3e50;font-size:16px;"
+                %td
+                  = invitation.status
+                  %br
+                  %small.text-muted=" #{time_ago_in_words(invitation.updated_at)} ago"
+                %td
+                  .btn-group.btn-group-md{id: "invitation_tasks#{invitation.id}", style: "display:none;font-size:40px;"}
+                    = link_to occasion_invitation_manage_path(@occasion,invitation, :guest_info), data: {title: "Edit", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-link", style:"color:black;padding:0px 10px;" do
+                      %span.glyphicon.glyphicon-pencil
+                    = link_to "#", data: {title: "Send", placement: "bottom", trigger: "hover"}, rel: "tooltip", confirm: 'Are you sure you want to send this invitation?', class: "btn btn-link", style:"padding:0px 10px;", disabled: !invitation.has_email do
+                      %span.glyphicon.glyphicon-envelope
+                    = link_to occasion_invitation_path(@occasion,invitation), method: :delete, data: {title: "Delete", placement: "bottom", trigger: "hover"},rel: "tooltip", confirm: 'Are you sure you want to delete this invitation?', class: "btn btn-link", style:"color:red;padding:0px 10px;" do
+                      %span.glyphicon.glyphicon-trash
+              %tr.edit_row.tablesorter-childRow{style: "display:none;", id: "edit_row#{invitation.id}"}
+                %td{colspan:7, style: "border-top:0px;"}
+                  .row
+                    .col-md-4
+                      .well.well-sm{style:"background-color:#fff;"}
+                        %p.text-muted.small  Guests
+                        - invitation.guests.each do |guest|
+                          = "#{guest.full_name}"
+                          %br
+                    .col-md-4
+                      .well.well-sm{style:"background-color:#fff;"}
+                        %p.text-muted.small  Contact Info
+                        - if invitation.address_line_1.present?
+                          = invitation.address_line_1
+                          %br
+                        - if invitation.address_line_2.present?
+                          = invitation.address_line_2
+                          %br
+                        - if invitation.address_line_3.present?
+                          = invitation.address_line_3
+                          %br
+                        - if invitation.cell_phone.present?
+                          %abbr{title: "Mobile"} M
+                          = invitation.cell_phone
+                          %br
+                        - if invitation.home_phone.present?  
+                          %abbr{title: "Home"} H
+                          = invitation.home_phone
+                          %br
+                        - if invitation.has_email?
+                          = link_to invitation.email, "mailto:#{invitation.email}", target: :blank
+                    .col-md-4
+                      .well.well-sm{style:"background-color:#fff;"}
+                        %p.text-muted.small Private Notes
+                        =invitation.notes

@@ -10,7 +10,17 @@ class EventsController < ApplicationController
   end
 
   def show
-    @invitations = @occasion.invitations#.includes(:household, :rsvps)
+    if params[:status].present?
+      @invitations = @event.invitations.where("status = ?", params[:status]).uniq
+    elsif params[:tag].present?
+      @invitations = @event.invitations.tagged_with(params[:tag]).uniq
+    elsif params[:q].present?
+      q = "%#{params[:q]}%"
+      @invitations = @event.invitations.where("lower(name) ILIKE lower(?)",q).uniq
+    else
+      @invitations = @event.invitations.uniq
+    end    
+    
   end
 
   def new
