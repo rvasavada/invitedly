@@ -51,7 +51,8 @@ class Guest < ActiveRecord::Base
           if row[$i].present?
             event = Event.find_by(name: events[$i], occasion_id: occasion.id)
             if event.present?
-              Rsvp.create_with(visibility: true, invitation_id: invitation.id).find_or_create_by(event_id: event.id, guest_id: guest.id)
+              response = ((row[$i] == "Attending") || (row[$i] == "Not Attending") || (row[$i] == "Not Responded")) ? row[$i] : "Not Responded"
+              Rsvp.create_with(visibility: true, invitation_id: invitation.id, response: response).find_or_create_by(event_id: event.id, guest_id: guest.id)
             end
           end
           $i += 1
