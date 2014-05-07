@@ -1,6 +1,7 @@
 class Rsvp < ActiveRecord::Base
   belongs_to :event
   belongs_to :guest
+  
   #default_scope { joins(:guest).order('guests.created_at ASC').readonly(false)  } 
 
   scope :event_view, -> { joins(:event).order('start_date ASC, start_time ASC').readonly(false) } 

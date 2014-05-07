@@ -28,7 +28,7 @@ $("table#invitation_guest").tablesorter
   headerTemplate: "{content} {icon}"
   widgets: [
     "uitheme"
-    #"stickyHeaders"
+    "stickyHeaders"
   ]
   widgetOptions:
     filter_reset: ".reset"

@@ -99,7 +99,7 @@ $("document").ready(function(){
      });
   
   
-     $('.invitation_name').click( function (e) {
+     $('.record_row').click( function (e) {
       $('#edit_row'+this.id).toggle();
       $('#yes_detail'+this.id).toggle();
       $('#no_detail'+this.id).toggle();

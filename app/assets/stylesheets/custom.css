@@ -13,6 +13,9 @@ body {background-color:#e5f0fb;}
 .important_name {
   font-weight:bold;
 }
+.stickyHeader {
+  background:white;
+}
 /*
 small {
   color: #A0A0A0;
