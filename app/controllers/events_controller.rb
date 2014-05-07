@@ -10,8 +10,8 @@ class EventsController < ApplicationController
   end
 
   def show
-    if params[:status].present?
-      @invitations = @event.invitations.where("status = ?", params[:status]).uniq
+    if params[:response].present?
+      @rsvps = @event.rsvps.where("response = ?", params[:response])
     elsif params[:tag].present?
       @invitations = @event.invitations.tagged_with(params[:tag]).uniq
     elsif params[:q].present?
