@@ -1,36 +1,118 @@
 .container
   .row
-    .col-sm-offset-3.col-sm-6
+    .col-sm-offset-1.col-sm-10
       %h1.text-center
         Invitedly
         %br
         %small Let us manage your guestlist.
-      = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+      = form_for(@user, :as => @user, :url => registration_path(@user)) do |f|
         %ul.list-group
           %li.list-group-item
-            %h3 Create a new account
+            %h3 Create a new wedding account
           %li.list-group-item
-            %formset
-              .form-group{class: resource.errors.include?(:email) ? 'has-error' : ''}
+            %fieldset
+              %h4
+                %strong Basic login info
+              .form-group{class: @user.errors.include?(:email) ? 'has-error' : ''}
                 = f.label :email, class: "control-label" do
                   Email
                   %span{style: "color:red"}*
                 = f.text_field :email, :autofocus => true, class: "form-control"
-                %span.help-block= resource.errors.get(:email).join('; ')
+                %span.help-block= @user.errors.get(:email).join('; ')
 
-              .form-group{class: resource.errors.include?(:password) ? 'has-error' : ''}
+              .form-group{class: @user.errors.include?(:password) ? 'has-error' : ''}
                 = f.label :password, class: "control-label" do
                   Password
                   %span{style: "color:red"}*
                 = f.password_field :password, class: "form-control"
-                %span.help-block= resource.errors.get(:password).join('; ')
+                %span.help-block= @user.errors.get(:password).join('; ')
 
-              .form-group{class: resource.errors.include?(:password_confirmation) ? 'has-error' : ''}
+              .form-group{class: @user.errors.include?(:password_confirmation) ? 'has-error' : ''}
                 = f.label :password_confirmation, class: "control-label" do
                   Password Confirmation
                   %span{style: "color:red"}*
                 = f.password_field :password_confirmation, class: "form-control"
-                %span.help-block= resource.errors.get(:password_confirmation).join('; ')
+                %span.help-block= @user.errors.get(:password_confirmation).join('; ')
+            %fieldset
+              %h4
+                %strong What are your names?
+                %small Shared with guests only.
+              
+              %label Your name
+              .row
+                .col-sm-3
+                  .form-group
+                    = f.label :title, class: "sr-only"
+                    = f.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
+                .col-sm-4
+                  .form-group
+                    = f.label :first_name, class: "sr-only"
+                    = f.text_field :first_name, class: "form-control", placeholder: "First Name"
+                .col-sm-5
+                  .form-group
+                    = f.label :last_name, class: "sr-only"
+                    = f.text_field :last_name, class: "form-control", placeholder: "Last Name"
+
+              %label Partner name
+              .row
+                .col-sm-3
+                  .form-group
+                    = f.label :partner_title, class: "sr-only"
+                    = f.collection_select(:partner_title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
+                .col-sm-4
+                  .form-group
+                    = f.label :partner_first_name, class: "sr-only"
+                    = f.text_field :partner_first_name, class: "form-control", placeholder: "First Name"
+                .col-sm-5
+                  .form-group
+                    = f.label :partner_last_name, class: "sr-only"
+                    = f.text_field :partner_last_name, class: "form-control", placeholder: "Last Name"
+            
+            %fieldset
+              %h4
+                %strong How should guests get in touch with you?
+                %small In case they want to send gifts, get directions, etc.
+
+              = f.label :address_1, class: "control-label" do
+                Address (optional)
+
+              .row
+                .col-sm-7
+                  .form-group
+                    = f.text_field :address_1, placeholder: "Address 1", :maxlength => 100, class: "form-control"
+                .col-sm-5
+                  .form-group
+                    = f.text_field :address_2, placeholder: "Address 2", :maxlength => 100, class: "form-control"
+              .row
+                .col-sm-5
+                  .form-group      
+                    = f.text_field :city, placeholder: "City", :maxlength => 100, class: "form-control"
+                .col-sm-4.domestic
+                  .form-group
+                    = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
+                .domestic.col-sm-3
+                  .form-group
+                    = f.text_field :zip, placeholder: "Zip", :maxlength => 5, class: "form-control"
+                .international.col-sm-4
+                  .form-group
+                    = f.text_field :region, placeholder: "Region", :maxlength => 100, class: "form-control"
+                .international.col-sm-3
+                  .form-group
+                    = f.text_field :postal_code, placeholder: "Postal Code", :maxlength => 20, class: "form-control"
+
+              .form-group
+                = f.collection_select(:country,	@country, :name, :name, {:selected => "United States"}, {class: "form-control",:id => "countrySelect"})
+
+              .row
+                .col-sm-5
+                  .form-group
+                    = f.label :cell_phone, class: "form-label"
+                    = f.text_field :cell_phone, :maxlength => 100, class: "form-control"
+                .col-sm-5
+                  .form-group
+                    = f.label :home_phone, class: "form-label"
+                    = f.text_field :home_phone, :maxlength => 100, class: "form-control"
+            
               
               = f.submit "Sign up", :class=> "btn btn-success btn-block"
-        = link_to "Already have an account? <strong>Sign in</strong>.".html_safe, new_session_path(resource_name), :class=> "btn btn-primary btn-block"
+        = link_to "Already have an account? <strong>Sign in</strong>.".html_safe, new_session_path(resource_name), :class=> "btn btn-link btn-block"

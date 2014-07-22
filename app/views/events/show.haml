@@ -75,13 +75,13 @@
                       - invitation.tags.each do |t| 
                         %span.label.label-info{style:"font-weight:normal;"}=t.name
 
-                    %td.text-success
+                    %td.text-success.text-center
                       - if attending.count > 0
                         .invitation_name{id: invitation.id}= attending.count
-                    %td.text-danger
+                    %td.text-danger.text-center
                       - if not_attending.count > 0
                         .invitation_name{id: invitation.id}= not_attending.count
-                    %td
+                    %td.text-center
                       - if not_responded.count > 0
                         .invitation_name{id: invitation.id}= not_responded.count
                     %td
