@@ -18,6 +18,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = User.new(user_params)
     Rails.logger.debug(@user.save.inspect)
     if @user.save
+      sign_up(:user, @user)
+      
       redirect_to new_occasion_event_path(@user.occasion), notice: 'Great!  Your occasion was saved.  Now, let\'s add some events...'
     else
       @state = State.all
