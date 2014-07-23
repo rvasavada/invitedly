@@ -16,7 +16,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   def create  
     @user = User.new(user_params)
-    Rails.logger.debug(@user.save.inspect)
     if @user.save
       sign_up(:user, @user)
       
@@ -28,6 +27,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
       render action: 'new' 
     end
   end
+  
+  def update
+    if @user.update(user_params)
+      redirect_to edit_user_registration_path, notice: 'Your account was successfully updated.'
+    else
+      @state = State.all
+      @title = Title.all
+      @country = Country.all
+      render action: 'edit'
+    end
+        
+  end
+    
   
   private
   

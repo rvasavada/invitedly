@@ -109,7 +109,7 @@
               = f.fields_for :occasion do |occasion|
                 
                 .form-group{class: occasion.object.errors.include?(:name) ? 'has-error' : ''}
-                  = f.label :name, class: "control-label" do
+                  = occasion.label :name, class: "control-label" do
                     Title
                     %span{style: "color:red"}*
                   .row
@@ -119,7 +119,7 @@
                       %span.help-block= occasion.object.errors.get(:name).join('; ')
                 
                 .form-group{class: occasion.object.errors.include?(:description) ? 'has-error' : ''}
-                  = f.label :description, class: "control-label" do
+                  = occasion.label :description, class: "control-label" do
                     Description
                     %span{style: "color:red"}*
                   .row
