@@ -7,10 +7,11 @@
         %small Let us manage your guestlist.
      
       = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-        .panel.panel-default
-          .panel-body
-            %legend Sign into your account
-            %formset
+        .ul.list-group
+          .li.list-group-item
+            %h3 Sign into your account
+          .li.list-group-item
+            %fieldset
               .form-group
                 = f.label :email, "Email", class: "control-label"
                 = f.text_field :email, :autofocus => true, class: "form-control"
@@ -20,8 +21,10 @@
               .form-group
                 .pull-right= link_to "Forgot password?", new_password_path(resource_name)
                 .checkbox
-                  = f.check_box :remember_me, :checked => true
-                  = f.label :remember_me, "Remember me"
+                  = f.label :remember_me do
+                    = f.check_box :remember_me, :checked => true
+                    Remember me
+                  
 
               = f.submit "Sign in", :class=> "btn btn-success btn-block"
 
