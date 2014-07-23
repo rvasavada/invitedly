@@ -14,10 +14,10 @@
           
             %fieldset
               %h4
-                %strong Login details
-                %small Guests can reply back to this email.
+                %strong 1. Login details
+                %small Guests can reply back to this email
               
-              .form-group{class: @user.errors.include?(:email) ? 'has-error' : ''} 
+              .form-group{class: @user.errors.include?(:email) ? 'has-error' : ''}
                 = f.label :email, class: "control-label" do
                   Email
                   %span{style: "color:red"}*
@@ -50,42 +50,87 @@
                     %span.help-block= @user.errors.get(:password_confirmation).join('; ')
             %fieldset
               %h4
-                %strong The lovely couple
-                %small Shared with guests only.
+                %strong 2. The lovely couple
+                %small Shared with guests only
           
-              %label Your name
+              %label
+                Your name
+                %span{style: "color:red"}*
               .row
                 .col-sm-3
-                  .form-group
-                    = f.label :title, class: "sr-only"
+                  .form-group{class: @user.errors.include?(:title) ? 'has-error' : ''}
+                    = f.label :title, class: "control-label sr-only" do
+                      Title
+                      %span{style: "color:red"}*
                     = f.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
                 .col-sm-4
-                  .form-group
-                    = f.label :first_name, class: "sr-only"
+                  .form-group{class: @user.errors.include?(:first_name) ? 'has-error' : ''}
+                    = f.label :first_name, class: "control-label sr-only" do
+                      First name
+                      %span{style: "color:red"}*
                     = f.text_field :first_name, class: "form-control", placeholder: "First Name"
+                    
                 .col-sm-5
-                  .form-group
-                    = f.label :last_name, class: "sr-only"
+                  .form-group{class: @user.errors.include?(:last_name) ? 'has-error' : ''}
+                    = f.label :last_name, class: "control-label sr-only" do
+                      Last name
+                      %span{style: "color:red"}*
                     = f.text_field :last_name, class: "form-control", placeholder: "Last Name"
 
-              %label Partner name
+              %label
+                Partner name
+                %span{style: "color:red"}*
               .row
                 .col-sm-3
-                  .form-group
-                    = f.label :partner_title, class: "sr-only"
+                  .form-group{class: @user.errors.include?(:partner_title) ? 'has-error' : ''}
+                    = f.label :partner_title, class: "control-label sr-only" do
+                      Title
+                      %span{style: "color:red"}*
                     = f.collection_select(:partner_title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
                 .col-sm-4
-                  .form-group
-                    = f.label :partner_first_name, class: "sr-only"
+                  .form-group{class: @user.errors.include?(:partner_first_name) ? 'has-error' : ''}
+                    = f.label :partner_first_name, class: "control-label sr-only" do
+                      First name
+                      %span{style: "color:red"}*
                     = f.text_field :partner_first_name, class: "form-control", placeholder: "First Name"
+                    
                 .col-sm-5
-                  .form-group
-                    = f.label :partner_last_name, class: "sr-only"
+                  .form-group{class: @user.errors.include?(:partner_last_name) ? 'has-error' : ''}
+                    = f.label :partner_last_name, class: "control-label sr-only" do
+                      Last name
+                      %span{style: "color:red"}*
                     = f.text_field :partner_last_name, class: "form-control", placeholder: "Last Name"
-        
+            
             %fieldset
               %h4
-                %strong Contact info
+                %strong 3. Wedding info
+                %small Tell your guests a little more about your wedding
+
+              = f.fields_for :occasion do |occasion|
+                
+                .form-group{class: occasion.object.errors.include?(:name) ? 'has-error' : ''}
+                  = f.label :name, class: "control-label" do
+                    Title
+                    %span{style: "color:red"}*
+                  .row
+                    .col-sm-7
+                      = occasion.text_field :name, class: "form-control"
+                    .col-sm-5
+                      %span.help-block= occasion.object.errors.get(:name).join('; ')
+                
+                .form-group{class: occasion.object.errors.include?(:description) ? 'has-error' : ''}
+                  = f.label :description, class: "control-label" do
+                    Description
+                    %span{style: "color:red"}*
+                  .row
+                    .col-sm-7
+                      = occasion.text_area :description, :rows => 5, :class => "form-control"
+                    .col-sm-5
+                      %span.help-block= occasion.object.errors.get(:description).join('; ')
+                      
+            %fieldset
+              %h4
+                %strong 4. Your contact info
                 %small Guests want to send gifts, ask questions, etc.
 
               = f.label :address_1, class: "control-label" do
@@ -127,7 +172,9 @@
                   .form-group
                     = f.label :home_phone, class: "form-label"
                     = f.text_field :home_phone, :maxlength => 100, class: "form-control"
-        
+                    
             %span.help-block Please note that this service is still in beta, so by signing up you agree to work with us in creating the best possible product!
             = f.submit "Sign up", :class=> "btn btn-success btn-block"
-        = link_to "Already have an account? <strong>Sign in</strong>.".html_safe, new_session_path(resource_name), :class=> "btn btn-link btn-block"
+        %p.text-center
+          Already have an account?
+          = link_to "Sign in.", new_session_path(resource_name)

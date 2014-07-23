@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   has_many :events, :through => :occasions
   has_many :guests, :through => :invitations
   
+  validates_presence_of :first_name, :last_name, :partner_first_name, :partner_last_name, :partner_title, :title
+  
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     signed_in_resource.facebook_uid = auth.uid
     signed_in_resource.facebook_token = auth.credentials.token

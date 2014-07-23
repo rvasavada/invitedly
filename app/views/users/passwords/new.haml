@@ -6,10 +6,11 @@
         %br
         %small Let us manage your guestlist.
       = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
-        .panel.panel-default
-          .panel-body
-            %legend Reset your password
-            %formset
+        .ul.list-group
+          .li.list-group-item
+            %h3 Reset your password
+          .li.list-group-item
+            %fieldset
               .form-group{class: resource.errors.include?(:email) ? 'has-error' : ''}
                 = f.label :email, class: "control-label" do
                   Email
