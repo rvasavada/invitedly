@@ -10,6 +10,7 @@ class Rsvp < ActiveRecord::Base
   scope :attending, ->(event) { where("visibility = 't' AND response = 'Attending' AND event_id = ?", event.id) }
   scope :not_attending, ->(event) { where("visibility = 't' AND response = 'Not Attending' AND event_id = ?", event.id) }
   scope :not_responded, ->(event) { where("visibility = 't' AND response = 'Not Responded' AND event_id = ?", event.id) }
+  scope :invited, ->(event) { where("visibility = 't' AND event_id = ?", event.id) }
   
   scope :active, -> { where(visibility: true) }
   

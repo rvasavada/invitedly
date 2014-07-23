@@ -2,19 +2,21 @@
   %h2 
     .pull-right= link_to 'New Event', new_occasion_event_path(@occasion), class: "btn btn-success"
     Events
-    %small.text-muted="(#{pluralize(@events.count, 'event')} found)"
     
   
   %ul.list-group
     - if @events.present?
       - @events.each do |event|
         %li.list-group-item
-          %h4
-            .pull-right
-              = link_to edit_occasion_event_path(@occasion,event), data: {title: "Edit Event", placement: "bottom", trigger: "hover"}, rel: "tooltip", class: "btn btn-link" do
-                %span.glyphicon.glyphicon-pencil
-              = link_to occasion_event_path(@occasion,event), method: :delete, data: {title: "Delete Event", placement: "bottom", trigger: "hover"},rel: "tooltip", confirm: 'Are you sure you want to delete this event?', class: "btn btn-link", style: "color:#E41313;"  do
-                %span.glyphicon.glyphicon-trash
+          .dropdown.pull-right
+            %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#", id: "eventDropdown#{event.id}"}
+              %span.glyphicon.glyphicon-cog
+            %ul.dropdown-menu{"aria-labelledby" =>  "eventDropdown#{event.id}", role: "menu"}
+              %li= link_to "View guest list", occasion_event_path(@occasion,event)
+              %li= link_to "Edit event", edit_occasion_event_path(@occasion,event)
+              %li.divider
+              %li= link_to "Delete Event", occasion_event_path(@occasion,event), method: :delete, confirm: 'Are you sure you want to delete this event?'
+          %h4              
             =link_to event.name, occasion_event_path(@occasion,event)
             %br
             %small.text-muted
@@ -27,6 +29,14 @@
                 = event.location
           %p=event.description
       
+          .progress
+            .progress-bar.progress-bar-success{style: "width: #{Rsvp.attending(event).count/(Rsvp.invited(event).count == 0 ? 1 : Rsvp.invited(event).count )}%"}
+              = "#{Rsvp.attending(event).count} attending"
+            .progress-bar.progress-bar-danger{style: "width: #{Rsvp.not_attending(event).count/(Rsvp.invited(event).count == 0 ? 1 : Rsvp.invited(event).count )}%"}
+              = "#{Rsvp.not_attending(event).count} not attending"
+            .progress-bar.progress-bar-primary{style: "width: #{Rsvp.not_responded(event).count/(Rsvp.invited(event).count == 0 ? 1 : Rsvp.invited(event).count )}%"}
+              = "#{Rsvp.not_responded(event).count} not responded"  
+          
           %ul.list-inline.well
             %li.text-danger
               %strong= event.rsvps.not_attending(event).count
@@ -43,4 +53,3 @@
       %li.list-group-item.text-center
         %h3
           You haven't added any events yet!
-          = link_to 'Add Event', new_occasion_event_path(@occasion), class: "btn btn-primary"

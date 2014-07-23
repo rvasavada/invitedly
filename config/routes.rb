@@ -12,8 +12,6 @@ Invitedly::Application.routes.draw do
     :sessions => "users/sessions"
      }
   
-  resources :wedding
-  
   get 'occasions' => 'occasions#index'  
   post 'occasions' => 'occasions#create'
   resources :occasions, :path => '' do
