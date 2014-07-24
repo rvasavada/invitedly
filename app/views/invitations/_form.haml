@@ -6,37 +6,44 @@
         %small Tell us more about the guests in this party
       %fieldset
         -if @occasion.user = current_user
+          
           .form-group{class: @invitation.errors.include?(:name) ? 'has-error' : ''}
-            = f.label :name, "Display Name", class: "control-label"
-            = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control"
-            - if @invitation.errors.include?(:name)
-              %span.help-block=@invitation.errors.get(:name).join('; ')
-            - else
-              %span.help-block This name is private and won't be shared with the guests.  
+            = f.label :name, class: "control-label" do
+              Display name
+              %span{style: "color:red"}*
+            .row
+              .col-sm-7
+                = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control", placeholder: "Will not be shared with guest"
+              .col-sm-5
+                %span.help-block= @invitation.errors.get(:name).join('; ')
 
         #guests  
           = f.fields_for :guests do |guest|
             = render 'invitations/guest_fields', :f => guest
           .links
-            = link_to_add_association 'Add another guest', f, :guests, :class => "", :partial => 'invitations/guest_fields'
+            = link_to_add_association 'Add another guest', f, :guests, :class => "btn btn-primary", :partial => 'invitations/guest_fields'
     
       %h4
         %strong Let's stay in touch  
         %small Add contact info
       %fieldset
-        .row
-          .col-md-8
-            .form-group{class: @invitation.errors.include?(:email) ? 'has-error' : ''}
-              = f.label :email, class: "control-label"
+        .form-group{class: @invitation.errors.include?(:email) ? 'has-error' : ''}
+          = f.label :email, class: "control-label" do
+            Email
+            %span{style: "color:red"}*
+          .row
+            .col-sm-7
               = f.text_field :email, :maxlength => 50, class: "form-control"
-              %span.help-block=@invitation.errors.get(:name).join('; ')
-              -#.input-group
-                %span.input-group-addon
-                  = f.label :has_email, style: "font-weight:normal;" do
-                    = f.check_box :has_email
-                    Has Email
-                = f.text_field :email, :maxlength => 50, class: "form-control"
-              -#%span.help-block Guests with an email will recieve invitations with a link to RSVP, reminders, and confirmation emails.
+            .col-sm-5
+              %span.help-block= @invitation.errors.get(:email).join('; ')
+
+          -#.input-group
+            %span.input-group-addon
+              = f.label :has_email, style: "font-weight:normal;" do
+                = f.check_box :has_email
+                Has Email
+            = f.text_field :email, :maxlength => 50, class: "form-control"
+          -#%span.help-block Guests with an email will recieve invitations with a link to RSVP, reminders, and confirmation emails.
       
         = f.label :location, class: "control-label" do
           Address (optional)
