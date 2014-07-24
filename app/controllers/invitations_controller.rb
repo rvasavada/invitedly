@@ -28,21 +28,16 @@ class InvitationsController < ApplicationController
     
     @invitation = @occasion.invitations.build
     @invitation.guests.build
-    
+    @events = @occasion.events
     @country = Country.all
     @state = State.all
   end
   
-  def show
-    @invitation = Invitation.friendly.find(params[:invitation_id])
-    
-    case step
-    when :guest_info
-      @title = Title.all
-    when :events
-    when :rsvp
-    end
-    render_wizard
+  def edit
+    @title = Title.all
+    @events = @occasion.events
+    @country = Country.all
+    @state = State.all
   end
    
   def create
@@ -50,7 +45,7 @@ class InvitationsController < ApplicationController
     @invitation.user_id = current_user.id
     
     if @invitation.save
-      redirect_to occasion_invitation_manage_path(@occasion, @invitation, :events), notice: 'Invitation was successfully created.'
+      redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully created.'
     else
       @title = Title.all
       @state = State.all
@@ -62,25 +57,12 @@ class InvitationsController < ApplicationController
   end
   
   def update
-    @invitation.household.user_id = current_user.id
-    @event_invites = @occasion.events.find(params[:events])
-    @event_uninvites = @occasion.events - @event_invites
-    
-    @invitation.household.guests.each do |guest|
-      @event_invites.each do |event|
-        guest.rsvps.find_or_create_by_event_id(event.id)
-        guest.user_id = current_user.id
-      end
-      @event_uninvites.each do |event|
-        rsvp = guest.rsvps.find_by_event_id(event.id)
-        rsvp.destroy if rsvp
-      end
-    end
-
     if @invitation.update(invitation_params)
       redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully updated.'
     else      
       @title = Title.all
+      @state = State.all
+      @country = Country.all
       @events = @occasion.events
       
       render action: 'edit' 
@@ -107,7 +89,7 @@ class InvitationsController < ApplicationController
     def invitation_params
       params.require(:invitation).permit(:message, :name, :email, :has_email, :notes, :tag_list, :address_1, 
           :address_2, :city, :state, :zip, :country, :region, :postal_code, :cell_phone, :home_phone,
-          guests_attributes: [:id, :title, :first_name, :last_name, :is_child, :is_additional_guest, :_destroy])
+          guests_attributes: [:id, :title, :first_name, :last_name, :is_child, :is_additional_guest, :_destroy, rsvps_attributes: [:id, :event_id, :visibility]])
     end
   
 end

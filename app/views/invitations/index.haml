@@ -1,15 +1,15 @@
 .container
   %h2
     .pull-right
-      %button.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"} Import from CSV
-      =link_to "New Invitation", new_occasion_invitation_path(@occasion), class: "btn btn-success"
+      -#%button.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"} Import from CSV
+      =link_to "New Invitation", new_occasion_invitation_path(@occasion), class: "btn btn-primary"
     Invitations
     %small.text-muted="(#{pluralize(@invitations.count, 'invitations')} found)"
 
   .panel.panel-default
     %ul.list-group
       %li.list-group-item
-        .pull-right
+        -#.pull-right
           %strong Download:
           = link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
       
@@ -81,7 +81,7 @@
                   %small.text-muted=" #{time_ago_in_words(invitation.updated_at)} ago"
                 %td
                   .btn-group.btn-group-md{id: "invitation_tasks#{invitation.id}", style: "display:none;font-size:40px;"}
-                    = link_to occasion_invitation_manage_path(@occasion,invitation, :guest_info), class: "btn btn-link", style:"color:black;padding:0px 10px;" do
+                    = link_to edit_occasion_invitation_path(@occasion,invitation), class: "btn btn-link", style:"color:black;padding:0px 10px;" do
                       %span.glyphicon.glyphicon-pencil
                     = link_to "#", data: {confirm: 'Are you sure you want to send this invitation?'}, class: "btn btn-link", style:"padding:0px 10px;", disabled: !invitation.has_email do
                       %span.glyphicon.glyphicon-envelope
