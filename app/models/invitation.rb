@@ -13,7 +13,8 @@ class Invitation < ActiveRecord::Base
   
   validates_presence_of :occasion_id
   
-  has_many :rsvps, -> {includes(:guest) }
+  #has_many :rsvps, -> {includes(:guest) }
+  has_many :rsvps, through: :guests
   accepts_nested_attributes_for :rsvps, :allow_destroy => true
   
   #default_scope {includes(:tags, :guests)}

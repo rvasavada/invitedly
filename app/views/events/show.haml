@@ -5,144 +5,91 @@
     = @event.name
     %small.text-muted="(#{pluralize(@event.rsvps.where(:visibility => true).count, 'guests')} found)"
     
-  .panel.panel-default
-    - if @event.rsvps.where(:visibility => true).present?
-      %ul.list-group
-        %li.list-group-item    
-          %ul.list-inline
-            %li
-              %strong Guest Status:
-            %li{style: params[:response].blank? && params[:tag].blank? ? "background-color:yellow;": ""}
-              %strong=@event.rsvps.where(:visibility => true).count
-              =link_to "All", occasion_event_path(@occasion, @event)
-            %li.text-success{style: params[:response] == "Attending" ? "background-color:yellow;" : ""}
-              %strong=@event.rsvps.where(:visibility => true, :response => "Attending").count
-              =link_to "Attending", occasion_event_path(@occasion, @event, :response => "Attending")
-            %li.text-danger{style: params[:response] == "Not Attending" ? "background-color:yellow;" : ""}
-              %strong=@event.rsvps.where(:visibility => true, :response => "Not Attending").count
-              =link_to "Not Attending", occasion_event_path(@occasion, @event, :response => "Not Attending")
-            %li.text-warning{style: params[:response] == "Not Responded" ? "background-color:yellow;" : ""}
-              %strong=@event.rsvps.where(:visibility => true, :response => "Not Responded").count
-              =link_to "Not Responded", occasion_event_path(@occasion, @event, :response => "Not Responded")
-            %li.pull-right
-              %strong Download:
-              = link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
-        %li.list-group-item
-          .row
-            .col-sm-4
-              .form-group
-                %strong Tags:
-                - Invitation.tag_counts.each do |t|
-                  =link_to t.name, occasion_event_path(@occasion, @event, :tag => t.name), class: "btn btn-default btn-xs"
-            .col-md-4.col-sm-offset-4
-              = form_tag occasion_event_path(@occasion,@event), :method => :get do
-                .input-group
-                  = search_field_tag :q, nil, placeholder: "Search invitation name", class: "form-control"
-                  .input-group-btn
-                    %button.btn.btn-warning{type: "submit"}
-                      %span.glyphicon.glyphicon-search
+  - if @event.rsvps.where(:visibility => true).present?
+    %ul.list-group
+      %li.list-group-item    
+        %ul.list-inline
+          %li
+            %strong Guest Status:
+          %li{style: params[:response].blank? && params[:tag].blank? ? "background-color:yellow;": ""}
+            %strong=@event.rsvps.where(:visibility => true).count
+            =link_to "All", occasion_event_path(@occasion, @event)
+          %li.text-success{style: params[:response] == "Attending" ? "background-color:yellow;" : ""}
+            %strong=@event.rsvps.where(:visibility => true, :response => "Attending").count
+            =link_to "Attending", occasion_event_path(@occasion, @event, :response => "Attending")
+          %li.text-danger{style: params[:response] == "Not Attending" ? "background-color:yellow;" : ""}
+            %strong=@event.rsvps.where(:visibility => true, :response => "Not Attending").count
+            =link_to "Not Attending", occasion_event_path(@occasion, @event, :response => "Not Attending")
+          %li.text-warning{style: params[:response] == "Not Responded" ? "background-color:yellow;" : ""}
+            %strong=@event.rsvps.where(:visibility => true, :response => "Not Responded").count
+            =link_to "Not Responded", occasion_event_path(@occasion, @event, :response => "Not Responded")
+          %li.pull-right
+            %strong Download:
+            = link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
+      %li.list-group-item
+        .row
+          .col-sm-4
+            .form-group
+              %strong Tags:
+              - Invitation.tag_counts.each do |t|
+                =link_to t.name, occasion_event_path(@occasion, @event, :tag => t.name), class: "btn btn-default btn-xs"
+          .col-md-4.col-sm-offset-4
+            = form_tag occasion_event_path(@occasion,@event), :method => :get do
+              .input-group
+                = search_field_tag :q, nil, placeholder: "Search invitation name", class: "form-control"
+                .input-group-btn
+                  %button.btn.btn-warning{type: "submit"}
+                    %span.glyphicon.glyphicon-search
 
-        - unless @invitations.present?
-          %ul.list-group
-            %li.list-group-item.text-center
-              %h3
-                %strong Sorry, no guests found!
-    
-        - else
-          .table-responsive
-            %table.table#invitation_guest
-              %thead
-                %tr
-                  %th{colspan: 2, width:"42.5%"} Invitation name
-                  %th{width:"10%"} Attending       
-                  %th{width:"10%"} Not Attending
-                  %th{width:"10%"} Not Responded
-                  %th{width:"15%"} Invitation Status          
-                  %th{width:"12.5%"}
-              %tbody
-                - @invitations.each do |invitation|
-                  - attending = invitation.rsvps.attending(@event)
-                  - not_attending = invitation.rsvps.not_attending(@event)
-                  - not_responded = invitation.rsvps.not_responded(@event)
-                  %tr.record_row{id: invitation.id, style: "cursor: pointer;"}
-                    %td
-                      %span.glyphicon.glyphicon-chevron-right.small{id: "no_detail#{invitation.id}"}
-                      %span.glyphicon.glyphicon-chevron-down.small{style:"display:none", id: "yes_detail#{invitation.id}"}
-                    %td{style:"height:50px;"}
-                      = link_to invitation.name, "#", style:"color:black;", class: "invitation_name", id: invitation.id
-
-
-                      - invitation.tags.each do |t| 
-                        %span.label.label-info{style:"font-weight:normal;"}=t.name
-
-                    %td.text-success.text-center
-                      - if attending.count > 0
-                        .invitation_name{id: invitation.id}= attending.count
-                    %td.text-danger.text-center
-                      - if not_attending.count > 0
-                        .invitation_name{id: invitation.id}= not_attending.count
-                    %td.text-center
-                      - if not_responded.count > 0
-                        .invitation_name{id: invitation.id}= not_responded.count
-                    %td
-                      = invitation.status
-                      %br
-                      %small.text-muted=" #{time_ago_in_words(invitation.updated_at)} ago"
-                    %td
-                      .btn-group.btn-group-md{id: "invitation_tasks#{invitation.id}", style: "display:none;font-size:40px;"}
-                        = link_to occasion_invitation_manage_path(@occasion,invitation, :guest_info), class: "btn btn-link", style:"color:black;padding:0px 10px;z-index:100;" do
-                          %span.glyphicon.glyphicon-pencil
-                  %tr.edit_row.tablesorter-childRow{style: "cursor:pointer;display:none;", id: "edit_row#{invitation.id}"}
-                    %td{colspan:7, style: "border-top:0px;"}
-                      .row
-                        .col-md-4
-                          - if attending.count > 0
-                            .well.well-sm{style:"background-color:#fff;border: 1px #3fb618 solid;"}
-                              %p.text-success.small="Attending (#{attending.count})"
-                              - attending.each do |rsvp|
-                                =rsvp.guest.full_name
-                                %br
-                          - if not_attending.count > 0
-                            .well.well-sm{style:"background-color:#fff;border: 1px #ff0039 solid;"}
-                              %p.text-danger.small="Not Attending (#{not_attending.count})"
-                              - not_attending.each do |rsvp|
-                                =rsvp.guest.full_name
-                                %br
-                          - if not_responded.count > 0
-                            .well.well-sm{style:"background-color:#fff;border: 1px #ff7518 solid;"}
-                              %p.text-warning.small="Not Responded (#{not_responded.count})"
-                              - not_responded.each do |rsvp|
-                                =rsvp.guest.full_name
-                                %br                              
-                        .col-md-4
-                          .well.well-sm{style:"background-color:#fff;"}
-                            %p.text-muted.small  Contact Info
-                            - if invitation.address_line_1.present?
-                              = invitation.address_line_1
-                              %br
-                            - if invitation.address_line_2.present?
-                              = invitation.address_line_2
-                              %br
-                            - if invitation.address_line_3.present?
-                              = invitation.address_line_3
-                              %br
-                            - if invitation.cell_phone.present?
-                              %abbr{title: "Mobile"} M
-                              = invitation.cell_phone
-                              %br
-                            - if invitation.home_phone.present?  
-                              %abbr{title: "Home"} H
-                              = invitation.home_phone
-                              %br
-                            - if invitation.has_email?
-                              = link_to invitation.email, "mailto:#{invitation.email}", target: :blank
-                        .col-md-4
-                          .well.well-sm{style:"background-color:#fff;"}
-                            %p.text-muted.small Private Notes
-                            =invitation.notes
-                    
-    - else
+    - unless @invitations.present?
       %ul.list-group
         %li.list-group-item.text-center
           %h3
-            %strong You haven't invited any guests yet!
+            %strong Sorry, no guests found!
+
+    - else
+      .panel-group
+        - @invitations.each do |invitation|
+          - attending = invitation.rsvps.attending(@event)
+          - not_attending = invitation.rsvps.not_attending(@event)
+          - not_responded = invitation.rsvps.not_responded(@event)
+          .panel.panel-default
+            .panel-heading
+              .pull-right
+                .text-success
+                  - if attending.count > 0
+                    = attending.count
+                    Attending
+                %small.text-danger
+                  - if not_attending.count > 0
+                    = not_attending.count
+                    Not Attending
+          
+                - if not_responded.count > 0
+                  = not_responded.count
+                  Not Responded
+                  
+              .panel-title=invitation.name
+              %small.text-muted=" #{time_ago_in_words(invitation.updated_at)} ago"
+            .panel-body
+              - if attending.count > 0
+                %p.text-success.small="Attending (#{attending.count})"
+                - attending.each do |rsvp|
+                  =rsvp.guest.full_name
+                  %br
+              - if not_attending.count > 0
+                %p.text-danger.small="Not Attending (#{not_attending.count})"
+                - not_attending.each do |rsvp|
+                  =rsvp.guest.full_name
+                  %br
+              - if not_responded.count > 0
+                %p.text-warning.small="Not Responded (#{not_responded.count})"
+                - not_responded.each do |rsvp|
+                  =rsvp.guest.full_name
+                  %br
+                  
+  - else
+    %ul.list-group
+      %li.list-group-item.text-center
+        %h3
+          %strong You haven't invited any guests yet!
