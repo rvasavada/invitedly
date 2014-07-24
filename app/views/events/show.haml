@@ -23,13 +23,13 @@
           %li.text-warning{style: params[:response] == "Not Responded" ? "background-color:yellow;" : ""}
             %strong=@event.rsvps.where(:visibility => true, :response => "Not Responded").count
             =link_to "Not Responded", occasion_event_path(@occasion, @event, :response => "Not Responded")
-          %li.pull-right
+          -#%li.pull-right
             %strong Download:
             = link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
       %li.list-group-item
         .row
           .col-sm-4
-            .form-group
+            -#.form-group
               %strong Tags:
               - Invitation.tag_counts.each do |t|
                 =link_to t.name, occasion_event_path(@occasion, @event, :tag => t.name), class: "btn btn-default btn-xs"
@@ -48,7 +48,7 @@
             %strong Sorry, no guests found!
 
     - else
-      .panel-group
+      .panel-group#accordion
         - @invitations.each do |invitation|
           - attending = invitation.rsvps.attending(@event)
           - not_attending = invitation.rsvps.not_attending(@event)
@@ -69,24 +69,25 @@
                   = not_responded.count
                   Not Responded
                   
-              .panel-title=invitation.name
+              .panel-title= link_to invitation.name, "#invitation#{invitation.id}", data: {toggle: "collapse", parent: "#accordion"}
               %small.text-muted=" #{time_ago_in_words(invitation.updated_at)} ago"
-            .panel-body
-              - if attending.count > 0
-                %p.text-success.small="Attending (#{attending.count})"
-                - attending.each do |rsvp|
-                  =rsvp.guest.full_name
-                  %br
-              - if not_attending.count > 0
-                %p.text-danger.small="Not Attending (#{not_attending.count})"
-                - not_attending.each do |rsvp|
-                  =rsvp.guest.full_name
-                  %br
-              - if not_responded.count > 0
-                %p.text-warning.small="Not Responded (#{not_responded.count})"
-                - not_responded.each do |rsvp|
-                  =rsvp.guest.full_name
-                  %br
+            .panel-collapse.collapse{id: "invitation#{invitation.id}"}
+              .panel-body
+                - if attending.count > 0
+                  %p.text-success.small="Attending (#{attending.count})"
+                  - attending.each do |rsvp|
+                    =rsvp.guest.full_name
+                    %br
+                - if not_attending.count > 0
+                  %p.text-danger.small="Not Attending (#{not_attending.count})"
+                  - not_attending.each do |rsvp|
+                    =rsvp.guest.full_name
+                    %br
+                - if not_responded.count > 0
+                  %p.text-warning.small="Not Responded (#{not_responded.count})"
+                  - not_responded.each do |rsvp|
+                    =rsvp.guest.full_name
+                    %br
                   
   - else
     %ul.list-group
