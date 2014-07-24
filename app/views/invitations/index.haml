@@ -60,59 +60,61 @@
                 =link_to "Create an invitation", new_occasion_invitation_path(@occasion), class: "btn btn-primary"
         -else
           - if @invitations.present?
-            - @invitations.each do |invitation|
-              .panel.panel-default
-                .panel-heading
-                  .btn-group.pull-right
-                    %button.btn.btn-link.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
-                      %span.glyphicon.glyphicon-cog
-                      %span.caret
-                    %ul.dropdown-menu{role: "menu"}
-                      %li= link_to "Edit invitaiton", edit_occasion_invitation_path(@occasion,invitation)
-                      %li.divider
-                      %li= link_to "Delete invitation", occasion_invitation_path(@occasion,invitation), method: :delete, confirm: 'Are you sure you want to delete this event?'
+            .panel-group#accordion
+              - @invitations.each do |invitation|
+                .panel.panel-default
+                  .panel-heading
+                    .btn-group.pull-right
+                      %button.btn.btn-link.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
+                        %span.glyphicon.glyphicon-cog
+                        %span.caret
+                      %ul.dropdown-menu{role: "menu"}
+                        %li= link_to "Edit invitation", edit_occasion_invitation_path(@occasion,invitation)
+                        %li.divider
+                        %li= link_to "Delete invitation", occasion_invitation_path(@occasion,invitation), method: :delete, confirm: 'Are you sure you want to delete this event?'
 
-                  .panel-title=invitation.name
-                  %small.text-muted=" #{time_ago_in_words(invitation.updated_at)} ago"
-                  
-                  = invitation.status
-                .panel-body
-                  .row
-                    .col-md-4
-                      .well.well-sm{style:"background-color:#fff;"}
-                        %p.text-muted.small  Guests
-                        - invitation.guests.each do |guest|
-                          =guest.full_name
-                          %br
-                    .col-md-4
-                      .well.well-sm{style:"background-color:#fff;"}
-                        %p.text-muted.small  Contact Info
-                        - if invitation.address_line_1.present?
-                          = invitation.address_line_1
-                          %br
-                        - if invitation.address_line_2.present?
-                          = invitation.address_line_2
-                          %br
-                        - if invitation.address_line_3.present?
-                          = invitation.address_line_3
-                          %br
-                        - if invitation.cell_phone.present?
-                          %abbr{title: "Mobile"} M
-                          = invitation.cell_phone
-                          %br
-                        - if invitation.home_phone.present?  
-                          %abbr{title: "Home"} H
-                          = invitation.home_phone
-                          %br
-                        - if invitation.has_email?
-                          = link_to invitation.email, "mailto:#{invitation.email}", target: :blank
-                    .col-md-4
-                      .well.well-sm{style:"background-color:#fff;"}
-                        %p.text-muted.small Private Notes
-                        =invitation.notes
-                -#.panel-footer
-                  - invitation.tags.each do |t| 
-                    %span.label.label-info{style:"font-weight:normal;"}=t.name
+                    .panel-title= link_to invitation.name, "#invitation#{invitation.id}", data: {toggle: "collapse", parent: "#accordion"}
+                    = invitation.status
+                    %small.text-muted=" #{time_ago_in_words(invitation.updated_at)} ago"
+
+                  .panel-collapse.collapse{id: "invitation#{invitation.id}"}
+                    .panel-body
+                      .row
+                        .col-md-4
+                          .well.well-sm{style:"background-color:#fff;"}
+                            %p.text-muted.small  Guests
+                            - invitation.guests.each do |guest|
+                              =guest.full_name
+                              %br
+                        .col-md-4
+                          .well.well-sm{style:"background-color:#fff;"}
+                            %p.text-muted.small  Contact Info
+                            - if invitation.address_line_1.present?
+                              = invitation.address_line_1
+                              %br
+                            - if invitation.address_line_2.present?
+                              = invitation.address_line_2
+                              %br
+                            - if invitation.address_line_3.present?
+                              = invitation.address_line_3
+                              %br
+                            - if invitation.cell_phone.present?
+                              %abbr{title: "Mobile"} M
+                              = invitation.cell_phone
+                              %br
+                            - if invitation.home_phone.present?  
+                              %abbr{title: "Home"} H
+                              = invitation.home_phone
+                              %br
+                            - if invitation.has_email?
+                              = link_to invitation.email, "mailto:#{invitation.email}", target: :blank
+                        .col-md-4
+                          .well.well-sm{style:"background-color:#fff;"}
+                            %p.text-muted.small Private Notes
+                            =invitation.notes
+                  -#.panel-footer
+                    - invitation.tags.each do |t| 
+                      %span.label.label-info{style:"font-weight:normal;"}=t.name
           - else
             %ul.list-group
               %li.list-group-item.text-center
