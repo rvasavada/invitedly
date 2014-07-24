@@ -49,20 +49,20 @@
           Address (optional)
 
         .row
-          .col-sm-7
+          .col-xs-7
             .form-group
               = f.text_field :address_1, placeholder: "Address 1", :maxlength => 100, class: "form-control"
-          .col-sm-5
+          .col-xs-5
             .form-group
               = f.text_field :address_2, placeholder: "Address 2", :maxlength => 100, class: "form-control"
         .row
           .col-sm-5
             .form-group      
               = f.text_field :city, placeholder: "City", :maxlength => 100, class: "form-control"
-          .col-sm-4.domestic
+          .domestic.col-sm-4.col-xs-7
             .form-group
               = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
-          .domestic.col-sm-3
+          .domestic.col-sm-3.col-xs-5
             .form-group
               = f.text_field :zip, placeholder: "Zip", :maxlength => 5, class: "form-control"
           .international.col-sm-4
@@ -76,11 +76,11 @@
           = f.collection_select(:country,	@country, :name, :name, {:selected => @invitation.country.blank? ? "United States" : @invitation.country}, {class: "form-control",:id => "countrySelect"})
     
         .row
-          .col-sm-5
+          .col-xs-5
             .form-group
               = f.label :cell_phone, class: "form-label"
               = f.text_field :cell_phone, :maxlength => 100, class: "form-control"
-          .col-sm-5
+          .col-xs-5
             .form-group
               = f.label :home_phone, class: "form-label"
               = f.text_field :home_phone, :maxlength => 100, class: "form-control"

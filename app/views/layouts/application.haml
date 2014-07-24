@@ -10,7 +10,7 @@
     %meta{content: "width=device-width, initial-scale=1, maximum-scale=1", name: "viewport"}
     = csrf_meta_tags
     =favicon_link_tag "/assets/favicon.ico"
-    %body
+    %body.body
       .container#main{style:"margin-top:20px;"}
         - if user_signed_in? 
           - if current_user.occasion.present? && controller.controller_name != 'wedding' 

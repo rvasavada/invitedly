@@ -11,19 +11,19 @@
           Guest name
           %span{style: "color:red"}*
         .row
-          .col-sm-3
+          .col-sm-3.col-xs-4
             .form-group
               = f.label :title, class: "sr-only"
               = f.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
-          .col-sm-4
+          .col-sm-4.col-xs-4
             .form-group{class: f.object.errors.include?(:first_name) ? 'has-error' : ''}
               = f.label :first_name, class: "sr-only"
-              = f.text_field :first_name, class: "form-control", placeholder: "First Name"
+              = f.text_field :first_name, class: "form-control", placeholder: "First"
               - if f.object.errors.include?(:first_name)
                 %span.help-block=f.object.errors.get(:first_name).join('; ')
-          .col-sm-5
+          .col-sm-5.col-xs-4
             .form-group{class: f.object.errors.include?(:last_name) ? 'has-error' : ''}
-              = f.text_field :last_name, class: "form-control", placeholder: "Last Name"
+              = f.text_field :last_name, class: "form-control", placeholder: "Last"
               - if f.object.errors.include?(:last_name)
                 %span.help-block=f.object.errors.get(:last_name).join('; ')
     .panel-body
