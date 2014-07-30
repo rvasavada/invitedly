@@ -4,11 +4,9 @@
   - if @invitations.present?
     - @invitations.each do |invitation|
       %li.list-group-item
-        %strong= link_to invitation.name, occasion_invitation_manage_path(@occasion, invitation, :guest_info)
-        %span.text-muted says:
-        =invitation.message
+        ="<strong>#{invitation.name}</strong>: #{invitation.message}".html_safe
         %br
         %small="#{time_ago_in_words(invitation.updated_at)} ago"
   - else
     %li.list-group-item.text-center
-      %h4 No one has left you a message yet!
+      %h4 No messages yet!
