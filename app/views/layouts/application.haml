@@ -10,52 +10,54 @@
     %meta{content: "width=device-width, initial-scale=1, maximum-scale=1", name: "viewport"}
     = csrf_meta_tags
     =favicon_link_tag "/assets/favicon.ico"
-    %body.body
-      .container#main{style:"margin-top:20px;"}
-        - if user_signed_in? 
-          - if current_user.occasion.present? && controller.controller_name != 'wedding' 
-            %nav.navbar.navbar-default{role: "navigation"}
-              / Brand and toggle get grouped for better mobile display
-              .navbar-header
-                %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", type: "button"}
-                  %span.sr-only Toggle navigation
-                  %span.icon-bar
-                  %span.icon-bar
-                  %span.icon-bar
-                = link_to "Invitedly", occasion_invitations_path(current_user.occasion), class: "navbar-brand"
-              / Collect the nav links, forms, and other content for toggling
-              #bs-example-navbar-collapse-1.collapse.navbar-collapse
-                %ul.nav.navbar-nav
-                  %li{class: "#{'active' if current_page?(occasion_events_path(current_user.occasion))}"}= link_to "Events", occasion_events_path(current_user.occasion)
-                  %li{class: "#{'active' if current_page?(occasion_invitations_path(current_user.occasion))}"}= link_to "Invitations", occasion_invitations_path(current_user.occasion)
-                  %li{class: "#{'active' if current_page?(occasion_guestbook_path(current_user.occasion))}"}= link_to "Guestbook", occasion_guestbook_path(current_user.occasion)
-  
+  %body.body
+    .container#main{style:"margin-top:20px;"}
 
-                %ul.nav.navbar-nav.navbar-right
-                  %li.dropdown{class: "#{'active' if current_page?(edit_user_registration_path)}"}
-                    %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
-                      %span.glyphicon.glyphicon-cog
-                      Settings
-                      %b.caret
-                    %ul.dropdown-menu
-                      %li= link_to "Account settings", edit_user_registration_path
-                      %li= link_to "Wedding settings", edit_occasion_path(current_user.occasion)
-                      %li= link_to "Preview invitation site", occasion_path(current_user.occasion)
-                      %li.divider
-                      %li= link_to "Sign out", destroy_user_session_path, method: :delete
+      - if user_signed_in? 
+        - if current_user.occasion.present? && controller.controller_name != 'wedding' 
+          %nav.navbar.navbar-default{role: "navigation"}
+            / Brand and toggle get grouped for better mobile display
+            .navbar-header
+              %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", type: "button"}
+                %span.sr-only Toggle navigation
+                %span.icon-bar
+                %span.icon-bar
+                %span.icon-bar
+              = link_to "Invitedly", occasion_invitations_path(current_user.occasion), class: "navbar-brand"
+            / Collect the nav links, forms, and other content for toggling
+            #bs-example-navbar-collapse-1.collapse.navbar-collapse
+              %ul.nav.navbar-nav
+                %li{class: "#{'active' if current_page?(occasion_events_path(current_user.occasion))}"}= link_to "Events", occasion_events_path(current_user.occasion)
+                %li{class: "#{'active' if current_page?(occasion_invitations_path(current_user.occasion))}"}= link_to "Invitations", occasion_invitations_path(current_user.occasion)
+                %li{class: "#{'active' if current_page?(occasion_guestbook_path(current_user.occasion))}"}= link_to "Guestbook", occasion_guestbook_path(current_user.occasion)
+
+
+              %ul.nav.navbar-nav.navbar-right
+                %li.dropdown{class: "#{'active' if current_page?(edit_user_registration_path)}"}
+                  %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+                    %span.glyphicon.glyphicon-cog
+                    Settings
+                    %b.caret
+                  %ul.dropdown-menu
+                    %li= link_to "Account settings", edit_user_registration_path
+                    %li= link_to "Wedding settings", edit_occasion_path(current_user.occasion)
+                    %li= link_to "Preview invitation site", occasion_path(current_user.occasion)
+                    %li.divider
+                    %li= link_to "Sign out", destroy_user_session_path, method: :delete
 
       - if notice.present?
-        %p.text-success
+        .alert.alert-success
           = notice
       - if alert.present?
         .alert.alert-danger
           = alert
-      
-      = yield
-      %footer.text-center{style: "margin-top:30px;margin-bottom:30px;"}
-        %small{style:"color:#2c3e50;"}
-          %strong Invitedly 
-          &copy; 2014
+    
+    = yield
 
-      = javascript_include_tag "application"
-      = javascript_include_tag "//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" 
+    %footer.text-center{style: "margin-top:30px;margin-bottom:30px;"}
+      %small{style:"color:#2c3e50;"}
+        %strong Invitedly 
+        &copy; 2014
+
+    = javascript_include_tag "application"
+    = javascript_include_tag "//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" 

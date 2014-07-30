@@ -43,7 +43,7 @@ class InvitationsController < ApplicationController
   def create
     @invitation = @occasion.invitations.new(invitation_params)
     @invitation.user_id = current_user.id
-    
+    @invitation.status = "Not Sent"
     if @invitation.save
       redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully created.'
     else

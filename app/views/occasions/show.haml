@@ -2,8 +2,15 @@
   .container
     %h1=@occasion.name
     %p#description=@occasion.description
-
 .container
+  .row
+    .col-sm-6
+      = render "events"
+    .col-sm-6
+      = render "guestbook"
+
+
+-#.container
   %h2 Guest Information
   = form_for [@occasion,@invitation], :html => {:role =>"form"} do |f|  
     = render "invitations/form", :f => f

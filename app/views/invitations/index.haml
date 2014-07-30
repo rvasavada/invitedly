@@ -1,171 +1,171 @@
 .container
-  .row
-    .col-sm-offset-2.col-sm-8
-      %h2
-        .pull-right
-          -#%button.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"} Import from CSV
-          =link_to "New Invitation", new_occasion_invitation_path(@occasion), class: "btn btn-primary"
-        Invitations
-        %small.text-muted="(#{@invitations.count} found)"
+  %h2
+    .pull-right
+      -#%button.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"} Import from CSV
+      =link_to "New Invitation", new_occasion_invitation_path(@occasion), class: "btn btn-primary"
+    Invitations
+    %small.text-muted="(#{@invitations.count} found)"
 
-      %ul.list-group  
-        %li.list-group-item
-          -#.pull-right
-            %strong Download:
-            = link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
-      
-          %ul.list-inline
-            %li
-              %strong Invitation Status:
-            %li.text-info{style: params[:status].blank? && params[:tag].blank? ? "background-color:yellow;": ""}
-              %strong=@occasion.invitations.count
-              =link_to "All", occasion_invitations_path(@occasion)
-            %li.text-success{style: params[:status] == "Responded" ? "background-color:yellow;" : ""}
-              %strong=@occasion.invitations.where(:status => "Responded").count
-              =link_to "Responded", occasion_invitations_path(@occasion, :status => "Responded")
-            %li{style: params[:status] == "Not Responded" ? "background-color:yellow;" : ""}
-              %strong=@occasion.invitations.where(:status => "Not Responded").count
-              =link_to "Not Responded", occasion_invitations_path(@occasion, :status => "Not Responded")
-            %li.text-warning{style: params[:status] == "Not Sent" ? "background-color:yellow;" : ""}
-              %strong=@occasion.invitations.where(:status => "Not Sent").count
-              =link_to "Not Sent", occasion_invitations_path(@occasion, :status => "Not Sent")
-          %li.list-group-item
-            .row
-              .col-sm-4
-                -#.form-group
-                  %strong Tags:
-                  - Invitation.tag_counts.each do |t|
-                    =link_to t.name, occasion_invitations_path(@occasion, :tag => t.name), class: "btn btn-info btn-xs"
-              .col-md-4.col-sm-offset-4
-                = form_tag occasion_invitations_path(@occasion), :method => :get do
-                  .input-group
-                    = search_field_tag :q, nil, placeholder: "Search invitation name", class: "form-control"
-                    .input-group-btn
-                      %button.btn.btn-warning{type: "submit"}
-                        %span.glyphicon.glyphicon-search
+  %ul.list-group  
+    %li.list-group-item
+      -#.pull-right
+        %strong Download:
+        = link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
+  
+      %ul.list-inline
+        %li
+          %strong Invitation Status:
+        %li.text-info{style: params[:status].blank? && params[:tag].blank? ? "background-color:yellow;": ""}
+          %strong=@occasion.invitations.count
+          =link_to "All", occasion_invitations_path(@occasion)
+        %li.text-success{style: params[:status] == "Responded" ? "background-color:yellow;" : ""}
+          %strong=@occasion.invitations.where(:status => "Responded").count
+          =link_to "Responded", occasion_invitations_path(@occasion, :status => "Responded")
+        %li{style: params[:status] == "Not Responded" ? "background-color:yellow;" : ""}
+          %strong=@occasion.invitations.where(:status => "Not Responded").count
+          =link_to "Not Responded", occasion_invitations_path(@occasion, :status => "Not Responded")
+        %li.text-warning{style: params[:status] == "Not Sent" ? "background-color:yellow;" : ""}
+          %strong=@occasion.invitations.where(:status => "Not Sent").count
+          =link_to "Not Sent", occasion_invitations_path(@occasion, :status => "Not Sent")
+      %li.list-group-item
+        .row
+          .col-sm-4
+            -#.form-group
+              %strong Tags:
+              - Invitation.tag_counts.each do |t|
+                =link_to t.name, occasion_invitations_path(@occasion, :tag => t.name), class: "btn btn-info btn-xs"
+          .col-md-4.col-sm-offset-4
+            = form_tag occasion_invitations_path(@occasion), :method => :get do
+              .input-group
+                = search_field_tag :q, nil, placeholder: "Search invitation name", class: "form-control"
+                .input-group-btn
+                  %button.btn.btn-warning{type: "submit"}
+                    %span.glyphicon.glyphicon-search
+    
+
         
+  - if @occasion.events.count == 0
+    %ul.list-group
+      %li.list-group-item.text-center
+        %h3
+          %strong Create some events to invite your guests to first!
+  - else
+    - unless @occasion.invitations.present?
+      %ul.list-group
+        %li.list-group-item.text-center
+          %h3
+            %strong You haven't invited any guests!
+            =link_to "Create an invitation", new_occasion_invitation_path(@occasion), class: "btn btn-primary"
+    -else
+      - if @invitations.present?
+        .panel-group#accordion
+          - @invitations.each do |invitation|
+            .panel.panel-default
+              .panel-heading
+                .pull-right= link_to invitation.status, edit_occasion_invitation_path(@occasion,invitation)
 
-            
-      - if @occasion.events.count == 0
+                .panel-title= link_to invitation.name, "#invitation#{invitation.id}", data: {toggle: "collapse", parent: "#accordion"}
+                %small.text-muted=" #{time_ago_in_words(invitation.updated_at)} ago"
+
+              .panel-collapse.collapse{id: "invitation#{invitation.id}"}
+                .panel-body
+                  .row
+                    .col-md-4
+                      .well.well-sm{style:"background-color:#fff;"}
+                        %p.text-muted.small  Guests
+                        - invitation.guests.each do |guest|
+                          =guest.full_name
+                          %br
+                    .col-md-4
+                      .well.well-sm{style:"background-color:#fff;"}
+                        %p.text-muted.small  Contact Info
+                        - if invitation.address_line_1.present?
+                          = invitation.address_line_1
+                          %br
+                        - if invitation.address_line_2.present?
+                          = invitation.address_line_2
+                          %br
+                        - if invitation.address_line_3.present?
+                          = invitation.address_line_3
+                          %br
+                        - if invitation.cell_phone.present?
+                          %abbr{title: "Mobile"} M
+                          = invitation.cell_phone
+                          %br
+                        - if invitation.home_phone.present?  
+                          %abbr{title: "Home"} H
+                          = invitation.home_phone
+                          %br
+                        - if invitation.has_email?
+                          = link_to invitation.email, "mailto:#{invitation.email}", target: :blank
+                    .col-md-4
+                      .well.well-sm{style:"background-color:#fff;"}
+                        %p.text-muted.small Private Notes
+                        =invitation.notes
+                .panel-footer
+                  .btn-group
+                    %a.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
+                      %span.glyphicon.glyphicon-cog
+                      Settings
+                      %span.caret
+                    %ul.dropdown-menu{role: "menu"}
+                      %li= link_to "Edit invitation", edit_occasion_invitation_path(@occasion,invitation)
+                      %li.divider
+                      %li= link_to "Delete invitation", occasion_invitation_path(@occasion,invitation), method: :delete, confirm: 'Are you sure you want to delete this invitation?'
+                  
+                  -#- invitation.tags.each do |t| 
+                    %span.label.label-info{style:"font-weight:normal;"}=t.name
+      - else
         %ul.list-group
           %li.list-group-item.text-center
             %h3
-              %strong Create some events to invite your guests to first!
-      - else
-        - unless @occasion.invitations.present?
-          %ul.list-group
-            %li.list-group-item.text-center
-              %h3
-                %strong You haven't invited any guests!
-                =link_to "Create an invitation", new_occasion_invitation_path(@occasion), class: "btn btn-primary"
-        -else
-          - if @invitations.present?
-            .panel-group#accordion
-              - @invitations.each do |invitation|
-                .panel.panel-default
-                  .panel-heading
-                    .pull-right=invitation.status
+              %strong Sorry, no guests found!
 
-                    .panel-title
-                      .btn-group
-                        %a.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
-                          %span.glyphicon.glyphicon-cog
-                        %ul.dropdown-menu{role: "menu"}
-                          %li= link_to "Edit invitation", edit_occasion_invitation_path(@occasion,invitation)
-                          %li.divider
-                          %li= link_to "Delete invitation", occasion_invitation_path(@occasion,invitation), method: :delete, confirm: 'Are you sure you want to delete this event?'
-                      = link_to invitation.name, "#invitation#{invitation.id}", data: {toggle: "collapse", parent: "#accordion"}
-                    %small.text-muted=" #{time_ago_in_words(invitation.updated_at)} ago"
-
-                  .panel-collapse.collapse{id: "invitation#{invitation.id}"}
-                    .panel-body
-                      .row
-                        .col-md-4
-                          .well.well-sm{style:"background-color:#fff;"}
-                            %p.text-muted.small  Guests
-                            - invitation.guests.each do |guest|
-                              =guest.full_name
-                              %br
-                        .col-md-4
-                          .well.well-sm{style:"background-color:#fff;"}
-                            %p.text-muted.small  Contact Info
-                            - if invitation.address_line_1.present?
-                              = invitation.address_line_1
-                              %br
-                            - if invitation.address_line_2.present?
-                              = invitation.address_line_2
-                              %br
-                            - if invitation.address_line_3.present?
-                              = invitation.address_line_3
-                              %br
-                            - if invitation.cell_phone.present?
-                              %abbr{title: "Mobile"} M
-                              = invitation.cell_phone
-                              %br
-                            - if invitation.home_phone.present?  
-                              %abbr{title: "Home"} H
-                              = invitation.home_phone
-                              %br
-                            - if invitation.has_email?
-                              = link_to invitation.email, "mailto:#{invitation.email}", target: :blank
-                        .col-md-4
-                          .well.well-sm{style:"background-color:#fff;"}
-                            %p.text-muted.small Private Notes
-                            =invitation.notes
-                  -#.panel-footer
-                    - invitation.tags.each do |t| 
-                      %span.label.label-info{style:"font-weight:normal;"}=t.name
-          - else
-            %ul.list-group
-              %li.list-group-item.text-center
-                %h3
-                  %strong Sorry, no guests found!
-
-    -#.modal.fade#myModal{:tabindex=> "-1", :role=>"dialog", "aria-labelledby"=>"myModalLabel", "aria-hidden"=> "true"}
-      .modal-dialog
-        .modal-content
-          .modal-header
-            %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
-            %h2.modal-title
-              %strong Import a CSV file of your guests
-          .modal-body
-            %h4 
-              %strong 1.  Download this example template
-            .form-group
-              = link_to "https://docs.google.com/a/vasavada.us/spreadsheet/ccc?key=0Ar12fAF1l7BJdGZfRUdZMy1NaDhGNER6SU9TX1h2UlE#gid=0", target: :blank, class:"btn btn-primary" do        
-                %span.glyphicon.glyphicon-new-window
-                Example template
-            %h4
-              %strong 2. Import your CSV!
-            =form_tag import_occasion_guests_path(@occasion), multipart: true do
-              .row
-                .col-sm-8
-                  .well.well-sm
-                    %strong= file_field_tag :file
-                .col-sm-4
-                  = submit_tag "Import guests", :class => "btn btn-success"
-            %hr
-            %h4
-              %strong Field Descriptions
-            %small
-              %dl
-                %dt Tags
-                %dd Comma separated words (e.g. Bride, Groom, Tier 1, etc.)
-                %dt Family Name (optional)
-                %dd If this is a family, add a family name else leave blank.  All guests under the same family name will be grouped together.
-                %dt Email (optional)
-                %dd Add email else leave blank.
-          
-                %dt Notes (optional)
-                %dd Add any notes.  These notes will be kept private.
-                %dt Title
-                %dd This can be either Dr., Mr., Mrs., and Ms. If you don't know the guest's name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
-                %dt First Name
-                %dd This is the guest's first name. If you don't know the guest's name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
-                %dt Last Name
-                %dd This is the guest's last name. If you don't know the guest's name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
-                %dt Events
-                %dd
-                  For every event that has been created, add an additional column with the
-                  %strong exact
-                  event name in the header and "Y" to the events to which the guest is invited, else leave the fields blank.
+-#.modal.fade#myModal{:tabindex=> "-1", :role=>"dialog", "aria-labelledby"=>"myModalLabel", "aria-hidden"=> "true"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
+        %h2.modal-title
+          %strong Import a CSV file of your guests
+      .modal-body
+        %h4 
+          %strong 1.  Download this example template
+        .form-group
+          = link_to "https://docs.google.com/a/vasavada.us/spreadsheet/ccc?key=0Ar12fAF1l7BJdGZfRUdZMy1NaDhGNER6SU9TX1h2UlE#gid=0", target: :blank, class:"btn btn-primary" do        
+            %span.glyphicon.glyphicon-new-window
+            Example template
+        %h4
+          %strong 2. Import your CSV!
+        =form_tag import_occasion_guests_path(@occasion), multipart: true do
+          .row
+            .col-sm-8
+              .well.well-sm
+                %strong= file_field_tag :file
+            .col-sm-4
+              = submit_tag "Import guests", :class => "btn btn-success"
+        %hr
+        %h4
+          %strong Field Descriptions
+        %small
+          %dl
+            %dt Tags
+            %dd Comma separated words (e.g. Bride, Groom, Tier 1, etc.)
+            %dt Family Name (optional)
+            %dd If this is a family, add a family name else leave blank.  All guests under the same family name will be grouped together.
+            %dt Email (optional)
+            %dd Add email else leave blank.
+      
+            %dt Notes (optional)
+            %dd Add any notes.  These notes will be kept private.
+            %dt Title
+            %dd This can be either Dr., Mr., Mrs., and Ms. If you don't know the guest's name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
+            %dt First Name
+            %dd This is the guest's first name. If you don't know the guest's name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
+            %dt Last Name
+            %dd This is the guest's last name. If you don't know the guest's name, but would like to reserve a place for an additional guest, please leave title, first name, and last name blank.
+            %dt Events
+            %dd
+              For every event that has been created, add an additional column with the
+              %strong exact
+              event name in the header and "Y" to the events to which the guest is invited, else leave the fields blank.

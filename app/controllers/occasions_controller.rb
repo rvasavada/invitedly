@@ -12,6 +12,10 @@ class OccasionsController < ApplicationController
       raise ActionController::RoutingError.new('Not Found')
     else
       @title = Title.all
+      
+      @invitations = @occasion.invitations.where("message IS NOT NULL AND length(message) > 0")
+      @events = @occasion.events
+      
     
       @invitation = @occasion.invitations.build
       @invitation.guests.build
@@ -61,11 +65,6 @@ class OccasionsController < ApplicationController
       format.html { redirect_to occasions_url, notice: 'Occasion was successfully deleted.' }
       format.json { head :no_content }
     end
-  end
-  
-  def guestbook
-    @occasion = Occasion.find_by_slug(params[:occasion_id])
-    @invitations = @occasion.invitations.where("message IS NOT NULL AND length(message) > 0")
   end
 
   private
