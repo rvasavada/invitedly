@@ -35,7 +35,7 @@
                     %b.caret
                   %ul.dropdown-menu
                     - current_user.occasion.events.each do |event|
-                      %li= link_to event.name, occasion_invitation_path(current_user.occasion, event)
+                      %li= link_to event.name, occasion_event_path(current_user.occasion, event)
                     %li.divider
                     %li= link_to "New Event", new_occasion_invitation_path(current_user.occasion)
                 
