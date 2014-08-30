@@ -5,23 +5,30 @@
         %strong Who's coming?
         %small Tell us more about the guests in this party
       %fieldset
-        -if @occasion.user = current_user
-          
-          .form-group{class: @invitation.errors.include?(:name) ? 'has-error' : ''}
-            = f.label :name, class: "control-label" do
-              Display name
-              %span{style: "color:red"}*
-            .row
-              .col-sm-7
-                = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control", placeholder: "Will not be shared with guest"
-              .col-sm-5
-                %span.help-block= @invitation.errors.get(:name).join('; ')
+        .form-group{class: @invitation.errors.include?(:name) ? 'has-error' : ''}
+          = f.label :name, class: "control-label" do
+            Family name
+            %span{style: "color:red"}*
+          .row
+            .col-sm-7
+              = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control", placeholder: "Will not be shared with guest"
+            .col-sm-5
+              %span.help-block= @invitation.errors.get(:name).join('; ')
 
-        #guests  
-          = f.fields_for :guests do |guest|
-            = render 'invitations/guest_fields', :f => guest
+        
+        = f.fields_for :guests do |guest|
+          %table.table
+            %thead
+              %tr
+                %th
+                %th Title
+                %th First Name
+                %th Last Name
+                %th Invited to
+            %tbody#guests
+              = render 'invitations/guest_fields', :f => guest
           .links
-            = link_to_add_association 'Add another guest', f, :guests, :class => "btn btn-primary", :partial => 'invitations/guest_fields'
+            = link_to_add_association 'Add another guest', f, :guests, :class => "btn btn-primary", :partial => 'invitations/guest_fields', :"data-association-insertion-node" => "tbody#guests", :"data-association-insertion-method" => "append"
     
       %h4
         %strong Let's stay in touch  

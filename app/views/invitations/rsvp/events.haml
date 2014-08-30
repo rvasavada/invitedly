@@ -15,60 +15,59 @@
   %h2 RSVP
 
   = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
-    .panel.panel-default
-      .panel-body
-        %h3
+    %ul.list-group
+      %li.list-group-item      
+        %h4
           %strong Now, confirm your RSVP.
-      %ul.list-group
-        %li.list-group-item      
-          - @events.each_with_index do |event,index|
-            - if @invitation.rsvps.where(:event_id => event.id, :visibility => true).count > 0
-              .row
-                .col-md-6
-                  %h4.text-warning{style:"margin-top:0px;margin-bottom:0px;font-weight:bold;"}=event.name
-                  %p.text-muted{style:"margin-top:0px;"}
-                    = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time.strftime('%l:%M%P')}"
-                    %br
-                    - unless event.address_1.blank?
-                      = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
-                      = "| #{event.address}"
-                    - else
-                      = event.location
-                  %p=event.description
-                .col-md-6
-                  %table.table
-                    %thead
-                      %tr
-                        %th Guest name
-                        %th.text-center{colspan: 2} Response
-                      %tbody
-                        = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id, :visibility => true) do |rsvp|
-                          %tr
+
+        - @events.each_with_index do |event,index|
+          - if @invitation.rsvps.where(:event_id => event.id, :visibility => true).count > 0
+            .row
+              .col-md-6
+                %p.text-warning{style:"margin-top:0px;margin-bottom:0px;font-weight:bold;"}=event.name
+                %p.text-muted{style:"margin-top:0px;"}
+                  = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time.strftime('%l:%M%P')}"
+                  %br
+                  - unless event.address_1.blank?
+                    = link_to event.location, "https://www.google.com/maps/preview#!q=#{event.address}"
+                    = "| #{event.address}"
+                  - else
+                    = event.location
+                %p=event.description
+              .col-md-6
+                %table.table
+                  %thead
+                    %tr
+                      %th Guest name
+                      %th.text-center{colspan: 2} Response
+                    %tbody
+                      = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id, :visibility => true) do |rsvp|
+                        %tr
+                          %td
+                            - if rsvp.object.guest.last_name != ""
+                              = rsvp.object.guest.full_name
+                            - else 
+                              %em.text-muted Additional guest not needed
+                              = rsvp.hidden_field :response, value: "Not Attending"
+                          - if (rsvp.object.guest.last_name != "")
                             %td
-                              - if rsvp.object.guest.last_name != ""
-                                = rsvp.object.guest.full_name
-                              - else 
-                                %em.text-muted Additional guest not needed
-                                = rsvp.hidden_field :response, value: "Not Attending"
-                            - if (rsvp.object.guest.last_name != "")
-                              %td
-                                %label.radio-inline 
-                                  = rsvp.radio_button :response, "Attending"
-                                  Attending
-                              %td
-                                %label.radio-inline
-                                  = rsvp.radio_button :response, "Not Attending"
-                                  Not Attending
-                            - else
-                              %td
-                                %label.radio-inline 
-                                  = rsvp.radio_button :response, "Attending", disabled: true
-                                  Attending
-                              %td
-                                %label.radio-inline
-                                  = rsvp.radio_button :response, "Not Attending", checked: true, disabled: true
-                                  Not Attending
-                            
+                              %label.radio-inline 
+                                = rsvp.radio_button :response, "Attending"
+                                Attending
+                            %td
+                              %label.radio-inline
+                                = rsvp.radio_button :response, "Not Attending"
+                                Not Attending
+                          - else
+                            %td
+                              %label.radio-inline 
+                                = rsvp.radio_button :response, "Attending", disabled: true
+                                Attending
+                            %td
+                              %label.radio-inline
+                                = rsvp.radio_button :response, "Not Attending", checked: true, disabled: true
+                                Not Attending
+                          
                         
     .form-group.pull-right
       = f.submit "Next", :class => "btn btn-success btn-lg"

@@ -65,7 +65,6 @@
                 .pull-right= link_to invitation.status, edit_occasion_invitation_path(@occasion,invitation)
 
                 .panel-title= link_to invitation.name, "#invitation#{invitation.id}", data: {toggle: "collapse", parent: "#accordion"}
-                %small.text-muted=" #{time_ago_in_words(invitation.updated_at)} ago"
 
               .panel-collapse.collapse{id: "invitation#{invitation.id}"}
                 .panel-body

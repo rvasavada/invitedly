@@ -1,5 +1,31 @@
-.nested-fields
-  .panel.panel-default
+%tr.nested-fields
+  %td
+    = link_to_remove_association f, :class => "btn btn-danger btn-sm" do
+      %span.glyphicon.glyphicon-trash
+  %td
+    .form-group
+      = f.label :title, class: "sr-only"
+      = f.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
+  %td
+    .form-group{class: f.object.errors.include?(:first_name) ? 'has-error' : ''}
+      = f.label :first_name, class: "sr-only"
+      = f.text_field :first_name, class: "form-control", placeholder: "First"
+      - if f.object.errors.include?(:first_name)
+        %span.help-block=f.object.errors.get(:first_name).join('; ')
+  %td
+    .form-group{class: f.object.errors.include?(:last_name) ? 'has-error' : ''}
+      = f.text_field :last_name, class: "form-control", placeholder: "Last"
+      - if f.object.errors.include?(:last_name)
+        %span.help-block=f.object.errors.get(:last_name).join('; ')
+  %td
+    - @events.each_with_index do |event,index|              
+      = f.fields_for :rsvps, Rsvp.find_or_initialize_by(:guest_id => f.object.id, :event_id => event.id) do |rsvp|
+        .checkbox
+          = rsvp.label :visibility do
+            = rsvp.check_box :visibility
+            =event.name
+          =rsvp.hidden_field :event_id, :value => event.id
+  -#.panel.panel-default
     .panel-heading        
       %fieldset
         .checkbox
@@ -37,6 +63,4 @@
               =event.name
             =rsvp.hidden_field :event_id, :value => event.id
     .panel-footer
-      = link_to_remove_association f, :class => "btn btn-danger" do
-        %span.glyphicon.glyphicon-trash
-        Delete guest
+      

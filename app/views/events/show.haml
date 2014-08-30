@@ -1,6 +1,6 @@
 .container
   %h2
-    %strong=link_to "Events", occasion_events_path(@occasion)
+    %strong Events
     %small.glyphicon.glyphicon-chevron-right
     = @event.name
     %small.text-muted="(#{@event.rsvps.where(:visibility => true).count} found)"

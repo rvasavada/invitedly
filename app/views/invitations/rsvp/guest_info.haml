@@ -16,71 +16,70 @@
   %h2 Guest Information
 
   = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
-    .panel.panel-default
-      .panel-body
-        %h3
-          %strong First, check your names and contact information.
-      %ul.list-group
-        %li.list-group-item
-          .row
-            .col-md-8
-              .form-group
-                = f.label :guests, "Guest names"
-                = f.fields_for :guests do |guest|
-                  .row
-                    .form-group.col-sm-3
-                      = guest.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
-                    .form-group.col-sm-4
-                      = guest.text_field :first_name, :maxlength => 50, class: "form-control", :placeholder => "First name"
-                    .form-group.col-sm-5
-                      = guest.text_field :last_name, :maxlength => 50, class: "form-control", :placeholder => "Last name"
-                %span.help-block Please correct any mistakes you find.
+    %ul.list-group
+      %li.list-group-item
+        %h4
+          %strong First, check your names and contact info.
+
+        .row
+          .col-md-8
+            .form-group
+              = f.label :guests, "Guest names"
+              = f.fields_for :guests do |guest|
+                .row
+                  .form-group.col-sm-3
+                    = guest.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
+                  .form-group.col-sm-4
+                    = guest.text_field :first_name, :maxlength => 50, class: "form-control", :placeholder => "First name"
+                  .form-group.col-sm-5
+                    = guest.text_field :last_name, :maxlength => 50, class: "form-control", :placeholder => "Last name"
+              %span.help-block Please correct any mistakes you find.
+
+            .form-group
+              = f.label :email, class: "control-label"
+              = f.text_field :email, :maxlength => 50, class: "form-control"
+              %span.help-block You can optionally add an email address (in case we need to contact you later).
+            
+            %fieldset
+              = f.label :location, class: "control-label" do
+                Address (optional)
+
+              .row
+                .col-sm-7
+                  .form-group
+                    = f.text_field :address_1, placeholder: "Address 1", :maxlength => 100, class: "form-control"
+                .col-sm-5
+                  .form-group
+                    = f.text_field :address_2, placeholder: "Address 2", :maxlength => 100, class: "form-control"
+              .row
+                .col-sm-5
+                  .form-group      
+                    = f.text_field :city, placeholder: "City", :maxlength => 100, class: "form-control"
+                .col-sm-4.domestic
+                  .form-group
+                    = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
+                .domestic.col-sm-3
+                  .form-group
+                    = f.text_field :zip, placeholder: "Zip", :maxlength => 5, class: "form-control"
+                .international.col-sm-4
+                  .form-group
+                    = f.text_field :region, placeholder: "Region", :maxlength => 100, class: "form-control"
+                .international.col-sm-3
+                  .form-group
+                    = f.text_field :postal_code, placeholder: "Postal Code", :maxlength => 20, class: "form-control"
 
               .form-group
-                = f.label :email, class: "control-label"
-                = f.text_field :email, :maxlength => 50, class: "form-control"
-                %span.help-block You can optionally add an email address (in case we need to contact you later).
-              
-              %fieldset
-                = f.label :location, class: "control-label" do
-                  Address (optional)
-
-                .row
-                  .col-sm-7
-                    .form-group
-                      = f.text_field :address_1, placeholder: "Address 1", :maxlength => 100, class: "form-control"
-                  .col-sm-5
-                    .form-group
-                      = f.text_field :address_2, placeholder: "Address 2", :maxlength => 100, class: "form-control"
-                .row
-                  .col-sm-5
-                    .form-group      
-                      = f.text_field :city, placeholder: "City", :maxlength => 100, class: "form-control"
-                  .col-sm-4.domestic
-                    .form-group
-                      = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
-                  .domestic.col-sm-3
-                    .form-group
-                      = f.text_field :zip, placeholder: "Zip", :maxlength => 5, class: "form-control"
-                  .international.col-sm-4
-                    .form-group
-                      = f.text_field :region, placeholder: "Region", :maxlength => 100, class: "form-control"
-                  .international.col-sm-3
-                    .form-group
-                      = f.text_field :postal_code, placeholder: "Postal Code", :maxlength => 20, class: "form-control"
-
-                .form-group
-                  = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control",:id => "countrySelect"})
-    
-                .row
-                  .col-sm-5
-                    .form-group
-                      = f.label :cell_phone, class: "form-label"
-                      = f.text_field :cell_phone, :maxlength => 100, class: "form-control"
-                  .col-sm-5
-                    .form-group
-                      = f.label :home_phone, class: "form-label"
-                      = f.text_field :home_phone, :maxlength => 100, class: "form-control"
+                = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control",:id => "countrySelect"})
+  
+              .row
+                .col-sm-5
+                  .form-group
+                    = f.label :cell_phone, class: "form-label"
+                    = f.text_field :cell_phone, :maxlength => 100, class: "form-control"
+                .col-sm-5
+                  .form-group
+                    = f.label :home_phone, class: "form-label"
+                    = f.text_field :home_phone, :maxlength => 100, class: "form-control"
 
     .form-group.pull-right
       = f.submit "Next", :class => "btn btn-success btn-lg"
