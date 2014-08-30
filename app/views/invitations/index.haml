@@ -72,12 +72,8 @@
               - @invitations.each do |invitation|
                 %tr
                   %td{style: "vertical-align:middle;"}= check_box_tag :invitation, :invitation_id
-                  %td{style: "vertical-align:middle;"}
-                    %div{style:"font-size:1.25em;"}= invitation.name
-                    .text-muted
-                      - invitation.guests.each do |guest|
-                        =guest.full_name
-                        %br
+                  %td{style: "vertical-align:middle;font-size:1.25em;"}
+                    = invitation.name
                   %td{style: "vertical-align:middle;"}
                     - if invitation.address_line_1.present?
                       = invitation.address_line_1
@@ -89,11 +85,11 @@
                       = invitation.address_line_3
                       %br
                     - if invitation.cell_phone.present?
-                      %abbr{title: "Mobile"} M
+                      %abbr{title: "Mobile"} M:
                       = invitation.cell_phone
-                      %br
+                      |
                     - if invitation.home_phone.present?  
-                      %abbr{title: "Home"} H
+                      %abbr{title: "Home"} H:
                       = invitation.home_phone
                       %br
                     - if invitation.has_email?
