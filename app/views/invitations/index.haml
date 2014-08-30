@@ -2,13 +2,14 @@
   %h1
     .pull-right
       -#%button.btn.btn-success{"data-target" => "#myModal", "data-toggle" => "modal"} Import from CSV
+      =link_to "Copy occasion link to send to guests", new_occasion_invitation_path(@occasion), class: "btn btn-link"
       =link_to "New Invitation", new_occasion_invitation_path(@occasion), class: "btn btn-primary"
     Invitations
     %small.text-muted="(#{@invitations.count} found)"
 
   %ul.list-group  
     %li.list-group-item
-      -#.pull-right
+      .pull-right
         %strong Download:
         = link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
   

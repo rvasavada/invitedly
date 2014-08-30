@@ -18,6 +18,9 @@ class ApplicationController < ActionController::Base
   def set_occasion
     if params[:occasion_id].present?
       @occasion = Occasion.find_by_slug(params[:occasion_id])
+      if @occasion.blank?
+        raise ActionController::RoutingError.new('Not Found')
+      end
     end
   end
 end
