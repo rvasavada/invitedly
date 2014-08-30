@@ -21,7 +21,7 @@
     %li.list-group-item
 
       %h3{style:"margin-top:0px;font-weight:bold;"}
-        = @invitation.guests.where("first_name != ? AND last_name != ?", "", "").map(&:full_name).join(', ')
+        = @invitation.name
       %p= link_to @invitation.email, "mailto:#{@invitation.email}" if @invitation.email.present?
     %li.list-group-item        
       - @events.each do |event|
@@ -67,4 +67,4 @@
           %br 
           Let us manage your RSVPs for you.
         .col-md-6
-          = link_to "Sign up for Invitedly!", new_user_registration_path, class: "btn btn-primary"
+          = link_to "Sign up for Invitedly!", new_user_registration_path, class: "btn btn-primary btn-sm"

@@ -2,17 +2,18 @@ class Invitations::RsvpController < ApplicationController
   before_action :set_occasion
   
   include Wicked::Wizard
-  steps :guest_info, :events, :guestbook, :confirmation
+  steps :events, :guest_info, :guestbook, :confirmation
 
   def show
     @invitation = Invitation.friendly.find(params[:invitation_id])
     
     case step
+    when :events
+      @events = @occasion.events
     when :guest_info
       @title = Title.all
       @state = State.all
       @country = Country.all
-    when :events
       @events = @occasion.events
     when :guestbook
     when :confirmation
@@ -25,14 +26,14 @@ class Invitations::RsvpController < ApplicationController
     @invitation = Invitation.friendly.find(params[:invitation_id])
 
     case step
+    when :events
+      @invitation.status = "Responded"
+      @invitation.update(invitation_params)
     when :guest_info
       @invitation.update(invitation_params)
       @title = Title.all
       @state = State.all
       @country = Country.all
-    when :events
-      @invitation.status = "Responded"
-      @invitation.update(invitation_params)
     when :guestbook
       @invitation.update(invitation_params)
     when :confirmation

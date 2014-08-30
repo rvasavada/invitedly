@@ -14,7 +14,7 @@ class Guest < ActiveRecord::Base
     unless self.is_additional_guest
       "#{title} #{first_name} #{last_name}"
     else
-      "#{title} #{first_name} #{last_name} (+1)"
+      "Additional guest (+1)"
     end
   end
   

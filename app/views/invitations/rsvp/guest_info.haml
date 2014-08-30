@@ -1,10 +1,10 @@
 .container
   %ul.list-inline
-    %li.text-primary
-      %strong 1. Guest Information
+    %li.text-muted 1. RSVP
     %li
       %small.glyphicon.glyphicon-chevron-right
-    %li 2. RSVP
+    %li.text-primary 
+      %strong 2. Contact Info
     %li
       %small.glyphicon.glyphicon-chevron-right
     %li 3. Guestbook
@@ -13,73 +13,100 @@
     %li 4. Confirmation
 
 
-  %h2 Guest Information
+  %h2 Contact Info
 
   = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
     %ul.list-group
       %li.list-group-item
-        %h4
-          %strong First, check your names and contact info.
 
         .row
           .col-md-8
-            .form-group
-              = f.label :guests, "Guest names"
-              = f.fields_for :guests do |guest|
-                .row
-                  .form-group.col-sm-3
-                    = guest.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
-                  .form-group.col-sm-4
-                    = guest.text_field :first_name, :maxlength => 50, class: "form-control", :placeholder => "First name"
-                  .form-group.col-sm-5
-                    = guest.text_field :last_name, :maxlength => 50, class: "form-control", :placeholder => "Last name"
-              %span.help-block Please correct any mistakes you find.
+            %table.table
+              %thead
+                %tr
+                  %th Title
+                  %th 
+                    First Name
+                    %span{style: "color:red"}*
+                  %th 
+                    Last Name
+                    %span{style: "color:red"}*
+                  %th Attending
+              %tbody
+                = f.fields_for :guests do |guest|
+                  %tr{style:"#{ Rsvp.where(:guest_id => guest.object.id, :response => "Attending").count > 0 ? "" : 'display:none;' }"}
+                    %td
+                      .form-group
+                        = guest.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
+                    %td
+                      .form-group{class: guest.object.errors.include?(:first_name) ? 'has-error' : ''}
+                        = guest.text_field :first_name, class: "form-control"
+                        - if guest.object.errors.include?(:first_name)
+                          %span.help-block=guest.object.errors.get(:first_name).join('; ')
+                    %td
+                      .form-group{class: guest.object.errors.include?(:last_name) ? 'has-error' : ''}
+                        = guest.text_field :last_name, class: "form-control"
+                        - if guest.object.errors.include?(:last_name)
+                          %span.help-block=guest.object.errors.get(:last_name).join('; ')
+                    %td
+                      - @events.each_with_index do |event,index|              
+                        = guest.fields_for :rsvps, Rsvp.find_by(:guest_id => guest.object.id, :event_id => event.id) do |rsvp|
+                          =event.name
+                      = f.hidden_field :is_additional_guest, :value => false
+                    
+                          
 
-            .form-group
-              = f.label :email, class: "control-label"
-              = f.text_field :email, :maxlength => 50, class: "form-control"
-              %span.help-block You can optionally add an email address (in case we need to contact you later).
-            
-            %fieldset
-              = f.label :location, class: "control-label" do
-                Address (optional)
-
+            .form-group{class: @invitation.errors.include?(:email) ? 'has-error' : ''}
+              = f.label :email, class: "control-label" do
+                Email
+                %span{style: "color:red"}*
               .row
                 .col-sm-7
-                  .form-group
-                    = f.text_field :address_1, placeholder: "Address 1", :maxlength => 100, class: "form-control"
+                  = f.text_field :email, :maxlength => 50, class: "form-control"
                 .col-sm-5
-                  .form-group
-                    = f.text_field :address_2, placeholder: "Address 2", :maxlength => 100, class: "form-control"
-              .row
-                .col-sm-5
-                  .form-group      
-                    = f.text_field :city, placeholder: "City", :maxlength => 100, class: "form-control"
-                .col-sm-4.domestic
-                  .form-group
-                    = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
-                .domestic.col-sm-3
-                  .form-group
-                    = f.text_field :zip, placeholder: "Zip", :maxlength => 5, class: "form-control"
-                .international.col-sm-4
-                  .form-group
-                    = f.text_field :region, placeholder: "Region", :maxlength => 100, class: "form-control"
-                .international.col-sm-3
-                  .form-group
-                    = f.text_field :postal_code, placeholder: "Postal Code", :maxlength => 20, class: "form-control"
+                  %span.help-block= @invitation.errors.get(:email).join('; ')
+            
+            = f.label :location, class: "control-label" do
+              Address (optional)
 
-              .form-group
-                = f.collection_select(:country,	@country, :name, :name, {:selected => current_user.country.blank? ? "United States" : current_user.country}, {class: "form-control",:id => "countrySelect"})
-  
-              .row
-                .col-sm-5
-                  .form-group
-                    = f.label :cell_phone, class: "form-label"
-                    = f.text_field :cell_phone, :maxlength => 100, class: "form-control"
-                .col-sm-5
-                  .form-group
-                    = f.label :home_phone, class: "form-label"
-                    = f.text_field :home_phone, :maxlength => 100, class: "form-control"
+            .row
+              .col-xs-7
+                .form-group
+                  = f.text_field :address_1, placeholder: "Address 1", :maxlength => 100, class: "form-control"
+              .col-xs-5
+                .form-group
+                  = f.text_field :address_2, placeholder: "Address 2", :maxlength => 100, class: "form-control"
+            .row
+              .col-sm-5
+                .form-group      
+                  = f.text_field :city, placeholder: "City", :maxlength => 100, class: "form-control"
+              .domestic.col-sm-4.col-xs-7
+                .form-group
+                  = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
+              .domestic.col-sm-3.col-xs-5
+                .form-group
+                  = f.text_field :zip, placeholder: "Zip", :maxlength => 5, class: "form-control"
+              .international.col-sm-4
+                .form-group
+                  = f.text_field :region, placeholder: "Region", :maxlength => 100, class: "form-control"
+              .international.col-sm-3
+                .form-group
+                  = f.text_field :postal_code, placeholder: "Postal Code", :maxlength => 20, class: "form-control"
+
+            .form-group
+              = f.collection_select(:country,	@country, :name, :name, {:selected => @invitation.country.blank? ? "United States" : @invitation.country}, {class: "form-control",:id => "countrySelect"})
+
+            .row
+              .col-xs-5
+                .form-group
+                  = f.label :cell_phone, class: "form-label"
+                  = f.text_field :cell_phone, :maxlength => 100, class: "form-control"
+              .col-xs-5
+                .form-group
+                  = f.label :home_phone, class: "form-label"
+                  = f.text_field :home_phone, :maxlength => 100, class: "form-control"
 
     .form-group.pull-right
       = f.submit "Next", :class => "btn btn-success btn-lg"
+    .form-group
+      = link_to 'Previous', previous_wizard_path, :class=> "btn btn-primary btn-lg"

@@ -1,10 +1,10 @@
 .container
   %ul.list-inline
-    %li.text-muted 1. Guest Information
+    %li.text-primary 
+      %strong 1. RSVP
     %li
       %small.glyphicon.glyphicon-chevron-right
-    %li.text-primary
-      %strong 2. RSVP
+    %li 2. Contact Info
     %li
       %small.glyphicon.glyphicon-chevron-right
     %li 3. Guestbook
@@ -16,15 +16,13 @@
 
   = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
     %ul.list-group
-      %li.list-group-item      
-        %h4
-          %strong Now, confirm your RSVP.
+      %li.list-group-item
 
         - @events.each_with_index do |event,index|
           - if @invitation.rsvps.where(:event_id => event.id, :visibility => true).count > 0
             .row
               .col-md-6
-                %p.text-warning{style:"margin-top:0px;margin-bottom:0px;font-weight:bold;"}=event.name
+                %h4.text-primary{style:"margin-top:0px;margin-bottom:0px;font-weight:bold;"}=event.name
                 %p.text-muted{style:"margin-top:0px;"}
                   = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time.strftime('%l:%M%P')}"
                   %br
@@ -39,37 +37,23 @@
                   %thead
                     %tr
                       %th Guest name
-                      %th.text-center{colspan: 2} Response
+                      %th Response
                     %tbody
                       = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id, :visibility => true) do |rsvp|
                         %tr
                           %td
-                            - if rsvp.object.guest.last_name != ""
-                              = rsvp.object.guest.full_name
-                            - else 
-                              %em.text-muted Additional guest not needed
-                              = rsvp.hidden_field :response, value: "Not Attending"
-                          - if (rsvp.object.guest.last_name != "")
-                            %td
-                              %label.radio-inline 
+                            = rsvp.object.guest.full_name
+                            -if rsvp.object.guest.full_name == "Additional guest (+1)"
+                              .text-muted If additional guest is not needed, mark as not attending.
+                          %td
+                            .btn-group{"data-toggle" => "buttons"}
+                              %label.btn.btn-default.btn-sm{class: "#{rsvp.object.response == "Attending" ? "active" : ""}"}
                                 = rsvp.radio_button :response, "Attending"
                                 Attending
-                            %td
-                              %label.radio-inline
+                              %label.btn.btn-default.btn-sm{class: "#{rsvp.object.response == "Not Attending" ? "active" : ""}"}
                                 = rsvp.radio_button :response, "Not Attending"
-                                Not Attending
-                          - else
-                            %td
-                              %label.radio-inline 
-                                = rsvp.radio_button :response, "Attending", disabled: true
-                                Attending
-                            %td
-                              %label.radio-inline
-                                = rsvp.radio_button :response, "Not Attending", checked: true, disabled: true
                                 Not Attending
                           
                         
     .form-group.pull-right
       = f.submit "Next", :class => "btn btn-success btn-lg"
-    .form-group
-      = link_to 'Previous', previous_wizard_path, :class=> "btn btn-primary btn-lg"
