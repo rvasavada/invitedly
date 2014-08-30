@@ -4,15 +4,10 @@
     %p#description=@occasion.description
     = link_to "Send me an invitation!", new_occasion_invitation_path(@occasion), class: "btn btn-success"
     = link_to "I want to RSVP", "#", disabled: true, class: "btn btn-primary"
-.container
-  .row
-    .col-sm-6
-      = render "events"
-    .col-sm-6
-      = render "guestbook"
-
-
--#.container
-  %h2 Guest Information
-  = form_for [@occasion,@invitation], :html => {:role =>"form"} do |f|  
-    = render "invitations/form", :f => f
+- if user_signed_in? && @occasion.user_id = current_user.id
+  .container
+    .row
+      .col-sm-6
+        = render "events"
+      .col-sm-6
+        = render "guestbook"
