@@ -26,7 +26,7 @@
               = event.location
             .text-muted=event.description
           %td
-            .progress
+            .progress{style:"height:30px;"}
               .progress-bar.progress-bar-success{style: "width: #{100*Rsvp.attending(event).count/(Rsvp.invited(event).count == 0 ? 1.0 : Rsvp.invited(event).count.to_f )}%"}
                 = Rsvp.attending(event).count
               .progress-bar{style: "width: #{100*Rsvp.not_responded(event).count/(Rsvp.invited(event).count == 0 ? 1.0 : Rsvp.invited(event).count.to_f)}%"}
