@@ -12,24 +12,47 @@
     %li.text-primary
       %strong 4. Confirmation
   
-  .alert.alert-success Thanks for your RSVP.  You're all set!
+  .alert.alert-success.alert-dismissible
+    %button.close{"data-dismiss" => "alert", :type => "button"}
+      %span{"aria-hidden" => "true"} ×
+      %span.sr-only Close
+    Thanks for your RSVP.  You're all set!
   %button.pull-right{id:"print", onclick:"javascript:print()", value:"Print", class: "btn btn-link"} Print this page
   
-  %h2 Confirmation
+  %h1 Confirmation
     
   %ul.list-group
     %li.list-group-item
 
-      %h3{style:"margin-top:0px;font-weight:bold;"}
-        = @invitation.name
-      %p= link_to @invitation.email, "mailto:#{@invitation.email}" if @invitation.email.present?
-    %li.list-group-item        
+      #confirmation-header{style:"margin-bottom:20px;"}
+        %h2= @invitation.name
+        - if @invitation.address_line_1.present?
+          = @invitation.address_line_1
+          %br
+        - if @invitation.address_line_2.present?
+          = @invitation.address_line_2
+          %br
+        - if @invitation.address_line_3.present?
+          = @invitation.address_line_3
+          %br
+        - if @invitation.cell_phone.present?
+          %abbr{title: "Mobile"} M:
+          = @invitation.cell_phone
+          |
+        - if @invitation.home_phone.present?  
+          %abbr{title: "Home"} H:
+          = @invitation.home_phone
+          %br
+        - if @invitation.has_email?
+          = link_to @invitation.email, "mailto:#{@invitation.email}", target: :blank
+      
+      %h3 Events
       - @events.each do |event|
         - if @invitation.rsvps.where(:event_id => event.id, :visibility => true).count > 0
           .row
             .col-md-6
-              %h4{style:"margin-top:0px;margin-bottom:0px;"}=event.name
-              %p.text-muted{style:"margin-top:0px;"}
+              %h4=event.name
+              %p.text-muted
                 = "#{event.start_date.strftime('%A, %B %e, %Y')} at #{event.start_time.strftime('%l:%M%P')}"
                 %br
                 - unless event.address_1.blank?
@@ -49,16 +72,16 @@
                 %tbody
                   - @invitation.rsvps.where(:event_id => event.id, :visibility => true).each do |rsvp|                  
                     %tr
-                      %td
-                        - if rsvp.guest.last_name != ""
+                      - unless rsvp.guest.is_additional_guest
+                        %td
                           = rsvp.guest.full_name
-                        - else 
-                          %em.text-muted Additional guest not needed
-                      %td{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}=rsvp.response
-    - if @invitation.message.present?
-      %li.list-group-item
-        %p.lead
-          %em= "\"#{@invitation.message}\""
+                        %td{class: rsvp.response == "Attending" ? "text-success" : rsvp.response == "Not Attending" ? "text-danger" : ""}=rsvp.response
+      - if @invitation.message.present?
+        %h3 Guestbook
+        
+        #confirmation-message{style:"margin-bottom:20px;"}
+          %h4
+            %em= "\"#{@invitation.message}\""
     
     %li.list-group-item.list-group-item.text-center
       .row

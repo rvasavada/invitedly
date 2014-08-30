@@ -13,7 +13,7 @@
     %li 4. Confirmation
 
 
-  %h2 Contact Info
+  %h1 Contact Info
 
   = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
     %ul.list-group
@@ -21,6 +21,16 @@
 
         .row
           .col-md-8
+            .form-group{class: @invitation.errors.include?(:name) ? 'has-error' : ''}
+              = f.label :name, class: "control-label" do
+                Family name
+                %span{style: "color:red"}*
+              .row
+                .col-sm-7
+                  = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control input-lg", placeholder: "Jane and Jim Doe"
+                .col-sm-5
+                  %span.help-block= @invitation.errors.get(:name).join('; ')
+                  
             %table.table
               %thead
                 %tr
@@ -34,27 +44,27 @@
                   %th Attending
               %tbody
                 = f.fields_for :guests do |guest|
-                  %tr{style:"#{ Rsvp.where(:guest_id => guest.object.id, :response => "Attending").count > 0 ? "" : 'display:none;' }"}
-                    %td
-                      .form-group
-                        = guest.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
-                    %td
-                      .form-group{class: guest.object.errors.include?(:first_name) ? 'has-error' : ''}
-                        = guest.text_field :first_name, class: "form-control"
-                        - if guest.object.errors.include?(:first_name)
-                          %span.help-block=guest.object.errors.get(:first_name).join('; ')
-                    %td
-                      .form-group{class: guest.object.errors.include?(:last_name) ? 'has-error' : ''}
-                        = guest.text_field :last_name, class: "form-control"
-                        - if guest.object.errors.include?(:last_name)
-                          %span.help-block=guest.object.errors.get(:last_name).join('; ')
-                    %td
-                      - @events.each_with_index do |event,index|              
-                        = guest.fields_for :rsvps, Rsvp.find_by(:guest_id => guest.object.id, :event_id => event.id) do |rsvp|
-                          =event.name
-                      = f.hidden_field :is_additional_guest, :value => false
-                    
-                          
+                  - if Rsvp.where(:guest_id => guest.object.id, :response => "Attending").count > 0
+                    %tr
+                      %td
+                        .form-group
+                          = guest.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
+                      %td
+                        .form-group{class: guest.object.errors.include?(:first_name) ? 'has-error' : ''}
+                          = guest.text_field :first_name, class: "form-control"
+                          - if guest.object.errors.include?(:first_name)
+                            %span.help-block=guest.object.errors.get(:first_name).join('; ')
+                      %td
+                        .form-group{class: guest.object.errors.include?(:last_name) ? 'has-error' : ''}
+                          = guest.text_field :last_name, class: "form-control"
+                          - if guest.object.errors.include?(:last_name)
+                            %span.help-block=guest.object.errors.get(:last_name).join('; ')
+                      %td
+                        - Rsvp.where(:guest_id => guest.object.id).each do |rsvp|
+                          = rsvp.event.name
+                          %br
+                        - if guest.object.is_additional_guest
+                          = guest.hidden_field :is_additional_guest, :value => false                          
 
             .form-group{class: @invitation.errors.include?(:email) ? 'has-error' : ''}
               = f.label :email, class: "control-label" do

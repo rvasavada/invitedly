@@ -8,6 +8,8 @@ class Guest < ActiveRecord::Base
   validates_presence_of :first_name, :last_name, :if => lambda { |o| !o.is_additional_guest }
   has_many :events, :through => :rsvps
   
+  default_scope { order(:id) }
+  
   #default_scope { includes(:rsvps).order('guests.created_at ASC')}
   
   def full_name

@@ -1,7 +1,7 @@
 .container
   %ul.list-inline
     %li.text-primary 
-      %strong 1. RSVP
+      %strong 1. Events
     %li
       %small.glyphicon.glyphicon-chevron-right
     %li 2. Contact Info
@@ -12,7 +12,7 @@
       %small.glyphicon.glyphicon-chevron-right
     %li 4. Confirmation
 
-  %h2 RSVP
+  %h1 Events
 
   = form_for [@occasion,@invitation], :url => wizard_path, :method => :put, :html => {:role =>"form"} do |f|
     %ul.list-group
@@ -37,22 +37,22 @@
                   %thead
                     %tr
                       %th Guest name
-                      %th Response
+                      %th Attending?
                     %tbody
-                      = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id, :visibility => true) do |rsvp|
+                      = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id, :visibility => true).order(:id) do |rsvp|
                         %tr
-                          %td
+                          %td{style:"vertical-align:middle;"}
                             = rsvp.object.guest.full_name
                             -if rsvp.object.guest.full_name == "Additional guest (+1)"
-                              .text-muted If additional guest is not needed, mark as not attending.
+                              .text-muted If additional guest is not needed, mark as "No".
                           %td
                             .btn-group{"data-toggle" => "buttons"}
                               %label.btn.btn-default.btn-sm{class: "#{rsvp.object.response == "Attending" ? "active" : ""}"}
                                 = rsvp.radio_button :response, "Attending"
-                                Attending
+                                Yes
                               %label.btn.btn-default.btn-sm{class: "#{rsvp.object.response == "Not Attending" ? "active" : ""}"}
                                 = rsvp.radio_button :response, "Not Attending"
-                                Not Attending
+                                No
                           
                         
     .form-group.pull-right
