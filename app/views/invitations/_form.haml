@@ -16,17 +16,18 @@
               %span.help-block= @invitation.errors.get(:name).join('; ')
 
         
-        = f.fields_for :guests do |guest|
-          %table.table
-            %thead
-              %tr
-                %th
-                %th Title
-                %th First Name
-                %th Last Name
-                %th Invited to
-            %tbody#guests
-              = render 'invitations/guest_fields', :f => guest
+          .table-responsive
+            %table.table
+              %thead
+                %tr
+                  %th
+                  %th Title
+                  %th First Name
+                  %th Last Name
+                  %th Invited to
+              %tbody#guests
+                = f.fields_for :guests do |guest|
+                  = render 'invitations/guest_fields', :f => guest
           .links
             = link_to_add_association 'Add another guest', f, :guests, :class => "btn btn-primary btn-sm", :partial => 'invitations/guest_fields', :"data-association-insertion-node" => "tbody#guests", :"data-association-insertion-method" => "append"
             = link_to_add_association 'Add another guest (Allow guest to enter name)', f, :guests, :class => "btn btn-default btn-sm", :partial => 'invitations/unknown_guest_fields', :"data-association-insertion-node" => "tbody#guests", :"data-association-insertion-method" => "append"

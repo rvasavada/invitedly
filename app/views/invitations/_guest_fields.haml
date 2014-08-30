@@ -2,21 +2,26 @@
   %td
     = link_to_remove_association f, :class => "btn btn-danger btn-sm" do
       %span.glyphicon.glyphicon-trash
-  %td
-    .form-group
-      = f.label :title, class: "sr-only"
-      = f.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
-  %td
-    .form-group{class: f.object.errors.include?(:first_name) ? 'has-error' : ''}
-      = f.label :first_name, class: "sr-only"
-      = f.text_field :first_name, class: "form-control"
-      - if f.object.errors.include?(:first_name)
-        %span.help-block=f.object.errors.get(:first_name).join('; ')
-  %td
-    .form-group{class: f.object.errors.include?(:last_name) ? 'has-error' : ''}
-      = f.text_field :last_name, class: "form-control"
-      - if f.object.errors.include?(:last_name)
-        %span.help-block=f.object.errors.get(:last_name).join('; ')
+  - if f.object.is_additional_guest
+    %td.text-center{colspan: 3}
+      = f.hidden_field :is_additional_guest, :value => true
+      %label.control-label Additional guest
+  - else  
+    %td
+      .form-group
+        = f.label :title, class: "sr-only"
+        = f.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
+    %td
+      .form-group{class: f.object.errors.include?(:first_name) ? 'has-error' : ''}
+        = f.label :first_name, class: "sr-only"
+        = f.text_field :first_name, class: "form-control"
+        - if f.object.errors.include?(:first_name)
+          %span.help-block=f.object.errors.get(:first_name).join('; ')
+    %td
+      .form-group{class: f.object.errors.include?(:last_name) ? 'has-error' : ''}
+        = f.text_field :last_name, class: "form-control"
+        - if f.object.errors.include?(:last_name)
+          %span.help-block=f.object.errors.get(:last_name).join('; ')
   %td
     - @events.each_with_index do |event,index|              
       = f.fields_for :rsvps, Rsvp.find_or_initialize_by(:guest_id => f.object.id, :event_id => event.id) do |rsvp|
@@ -25,42 +30,3 @@
             = rsvp.check_box :visibility
             =event.name
           =rsvp.hidden_field :event_id, :value => event.id
-  -#.panel.panel-default
-    .panel-heading        
-      %fieldset
-        .checkbox
-          = f.label :is_additional_guest do
-            = f.check_box :is_additional_guest
-            I do not know this guest's name
-      %fieldset
-        %label
-          Guest name
-          %span{style: "color:red"}*
-        .row
-          .col-sm-3.col-xs-4
-            .form-group
-              = f.label :title, class: "sr-only"
-              = f.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
-          .col-sm-4.col-xs-4
-            .form-group{class: f.object.errors.include?(:first_name) ? 'has-error' : ''}
-              = f.label :first_name, class: "sr-only"
-              = f.text_field :first_name, class: "form-control", placeholder: "First"
-              - if f.object.errors.include?(:first_name)
-                %span.help-block=f.object.errors.get(:first_name).join('; ')
-          .col-sm-5.col-xs-4
-            .form-group{class: f.object.errors.include?(:last_name) ? 'has-error' : ''}
-              = f.text_field :last_name, class: "form-control", placeholder: "Last"
-              - if f.object.errors.include?(:last_name)
-                %span.help-block=f.object.errors.get(:last_name).join('; ')
-    .panel-body
-      
-      %em Select the events to which this guest is invited:
-      - @events.each_with_index do |event,index|              
-        = f.fields_for :rsvps, Rsvp.find_or_initialize_by(:guest_id => f.object.id, :event_id => event.id) do |rsvp|
-          .checkbox
-            = rsvp.label :visibility do
-              = rsvp.check_box :visibility
-              =event.name
-            =rsvp.hidden_field :event_id, :value => event.id
-    .panel-footer
-      
