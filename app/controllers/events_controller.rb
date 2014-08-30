@@ -39,7 +39,7 @@ class EventsController < ApplicationController
     @event = @occasion.events.new(event_params)
     if @event.save
       unless params[:commit] == "Save & Add more"
-        redirect_to occasion_events_path(@occasion), notice: 'Event was successfully created.'
+        redirect_to @occasion, notice: 'Event was successfully created.'
       else
         redirect_to new_occasion_event_path(@occasion), notice: 'Event was successfully created.'
       end
@@ -54,7 +54,7 @@ class EventsController < ApplicationController
     params[:event][:start_time] = DateTime.parse(params[:event][:start_time])
     if @event.update(event_params)
       unless params[:commit] == "Save & Add more" 
-        redirect_to occasion_events_path(@occasion), notice: 'Event was successfully updated.'
+        redirect_to @occasion, notice: 'Event was successfully updated.'
       else
         redirect_to new_occasion_event_path(@occasion), notice: 'Event was successfully updated.'
       end
@@ -67,7 +67,7 @@ class EventsController < ApplicationController
 
   def destroy
     @event.destroy
-    redirect_to occasion_events_path(@occasion), notice: 'Event was successfully deleted.'
+    redirect_to @occasion, notice: 'Event was successfully deleted.'
   end
 
   def manage_guestlist
