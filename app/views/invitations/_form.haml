@@ -1,7 +1,7 @@
 = form_for [@occasion,@invitation], :html => {:role =>"form"} do |f|
   %ul.list-group
     %li.list-group-item
-      %h4
+      %h3
         %strong Who's coming?
         %small Tell us more about the guests in this party
       %fieldset
@@ -28,15 +28,17 @@
                   %th 
                     Last Name
                     %span{style: "color:red"}*
-                  %th Invited to
+                  - if user_signed_in? && @occasion.user_id = current_user.id
+                    %th Invited to
               %tbody#guests
                 = f.fields_for :guests do |guest|
                   = render 'invitations/guest_fields', :f => guest
           .links
             = link_to_add_association 'Add another guest', f, :guests, :class => "btn btn-primary btn-sm", :partial => 'invitations/guest_fields', :"data-association-insertion-node" => "tbody#guests", :"data-association-insertion-method" => "append"
-            = link_to_add_association 'Add another guest (Allow guest to enter name)', f, :guests, :class => "btn btn-default btn-sm", :partial => 'invitations/unknown_guest_fields', :"data-association-insertion-node" => "tbody#guests", :"data-association-insertion-method" => "append"
+            - if user_signed_in? && @occasion.user_id = current_user.id
+              = link_to_add_association 'Add another guest (Allow guest to enter name)', f, :guests, :class => "btn btn-default btn-sm", :partial => 'invitations/unknown_guest_fields', :"data-association-insertion-node" => "tbody#guests", :"data-association-insertion-method" => "append"
     
-      %h4
+      %h3
         %strong Let's stay in touch  
         %small Add contact info
       %fieldset
@@ -97,20 +99,22 @@
             .form-group
               = f.label :home_phone, class: "form-label"
               = f.text_field :home_phone, :maxlength => 100, class: "form-control"
-      %h4
-        %strong Notes
-        %small Add notes & tags
-      %fieldset
-        .row
-          .col-md-8
-            .form-group
-              = f.label :notes, "Private Notes", class: "control-label"
-              = f.text_area :notes, {:rows => 5, :maxlength => 500, class: "form-control"}
-              %span.help-block These notes are private and won't be shared with the guests.
+      
+      - if user_signed_in? && @occasion.user_id = current_user.id
+        %h3
+          %strong Notes
+          %small Add notes & tags
+        %fieldset
+          .row
+            .col-md-8
+              .form-group
+                = f.label :notes, "Private Notes", class: "control-label"
+                = f.text_area :notes, {:rows => 5, :maxlength => 500, class: "form-control"}
+                %span.help-block These notes are private and won't be shared with the guests.
   
-            -#.form-group
-              = f.label :tag_list, "Tags (separated by commas)"
-              = f.text_field :tag_list, class: "form-control", :placeholder => "Bride, Groom, Tier 1, etc."
+              -#.form-group
+                = f.label :tag_list, "Tags (separated by commas)"
+                = f.text_field :tag_list, class: "form-control", :placeholder => "Bride, Groom, Tier 1, etc."
 
   .form-group
     = f.submit "Save", :class => "btn btn-success btn-lg pull-right"

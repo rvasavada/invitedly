@@ -1,7 +1,7 @@
 = form_for [@occasion,@event], :html => { :role => "form"} do |f|
   %ul.list-group
     %li.list-group-item
-      %h4
+      %h3
         %strong Event details
         %small What? When? Where? Why?
       
@@ -41,7 +41,7 @@
             .col-sm-5
               %span.help-block= @event.errors.get(:description).join('; ')
 
-      %h4
+      %h3
         %strong Venue info
         %small Where is the event?
       %fieldset

@@ -22,11 +22,12 @@
         = f.text_field :last_name, class: "form-control"
         - if f.object.errors.include?(:last_name)
           %span.help-block=f.object.errors.get(:last_name).join('; ')
-  %td
-    - @events.each_with_index do |event,index|              
-      = f.fields_for :rsvps, Rsvp.find_or_initialize_by(:guest_id => f.object.id, :event_id => event.id) do |rsvp|
-        .checkbox
-          = rsvp.label :visibility do
-            = rsvp.check_box :visibility
-            =event.name
-          =rsvp.hidden_field :event_id, :value => event.id
+  - if user_signed_in? && @occasion.user_id = current_user.id
+    %td
+      - @events.each_with_index do |event,index|              
+        = f.fields_for :rsvps, Rsvp.find_or_initialize_by(:guest_id => f.object.id, :event_id => event.id) do |rsvp|
+          .checkbox
+            = rsvp.label :visibility do
+              = rsvp.check_box :visibility
+              =event.name
+            =rsvp.hidden_field :event_id, :value => event.id

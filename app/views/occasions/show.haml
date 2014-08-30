@@ -1,7 +1,9 @@
 .jumbotron
-  .container
+  .container.text-center
     %h1=@occasion.name
     %p#description=@occasion.description
+    = link_to "Send me an invitation!", new_occasion_invitation_path(@occasion), class: "btn btn-success"
+    = link_to "I want to RSVP", "#", disabled: true, class: "btn btn-primary"
 .container
   .row
     .col-sm-6

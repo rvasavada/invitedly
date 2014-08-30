@@ -2,7 +2,7 @@ class InvitationsController < ApplicationController
   before_action :set_invitation, only: [:edit, :update, :destroy]
   before_action :set_occasion
   
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, except: [:new, :create]
   before_filter :verify_occasion_ownership, only: [:index,:new,:edit]
   
   def index
@@ -42,10 +42,14 @@ class InvitationsController < ApplicationController
    
   def create
     @invitation = @occasion.invitations.new(invitation_params)
-    @invitation.user_id = current_user.id
+    @invitation.user_id = @occasion.user_id
     @invitation.status = "Not Sent"
     if @invitation.save
-      redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully created.'
+      if
+        redirect_to @occasion, notice: 'Thanks for giving us your contact info.  We\'ll be sure to send you an invite!'
+      else 
+        redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully created.'
+      end
     else
       @title = Title.all
       @state = State.all
