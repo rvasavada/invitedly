@@ -2,21 +2,9 @@
   %td
     = link_to_remove_association f, :class => "btn btn-danger btn-sm" do
       %span.glyphicon.glyphicon-trash
-  %td
-    .form-group
-      = f.label :title, class: "sr-only"
-      = f.collection_select(:title,	@title, :name, :name, {:prompt => "Select"}, {class: "form-control"})
-  %td
-    .form-group{class: f.object.errors.include?(:first_name) ? 'has-error' : ''}
-      = f.label :first_name, class: "sr-only"
-      = f.text_field :first_name, class: "form-control"
-      - if f.object.errors.include?(:first_name)
-        %span.help-block=f.object.errors.get(:first_name).join('; ')
-  %td
-    .form-group{class: f.object.errors.include?(:last_name) ? 'has-error' : ''}
-      = f.text_field :last_name, class: "form-control"
-      - if f.object.errors.include?(:last_name)
-        %span.help-block=f.object.errors.get(:last_name).join('; ')
+  %td.text-center{colspan:3}
+    = f.hidden_field :is_additional_guest, :value => true
+    %label.control-label Additional guest
   %td
     - @events.each_with_index do |event,index|              
       = f.fields_for :rsvps, Rsvp.find_or_initialize_by(:guest_id => f.object.id, :event_id => event.id) do |rsvp|

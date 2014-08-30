@@ -37,7 +37,7 @@
                     - current_user.occasion.events.each do |event|
                       %li= link_to event.name, occasion_event_path(current_user.occasion, event)
                     %li.divider
-                    %li= link_to "New Event", new_occasion_invitation_path(current_user.occasion)
+                    %li= link_to "New Event", new_occasion_event_path(current_user.occasion)
                 
                 %li= link_to "Invitations", occasion_invitations_path(current_user.occasion)
 

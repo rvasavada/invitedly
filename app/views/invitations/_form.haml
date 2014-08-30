@@ -11,7 +11,7 @@
             %span{style: "color:red"}*
           .row
             .col-sm-7
-              = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control", placeholder: "Will not be shared with guest"
+              = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control input-lg", placeholder: "Jane and Jim Doe"
             .col-sm-5
               %span.help-block= @invitation.errors.get(:name).join('; ')
 
@@ -28,7 +28,8 @@
             %tbody#guests
               = render 'invitations/guest_fields', :f => guest
           .links
-            = link_to_add_association 'Add another guest', f, :guests, :class => "btn btn-primary", :partial => 'invitations/guest_fields', :"data-association-insertion-node" => "tbody#guests", :"data-association-insertion-method" => "append"
+            = link_to_add_association 'Add another guest', f, :guests, :class => "btn btn-primary btn-sm", :partial => 'invitations/guest_fields', :"data-association-insertion-node" => "tbody#guests", :"data-association-insertion-method" => "append"
+            = link_to_add_association 'Add another guest (Allow guest to enter name)', f, :guests, :class => "btn btn-default btn-sm", :partial => 'invitations/unknown_guest_fields', :"data-association-insertion-node" => "tbody#guests", :"data-association-insertion-method" => "append"
     
       %h4
         %strong Let's stay in touch  
