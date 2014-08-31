@@ -103,7 +103,7 @@
                     .btn-group
                       = link_to occasion_invitation_send_invitation_path(@occasion,invitation), method: :post, confirm: 'Are you sure you want to send this invitation?', class: "btn btn-primary btn-xs btn-default", disabled: invitation.status != "Not Sent", remote: true do
                         %span.glyphicon.glyphicon-send
-                      = link_to occasion_invitation_rsvp_url(@occasion, invitation, :events), class: "btn btn-xs btn-primary" do
+                      = link_to occasion_invitation_rsvp_url(@occasion, invitation, :events), class: "btn btn-xs btn-success" do
                         %span.glyphicon.glyphicon-envelope
                       = link_to edit_occasion_invitation_path(@occasion,invitation), class: "btn btn-xs btn-default" do
                         %span.glyphicon.glyphicon-pencil
