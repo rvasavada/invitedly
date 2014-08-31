@@ -83,6 +83,20 @@ class InvitationsController < ApplicationController
     render :layout => nil
   end
   
+  def send_invitation
+    invitation = Invitation.friendly.find(params[:invitation_id])
+    if invitation.status == "Not Sent"
+      InvitationMailer.email_invitation(current_user, @occasion, invitation)
+    else
+    invitation.status = "Not Responded"
+    
+    if invitation.save
+      render :js=>'alert("Invitation sent!");'
+    else
+      render :js=>'alert("Whoops!  An error occured.  Please try again.");'
+    end
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_invitation

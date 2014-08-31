@@ -25,8 +25,10 @@ Invitedly::Application.routes.draw do
     get 'guestbook' => 'occasions#guestbook'  
         
     resources :invitations do
-      resources :manage, controller: 'invitations/manage'      
-      resources :rsvp, controller: 'invitations/rsvp'      
+      resources :manage, controller: 'invitations/manage'
+      resources :rsvp, controller: 'invitations/rsvp'
+      match 'send_invitation' => 'invitations#send_invitation', :via => :post
+        
     end
     
     resources :events

@@ -128,4 +128,9 @@ $("document").ready(function(){
             }
         }, 0);
     })
+    
+    $('#check_all').on("click", function(){ 
+      $('input[type="checkbox"]').click();
+      
+    });
 });
