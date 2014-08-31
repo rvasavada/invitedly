@@ -87,8 +87,8 @@ class InvitationsController < ApplicationController
     invitation = Invitation.friendly.find(params[:invitation_id])
     if invitation.status == "Not Sent"
       InvitationMailer.email_invitation(current_user, @occasion, invitation)
-    else
-    invitation.status = "Not Responded"
+      invitation.status = "Not Responded"
+    end
     
     if invitation.save
       render :js=>'alert("Invitation sent!");'
