@@ -45,7 +45,7 @@ class InvitationsController < ApplicationController
     @invitation.user_id = @occasion.user_id
     @invitation.status = "Not Sent"
     if @invitation.save
-      if
+      if user_signed_in? && @occasion.user_id = current_user.id
         redirect_to @occasion, notice: 'Thanks for giving us your contact info.  We\'ll be sure to send you an invite!'
       else 
         redirect_to occasion_invitations_path(@occasion), notice: 'Invitation was successfully created.'

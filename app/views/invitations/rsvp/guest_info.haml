@@ -1,6 +1,6 @@
 .container
   %ul.list-inline
-    %li.text-muted 1. RSVP
+    %li.text-muted 1. Events
     %li
       %small.glyphicon.glyphicon-chevron-right
     %li.text-primary 
@@ -44,7 +44,7 @@
                   %th Attending
               %tbody
                 = f.fields_for :guests do |guest|
-                  - if Rsvp.where(:guest_id => guest.object.id, :response => "Attending").count > 0
+                  - if (Rsvp.where(:guest_id => guest.object.id, :response => "Attending").count > 0 && guest.object.is_additional_guest) ||  !guest.object.is_additional_guest
                     %tr
                       %td
                         .form-group
@@ -60,7 +60,7 @@
                           - if guest.object.errors.include?(:last_name)
                             %span.help-block=guest.object.errors.get(:last_name).join('; ')
                       %td
-                        - Rsvp.where(:guest_id => guest.object.id).each do |rsvp|
+                        - Rsvp.where(:guest_id => guest.object.id, :response => "Attending").each do |rsvp|
                           = rsvp.event.name
                           %br
                         - if guest.object.is_additional_guest
