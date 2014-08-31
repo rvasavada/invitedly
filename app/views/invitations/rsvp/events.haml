@@ -37,7 +37,7 @@
                   %thead
                     %tr
                       %th Guest name
-                      %th Attending?
+                      %th{width: "40%"} Attending?
                     %tbody
                       = f.fields_for :rsvps, @invitation.rsvps.where(:event_id => event.id, :visibility => true).order(:id) do |rsvp|
                         %tr
