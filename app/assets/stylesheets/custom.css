@@ -6,6 +6,7 @@ body {
 
 .container-filled {
   background-color: #fff;
+  box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);
 }
 
 .navbar-default {
@@ -24,6 +25,9 @@ body {
   color: #A8DCFF;
 }
 
+.dropdown-menu {
+  font-size: 16px;
+}
 .navbar-default .navbar-brand {
   font-size: 22px;
   color: white;
@@ -39,8 +43,6 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small
 
 .form-control {
   font-size: 16px;
-  border-radius: 0px;
-  height: 50px;
 }
 
 fieldset {
@@ -57,7 +59,6 @@ fieldset {
 
 .btn {
   font-size: 16px;
-  border-radius: 0;
 }
 
 .btn-primary {
@@ -68,6 +69,13 @@ fieldset {
   background-color: #031135;
 }
 
+table {
+  font-size: 14px;  
+}
+
+label, .control-label, .help-block, .checkbox, .radio {
+  font-size: 14px;  
+}
 
 .jumbotron {
   border-top:1px solid rgba(0,0,0,.3);
