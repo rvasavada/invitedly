@@ -1,120 +1,124 @@
 = form_for [@occasion,@invitation], :html => {:role =>"form"} do |f|
-  %ul.list-group
-    %li.list-group-item
-      %h3
-        %strong Who's coming?
-        %small Tell us more about the guests in this party
-      %fieldset
-        .form-group{class: @invitation.errors.include?(:name) ? 'has-error' : ''}
-          = f.label :name, class: "control-label" do
-            Family name
-            %span{style: "color:red"}*
-          .row
-            .col-sm-7
-              = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control input-lg", placeholder: "Jane and Jim Doe"
-            .col-sm-5
-              %span.help-block= @invitation.errors.get(:name).join('; ')
 
-        
-          .table-responsive
-            %table.table
-              %thead
-                %tr
-                  %th
-                  %th Title
-                  %th 
-                    First Name
-                    %span{style: "color:red"}*
-                  %th 
-                    Last Name
-                    %span{style: "color:red"}*
-                  - if user_signed_in? && @occasion.user_id = current_user.id
-                    %th Invited to
-              %tbody#guests
-                = f.fields_for :guests do |guest|
-                  = render 'invitations/guest_fields', :f => guest
-          .links
-            = link_to_add_association 'Add another guest', f, :guests, :class => "btn btn-primary btn-sm", :partial => 'invitations/guest_fields', :"data-association-insertion-node" => "tbody#guests", :"data-association-insertion-method" => "append"
+  %fieldset
+    %legend
+      %span.glyphicon.glyphicon-user        
+      Guest info
+
+    .form-group{class: @invitation.errors.include?(:name) ? 'has-error' : ''}
+      = f.label :name, class: "control-label" do
+        Family name
+        %span{style: "color:red"}*
+      .row
+        .col-sm-7
+          = f.text_field :name, :autofocus => true, :maxlength => 50, class: "form-control input-lg", placeholder: "Jane and Jim Doe"
+        .col-sm-5
+          %span.help-block= @invitation.errors.get(:name).join('; ')
+
+    
+    .table-responsive
+      %table.table
+        %thead
+          %tr
+            %th
+            %th Title
+            %th 
+              First Name
+              %span{style: "color:red"}*
+            %th 
+              Last Name
+              %span{style: "color:red"}*
             - if user_signed_in? && @occasion.user_id = current_user.id
-              = link_to_add_association 'Add another guest (Allow guest to enter name)', f, :guests, :class => "btn btn-default btn-sm", :partial => 'invitations/unknown_guest_fields', :"data-association-insertion-node" => "tbody#guests", :"data-association-insertion-method" => "append"
-    
-      %h3
-        %strong Let's stay in touch  
-        %small Add contact info
-      %fieldset
-        .form-group{class: @invitation.errors.include?(:email) ? 'has-error' : ''}
-          = f.label :email, class: "control-label" do
-            Email
-            %span{style: "color:red"}*
-          .row
-            .col-sm-7
-              = f.text_field :email, :maxlength => 50, class: "form-control"
-            .col-sm-5
-              %span.help-block= @invitation.errors.get(:email).join('; ')
-
-          -#.input-group
-            %span.input-group-addon
-              = f.label :has_email, style: "font-weight:normal;" do
-                = f.check_box :has_email
-                Has Email
-            = f.text_field :email, :maxlength => 50, class: "form-control"
-          -#%span.help-block Guests with an email will recieve invitations with a link to RSVP, reminders, and confirmation emails.
-      
-        = f.label :location, class: "control-label" do
-          Address (optional)
-
-        .row
-          .col-xs-7
-            .form-group
-              = f.text_field :address_1, placeholder: "Address 1", :maxlength => 100, class: "form-control"
-          .col-xs-5
-            .form-group
-              = f.text_field :address_2, placeholder: "Address 2", :maxlength => 100, class: "form-control"
-        .row
-          .col-sm-5
-            .form-group      
-              = f.text_field :city, placeholder: "City", :maxlength => 100, class: "form-control"
-          .domestic.col-sm-4.col-xs-7
-            .form-group
-              = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
-          .domestic.col-sm-3.col-xs-5
-            .form-group
-              = f.text_field :zip, placeholder: "Zip", :maxlength => 5, class: "form-control"
-          .international.col-sm-4
-            .form-group
-              = f.text_field :region, placeholder: "Region", :maxlength => 100, class: "form-control"
-          .international.col-sm-3
-            .form-group
-              = f.text_field :postal_code, placeholder: "Postal Code", :maxlength => 20, class: "form-control"
-
-        .form-group
-          = f.collection_select(:country,	@country, :name, :name, {:selected => @invitation.country.blank? ? "United States" : @invitation.country}, {class: "form-control",:id => "countrySelect"})
-    
-        .row
-          .col-xs-5
-            .form-group
-              = f.label :cell_phone, class: "form-label"
-              = f.text_field :cell_phone, :maxlength => 100, class: "form-control"
-          .col-xs-5
-            .form-group
-              = f.label :home_phone, class: "form-label"
-              = f.text_field :home_phone, :maxlength => 100, class: "form-control"
-      
+              %th Invited to
+        %tbody#guests
+          = f.fields_for :guests do |guest|
+            = render 'invitations/guest_fields', :f => guest
+    .links
+      = link_to_add_association 'Add another guest', f, :guests, :class => "btn btn-primary btn-sm", :partial => 'invitations/guest_fields', :"data-association-insertion-node" => "tbody#guests", :"data-association-insertion-method" => "append"
       - if user_signed_in? && @occasion.user_id = current_user.id
-        %h3
-          %strong Notes
-          %small Add notes & tags
-        %fieldset
-          .row
-            .col-md-8
-              .form-group
-                = f.label :notes, "Private Notes", class: "control-label"
-                = f.text_area :notes, {:rows => 5, :maxlength => 500, class: "form-control"}
-                %span.help-block These notes are private and won't be shared with the guests.
-  
-              -#.form-group
-                = f.label :tag_list, "Tags (separated by commas)"
-                = f.text_field :tag_list, class: "form-control", :placeholder => "Bride, Groom, Tier 1, etc."
+        = link_to_add_association 'Add another guest (Allow guest to enter name)', f, :guests, :class => "btn btn-default btn-sm", :partial => 'invitations/unknown_guest_fields', :"data-association-insertion-node" => "tbody#guests", :"data-association-insertion-method" => "append"
 
-  .form-group
-    = f.submit "Save", :class => "btn btn-success btn-lg pull-right"
+
+  %fieldset
+    %legend
+      %span.glyphicon.glyphicon-briefcase
+      Contact info
+      
+    .form-group{class: @invitation.errors.include?(:email) ? 'has-error' : ''}
+      = f.label :email, class: "control-label" do
+        Email
+        %span{style: "color:red"}*
+      .row
+        .col-sm-7
+          = f.text_field :email, :maxlength => 50, class: "form-control"
+        .col-sm-5
+          %span.help-block= @invitation.errors.get(:email).join('; ')
+
+      -#.input-group
+        %span.input-group-addon
+          = f.label :has_email, style: "font-weight:normal;" do
+            = f.check_box :has_email
+            Has Email
+        = f.text_field :email, :maxlength => 50, class: "form-control"
+      -#%span.help-block Guests with an email will recieve invitations with a link to RSVP, reminders, and confirmation emails.
+  
+    = f.label :location, class: "control-label" do
+      Address (optional)
+
+    .row
+      .col-xs-7
+        .form-group
+          = f.text_field :address_1, placeholder: "Address 1", :maxlength => 100, class: "form-control"
+      .col-xs-5
+        .form-group
+          = f.text_field :address_2, placeholder: "Address 2", :maxlength => 100, class: "form-control"
+    .row
+      .col-sm-5
+        .form-group      
+          = f.text_field :city, placeholder: "City", :maxlength => 100, class: "form-control"
+      .domestic.col-sm-4.col-xs-7
+        .form-group
+          = f.collection_select :state,	@state, :name, :name, {prompt: "Please select..."}, {class: "form-control"} 
+      .domestic.col-sm-3.col-xs-5
+        .form-group
+          = f.text_field :zip, placeholder: "Zip", :maxlength => 5, class: "form-control"
+      .international.col-sm-4
+        .form-group
+          = f.text_field :region, placeholder: "Region", :maxlength => 100, class: "form-control"
+      .international.col-sm-3
+        .form-group
+          = f.text_field :postal_code, placeholder: "Postal Code", :maxlength => 20, class: "form-control"
+
+    .form-group
+      = f.collection_select(:country,	@country, :name, :name, {:selected => @invitation.country.blank? ? "United States" : @invitation.country}, {class: "form-control",:id => "countrySelect"})
+
+    .row
+      .col-xs-5
+        .form-group
+          = f.label :cell_phone, class: "form-label"
+          = f.text_field :cell_phone, :maxlength => 100, class: "form-control"
+      .col-xs-5
+        .form-group
+          = f.label :home_phone, class: "form-label"
+          = f.text_field :home_phone, :maxlength => 100, class: "form-control"
+  
+  - if user_signed_in? && @occasion.user_id = current_user.id
+    %fieldset
+      %legend
+        %span.glyphicon.glyphicon-comment
+        Notes
+
+      .row
+        .col-md-8
+          .form-group
+            = f.label :notes, "Private Notes", class: "control-label"
+            = f.text_area :notes, {:rows => 5, :maxlength => 500, class: "form-control"}
+            %span.help-block These notes are private and won't be shared with the guests.
+
+          -#.form-group
+            = f.label :tag_list, "Tags (separated by commas)"
+            = f.text_field :tag_list, class: "form-control", :placeholder => "Bride, Groom, Tier 1, etc."
+
+    %fieldset
+      .form-group
+        = f.submit "Save", :class => "btn btn-success btn-lg pull-right"

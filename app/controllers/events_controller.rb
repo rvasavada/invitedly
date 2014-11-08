@@ -18,7 +18,9 @@ class EventsController < ApplicationController
       q = "%#{params[:q]}%"
       @invitations = @event.invitations.where("lower(name) ILIKE lower(?)",q).uniq
     else
-      @invitations = @event.invitations.uniq
+      #@invitations = @event.invitations.uniq
+      
+      @invitations = Invitation.joins(:rsvps).where(occasion_id: @occasion).order(updated_at: :desc).uniq
     end    
     
   end

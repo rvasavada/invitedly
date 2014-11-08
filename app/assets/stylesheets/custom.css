@@ -1,3 +1,74 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  background-color: #54A49F;
+}
+
+.container-filled {
+  background-color: #fff;
+}
+
+.navbar-default {
+  background: #2B4776;
+  height: 56px;
+  border: 0px;
+  font-size: 18px;
+  box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: white;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+  color: #A8DCFF;
+}
+
+.navbar-default .navbar-brand {
+  font-size: 22px;
+  color: white;
+}
+
+.navbar-default .navbar-brand:hover {
+  color: #A8DCFF;
+}
+
+h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small, h1 .small, h2 .small, h3 .small, h4 .small, h5 .small, h6 .small, .h1 .small, .h2 .small, .h3 .small, .h4 .small, .h5 .small, .h6 .small {
+  color: #fff;
+}
+
+.form-control {
+  font-size: 16px;
+  border-radius: 0px;
+  height: 50px;
+}
+
+fieldset {
+  padding-bottom: 30px;
+}
+
+.list-group-item:first-child {
+  border-radius: 0px;
+}
+
+.list-group-item:last-child {
+  border-radius: 0px;
+}
+
+.btn {
+  font-size: 16px;
+  border-radius: 0;
+}
+
+.btn-primary {
+  background-color: #2B4776;
+}
+
+.btn-primary:hover {
+  background-color: #031135;
+}
+
+
 .jumbotron {
   border-top:1px solid rgba(0,0,0,.3);
   box-shadow: 0 3px 4px rgba(0,0,0,.1);-moz-box-shadow: 0 3px 4px rgba(0,0,0,.1);-webkit-box-shadow: 0 3px 4px rgba(0,0,0,.1);
