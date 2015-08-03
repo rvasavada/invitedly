@@ -8,27 +8,27 @@
         Invitations
         %small.text-muted="(#{@invitations.count} found)"
 
-      %ul.list-group  
+      %ul.list-group{style: "font-size:14px;"}  
         %li.list-group-item
           .pull-right
             %strong Download:
             = link_to "CSV", occasion_invitations_path(@occasion, format: "csv")
   
-          %ul.list-inline
+          %ul.list-inline{style: "font-size:14px;"}
             %li
               %strong Invitation Status:
             %li.text-info{style: params[:status].blank? && params[:tag].blank? ? "background-color:yellow;": ""}
-              %strong=@occasion.invitations.count
               =link_to "All", occasion_invitations_path(@occasion)
+              %span.badge=@occasion.invitations.count
             %li.text-success{style: params[:status] == "Responded" ? "background-color:yellow;" : ""}
-              %strong=@occasion.invitations.where(:status => "Responded").count
               =link_to "Responded", occasion_invitations_path(@occasion, :status => "Responded")
+              %span.badge=@occasion.invitations.where(:status => "Responded").count
             %li{style: params[:status] == "Not Responded" ? "background-color:yellow;" : ""}
-              %strong=@occasion.invitations.where(:status => "Not Responded").count
               =link_to "Not Responded", occasion_invitations_path(@occasion, :status => "Not Responded")
+              %span.badge=@occasion.invitations.where(:status => "Not Responded").count
             %li.text-warning{style: params[:status] == "Not Sent" ? "background-color:yellow;" : ""}
-              %strong=@occasion.invitations.where(:status => "Not Sent").count
               =link_to "Not Sent", occasion_invitations_path(@occasion, :status => "Not Sent")
+              %span.badge=@occasion.invitations.where(:status => "Not Sent").count
           %li.list-group-item
             .row
               .col-sm-4
@@ -72,13 +72,22 @@
                     %th Contact information
                     %th{width:"25%"} Notes
                     %th{width:"10%"} Status
-                    %th Actions
                 %tbody
                   - @invitations.each do |invitation|
                     %tr
                       -#%td{style: "vertical-align:middle;"}= check_box_tag :invitation, :invitation_id
                       %td{style: "vertical-align:middle;font-size:1.25em;"}
                         = invitation.name
+                        %br
+                        .btn-group
+                          = link_to occasion_invitation_send_invitation_path(@occasion,invitation), method: :post, confirm: 'Are you sure you want to send this invitation?', class: "btn btn-primary btn-xs btn-default", disabled: invitation.status != "Not Sent", remote: true do
+                            %span.glyphicon.glyphicon-send
+                          = link_to occasion_invitation_rsvp_url(@occasion, invitation, :events), class: "btn btn-xs btn-success" do
+                            %span.glyphicon.glyphicon-envelope
+                          = link_to edit_occasion_invitation_path(@occasion,invitation), class: "btn btn-xs btn-default" do
+                            %span.glyphicon.glyphicon-pencil
+                          = link_to occasion_invitation_path(@occasion,invitation), method: :delete, confirm: 'Are you sure you want to delete this invitation?', class: "btn btn-danger btn-xs btn-default" do
+                            %span.glyphicon.glyphicon-trash
                       %td{style: "vertical-align:middle;"}
                         - if invitation.address_line_1.present?
                           = invitation.address_line_1
@@ -101,16 +110,7 @@
                           = link_to invitation.email, "mailto:#{invitation.email}", target: :blank
                       %td{style: "vertical-align:middle;"}=invitation.notes
                       %td{style:"vertical-align:middle;font-size:1.25em;"}= invitation.status
-                      %td{style:"vertical-align:middle;font-size:1.25em;"}
-                        .btn-group
-                          = link_to occasion_invitation_send_invitation_path(@occasion,invitation), method: :post, confirm: 'Are you sure you want to send this invitation?', class: "btn btn-primary btn-xs btn-default", disabled: invitation.status != "Not Sent", remote: true do
-                            %span.glyphicon.glyphicon-send
-                          = link_to occasion_invitation_rsvp_url(@occasion, invitation, :events), class: "btn btn-xs btn-success" do
-                            %span.glyphicon.glyphicon-envelope
-                          = link_to edit_occasion_invitation_path(@occasion,invitation), class: "btn btn-xs btn-default" do
-                            %span.glyphicon.glyphicon-pencil
-                          = link_to occasion_invitation_path(@occasion,invitation), method: :delete, confirm: 'Are you sure you want to delete this invitation?', class: "btn btn-danger btn-xs btn-default" do
-                            %span.glyphicon.glyphicon-trash
+                        
         
                  
                       -#- invitation.tags.each do |t| 

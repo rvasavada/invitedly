@@ -1,36 +1,38 @@
 .container
   .row
-    .col-sm-offset-3.col-sm-6
-      %h1.text-center
-        Invitedly
-        %br
-        %small Let us manage your guestlist.
-     
+    .col-sm-offset-2.col-sm-8
+      .text-center
+        %h1 Invitedly
+        %p Let us manage your guestlist.
       = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-        .ul.list-group
-          .li.list-group-item
-            %h3 Sign into your account
-          .li.list-group-item
+        .row.container-filled
+
+          .col-sm-offset-1.col-sm-10
             %fieldset
+              %legend Sign into your account
+    
+
               .form-group
                 = f.label :email, "Email", class: "control-label"
-                = f.text_field :email, :autofocus => true, class: "form-control"
+                = f.text_field :email, :autofocus => true, class: "form-control input-lg"
               .form-group
                 = f.label :password, "Password", class: "control-label"
-                = f.password_field :password, class: "form-control" 
+                = f.password_field :password, class: "form-control input-lg" 
 
               .form-group
                 .checkbox
                   = f.label :remember_me do
                     = f.check_box :remember_me, :checked => true
                     Remember me
-                  
+              
 
-              = f.submit "Sign in", :class=> "btn btn-success btn-block"
+            %fieldset 
+              = f.submit "Sign in", :class=> "btn btn-success btn-block btn-lg"
 
-      %p.text-center
-        Don't have an account?
-        = link_to "Sign up!", new_registration_path(resource_name), :class=> "btn btn-primary"
-        or
-        = link_to "Forgot password?", new_password_path(resource_name), class: "btn btn-default"
-      
+  %fieldset
+    %p.text-center
+      Don't have an account?
+      = link_to "Sign up!", new_registration_path(resource_name), :class=> "btn btn-primary"
+      or
+      = link_to "Forgot password?", new_password_path(resource_name), class: "btn btn-default"
+  
